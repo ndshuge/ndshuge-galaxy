@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#050816">
+  <meta name="description" content="鼠哥星系个人导航主页">
+  <title>鼠哥星系</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050816'/%3E%3Ccircle cx='16' cy='17' r='9' fill='%23a8e3ff'/%3E%3Ccircle cx='9' cy='9' r='5' fill='%23ff9ec4'/%3E%3Ccircle cx='23' cy='9' r='5' fill='%23ff9ec4'/%3E%3Crect x='19' y='16' width='3' height='3' fill='%23050816'/%3E%3Crect x='14' y='21' width='5' height='3' fill='%23ff5c8a'/%3E%3C/svg%3E">
+  <style>
+    :root{--space:#050816;--deep:#0b1638;--cyan:#4fc3ff;--cyan2:#a8e3ff;--yellow:#ffd54f;--red:#ff5c5c;--pink:#ff5c8a;--purple:#b388ff;--green:#69f0ae;--white:#fff2a8}
+    *{box-sizing:border-box}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--space);color:var(--cyan2);font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif}
+    body{touch-action:none;user-select:none}
+    canvas{position:fixed;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;cursor:crosshair}
+    .title{position:fixed;z-index:2;top:max(7vh,18px);left:50%;margin:0;transform:translateX(-50%);white-space:nowrap;font-size:clamp(28px,5.5vw,58px);font-weight:900;letter-spacing:.2em;color:var(--cyan2);text-shadow:0 0 5px var(--cyan),0 0 14px var(--cyan),3px 3px 0 var(--deep);pointer-events:none;opacity:0;clip-path:inset(0 100% 0 0);animation:typeIn 1.4s steps(5,end) .2s forwards,titlePulse 2.8s ease-in-out 1.7s infinite}
+    .title::after{content:"_";color:var(--yellow);animation:blink .75s steps(1) infinite}
+    .status{position:fixed;z-index:3;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:18px;padding:6px 11px;border:2px solid var(--cyan);background:rgba(5,8,22,.76);box-shadow:3px 3px 0 var(--deep),0 0 9px rgba(79,195,255,.35);font:700 12px/1 monospace;letter-spacing:.06em;white-space:nowrap;pointer-events:none}
+    .status b{color:var(--yellow);font-weight:700}
+    .hint{position:fixed;z-index:2;right:12px;top:12px;color:var(--cyan2);font:700 11px/1 monospace;opacity:.55;pointer-events:none}
+    .terminal{position:fixed;z-index:7;left:50%;top:50%;width:min(560px,calc(100% - 28px));transform:translate(-50%,-50%);border:3px solid var(--green);background:rgba(5,8,22,.96);box-shadow:8px 8px 0 var(--deep),0 0 20px rgba(105,240,174,.3);padding:14px;display:none}
+    .terminal.open{display:block}
+    .terminal-head{display:flex;justify-content:space-between;color:var(--green);font:800 14px/1 monospace;margin-bottom:12px}
+    .terminal label{display:flex;align-items:center;gap:8px;color:var(--yellow);font:700 16px/1.4 monospace}
+    .terminal input{min-width:0;flex:1;border:0;border-bottom:2px solid var(--green);outline:0;background:transparent;color:var(--cyan2);font:700 16px/1.4 monospace}
+    .terminal-output{min-height:22px;margin:10px 0 0;color:var(--pink);font:700 13px/1.5 monospace}
+    .flash{position:fixed;z-index:6;inset:0;pointer-events:none;opacity:0;background:var(--cyan2)}
+    .flash.on{animation:flash .15s steps(2)}
+    .glitch{position:fixed;z-index:6;inset:0;pointer-events:none;display:none;background:repeating-linear-gradient(0deg,transparent 0 7px,var(--pink) 7px 10px,transparent 10px 17px,var(--cyan) 17px 19px);mix-blend-mode:screen}
+    .glitch.on{display:block;animation:glitch .15s steps(3)}
+    @keyframes typeIn{to{opacity:1;clip-path:inset(0 0 0 0)}}
+    @keyframes titlePulse{50%{filter:brightness(1.3);transform:translateX(-50%) scale(1.025)}}
+    @keyframes blink{50%{opacity:0}}
+    @keyframes flash{0%{opacity:0}35%{opacity:.95}100%{opacity:0}}
+    @keyframes glitch{0%{transform:translateX(-8px)}50%{transform:translateX(7px)}100%{transform:translateX(0)}}
+    @media (max-width:560px){.title{top:max(5vh,14px);font-size:30px}.hint{display:none}.status{gap:10px;font-size:10px}.terminal{padding:12px}}
+    @media (prefers-reduced-motion:reduce){.title{animation:typeIn .01s forwards}.title::after{animation:none}.flash,.glitch{display:none!important}}
+  </style>
+</head>
+<body>
+  <canvas id="space" aria-label="鼠哥星系像素太空导航；点击星球进入项目，连续点击火箭五次触发彩蛋"></canvas>
+  <h1 class="title">鼠哥星系</h1>
+  <div class="hint">[/] 终端</div>
+  <div class="status"><span>TIME <b id="clock">00:00:00</b></span><span>VISITS <b id="visits">0001</b></span></div>
+  <section class="terminal" id="terminal" role="dialog" aria-modal="true" aria-label="项目跃迁终端">
+    <div class="terminal-head"><span>GALAXY TERMINAL</span><span>ESC CLOSE</span></div>
+    <label>&gt;<input id="command" autocomplete="off" spellcheck="false" aria-label="输入项目名"></label>
+    <p class="terminal-output" id="terminalOutput">输入项目名后按 Enter 跃迁</p>
+  </section>
+  <div class="flash" id="flash"></div><div class="glitch" id="glitch"></div>
+  <script>
+    const PROJECTS = [
+      // 填入 name 和 url 后，这颗星球才会启用文字和跳转。
+      // name 为空 = 空白星球，点击只抖动不跳转。
+      // 想增删星球，直接增删数组项即可。
+      { name: "", desc: "", url: "", color: "#ff5c8a", glow: "#ff9ec4", z: 6 },
+      { name: "", desc: "", url: "", color: "#4fc3ff", glow: "#a8e3ff", z: 9 },
+      { name: "", desc: "", url: "", color: "#ffd54f", glow: "#fff2a8", z: 7 },
+      { name: "", desc: "", url: "", color: "#b388ff", glow: "#d7bfff", z: 8 },
+      { name: "", desc: "", url: "", color: "#69f0ae", glow: "#b9ffd5", z: 10 }
+    ];
+
+    const W=480,H=270,FOCAL=34,canvas=document.querySelector('#space'),ctx=canvas.getContext('2d');
+    const flash=document.querySelector('#flash'),glitch=document.querySelector('#glitch');
+    const terminal=document.querySelector('#terminal'),command=document.querySelector('#command'),terminalOutput=document.querySelector('#terminalOutput');
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let view={x:0,y:0},pointer={x:-999,y:-999},hover=-1,warp=null,last=performance.now(),salute=0,rocketClicks=[],explosion=[];
+    const layout=[[-2.9,-1.15],[2.8,-.75],[-2.35,1.45],[2.15,1.2],[.1,-1.72]];
+
+    function resize(){
+      const d=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(innerWidth*d);canvas.height=Math.round(innerHeight*d);
+      ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0);ctx.imageSmoothingEnabled=false;
+    }
+    addEventListener('resize',resize);resize();
+
+    const rand=(a,b)=>a+Math.random()*(b-a);
+    const stars=Array.from({length:92},()=>{const a=rand(0,Math.PI*2),r=rand(6,250);return{x:W/2+Math.cos(a)*r,y:H/2+Math.sin(a)*r,s:Math.random()<.12?2:1,p:rand(0,Math.PI*2),v:rand(.04,.15)}});
+    const planets=PROJECTS.map((p,i)=>({...p,baseZ:p.z,z:p.z,x:layout[i%layout.length][0],y:layout[i%layout.length][1],baseRadius:rand(7.2,9.2),phase:rand(0,Math.PI*2),spin:rand(.25,.55),shake:0,hit:null}));
+
+    function screenPlanet(p,t){
+      const z=Math.max(.35,p.z),scale=FOCAL/z,r=p.baseRadius*scale;
+      return{x:Math.round(W/2+p.x*scale+view.x*(1-z/14)),y:Math.round(H/2+p.y*scale+Math.sin(t*.001+p.phase)*2+view.y*(1-z/14)),r};
+    }
+    function drawStars(t,dt){
+      const speed=warp?7:1;
+      for(const s of stars){
+        let dx=s.x-W/2,dy=s.y-H/2,d=Math.hypot(dx,dy)||1;
+        s.x+=dx/d*s.v*speed*dt*.06;s.y+=dy/d*s.v*speed*dt*.06;
+        if(s.x<-8||s.x>W+8||s.y<-8||s.y>H+8){const a=rand(0,Math.PI*2),r=rand(3,24);s.x=W/2+Math.cos(a)*r;s.y=H/2+Math.sin(a)*r}
+        const tw=.45+Math.sin(t*.003+s.p)*.3;
+        ctx.globalAlpha=warp?.9:tw;ctx.strokeStyle='#a8e3ff';ctx.fillStyle='#a8e3ff';
+        if(warp){ctx.lineWidth=s.s;ctx.beginPath();ctx.moveTo(Math.round(s.x),Math.round(s.y));ctx.lineTo(Math.round(s.x-dx/d*rand(8,24)),Math.round(s.y-dy/d*rand(8,24)));ctx.stroke()}
+        else ctx.fillRect(Math.round(s.x+view.x*.15),Math.round(s.y+view.y*.15),s.s,s.s);
+      }ctx.globalAlpha=1;
+    }
+    function drawPlanet(p,i,t){
+      const s=screenPlanet(p,t);p.hit=s;const active=p.name.trim()&&p.url.trim(),isHover=i===hover&&!warp;
+      const jitter=p.shake>0?Math.round(Math.sin(t*.12)*3):0;if(p.shake>0)p.shake--;
+      const x=s.x+jitter,y=s.y,r=Math.max(4,Math.round(s.r*(isHover?1.05:1)));
+      ctx.save();ctx.globalAlpha=Math.min(1,.46+8/Math.max(8,p.z));
+      if(isHover){ctx.shadowColor=p.glow;ctx.shadowBlur=active?12:7;ctx.strokeStyle=p.glow;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r+4+Math.sin(t*.004)*2,0,Math.PI*2);ctx.stroke()}
+      const g=ctx.createRadialGradient(x-r*.35,y-r*.4,1,x,y,r);g.addColorStop(0,p.glow);g.addColorStop(.43,p.color);g.addColorStop(1,'#0b1638');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+      ctx.save();ctx.beginPath();ctx.arc(x,y,r-1,0,Math.PI*2);ctx.clip();ctx.globalAlpha=.28;ctx.fillStyle='#050816';
+      const band=Math.round(((t*.018*p.spin+p.phase*20)%(r*3))-r*1.5);ctx.beginPath();ctx.ellipse(x+band,y,r*.3,r*.92,0,0,Math.PI*2);ctx.fill();ctx.restore();
+      ctx.globalAlpha=.9;ctx.strokeStyle=p.glow;ctx.lineWidth=Math.max(1,Math.round(r*.08));ctx.beginPath();ctx.arc(x,y,r+1,0,Math.PI*2);ctx.stroke();
+      ctx.globalAlpha=.55;ctx.fillStyle='#fff2a8';ctx.fillRect(Math.round(x-r*.42),Math.round(y-r*.48),Math.max(2,Math.round(r*.22)),Math.max(1,Math.round(r*.1)));
+      if(active&&isHover){
+        ctx.globalAlpha=1;ctx.font='700 12px "PingFang SC","Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+        const w=Math.ceil(ctx.measureText(p.name).width)+14,ly=Math.round(y-r-15);ctx.fillStyle='rgba(5,8,22,.88)';ctx.fillRect(Math.round(x-w/2),ly-9,w,18);ctx.strokeStyle=p.glow;ctx.lineWidth=1;ctx.strokeRect(Math.round(x-w/2),ly-9,w,18);ctx.fillStyle='#fff2a8';ctx.fillText(p.name,x,ly);
+      }ctx.restore();
+    }
+    function drawRocket(t){
+      const x=240,y=Math.round(222+Math.sin(t*.006)*2),boost=warp?rand(18,34):rand(7,12);ctx.save();
+      for(let i=0;i<6;i++){const px=x+rand(-5,5),py=y+31+rand(0,boost);ctx.fillStyle=i%2?'#ff5c5c':'#ffd54f';ctx.globalAlpha=rand(.35,1);ctx.fillRect(Math.round(px),Math.round(py),rand(2,5)|0,rand(3,8)|0)}ctx.globalAlpha=1;
+      ctx.fillStyle='#ff5c5c';ctx.beginPath();ctx.moveTo(x-18,y+18);ctx.lineTo(x-27,y+30);ctx.lineTo(x-14,y+28);ctx.fill();ctx.beginPath();ctx.moveTo(x+18,y+18);ctx.lineTo(x+27,y+30);ctx.lineTo(x+14,y+28);ctx.fill();
+      ctx.fillStyle='#a8e3ff';ctx.fillRect(x-14,y-3,28,31);ctx.fillStyle='#4fc3ff';ctx.fillRect(x-17,y+7,34,17);ctx.fillStyle='#0b1638';ctx.fillRect(x-12,y+28,24,5);ctx.fillStyle='#ff5c5c';ctx.fillRect(x-16,y+16,4,9);ctx.fillRect(x+12,y+16,4,9);
+      ctx.fillStyle='#b388ff';ctx.beginPath();ctx.arc(x,y+1,15,Math.PI,Math.PI*2);ctx.fill();ctx.strokeStyle='#a8e3ff';ctx.lineWidth=3;ctx.stroke();
+      // 鼠鼠宇航员
+      ctx.fillStyle='#ff9ec4';ctx.beginPath();ctx.arc(x-8,y-4,5,0,Math.PI*2);ctx.arc(x+8,y-4,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#a8e3ff';ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);ctx.fill();ctx.fillStyle='#050816';ctx.fillRect(x+3,y-2,2,2);ctx.fillStyle='#ff5c8a';ctx.fillRect(x-1,y+4,3,2);
+      ctx.strokeStyle='#ff9ec4';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x+14,y+17);ctx.quadraticCurveTo(x+31,y+11,x+27,y+2);ctx.stroke();
+      if(salute>t){ctx.strokeStyle='#a8e3ff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x-8,y+7);ctx.lineTo(x-15,y-3);ctx.lineTo(x-12,y-10);ctx.stroke()}
+      ctx.restore();return{x:x-30,y:y-18,w:60,h:58};
+    }
+    function drawExplosion(dt){
+      for(const p of explosion){p.x+=p.vx*dt*.06;p.y+=p.vy*dt*.06;p.vy+=.012*dt;p.life-=dt;ctx.globalAlpha=Math.max(0,p.life/850);ctx.fillStyle=p.c;ctx.fillRect(Math.round(p.x),Math.round(p.y),p.s,p.s)}ctx.globalAlpha=1;explosion=explosion.filter(p=>p.life>0);
+    }
+    function startExplosion(t){salute=t+1400;const colors=['#4fc3ff','#ffd54f','#ff5c8a','#b388ff','#69f0ae','#fff2a8'];for(let i=0;i<140;i++){const a=rand(0,Math.PI*2),v=rand(.5,3.4);explosion.push({x:240,y:218,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1,s:rand(2,5)|0,c:colors[i%colors.length],life:rand(500,1150)})}}
+    function beginWarp(i){const p=planets[i];if(!p||!p.url.trim()){if(p)p.shake=13;return}if(reduced){location.href=p.url;return}warp={index:i,start:performance.now(),duration:1150,url:p.url};}
+    function updateWarp(t){if(!warp)return;const q=Math.min(1,(t-warp.start)/warp.duration),ease=1-Math.pow(1-q,3);planets.forEach((p,i)=>p.z=i===warp.index?p.baseZ*(1-ease)+.42*ease:p.baseZ+ease*25);if(q===1){flash.classList.add('on');glitch.classList.add('on');setTimeout(()=>location.href=warp.url,150)}}
+    function frame(t){const dt=Math.min(40,t-last);last=t;ctx.clearRect(0,0,W,H);const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#050816');bg.addColorStop(1,'#0b1638');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);drawStars(t,dt);updateWarp(t);hover=-1;if(!warp){for(let i=planets.length-1;i>=0;i--){const s=screenPlanet(planets[i],t);if(Math.hypot(pointer.x-s.x,pointer.y-s.y)<Math.max(13,s.r+6)){hover=i;break}}}planets.slice().sort((a,b)=>b.z-a.z).forEach(p=>drawPlanet(p,planets.indexOf(p),t));drawRocket(t);drawExplosion(dt);requestAnimationFrame(frame)}requestAnimationFrame(frame);
+
+    function point(e){const r=canvas.getBoundingClientRect(),touch=e.touches?.[0]||e.changedTouches?.[0]||e;return{x:(touch.clientX-r.left)*W/r.width,y:(touch.clientY-r.top)*H/r.height}}
+    canvas.addEventListener('pointermove',e=>{pointer=point(e);view.x=(pointer.x-W/2)/W*5;view.y=(pointer.y-H/2)/H*3});
+    canvas.addEventListener('pointerleave',()=>{pointer={x:-999,y:-999};view={x:0,y:0}});
+    canvas.addEventListener('pointerup',e=>{const p=point(e),t=performance.now();let hit=hover;if(hit<0)hit=planets.findIndex(v=>v.hit&&Math.hypot(p.x-v.hit.x,p.y-v.hit.y)<Math.max(16,v.hit.r+8));if(hit>=0){beginWarp(hit);return}if(p.x>210&&p.x<270&&p.y>195&&p.y<265){rocketClicks=rocketClicks.filter(n=>t-n<1800);rocketClicks.push(t);if(rocketClicks.length>=5){rocketClicks=[];startExplosion(t)}}});
+
+    function openTerminal(){terminal.classList.add('open');command.value='';terminalOutput.textContent='输入项目名后按 Enter 跃迁';setTimeout(()=>command.focus(),0)}
+    function closeTerminal(){terminal.classList.remove('open');command.blur()}
+    addEventListener('keydown',e=>{if(e.key==='/'&&!terminal.classList.contains('open')){e.preventDefault();openTerminal()}else if(e.key==='Escape')closeTerminal()});
+    command.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const q=command.value.trim().toLowerCase(),i=planets.findIndex(p=>p.name.trim().toLowerCase()===q&&p.url.trim());if(i<0){terminalOutput.textContent='暂无项目';return}closeTerminal();beginWarp(i)});
+    terminal.addEventListener('pointerdown',e=>e.stopPropagation());
+
+    const count=Math.max(1,Number(localStorage.getItem('mouseGalaxyVisits')||0)+1);localStorage.setItem('mouseGalaxyVisits',String(count));document.querySelector('#visits').textContent=String(count).padStart(4,'0');
+    function tick(){document.querySelector('#clock').textContent=new Intl.DateTimeFormat('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date())}tick();setInterval(tick,1000);
+  </script>
+</body>
+</html>
