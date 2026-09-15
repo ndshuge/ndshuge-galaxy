@@ -1,147 +1,597 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#050816">
-  <meta name="description" content="鼠哥星系个人导航主页">
-  <title>鼠哥星系</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050816'/%3E%3Ccircle cx='16' cy='17' r='9' fill='%23a8e3ff'/%3E%3Ccircle cx='9' cy='9' r='5' fill='%23ff9ec4'/%3E%3Ccircle cx='23' cy='9' r='5' fill='%23ff9ec4'/%3E%3Crect x='19' y='16' width='3' height='3' fill='%23050816'/%3E%3Crect x='14' y='21' width='5' height='3' fill='%23ff5c8a'/%3E%3C/svg%3E">
-  <style>
-    :root{--space:#050816;--deep:#0b1638;--cyan:#4fc3ff;--cyan2:#a8e3ff;--yellow:#ffd54f;--red:#ff5c5c;--pink:#ff5c8a;--purple:#b388ff;--green:#69f0ae;--white:#fff2a8}
-    *{box-sizing:border-box}
-    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--space);color:var(--cyan2);font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif}
-    body{touch-action:none;user-select:none}
-    canvas{position:fixed;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;cursor:crosshair}
-    .title{position:fixed;z-index:2;top:max(7vh,18px);left:50%;margin:0;transform:translateX(-50%);white-space:nowrap;font-size:clamp(28px,5.5vw,58px);font-weight:900;letter-spacing:.2em;color:var(--cyan2);text-shadow:0 0 5px var(--cyan),0 0 14px var(--cyan),3px 3px 0 var(--deep);pointer-events:none;opacity:0;clip-path:inset(0 100% 0 0);animation:typeIn 1.4s steps(5,end) .2s forwards,titlePulse 2.8s ease-in-out 1.7s infinite}
-    .title::after{content:"_";color:var(--yellow);animation:blink .75s steps(1) infinite}
-    .status{position:fixed;z-index:3;left:50%;bottom:max(10px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:18px;padding:6px 11px;border:2px solid var(--cyan);background:rgba(5,8,22,.76);box-shadow:3px 3px 0 var(--deep),0 0 9px rgba(79,195,255,.35);font:700 12px/1 monospace;letter-spacing:.06em;white-space:nowrap;pointer-events:none}
-    .status b{color:var(--yellow);font-weight:700}
-    .hint{position:fixed;z-index:2;right:12px;top:12px;color:var(--cyan2);font:700 11px/1 monospace;opacity:.55;pointer-events:none}
-    .terminal{position:fixed;z-index:7;left:50%;top:50%;width:min(560px,calc(100% - 28px));transform:translate(-50%,-50%);border:3px solid var(--green);background:rgba(5,8,22,.96);box-shadow:8px 8px 0 var(--deep),0 0 20px rgba(105,240,174,.3);padding:14px;display:none}
-    .terminal.open{display:block}
-    .terminal-head{display:flex;justify-content:space-between;color:var(--green);font:800 14px/1 monospace;margin-bottom:12px}
-    .terminal label{display:flex;align-items:center;gap:8px;color:var(--yellow);font:700 16px/1.4 monospace}
-    .terminal input{min-width:0;flex:1;border:0;border-bottom:2px solid var(--green);outline:0;background:transparent;color:var(--cyan2);font:700 16px/1.4 monospace}
-    .terminal-output{min-height:22px;margin:10px 0 0;color:var(--pink);font:700 13px/1.5 monospace}
-    .flash{position:fixed;z-index:6;inset:0;pointer-events:none;opacity:0;background:var(--cyan2)}
-    .flash.on{animation:flash .15s steps(2)}
-    .glitch{position:fixed;z-index:6;inset:0;pointer-events:none;display:none;background:repeating-linear-gradient(0deg,transparent 0 7px,var(--pink) 7px 10px,transparent 10px 17px,var(--cyan) 17px 19px);mix-blend-mode:screen}
-    .glitch.on{display:block;animation:glitch .15s steps(3)}
-    @keyframes typeIn{to{opacity:1;clip-path:inset(0 0 0 0)}}
-    @keyframes titlePulse{50%{filter:brightness(1.3);transform:translateX(-50%) scale(1.025)}}
-    @keyframes blink{50%{opacity:0}}
-    @keyframes flash{0%{opacity:0}35%{opacity:.95}100%{opacity:0}}
-    @keyframes glitch{0%{transform:translateX(-8px)}50%{transform:translateX(7px)}100%{transform:translateX(0)}}
-    @media (max-width:560px){.title{top:max(5vh,14px);font-size:30px}.hint{display:none}.status{gap:10px;font-size:10px}.terminal{padding:12px}}
-    @media (prefers-reduced-motion:reduce){.title{animation:typeIn .01s forwards}.title::after{animation:none}.flash,.glitch{display:none!important}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050514">
+<title>鼠哥星系</title>
+<link rel="stylesheet" href="https://fontsapi.zeoseven.com/570/main/result.css" />
+<style>
+:root{--bg:#050514;--cyan:#00e5ff;--yellow:#ffd54f;--pink:#ff5c8a;--ink:#eafcff;--dim:rgba(150,215,255,.55)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg)}
+body{font-family:"Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace;
+     user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;color:#bfefff}
+#space{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
+       image-rendering:crisp-edges;image-rendering:pixelated;touch-action:none}
+#crt{position:fixed;inset:0;z-index:7;pointer-events:none;
+     background:repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px)}
+#brand{position:fixed;top:12px;left:16px;z-index:5;font-size:12px;letter-spacing:1px;color:var(--dim);pointer-events:none}
+#brand b{color:var(--yellow);font-weight:normal}
+#sys{position:fixed;top:12px;right:16px;z-index:5;font-size:12px;letter-spacing:1px;color:var(--dim);
+     display:flex;align-items:center;gap:8px;pointer-events:auto;cursor:pointer}
+#sysDot{width:8px;height:8px;background:#69f0ae;box-shadow:0 0 8px #69f0ae;animation:blink 1.3s steps(1) infinite}
+#sndTag{color:var(--cyan)}
+#title{position:fixed;left:0;right:0;top:6vh;text-align:center;pointer-events:none;z-index:5;transition:opacity .3s}
+#title h1{font-size:48px;letter-spacing:12px;color:var(--ink);font-weight:normal;min-height:1.1em;
+  text-shadow:0 0 10px rgba(0,229,255,.95),0 0 30px rgba(0,229,255,.5),0 0 70px rgba(0,229,255,.3);
+  animation:breathe 3.4s ease-in-out infinite}
+#title .caret{display:inline-block;width:22px;height:40px;margin-left:8px;background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan);vertical-align:-4px;animation:blink .8s steps(1) infinite}
+#title .line{width:140px;height:2px;margin:14px auto 0;background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  box-shadow:0 0 8px var(--cyan)}
+#title .sub{margin-top:10px;font-size:12px;letter-spacing:.5em;color:var(--dim);opacity:0;transition:opacity .9s}
+#title .sub.show{opacity:1}
+body.warping #title,body.warping #brand,body.warping #sys{opacity:0}
+#brand,#sys{transition:opacity .3s}
+#hud{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  padding:9px 16px calc(9px + env(safe-area-inset-bottom));font-size:12px;letter-spacing:1px;
+  color:var(--dim);background:linear-gradient(to top,rgba(4,7,22,.9),rgba(4,7,22,0));
+  border-top:1px solid rgba(0,229,255,.16);pointer-events:none}
+#hud #clock{color:#bfefff}
+#hud #hintTxt{text-align:center}
+#term{position:fixed;left:50%;bottom:64px;transform:translateX(-50%);width:min(520px,88vw);z-index:9;display:none;
+  background:rgba(4,8,24,.94);border:1px solid rgba(0,229,255,.4);
+  box-shadow:0 0 26px rgba(0,229,255,.22),inset 0 0 18px rgba(0,229,255,.05);
+  padding:10px 14px 12px;font-size:12px;line-height:1.8;color:#bfefff}
+#term.open{display:block}
+#termBar{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:1px;color:var(--cyan);
+  border-bottom:1px solid rgba(0,229,255,.3);padding-bottom:6px;margin-bottom:8px}
+#termClose{cursor:pointer;pointer-events:auto;padding:0 4px;color:#ff7d9d}
+#termClose:hover{color:#ffffff}
+#termOut{white-space:pre-wrap;max-height:150px;overflow-y:auto;margin-bottom:6px}
+.termRow{display:flex;align-items:center;gap:6px}
+#termIn{flex:1;min-width:0;background:transparent;border:none;outline:none;color:var(--cyan);
+  font-family:inherit;font-size:12px;caret-color:var(--yellow)}
+#term .prompt{color:var(--yellow)}
+@keyframes breathe{0%,100%{opacity:.9}50%{opacity:1}}
+@keyframes blink{50%{opacity:0}}
+@media (max-width:640px){
+  #title h1{font-size:36px;letter-spacing:8px}
+  #title .caret{width:16px;height:30px}
+  #hud #hintTxt{display:none}
+}
+@media (orientation:portrait){
+  body{background:linear-gradient(#070a1e,#03040e)}
+  #space{-webkit-mask-image:linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent);
+         mask-image:linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent)}
+}
+@media (prefers-reduced-motion:reduce){#title h1{animation:none}#title .caret{animation:none}#sysDot{animation:none}}
+</style>
 </head>
 <body>
-  <canvas id="space" aria-label="鼠哥星系像素太空导航；点击星球进入项目，连续点击火箭五次触发彩蛋"></canvas>
-  <h1 class="title">鼠哥星系</h1>
-  <div class="hint">[/] 终端</div>
-  <div class="status"><span>TIME <b id="clock">00:00:00</b></span><span>VISITS <b id="visits">0001</b></span></div>
-  <section class="terminal" id="terminal" role="dialog" aria-modal="true" aria-label="项目跃迁终端">
-    <div class="terminal-head"><span>GALAXY TERMINAL</span><span>ESC CLOSE</span></div>
-    <label>&gt;<input id="command" autocomplete="off" spellcheck="false" aria-label="输入项目名"></label>
-    <p class="terminal-output" id="terminalOutput">输入项目名后按 Enter 跃迁</p>
-  </section>
-  <div class="flash" id="flash"></div><div class="glitch" id="glitch"></div>
-  <script>
-    const PROJECTS = [
-      // 填入 name 和 url 后，这颗星球才会启用文字和跳转。
-      // name 为空 = 空白星球，点击只抖动不跳转。
-      // 想增删星球，直接增删数组项即可。
-      { name: "", desc: "", url: "", color: "#ff5c8a", glow: "#ff9ec4", z: 6 },
-      { name: "", desc: "", url: "", color: "#4fc3ff", glow: "#a8e3ff", z: 9 },
-      { name: "", desc: "", url: "", color: "#ffd54f", glow: "#fff2a8", z: 7 },
-      { name: "", desc: "", url: "", color: "#b388ff", glow: "#d7bfff", z: 8 },
-      { name: "", desc: "", url: "", color: "#69f0ae", glow: "#b9ffd5", z: 10 }
-    ];
+<canvas id="space" width="480" height="270"></canvas>
+<div id="crt"></div>
+<div id="brand">◆ SHUGE GALAXY OS <b>v1.3</b></div>
+<div id="sys"><i id="sysDot"></i>SYS ONLINE <b id="sndTag">[M]♪ON</b></div>
+<div id="title"><h1 id="titleText"></h1><div class="line"></div><div class="sub" id="titleSub">S H U G E · G A L A X Y</div></div>
+<div id="hud"><span id="clock">--:--:--</span><span id="hintTxt">点击星系跃迁 · 「/」终端 · 「M」音效</span><span id="visits"></span></div>
+<div id="term">
+  <div id="termBar"><span>SHUGE-TERM · 跃迁控制台</span><span id="termClose">×</span></div>
+  <div id="termOut"></div>
+  <div class="termRow"><span class="prompt">guest@shuge:~$</span><input id="termIn" autocomplete="off" spellcheck="false" maxlength="60"></div>
+</div>
+<script>
+'use strict';
+/* ============ 配置区 ============
+   每一项 = 一个迷你星系（中心恒星 + 绕圈行星），填了 name 和 url 才会显示名字并可以跃迁。
+   name 为空 = 未命名星系，点击只抖动不跳转。
+   moons = 星系里绕圈的行星数量，不填默认 3。想增删星系，直接增删数组项。 */
+const PROJECTS = [
+  { name: "鼠哥学院",   desc: "五院共通 · 硬课一起啃",     url: "https://ndshuge.github.io/ndshuge-academy/",   color: "#69f0ae", glow: "#b9ffd5", z: 6,  moons: 5 },
+  { name: "鼠哥游戏厅", desc: "实验品与半成品 · 接受拍砖", url: "https://ndshuge.github.io/ndshuge-game/",      color: "#ffd54f", glow: "#fff2a8", z: 7,  moons: 4 },
+  { name: "课堂笔记",   desc: "录音转结构化笔记",         url: "https://ndshuge.github.io/ndshuge-classnote/", color: "#b388ff", glow: "#d7bfff", z: 8,  moons: 3 },
+  { name: "", desc: "", url: "", color: "#ff5c8a", glow: "#ff9ec4", z: 9,  moons: 2 },
+  { name: "", desc: "", url: "", color: "#4fc3ff", glow: "#a8e3ff", z: 10, moons: 2 }
+];
+/* ============ 引擎 ============ */
+const W=480,H=270,CX=W/2,CY=H/2,FOCAL=12,TAU=Math.PI*2;
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IS_TOUCH=matchMedia('(pointer:coarse)').matches;
+const cv=document.getElementById('space'),ctx=cv.getContext('2d');
+ctx.imageSmoothingEnabled=false;
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+const lerp=(a,b,k)=>a+(b-a)*k;
+const wrap=(v,m)=>((v%m)+m)%m;
+function shade(hex,f){const n=parseInt(hex.slice(1),16);let r=n>>16&255,g=n>>8&255,b=n&255;
+  if(f>=0){r+=(255-r)*f;g+=(255-g)*f;b+=(255-b)*f}else{r*=1+f;g*=1+f;b*=1+f}
+  return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')';}
+function hexA(hex,a){const n=parseInt(hex.slice(1),16);
+  return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';}
+function fit(){
+  const portrait=innerHeight>innerWidth;
+  /* 竖屏 contain 保全景，横屏 cover 铺满 */
+  const s=portrait?Math.min(innerWidth/W,innerHeight/H):Math.max(innerWidth/W,innerHeight/H);
+  cv.style.width=Math.ceil(W*s)+'px';cv.style.height=Math.ceil(H*s)+'px';}
+addEventListener('resize',fit);fit();
 
-    const W=480,H=270,FOCAL=34,canvas=document.querySelector('#space'),ctx=canvas.getContext('2d');
-    const flash=document.querySelector('#flash'),glitch=document.querySelector('#glitch');
-    const terminal=document.querySelector('#terminal'),command=document.querySelector('#command'),terminalOutput=document.querySelector('#terminalOutput');
-    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let view={x:0,y:0},pointer={x:-999,y:-999},hover=-1,warp=null,last=performance.now(),salute=0,rocketClicks=[],explosion=[];
-    const layout=[[-2.9,-1.15],[2.8,-.75],[-2.35,1.45],[2.15,1.2],[.1,-1.72]];
+const SPOTS=[[.24,.36],[.72,.26],[.82,.60],[.16,.70],[.50,.52]];
+function spot(i){if(i<SPOTS.length)return[SPOTS[i][0]*W,SPOTS[i][1]*H];
+  const a=i*2.39996;return[CX+Math.cos(a)*(58+(i%3)*26),CY+Math.sin(a)*(36+(i%3)*16)];}
 
-    function resize(){
-      const d=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(innerWidth*d);canvas.height=Math.round(innerHeight*d);
-      ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0);ctx.imageSmoothingEnabled=false;
-    }
-    addEventListener('resize',resize);resize();
+/* 星系数据：中心恒星 + 行星绕椭圆轨道公转 */
+function makeMoons(n,color){
+  const rings=[.45,.68,.92],list=[];
+  for(let i=0;i<n;i++){
+    const ring=rings[i%rings.length];
+    list.push({orbitR:ring,a:rnd(0,TAU),
+      sp:rnd(.28,.5)*(i%2?1:-1)/(ring*2),
+      mr:rnd(.05,.08),c:shade(color,i%2?-.15:.3)});}
+  return list;}
+/* 旋臂：两条对数螺旋点列 */
+function makeArms(){
+  const pts=[];
+  for(let arm=0;arm<2;arm++)for(let i=0;i<14;i++){
+    const t2=i/13;
+    pts.push({t:t2,off:arm*Math.PI+rnd(-.14,.14)});}
+  return pts;}
+const systems=PROJECTS.map((p,i)=>{
+  const s=spot(i);
+  return Object.assign({},p,{hx:s[0],hy:s[1],x:s[0],y:s[1],r:1,baseR:22,zEff:p.z,
+    hover:0,shake:0,flash:0,floatPh:rnd(0,TAU),rotA:rnd(0,TAU),
+    moons:makeMoons(p.moons||3,p.color),arms:makeArms()});});
 
-    const rand=(a,b)=>a+Math.random()*(b-a);
-    const stars=Array.from({length:92},()=>{const a=rand(0,Math.PI*2),r=rand(6,250);return{x:W/2+Math.cos(a)*r,y:H/2+Math.sin(a)*r,s:Math.random()<.12?2:1,p:rand(0,Math.PI*2),v:rand(.04,.15)}});
-    const planets=PROJECTS.map((p,i)=>({...p,baseZ:p.z,z:p.z,x:layout[i%layout.length][0],y:layout[i%layout.length][1],baseRadius:rand(7.2,9.2),phase:rand(0,Math.PI*2),spin:rand(.25,.55),shake:0,hit:null}));
+const stars=[];
+for(let i=0;i<110;i++)stars.push({a:rnd(0,TAU),d:rnd(2,300),sp:rnd(6,26),tw:rnd(.8,2.6),
+  ph:rnd(0,TAU),s:Math.random()<.85?1:2,par:rnd(.3,1),px:-999,py:-999,
+  c:Math.random()<.68?'#ffffff':(Math.random()<.5?'#00e5ff':'#ffd54f')});
+/* 远景小行星带 */
+const rocks=[];
+for(let i=0;i<12;i++)rocks.push({a:rnd(0,TAU),sp:rnd(.05,.1),rx:rnd(150,208),ry:rnd(50,74),s:Math.random()<.7?1:2});
+/* 曲率隧道星（仅跃迁时激活） */
+const wstars=[];
+for(let i=0;i<42;i++)wstars.push({a:rnd(0,TAU),d:rnd(4,300),sp:rnd(260,620),px:-999,py:-999});
+/* 银河带 + 亮星十字 */
+const band=[];
+for(let i=0;i<70;i++){
+  const u=rnd(-20,W+20),v=CY+Math.sin(-.28)*(u-CX)+rnd(-34,34);
+  band.push({x:u,y:v,a:rnd(.12,.4)});}
+const brights=[];
+for(let i=0;i<6;i++)brights.push({x:rnd(20,W-20),y:rnd(30,H-60),ph:rnd(0,TAU)});
 
-    function screenPlanet(p,t){
-      const z=Math.max(.35,p.z),scale=FOCAL/z,r=p.baseRadius*scale;
-      return{x:Math.round(W/2+p.x*scale+view.x*(1-z/14)),y:Math.round(H/2+p.y*scale+Math.sin(t*.001+p.phase)*2+view.y*(1-z/14)),r};
-    }
-    function drawStars(t,dt){
-      const speed=warp?7:1;
-      for(const s of stars){
-        let dx=s.x-W/2,dy=s.y-H/2,d=Math.hypot(dx,dy)||1;
-        s.x+=dx/d*s.v*speed*dt*.06;s.y+=dy/d*s.v*speed*dt*.06;
-        if(s.x<-8||s.x>W+8||s.y<-8||s.y>H+8){const a=rand(0,Math.PI*2),r=rand(3,24);s.x=W/2+Math.cos(a)*r;s.y=H/2+Math.sin(a)*r}
-        const tw=.45+Math.sin(t*.003+s.p)*.3;
-        ctx.globalAlpha=warp?.9:tw;ctx.strokeStyle='#a8e3ff';ctx.fillStyle='#a8e3ff';
-        if(warp){ctx.lineWidth=s.s;ctx.beginPath();ctx.moveTo(Math.round(s.x),Math.round(s.y));ctx.lineTo(Math.round(s.x-dx/d*rand(8,24)),Math.round(s.y-dy/d*rand(8,24)));ctx.stroke()}
-        else ctx.fillRect(Math.round(s.x+view.x*.15),Math.round(s.y+view.y*.15),s.s,s.s);
-      }ctx.globalAlpha=1;
-    }
-    function drawPlanet(p,i,t){
-      const s=screenPlanet(p,t);p.hit=s;const active=p.name.trim()&&p.url.trim(),isHover=i===hover&&!warp;
-      const jitter=p.shake>0?Math.round(Math.sin(t*.12)*3):0;if(p.shake>0)p.shake--;
-      const x=s.x+jitter,y=s.y,r=Math.max(4,Math.round(s.r*(isHover?1.05:1)));
-      ctx.save();ctx.globalAlpha=Math.min(1,.46+8/Math.max(8,p.z));
-      if(isHover){ctx.shadowColor=p.glow;ctx.shadowBlur=active?12:7;ctx.strokeStyle=p.glow;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,r+4+Math.sin(t*.004)*2,0,Math.PI*2);ctx.stroke()}
-      const g=ctx.createRadialGradient(x-r*.35,y-r*.4,1,x,y,r);g.addColorStop(0,p.glow);g.addColorStop(.43,p.color);g.addColorStop(1,'#0b1638');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
-      ctx.save();ctx.beginPath();ctx.arc(x,y,r-1,0,Math.PI*2);ctx.clip();ctx.globalAlpha=.28;ctx.fillStyle='#050816';
-      const band=Math.round(((t*.018*p.spin+p.phase*20)%(r*3))-r*1.5);ctx.beginPath();ctx.ellipse(x+band,y,r*.3,r*.92,0,0,Math.PI*2);ctx.fill();ctx.restore();
-      ctx.globalAlpha=.9;ctx.strokeStyle=p.glow;ctx.lineWidth=Math.max(1,Math.round(r*.08));ctx.beginPath();ctx.arc(x,y,r+1,0,Math.PI*2);ctx.stroke();
-      ctx.globalAlpha=.55;ctx.fillStyle='#fff2a8';ctx.fillRect(Math.round(x-r*.42),Math.round(y-r*.48),Math.max(2,Math.round(r*.22)),Math.max(1,Math.round(r*.1)));
-      if(active&&isHover){
-        ctx.globalAlpha=1;ctx.font='700 12px "PingFang SC","Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-        const w=Math.ceil(ctx.measureText(p.name).width)+14,ly=Math.round(y-r-15);ctx.fillStyle='rgba(5,8,22,.88)';ctx.fillRect(Math.round(x-w/2),ly-9,w,18);ctx.strokeStyle=p.glow;ctx.lineWidth=1;ctx.strokeRect(Math.round(x-w/2),ly-9,w,18);ctx.fillStyle='#fff2a8';ctx.fillText(p.name,x,ly);
-      }ctx.restore();
-    }
-    function drawRocket(t){
-      const x=240,y=Math.round(222+Math.sin(t*.006)*2),boost=warp?rand(18,34):rand(7,12);ctx.save();
-      for(let i=0;i<6;i++){const px=x+rand(-5,5),py=y+31+rand(0,boost);ctx.fillStyle=i%2?'#ff5c5c':'#ffd54f';ctx.globalAlpha=rand(.35,1);ctx.fillRect(Math.round(px),Math.round(py),rand(2,5)|0,rand(3,8)|0)}ctx.globalAlpha=1;
-      ctx.fillStyle='#ff5c5c';ctx.beginPath();ctx.moveTo(x-18,y+18);ctx.lineTo(x-27,y+30);ctx.lineTo(x-14,y+28);ctx.fill();ctx.beginPath();ctx.moveTo(x+18,y+18);ctx.lineTo(x+27,y+30);ctx.lineTo(x+14,y+28);ctx.fill();
-      ctx.fillStyle='#a8e3ff';ctx.fillRect(x-14,y-3,28,31);ctx.fillStyle='#4fc3ff';ctx.fillRect(x-17,y+7,34,17);ctx.fillStyle='#0b1638';ctx.fillRect(x-12,y+28,24,5);ctx.fillStyle='#ff5c5c';ctx.fillRect(x-16,y+16,4,9);ctx.fillRect(x+12,y+16,4,9);
-      ctx.fillStyle='#b388ff';ctx.beginPath();ctx.arc(x,y+1,15,Math.PI,Math.PI*2);ctx.fill();ctx.strokeStyle='#a8e3ff';ctx.lineWidth=3;ctx.stroke();
-      // 鼠鼠宇航员
-      ctx.fillStyle='#ff9ec4';ctx.beginPath();ctx.arc(x-8,y-4,5,0,Math.PI*2);ctx.arc(x+8,y-4,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#a8e3ff';ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);ctx.fill();ctx.fillStyle='#050816';ctx.fillRect(x+3,y-2,2,2);ctx.fillStyle='#ff5c8a';ctx.fillRect(x-1,y+4,3,2);
-      ctx.strokeStyle='#ff9ec4';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x+14,y+17);ctx.quadraticCurveTo(x+31,y+11,x+27,y+2);ctx.stroke();
-      if(salute>t){ctx.strokeStyle='#a8e3ff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x-8,y+7);ctx.lineTo(x-15,y-3);ctx.lineTo(x-12,y-10);ctx.stroke()}
-      ctx.restore();return{x:x-30,y:y-18,w:60,h:58};
-    }
-    function drawExplosion(dt){
-      for(const p of explosion){p.x+=p.vx*dt*.06;p.y+=p.vy*dt*.06;p.vy+=.012*dt;p.life-=dt;ctx.globalAlpha=Math.max(0,p.life/850);ctx.fillStyle=p.c;ctx.fillRect(Math.round(p.x),Math.round(p.y),p.s,p.s)}ctx.globalAlpha=1;explosion=explosion.filter(p=>p.life>0);
-    }
-    function startExplosion(t){salute=t+1400;const colors=['#4fc3ff','#ffd54f','#ff5c8a','#b388ff','#69f0ae','#fff2a8'];for(let i=0;i<140;i++){const a=rand(0,Math.PI*2),v=rand(.5,3.4);explosion.push({x:240,y:218,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1,s:rand(2,5)|0,c:colors[i%colors.length],life:rand(500,1150)})}}
-    function beginWarp(i){const p=planets[i];if(!p||!p.url.trim()){if(p)p.shake=13;return}if(reduced){location.href=p.url;return}warp={index:i,start:performance.now(),duration:1150,url:p.url};}
-    function updateWarp(t){if(!warp)return;const q=Math.min(1,(t-warp.start)/warp.duration),ease=1-Math.pow(1-q,3);planets.forEach((p,i)=>p.z=i===warp.index?p.baseZ*(1-ease)+.42*ease:p.baseZ+ease*25);if(q===1){flash.classList.add('on');glitch.classList.add('on');setTimeout(()=>location.href=warp.url,150)}}
-    function frame(t){const dt=Math.min(40,t-last);last=t;ctx.clearRect(0,0,W,H);const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#050816');bg.addColorStop(1,'#0b1638');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);drawStars(t,dt);updateWarp(t);hover=-1;if(!warp){for(let i=planets.length-1;i>=0;i--){const s=screenPlanet(planets[i],t);if(Math.hypot(pointer.x-s.x,pointer.y-s.y)<Math.max(13,s.r+6)){hover=i;break}}}planets.slice().sort((a,b)=>b.z-a.z).forEach(p=>drawPlanet(p,planets.indexOf(p),t));drawRocket(t);drawExplosion(dt);requestAnimationFrame(frame)}requestAnimationFrame(frame);
+const parts=[];
+const rocket={x:CX,y:206,salute:0,clicks:0,last:0,intro:REDUCED?1:0,hop:0,_y:206};
+const warp={active:false,t:0,k:0,target:null,url:'',gentle:false};
+const flash={active:false,t:0,gentle:false};
+let gdt=1/60,mouseX=CX,mouseY=CY,mox=0,moy=0,shakeT=0,whitePop=0,flameAcc=0,lastHover=null;
 
-    function point(e){const r=canvas.getBoundingClientRect(),touch=e.touches?.[0]||e.changedTouches?.[0]||e;return{x:(touch.clientX-r.left)*W/r.width,y:(touch.clientY-r.top)*H/r.height}}
-    canvas.addEventListener('pointermove',e=>{pointer=point(e);view.x=(pointer.x-W/2)/W*5;view.y=(pointer.y-H/2)/H*3});
-    canvas.addEventListener('pointerleave',()=>{pointer={x:-999,y:-999};view={x:0,y:0}});
-    canvas.addEventListener('pointerup',e=>{const p=point(e),t=performance.now();let hit=hover;if(hit<0)hit=planets.findIndex(v=>v.hit&&Math.hypot(p.x-v.hit.x,p.y-v.hit.y)<Math.max(16,v.hit.r+8));if(hit>=0){beginWarp(hit);return}if(p.x>210&&p.x<270&&p.y>195&&p.y<265){rocketClicks=rocketClicks.filter(n=>t-n<1800);rocketClicks.push(t);if(rocketClicks.length>=5){rocketClicks=[];startExplosion(t)}}});
+/* 静态渐变只创建一次 */
+const bgGrad=ctx.createLinearGradient(0,0,0,H);
+bgGrad.addColorStop(0,'#070a1e');bgGrad.addColorStop(1,'#03040e');
+const nebula=[[110,85,150,'rgba(0,110,150,.10)'],[360,180,130,'rgba(96,44,150,.10)'],[300,55,90,'rgba(130,100,30,.06)']]
+  .map(function(q){const g=ctx.createRadialGradient(q[0],q[1],0,q[0],q[1],q[2]);
+    g.addColorStop(0,q[3]);g.addColorStop(1,'rgba(0,0,0,0)');return g;});
+const vign=ctx.createRadialGradient(CX,CY,90,CX,CY,310);
+vign.addColorStop(0,'rgba(0,0,0,0)');vign.addColorStop(1,'rgba(0,0,14,.5)');
 
-    function openTerminal(){terminal.classList.add('open');command.value='';terminalOutput.textContent='输入项目名后按 Enter 跃迁';setTimeout(()=>command.focus(),0)}
-    function closeTerminal(){terminal.classList.remove('open');command.blur()}
-    addEventListener('keydown',e=>{if(e.key==='/'&&!terminal.classList.contains('open')){e.preventDefault();openTerminal()}else if(e.key==='Escape')closeTerminal()});
-    command.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const q=command.value.trim().toLowerCase(),i=planets.findIndex(p=>p.name.trim().toLowerCase()===q&&p.url.trim());if(i<0){terminalOutput.textContent='暂无项目';return}closeTerminal();beginWarp(i)});
-    terminal.addEventListener('pointerdown',e=>e.stopPropagation());
+/* ============ 音效（合成） ============ */
+let actx=null,master=null,muted=false;
+function audio(){if(actx)return;
+  try{actx=new (window.AudioContext||window.webkitAudioContext)();
+    master=actx.createGain();master.gain.value=muted?0:1;master.connect(actx.destination);
+    setInterval(arp,560);}catch(e){}}
+function env(g,t0,a,d,peak){g.gain.setValueAtTime(0.0001,t0);g.gain.linearRampToValueAtTime(peak,t0+a);
+  g.gain.exponentialRampToValueAtTime(0.0001,t0+a+d);}
+function tone(type,f0,f1,dur,peak,delay){if(!actx||!master)return;
+  const t=actx.currentTime+(delay||0);
+  const o=actx.createOscillator(),g=actx.createGain();o.type=type;
+  o.frequency.setValueAtTime(f0,t);
+  if(f1&&f1!==f0)o.frequency.exponentialRampToValueAtTime(Math.max(30,f1),t+dur);
+  env(g,t,.005,dur,peak);o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+.05);}
+function noiseS(dur,peak,f0,f1,Q){if(!actx||!master)return;
+  const n=Math.max(1,(actx.sampleRate*dur)|0),buf=actx.createBuffer(1,n,actx.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);
+  const s=actx.createBufferSource();s.buffer=buf;
+  const f=actx.createBiquadFilter();f.type='bandpass';f.Q.value=Q||.8;
+  f.frequency.setValueAtTime(f0,actx.currentTime);
+  f.frequency.exponentialRampToValueAtTime(Math.max(60,f1),actx.currentTime+dur);
+  const g=actx.createGain();env(g,actx.currentTime,.004,dur,peak);
+  s.connect(f);f.connect(g);g.connect(master);s.start();}
+function arp(){if(!actx||muted)return;if(Math.random()<.55)return;
+  const sc=[261.63,293.66,329.63,392,440,523.25,587.33,659.25];
+  const f=sc[(Math.random()*sc.length)|0];
+  tone('triangle',f,f,1.4,.035);tone('sine',f/2,f/2,1.6,.02);}
+const SND={
+  hover:function(){tone('square',920,1040,.05,.05);},
+  pick:function(){tone('square',320,170,.09,.12);},
+  warp:function(){tone('sawtooth',110,880,1.0,.14);tone('square',55,440,1.0,.08);},
+  boom:function(){noiseS(.5,.4,900,80,1);tone('sine',180,40,.45,.35);},
+  term:function(){tone('square',600,900,.06,.08);}
+};
+function toggleMute(){audio();muted=!muted;
+  if(master)master.gain.value=muted?0:1;
+  document.getElementById('sndTag').textContent=muted?'[M]♪OFF':'[M]♪ON';}
+document.getElementById('sys').addEventListener('click',toggleMute);
 
-    const count=Math.max(1,Number(localStorage.getItem('mouseGalaxyVisits')||0)+1);localStorage.setItem('mouseGalaxyVisits',String(count));document.querySelector('#visits').textContent=String(count).padStart(4,'0');
-    function tick(){document.querySelector('#clock').textContent=new Intl.DateTimeFormat('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date())}tick();setInterval(tick,1000);
-  </script>
+/* 输入 */
+function toGame(e){const r=cv.getBoundingClientRect();
+  return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height];}
+cv.addEventListener('pointermove',function(e){const p=toGame(e);mouseX=p[0];mouseY=p[1];});
+cv.addEventListener('pointerdown',function(e){
+  audio();
+  const m=toGame(e),mx=m[0],my=m[1];mouseX=mx;mouseY=my;
+  if(warp.active)return;
+  const sorted=systems.slice().sort(function(a,b){return a.zEff-b.zEff;});
+  for(let i=0;i<sorted.length;i++){const p=sorted[i];
+    const hr=Math.max(p.r+(IS_TOUCH?8:4),IS_TOUCH?30:20),dx=mx-p.x,dy=my-p.y;
+    if(dx*dx+dy*dy<=hr*hr){clickPlanet(p);return;}}
+  if(Math.abs(mx-rocket.x)<18&&my>rocket.y-26&&my<rocket.y+14)rocketClick();
+});
+function clickPlanet(p){
+  if(!p.name||!p.url){p.shake=1;p.flash=.85;SND.pick();return;}   /* 未配置：抖动+闪一下 */
+  const u=p.url.indexOf('http')===0?p.url:'https://'+p.url;
+  if(REDUCED){gentleWarp(p,u);return;}   /* 系统要求减少动效：温和跃迁（短放大+白幕淡出） */
+  startWarp(p,u,false);
+}
+function startWarp(p,u,gentle){warp.active=true;warp.t=0;warp.k=0;warp.target=p;warp.url=u;
+  warp.gentle=!!gentle;hideTerm();
+  if(gentle)tone('sine',440,660,.3,.06);
+  else{SND.warp();noiseS(1.0,.2,250,2800,.7);}
+  document.body.classList.add('warping');}
+function gentleWarp(p,u){startWarp(p,u,true);}
+function rocketClick(){const now=performance.now();
+  if(now-rocket.last>1600)rocket.clicks=0;
+  rocket.last=now;rocket.hop=1;
+  if(++rocket.clicks>=5){rocket.clicks=0;boom();}}
+function boom(){rocket.salute=2.4;shakeT=REDUCED?0:.7;whitePop=REDUCED?0:.12;SND.boom();
+  for(let i=0;i<90;i++){const a=rnd(0,TAU),sp=rnd(18,95);
+    parts.push({x:rocket.x,y:rocket._y-8,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-12,
+      age:0,life:rnd(.5,1.3),s:Math.random()<.5?1:2,
+      c:['#ffffff','#00e5ff','#ffd54f','#ff5c8a','#69f0ae'][Math.random()*5|0]});}}
+
+/* 终端 */
+const term=document.getElementById('term'),termOut=document.getElementById('termOut'),termIn=document.getElementById('termIn');
+function termPrint(s){const d=document.createElement('div');d.textContent=s;termOut.appendChild(d);termOut.scrollTop=termOut.scrollHeight;}
+function openTerm(){term.classList.add('open');termIn.focus();SND.term();
+  if(!termOut.firstChild)termPrint('鼠哥星系终端 · 输入星系名后回车跃迁，help 查看列表');}
+function hideTerm(){term.classList.remove('open');termIn.blur();}
+function runCmd(raw){const c=raw.trim();if(!c)return;
+  termPrint('guest@shuge:~$ '+c);const lc=c.toLowerCase();
+  if(lc==='help'){const list=PROJECTS.filter(function(p){return p.name;});
+    termPrint(list.length?list.map(function(p){return '· '+p.name+(p.desc?'　'+p.desc:'');}).join('\n'):'暂无项目');}
+  else if(lc==='clear'){termOut.innerHTML='';}
+  else{let p=PROJECTS.find(function(q){return q.name&&q.name.toLowerCase()===lc;});
+    if(!p){const hits=PROJECTS.filter(function(q){return q.name&&q.name.toLowerCase().indexOf(lc)>=0;});
+      if(hits.length===1)p=hits[0];
+      else if(hits.length>1){termPrint('匹配到多个：'+hits.map(function(h){return h.name;}).join(' / '));return;}}
+    if(p&&p.url){termPrint('跃迁目标锁定：'+p.name);hideTerm();
+      const u=p.url.indexOf('http')===0?p.url:'https://'+p.url;
+      if(REDUCED)gentleWarp(p,u);else startWarp(p,u,false);}
+    else termPrint('暂无项目');}}
+addEventListener('keydown',function(e){
+  audio();
+  if(e.key==='/'&&document.activeElement!==termIn){e.preventDefault();
+    term.classList.contains('open')?hideTerm():openTerm();}
+  else if(e.key==='Escape')hideTerm();
+  else if((e.key==='m'||e.key==='M')&&document.activeElement!==termIn)toggleMute();
+  else if(e.key==='Enter'&&document.activeElement===termIn){const v=termIn.value;termIn.value='';runCmd(v);}});
+document.getElementById('termClose').addEventListener('click',hideTerm);
+
+/* 状态栏 */
+const clockEl=document.getElementById('clock'),visitsEl=document.getElementById('visits');
+function tick(){const d=new Date();
+  clockEl.textContent=[d.getHours(),d.getMinutes(),d.getSeconds()].map(function(n){return String(n).padStart(2,'0');}).join(':');}
+tick();setInterval(tick,1000);
+let visits=1;
+try{const K='shuge-galaxy-visits';
+  visits=(parseInt(localStorage.getItem(K)||'0',10)||0)+1;localStorage.setItem(K,String(visits));}catch(err){}
+visitsEl.textContent='第 '+visits+' 次到访';
+if(IS_TOUCH)document.getElementById('hintTxt').textContent='点星系跃迁 · 点右上角切音效';
+
+/* 标题打字机 */
+const titleText=document.getElementById('titleText'),titleSub=document.getElementById('titleSub');
+const TITLE='鼠哥星系';
+if(REDUCED){titleText.textContent=TITLE;titleSub.classList.add('show');}
+else{let i=0;const iv=setInterval(function(){i++;
+  if(i>=TITLE.length){titleText.textContent=TITLE;clearInterval(iv);titleSub.classList.add('show');}
+  else titleText.innerHTML=TITLE.slice(0,i)+'<span class="caret"></span>';},240);}
+
+function update(dt,t){
+  gdt=dt;
+  mox+=(clamp((mouseX-CX)*.05,-9,9)-mox)*Math.min(1,dt*6);
+  moy+=(clamp((mouseY-CY)*.04,-7,7)-moy)*Math.min(1,dt*6);
+  if(REDUCED){mox=0;moy=0;}
+  if(rocket.intro<1)rocket.intro=Math.min(1,rocket.intro+dt/1.3);
+  rocket.hop=Math.max(0,rocket.hop-dt*2.4);
+  /* 曲率飞行：跃迁后半程火箭冲向目标星系方向 */
+  if(warp.active&&!warp.gentle){
+    const ft=clamp((warp.t-.38)/.62,0,1),e=ft*ft*ft;
+    rocket.flyX=(warp.target.x-rocket.x)*.7*ft*ft;
+    rocket.flyY=-(H+120)*e;
+    rocket.flying=ft>0;}
+  else{rocket.flyX=0;rocket.flyY=0;rocket.flying=false;}
+  if(warp.active){warp.t=Math.min(1,warp.t+dt/(warp.gentle?.6:1.35));
+    warp.k=warp.t*warp.t*(3-2*warp.t);
+    if(!flash.active){const zEnd=warp.gentle?.5:.32;
+      const tz=lerp(warp.target.z,zEnd,warp.k);
+      if(warp.target.baseR*FOCAL/tz>=(warp.gentle?210:300)){
+        flash.active=true;flash.gentle=warp.gentle;flash.t=warp.gentle?.35:.15;}}}
+  if(flash.active){flash.t-=dt;
+    if(flash.t<=0){flash.active=false;location.href=warp.url;return;}}
+  for(let i=0;i<systems.length;i++){const s=systems[i];
+    s.zEff=warp.active?(s===warp.target?lerp(s.z,warp.gentle?.5:.32,warp.k):(warp.gentle?s.z:s.z*(1+warp.k*9))):s.z;
+    s.r=s.baseR*FOCAL/s.zEff*(1+.06*s.hover);
+    let x=s.hx+mox*.35,y=s.hy+moy*.3;
+    if(!REDUCED)y+=Math.sin(t*.9+s.floatPh)*2.2;
+    if(warp.active){const k=warp.k;
+      if(s===warp.target){x+=(CX-x)*k;y+=(CY-y)*k;}
+      else if(!warp.gentle){x+=(x-CX)*k*1.35;y+=(y-CY)*k*1.35;}}
+    if(s.shake>0){s.shake=Math.max(0,s.shake-dt*2.2);x+=Math.sin(t*60)*3.5*s.shake;}
+    if(s.flash>0)s.flash=Math.max(0,s.flash-dt*3.5);
+    s.x=x;s.y=y;
+    /* 行星公转：跃迁时加速旋转 */
+    const spinUp=(warp.active&&s===warp.target&&!warp.gentle)?1+warp.k*14:1;
+    s.rotA+=.06*gdt*spinUp*(REDUCED?.3:1);
+    for(let j=0;j<s.moons.length;j++){const m=s.moons[j];
+      m.a+=m.sp*gdt*spinUp*(REDUCED?.3:1);}}
+  for(let i=0;i<rocks.length;i++){const rk=rocks[i];rk.a+=rk.sp*dt*(REDUCED?.3:1);}
+  /* 隧道星推进 */
+  if(warp.active&&!warp.gentle){for(let i=0;i<wstars.length;i++){const ws=wstars[i];
+    ws.d+=ws.sp*gdt*(1+warp.k*2.5);
+    if(ws.d>320){ws.d=rnd(2,14);ws.a=rnd(0,TAU);ws.px=-999;ws.py=-999;}}}
+  /* 悬停检测 */
+  let hp=null;
+  if(!warp.active){const sorted=systems.slice().sort(function(a,b){return a.zEff-b.zEff;});
+    for(let i=0;i<sorted.length;i++){const q=sorted[i];
+      const hr=Math.max(q.r,IS_TOUCH?30:20),dx=mouseX-q.x,dy=mouseY-q.y;
+      if(dx*dx+dy*dy<=hr*hr){hp=q;break;}}}
+  if(hp&&hp!==lastHover)SND.hover();
+  lastHover=hp;
+  const overRocket=!warp.active&&Math.abs(mouseX-rocket.x)<18&&mouseY>rocket.y-26&&mouseY<rocket.y+14;
+  cv.style.cursor=(hp||overRocket)?'pointer':'default';
+  for(let i=0;i<systems.length;i++){const s=systems[i];
+    s.hover+=((s===hp?1:0)-s.hover)*Math.min(1,dt*9);}
+  /* 尾焰粒子 */
+  const flyBoost=rocket.flying?(1+clamp((warp.t-.38)/.62,0,1)*14):0;
+  const fb=(warp.active&&!warp.gentle)?(4+warp.k*4+flyBoost):((REDUCED?.5:1)+(rocket.intro<1?2.2:0));
+  flameAcc+=dt*26*fb;
+  while(flameAcc>=1){flameAcc--;
+    if(parts.length<420)parts.push({x:rocket.x+rnd(-2,2),y:rocket._y+9,
+      vx:rnd(-7,7),vy:rnd(26,50)*((warp.active&&!warp.gentle)?1.5:1),age:0,life:rnd(.22,.5),
+      s:Math.random()<.35?2:1,
+      c:Math.random()<.45?'#ffd54f':(Math.random()<.6?'#ffffff':'#ff4757')});}
+  for(let i=parts.length-1;i>=0;i--){const q=parts[i];
+    q.age+=dt;if(q.age>=q.life){parts.splice(i,1);continue;}
+    q.x+=q.vx*dt;q.y+=q.vy*dt;q.vx*=1-1.4*dt;q.vy*=1-1.4*dt;}
+  rocket.salute=Math.max(0,rocket.salute-dt);
+  shakeT=Math.max(0,shakeT-dt);whitePop=Math.max(0,whitePop-dt);
+}
+
+function drawStars(t,boost){
+  for(let i=0;i<stars.length;i++){const s=stars[i];
+    s.d+=s.sp*boost*gdt;
+    if(s.d>320){s.d=rnd(1,18);s.a=rnd(0,TAU);s.px=-999;s.py=-999;}
+    const x=CX+Math.cos(s.a)*s.d+mox*s.par,y=CY+Math.sin(s.a)*s.d*.78+moy*s.par;
+    const a=REDUCED?.6:(.3+.7*Math.pow(Math.sin(t*s.tw+s.ph)*.5+.5,2));
+    const dx=x-s.px,dy=y-s.py;
+    ctx.globalAlpha=a;ctx.fillStyle=s.c;ctx.strokeStyle=s.c;
+    if(boost>3&&dx*dx+dy*dy>9){ctx.lineWidth=s.s;ctx.beginPath();ctx.moveTo(s.px,s.py);ctx.lineTo(x,y);ctx.stroke();}
+    else ctx.fillRect(x|0,y|0,s.s,s.s);
+    s.px=x;s.py=y;}
+  ctx.globalAlpha=1;
+}
+function drawRocks(){
+  ctx.fillStyle='rgba(178,190,210,.45)';
+  for(let i=0;i<rocks.length;i++){const rk=rocks[i];
+    const x=(CX+Math.cos(rk.a)*rk.rx+mox*.25)|0,y=(CY+Math.sin(rk.a)*rk.ry+moy*.2)|0;
+    ctx.fillRect(x,y,rk.s,rk.s);}
+}
+
+/* 迷你星系：星云雾 + 轨道 + 行星 + 恒星 */
+function drawSystem(s,t){
+  if(s.zEff>60||s.r<.5)return;
+  const x=s.x|0,y=s.y|0,r=Math.max(1,s.r);
+  const near=clamp((12-s.zEff)/6,.25,1);
+  const breath=.5+.5*Math.sin(t*2+s.floatPh);
+  const hoverK=s.hover*(REDUCED?.6:(.55+.45*breath));
+  /* 未命名星系：悬停呼吸光晕 */
+  if((!s.name||!s.url)&&hoverK>.02){
+    const hg=ctx.createRadialGradient(x,y,r*.4,x,y,r*1.3);
+    hg.addColorStop(0,'rgba(0,0,0,0)');
+    hg.addColorStop(.72,hexA(s.glow,.16*hoverK*(.6+.4*breath)));
+    hg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=hg;ctx.beginPath();ctx.arc(x,y,r*1.3,0,TAU);ctx.fill();}
+  /* 星云雾底 */
+  const ng=ctx.createRadialGradient(x,y,0,x,y,r);
+  ng.addColorStop(0,hexA(s.color,.09*near+.05*hoverK));
+  ng.addColorStop(1,hexA(s.color,0));
+  ctx.fillStyle=ng;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill();
+  /* 旋臂：两条对数螺旋点列，整体缓转 */
+  for(let i=0;i<s.arms.length;i++){const a2=s.arms[i];
+    const ang=a2.t*4.6+a2.off+s.rotA;
+    const rad=r*(.18+.82*a2.t);
+    ctx.globalAlpha=(1-a2.t)*(.26+.2*hoverK)*near;
+    ctx.fillStyle=s.color;
+    ctx.fillRect((x+Math.cos(ang)*rad)|0,(y+Math.sin(ang)*rad*.42)|0,a2.t<.3?2:1,a2.t<.3?2:1);}
+  ctx.globalAlpha=1;
+  /* 轨道环 */
+  const ORB=[.45,.68,.92];
+  for(let i=0;i<ORB.length;i++){
+    ctx.globalAlpha=(.16+.14*hoverK)*near;
+    ctx.strokeStyle=s.color;ctx.lineWidth=1;
+    ctx.beginPath();ctx.ellipse(x,y,r*ORB[i],r*ORB[i]*.42,0,0,TAU);ctx.stroke();}
+  if(hoverK>.02){ctx.globalAlpha=.3*hoverK*near;
+    ctx.strokeStyle=s.glow;
+    ctx.beginPath();ctx.ellipse(x,y,r*.92,r*.92*.42,0,0,TAU);ctx.stroke();}
+  ctx.globalAlpha=1;
+  /* 行星（rect 像素点） */
+  for(let i=0;i<s.moons.length;i++){const m=s.moons[i];
+    const or=r*m.orbitR;
+    const mx=x+Math.cos(m.a)*or,my=y+Math.sin(m.a)*or*.42;
+    const mr=Math.max(1,(r*m.mr)|0);
+    ctx.globalAlpha=clamp(near+.15,0,1);ctx.fillStyle=m.c;
+    ctx.fillRect((mx-mr/2)|0,(my-mr/2)|0,mr,mr);}
+  ctx.globalAlpha=1;
+  /* 中心恒星：白核 + 色晕 + 呼吸 */
+  const sr=r*.20*(1+.10*breath);
+  const g=ctx.createRadialGradient(x,y,0,x,y,sr*2.4);
+  g.addColorStop(0,'#ffffff');
+  g.addColorStop(.32,s.color);
+  g.addColorStop(1,hexA(s.color,0));
+  ctx.globalAlpha=clamp(.8+.2*near+.15*hoverK,0,1);
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,sr*2.4,0,TAU);ctx.fill();
+  ctx.globalAlpha=1;
+  /* 名字（配置了才显示） */
+  if(s.name&&s.url&&r>8&&!warp.active){
+    ctx.globalAlpha=clamp(near+.25,0,1)*(.55+.45*s.hover);
+    ctx.font='12px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+    ctx.textAlign='center';
+    ctx.fillStyle='rgba(0,0,10,.8)';
+    ctx.fillText(s.name,x+1,(y+r+11)|0);
+    ctx.fillStyle='#eafcff';
+    ctx.fillText(s.name,x,(y+r+10)|0);ctx.textAlign='left';ctx.globalAlpha=1;}
+  if(s.flash>0){ctx.globalAlpha=s.flash*.85;ctx.fillStyle='#ffffff';
+    ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill();ctx.globalAlpha=1;}
+}
+
+function drawRocket(t){
+  const ie=1-Math.pow(1-rocket.intro,3);
+  const introY=(1-ie)*124;                 /* 开场从屏幕下方升入 */
+  const bob=Math.sin(t*2.1)*1.6;
+  const drift=Math.sin(t*.6)*2.5;
+  const jit=(warp.active&&!warp.gentle)?rnd(-.8,.8):0;
+  const hopY=rocket.hop>0?-Math.sin((1-rocket.hop)*Math.PI)*3.2:0;
+  const x=(rocket.x+drift+(rocket.flyX||0)+jit)|0;
+  const y=(rocket.y+bob+introY+hopY+(rocket.flyY||0)+jit*.5)|0;
+  rocket._y=y;
+  /* 尾巴：末端摆动 */
+  ctx.strokeStyle='rgba(207,216,220,.85)';ctx.lineWidth=1;
+  const tw=Math.sin(t*3.2)*2;
+  ctx.beginPath();ctx.moveTo(x+6,y-1);ctx.quadraticCurveTo(x+13+tw,y+3,x+11+tw*.6,y+9);ctx.stroke();
+  /* 尾焰核心：开场点火更长 */
+  const fl=6+Math.sin(t*31)*1.5+(rocket.intro<1?5:0)+((warp.active&&!warp.gentle)?8+(rocket.flying?6:0):0);
+  ctx.fillStyle='#ffd54f';ctx.fillRect(x-2,y+6,4,3);
+  ctx.fillStyle='rgba(255,213,79,.55)';ctx.fillRect(x-1,y+9,2,fl|0);
+  ctx.fillStyle='#ffffff';ctx.fillRect(x-1,y+6,2,2);
+  /* 鳍 */
+  ctx.fillStyle='#ff4757';ctx.fillRect(x-8,y-3,3,9);ctx.fillRect(x+5,y-3,3,9);
+  /* 机身 */
+  ctx.fillStyle='#cfd8dc';ctx.fillRect(x-5,y-14,10,18);
+  ctx.fillStyle='#ffffff';ctx.fillRect(x+1,y-14,2,18);
+  ctx.fillStyle='rgba(10,25,60,.25)';ctx.fillRect(x-5,y-14,2,18);
+  /* 鼻锥 */
+  ctx.fillStyle='#ff4757';
+  ctx.fillRect(x-1,y-18,2,2);ctx.fillRect(x-3,y-16,6,2);ctx.fillRect(x-5,y-14,10,2);
+  ctx.fillRect(x-5,y+1,10,2);
+  /* 喷口 */
+  ctx.fillStyle='rgba(10,25,60,.55)';ctx.fillRect(x-3,y+4,6,3);
+  /* 舷窗里的老鼠宇航员：会环顾四周、会眨眼 */
+  const look=Math.sin(t*.55)*.9;
+  const blink=(t%3.4)<.14;
+  const wx=x+look,wy=y-7;
+  ctx.fillStyle='#08122e';ctx.beginPath();ctx.arc(wx,wy,4.5,0,TAU);ctx.fill();
+  ctx.fillStyle='#cfd8dc';ctx.beginPath();ctx.arc(wx,wy+1.2,2.6,0,TAU);ctx.fill();
+  ctx.beginPath();ctx.arc(wx-1.7,wy-1,1.2,0,TAU);ctx.arc(wx+1.7,wy-1,1.2,0,TAU);ctx.fill();
+  ctx.fillStyle='#ff9ec4';
+  ctx.beginPath();ctx.arc(wx-1.7,wy-1,.6,0,TAU);ctx.arc(wx+1.7,wy-1,.6,0,TAU);ctx.fill();
+  ctx.fillStyle='#08122e';
+  if(blink)ctx.fillRect((wx-1.5)|0,(wy+.7)|0,3,1);
+  else{ctx.fillRect((wx-1.5)|0,(wy+.6)|0,1,1);ctx.fillRect((wx+.6)|0,(wy+.6)|0,1,1);}
+  ctx.strokeStyle='#00e5ff';ctx.lineWidth=1;
+  ctx.beginPath();ctx.arc(wx,wy,4.5,0,TAU);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.85)';ctx.fillRect(wx-3,wy-3,1,1);
+  /* 彩蛋：敬礼 + 头顶闪星 */
+  if(rocket.salute>0){ctx.fillStyle='#cfd8dc';ctx.fillRect(x+5,y-16,2,7);
+    ctx.fillStyle='#ffffff';ctx.fillRect(x+5,y-18,2,2);
+    const tw2=Math.sin(t*12)*.5+.5;
+    ctx.globalAlpha=.35+.65*tw2;ctx.fillStyle='#ffd54f';
+    ctx.fillRect(x-5,y-26,1,1);ctx.fillRect(x+5,y-24,1,1);ctx.globalAlpha=1;}
+}
+function drawParts(){
+  for(let i=0;i<parts.length;i++){const q=parts[i];const a=1-q.age/q.life;
+    ctx.globalAlpha=a;ctx.fillStyle=q.c;
+    const s=Math.max(1,(q.s*(0.6+a*0.4))|0);
+    ctx.fillRect(q.x|0,q.y|0,s,s);}
+  ctx.globalAlpha=1;
+}
+function drawTunnel(){
+  /* 曲率隧道：高速放射光线 */
+  for(let i=0;i<wstars.length;i++){const ws=wstars[i];
+    const x=CX+Math.cos(ws.a)*ws.d,y=CY+Math.sin(ws.a)*ws.d*.78;
+    const dx=x-ws.px,dy=y-ws.py;
+    ctx.globalAlpha=.7;ctx.strokeStyle=i%3?'#ffffff':'#00e5ff';ctx.lineWidth=1;
+    if(dx*dx+dy*dy>4){ctx.beginPath();ctx.moveTo(ws.px,ws.py);ctx.lineTo(x,y);ctx.stroke();}
+    else ctx.fillRect(x|0,y|0,1,1);
+    ws.px=x;ws.py=y;}
+  ctx.globalAlpha=1;
+}
+function render(t){
+  ctx.setTransform(1,0,0,1,0,0);
+  if(shakeT>0)ctx.translate(rnd(-3,3)*shakeT*2,rnd(-3,3)*shakeT*2);
+  /* 相机推进：跃迁时轻微向中心放大 */
+  if(warp.active&&!warp.gentle){const z=1+warp.k*.05;
+    ctx.translate(CX,CY);ctx.scale(z,z);ctx.translate(-CX,-CY);}
+  ctx.fillStyle=bgGrad;ctx.fillRect(-8,-8,W+16,H+16);
+  for(let i=0;i<nebula.length;i++){ctx.fillStyle=nebula[i];ctx.fillRect(0,0,W,H);}
+  /* 银河带雾 */
+  ctx.save();ctx.translate(CX,CY);ctx.rotate(-.28);
+  const mg=ctx.createRadialGradient(0,0,10,0,0,240);
+  mg.addColorStop(0,'rgba(140,170,255,.05)');mg.addColorStop(1,'rgba(140,170,255,0)');
+  ctx.fillStyle=mg;ctx.fillRect(-260,-52,520,104);ctx.restore();
+  const boost=(warp.active&&!warp.gentle)?1+warp.k*80:(REDUCED?0:1);
+  drawStars(t,boost);
+  /* 银河带星 */
+  for(let i=0;i<band.length;i++){const b2=band[i];
+    ctx.globalAlpha=b2.a*(REDUCED?.8:(.7+.3*Math.sin(t*.8+i)));
+    ctx.fillStyle='#cfd8ff';ctx.fillRect((b2.x+mox*.15)|0,(b2.y+moy*.1)|0,1,1);}
+  ctx.globalAlpha=1;
+  drawRocks();
+  /* 亮星十字 */
+  for(let i=0;i<brights.length;i++){const b3=brights[i];
+    const tw3=REDUCED?.6:(.5+.5*Math.sin(t*1.6+b3.ph));
+    const bx=(b3.x+mox*.2)|0,by=(b3.y+moy*.15)|0;
+    ctx.globalAlpha=.5+.4*tw3;ctx.fillStyle='#ffffff';
+    ctx.fillRect(bx-1,by-1,2,2);
+    ctx.globalAlpha=.3*tw3;
+    ctx.fillRect(bx-4,by,3,1);ctx.fillRect(bx+2,by,3,1);
+    ctx.fillRect(bx,by-4,1,3);ctx.fillRect(bx,by+2,1,3);}
+  ctx.globalAlpha=1;
+  if(warp.active&&!warp.gentle)drawTunnel();
+  if(warp.active&&!warp.gentle){ctx.fillStyle='rgba(0,229,255,'+(warp.k*.09)+')';ctx.fillRect(0,0,W,H);}
+  const sorted=systems.slice().sort(function(a,b){return b.zEff-a.zEff;});
+  for(let i=0;i<sorted.length;i++)drawSystem(sorted[i],t);
+  drawRocket(t);
+  drawParts();
+  /* 隧道中心辉光（温和跃迁也有，柔和无频闪） */
+  if(warp.active){
+    const gk=warp.gentle?.5:1;
+    const cg=ctx.createRadialGradient(CX,CY,0,CX,CY,90+warp.k*70);
+    cg.addColorStop(0,'rgba(200,245,255,'+((.12+.45*warp.k)*gk)+')');
+    cg.addColorStop(1,'rgba(200,245,255,0)');
+    ctx.fillStyle=cg;ctx.fillRect(0,0,W,H);}
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.fillStyle=vign;ctx.fillRect(0,0,W,H);
+  if(whitePop>0){ctx.fillStyle='rgba(255,255,255,'+(whitePop/.12*.5)+')';ctx.fillRect(0,0,W,H);}
+  if(flash.active){
+    if(flash.gentle){   /* 温和跃迁：纯白淡入，无故障效果 */
+      ctx.fillStyle='rgba(250,252,255,'+(clamp(1-flash.t/.35,0,1)*.96)+')';
+      ctx.fillRect(0,0,W,H);}
+    else{const a=clamp(flash.t/.15,0,1);   /* 全屏霓虹闪 + 像素故障条纹 */
+      for(let i=0;i<10;i++){ctx.globalAlpha=.25+Math.random()*.45;
+        ctx.fillStyle=['#00e5ff','#ffd54f','#ff5c8a','#ffffff'][i&3];
+        ctx.fillRect(0,Math.random()*H|0,W,1+(Math.random()*5|0));}
+      ctx.globalAlpha=1;
+      ctx.fillStyle='rgba(255,255,255,'+(.8*a)+')';ctx.fillRect(0,0,W,H);}}
+}
+let last=performance.now();
+function frame(now){const dt=clamp((now-last)/1000,0,.05);last=now;
+  update(dt,now/1000);render(now/1000);requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+/* 调试钩子（只读快照，不影响运行） */
+window.__gx=function(){return{warp:warp.active,gentle:warp.gentle,
+  systems:systems.map(function(s){return{name:s.name,moons:s.moons.length,r:Math.round(s.r)};}),
+  visits:visits,muted:muted,parts:parts.length,title:document.getElementById('titleText').textContent};};
+</script>
 </body>
 </html>
