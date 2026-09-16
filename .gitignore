@@ -1,0 +1,97 @@
+# ===== 本地部署脚本（含机器路径/凭据风险）=====
+*.bat
+*.ps1
+*.cmd
+*.lnk
+*.hta
+*.vbs
+
+# ===== 备份与临时文件 =====
+*.bak
+*.bak-*
+*.bak.*
+*.tmp
+*.old
+*.orig
+*.rej
+*~
+
+# ===== 编辑器 / 系统 =====
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ===== 依赖 / 缓存 =====
+node_modules/
+npm-cache/
+__pycache__/
+*.pyc
+.venv/
+venv/
+pip-*/
+uv-cache/
+.uv-cache/
+
+# ===== 日志 =====
+*.log
+err*.txt
+_repo.txt
+
+# ===== 密钥类，永不入库 =====
+.env
+.env.*
+*.pem
+*.key
+*token*.txt
+*令牌*.txt
+
+# ===== managed by fix-gitignore script =====
+# local deploy scripts (machine paths / credential risk)
+*.bat
+*.ps1
+*.cmd
+*.lnk
+*.hta
+*.vbs
+
+# backup & temp
+*.bak
+*.bak-*
+*.bak.*
+*.tmp
+*.old
+*.orig
+*.rej
+*~
+
+# editor / os
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# deps / cache
+node_modules/
+npm-cache/
+__pycache__/
+*.pyc
+.venv/
+venv/
+pip-*/
+uv-cache/
+.uv-cache/
+
+# logs
+*.log
+err*.txt
+_repo.txt
+
+# secrets - never commit
+.env
+.env.*
+*.pem
+*.key
+*token*.txt
