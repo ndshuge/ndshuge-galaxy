@@ -346,7 +346,7 @@ function update(dt,t){
     if(warp.active&&s===warp.target)s.zEff=lerp(s.z,warp.gentle?.5:.32,warp.k);
     s.r=s.baseR*FOCAL/s.zEff*(1+.06*s.hover);
     s.fade=(warp.active&&s!==warp.target)?1-warp.k:(s._fade===undefined?1:s._fade);
-    let x=s.hx+mox*.35,y=s.hy+moy*.3;
+    let x=s.hx,y=s.hy;
     if(!REDUCED)y+=Math.sin(t*.9+s.floatPh)*2.2;
     if(warp.active){const k=warp.k;
       if(s===warp.target){x+=(CX-x)*k;y+=(CY-y)*k;}
