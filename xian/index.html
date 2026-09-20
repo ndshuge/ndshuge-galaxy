@@ -250,7 +250,8 @@ body.enter #grain{animation:fadeIn 1.6s ease .5s both}
   </div>
 
   <div class="hud" id="br">
-    <div class="lg"><span class="sw" style="background:rgba(157,178,196,.7)"></span><span>等高线 · 每 10 倍等高距注真高程</span></div>
+    <div class="lg"><span class="sw" style="background:rgba(157,178,196,.9)"></span><span>计曲线 · 每 5 条加粗并注真高程</span></div>
+    <div class="lg"><span class="sw" style="background:linear-gradient(90deg,rgba(186,200,220,.5),rgba(200,118,58,.85))"></span><span>海拔色阶 · 越高越亮越暖</span></div>
     <div class="lg"><span class="sw" style="background:rgba(74,107,130,.85)"></span><span>水系 · 八水绕长安（实测）</span></div>
     <div class="lg"><span class="sw" style="background:rgba(46,125,110,.7)"></span><span>道路 · 现代干道</span></div>
     <div class="lg"><span class="sw" style="background:rgba(200,118,58,.9)"></span><span>读数光斑 · 赭石</span></div>
@@ -530,6 +531,42 @@ function renderTerrain(){
   /* 屏幕映射 */
   const sX=wx=>(wx-cam.x)/mw+cssW/2, sY=wy=>cssH/2-(wy-cam.y)/mw;
 
+  /* --- 5.25 海拔色阶：分层设色，越高越亮、峰带暖，让"高"一眼可见 ---
+     色带边界对齐计曲线（Q = Icoarse 的整数倍），免得出现第二套互不相干的分级 */
+  {
+    const Q=Math.max(20,Math.round(200/Icoarse)*Icoarse);
+    const bw=Math.max(1e-5,0.075*span);
+    if(!S.tintCv||S.tintCv.width!==NX||S.tintCv.height!==NY){
+      S.tintCv=document.createElement('canvas'); S.tintCv.width=NX; S.tintCv.height=NY;
+      S.tintCtx=S.tintCv.getContext('2d');
+      S.tintImg=S.tintCtx.createImageData(NX,NY);
+      S.tint32=new Uint32Array(S.tintImg.data.buffer);
+    }
+    const px=S.tint32;
+    for(let k=0;k<NX*NY;k++){
+      const h=H[k];
+      const q0=Math.floor(h/Q), qt=h/Q-q0;
+      /* 带内只在前 20% 过渡，其余保持恒定 → 一档一档的阶地感 */
+      const hE=(q0+(qt<0.20?qt/0.20:1))*Q;
+      let t=(hE-420)/2150; if(t<0)t=0; else if(t>1)t=1;
+      /* 低地保持未着墨的底（保住铜版蚀刻的空白），中高海拔才逐级亮起来，最高段带暖 */
+      let a,r,g,b;
+      if(t<0.13){ a=0.014*(t/0.13); r=188; g=202; b=222; }
+      else if(t<0.36){ const u=(t-0.13)/0.23; a=0.014+0.032*u; r=188; g=202; b=222; }
+      else if(t<0.64){ const u=(t-0.36)/0.28; a=0.046+0.048*u; r=190+6*u; g=200-16*u; b=220-32*u; }
+      else { const u=(t-0.64)/0.36; a=0.094+0.052*u; r=196+10*u; g=184-34*u; b=188-58*u; }
+      if(INVAL){ const dv=(revealH-h)/bw; if(dv<=0){ px[k]=0; continue; } a*=Math.min(1,dv*1.6); }
+      const A=(a*255)|0;
+      px[k]=(A<<24)|((b|0)<<16)|((g|0)<<8)|(r|0);
+    }
+    S.tintCtx.putImageData(S.tintImg,0,0);
+    ctx.save();
+    ctx.imageSmoothingEnabled=true;
+    if('imageSmoothingQuality' in ctx) ctx.imageSmoothingQuality='high';
+    ctx.drawImage(S.tintCv,0,0,NX,NY,-cs,-cs,NX*cs,NY*cs);
+    ctx.restore();
+  }
+
   /* --- 5.3 水面（真矢量多边形） --- */
   if(S.areas&&!INVAL){
     ctx.beginPath();
@@ -542,7 +579,7 @@ function renderTerrain(){
   }
 
   /* --- 5.4 等高线 --- */
-  const NB=6, bcnt=new Int32Array(NB);
+  const NB=7, bcnt=new Int32Array(NB);     /* 后 1 桶专装计曲线（索引线） */
   if(!S.buf||S.buf[0].length<90000*4){ S.buf=[]; for(let b=0;b<NB;b++) S.buf.push(new Float32Array(120000)); }
   const buf=S.buf;
   const labelStep=Ifine*10;
@@ -566,7 +603,10 @@ function renderTerrain(){
         let al=prom(V)*(isMain?1:gSub)*(0.50+0.86*dens);
         if(al<=0.045) continue;
         if(INVAL){ const dv=(revealH-V)/revBand; if(dv<=0) continue; al*=Math.min(1,dv*1.6); }
-        let bk=(al*5.999)|0; if(bk<0)bk=0; if(bk>NB-1)bk=NB-1;
+        /* 计曲线单独一桶：等高距过渡完成后一律最浓最粗，撑起"层级"的骨架 */
+        const isIdx=isMain&&gSub>0.5;
+        let bk=isIdx?NB-1:((al*5.999)|0);
+        if(bk<0)bk=0; if(bk>NB-1)bk=NB-1;
         const arr=buf[bk]; let n=bcnt[bk];
         const idx=(a>V?8:0)|(b>V?4:0)|(d>V?2:0)|(c>V?1:0);
         if(idx===0||idx===15) continue;
@@ -591,15 +631,23 @@ function renderTerrain(){
         }
         bcnt[bk]=n;
         /* 索引线取样：取离屏幕中心最近的一段做注记 */
+        /* 高程注记：每个高程值最多取 3 处彼此分开的位置，别全挤在一堆 */
         if(!INVAL&&Math.abs(V%labelStep)<1e-6&&n>n0){
-          const d2=Math.abs(x0-cssW/2)+Math.abs(y0-cssH/2);
-          const Lk=lab[V];
-          if(!Lk||d2<Lk.d2) lab[V]={d2, x1:arr[n0],y1:arr[n0+1],x2:arr[n0+2],y2:arr[n0+3]};
+          const qx1=arr[n0],qy1=arr[n0+1],qx2=arr[n0+2],qy2=arr[n0+3];
+          let Lk=lab[V]; if(!Lk) Lk=lab[V]={pts:[]};
+          if(Lk.pts.length<3){
+            let far=true;
+            for(let w2=0;w2<Lk.pts.length;w2++){
+              const P2=Lk.pts[w2];
+              if(Math.abs(P2.x1-qx1)<cssW*0.20&&Math.abs(P2.y1-qy1)<cssH*0.20){ far=false; break; }
+            }
+            if(far) Lk.pts.push({x1:qx1,y1:qy1,x2:qx2,y2:qy2});
+          }
         }
       }
     }
   }
-  const ALPHA=[0.11,0.20,0.31,0.42,0.55,0.72], LW=[0.62,0.72,0.82,0.94,1.06,1.22];
+  const ALPHA=[0.09,0.15,0.22,0.30,0.38,0.46,0.94], LW=[0.58,0.66,0.74,0.84,0.94,1.06,1.85];
   for(let b=0;b<NB;b++){
     const n=bcnt[b]; if(!n) continue;
     const arr=buf[b];
@@ -611,15 +659,18 @@ function renderTerrain(){
   if(!INVAL){
     ctx.font='9.5px '+MONO; ctx.textBaseline='middle'; ctx.textAlign='center';
     for(const V in lab){
-      const L2=lab[V];
-      let ang=Math.atan2(L2.y2-L2.y1,L2.x2-L2.x1);
-      if(ang>Math.PI/2||ang<-Math.PI/2) ang+=Math.PI;
-      const mxp=(L2.x1+L2.x2)/2, myp=(L2.y1+L2.y2)/2;
-      ctx.save(); ctx.translate(mxp,myp); ctx.rotate(ang);
-      ctx.fillStyle='rgba(7,10,15,.82)'; ctx.fillRect(-15,-6,30,12);
-      ctx.fillStyle='rgba('+INK_LN+',0.78)';
-      ctx.fillText(String(Math.round(+V)),0,0.5);
-      ctx.restore();
+      const isIdxL=Math.abs(V/Icoarse-Math.round(V/Icoarse))<1e-4;
+      ctx.font=(isIdxL?'10px ':'9.5px ')+MONO;
+      for(const L2 of lab[V].pts){
+        let ang=Math.atan2(L2.y2-L2.y1,L2.x2-L2.x1);
+        if(ang>Math.PI/2||ang<-Math.PI/2) ang+=Math.PI;
+        const mxp=(L2.x1+L2.x2)/2, myp=(L2.y1+L2.y2)/2;
+        ctx.save(); ctx.translate(mxp,myp); ctx.rotate(ang);
+        ctx.fillStyle='rgba(7,10,15,.86)'; ctx.fillRect(-15,-6,30,12);
+        ctx.fillStyle='rgba('+INK_LN+','+(isIdxL?0.92:0.72)+')';
+        ctx.fillText(String(Math.round(+V)),0,0.5);
+        ctx.restore();
+      }
     }
   }
 
