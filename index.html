@@ -277,7 +277,6 @@ function boom(){rocket.salute=2.4;shakeT=REDUCED?0:.7;whitePop=REDUCED?0:.12;SND
       age:0,life:rnd(.5,1.3),s:Math.random()<.5?1:2,
       c:['#ffffff','#00e5ff','#ffd54f','#ff5c8a','#69f0ae'][Math.random()*5|0]});}}
 
-/* ============ 方案切换 UI ============ */
 
 /* ============ 终端 ============ */
 const term=document.getElementById('term'),termOut=document.getElementById('termOut'),termIn=document.getElementById('termIn');
@@ -556,7 +555,7 @@ function drawParts(){
     ctx.fillRect(q.x|0,q.y|0,s,s);}
   ctx.globalAlpha=1;
 }
-/* 方案 4 / 6 专属：屏幕外的星系指示 */
+/* 屏幕外的星系：在画面边缘闪烁提示方向 */
 function drawOffscreen(t){
   for(let i=0;i<systems.length;i++){const s=systems[i];
     if(s.x>16&&s.x<W-16&&s.y>16&&s.y<H-16)continue;
@@ -572,7 +571,7 @@ function drawOffscreen(t){
   }
   ctx.globalAlpha=1;
 }
-/* 方案 6 专属：跟手的航向准星（就在鼠标处，中心留出断口） */
+/* 航向准星：画在鼠标处，中心留出断口 */
 function drawHelm(t){
   const hx=clamp(mouseX,0,W)|0,hy=clamp(mouseY,0,H)|0;
   ctx.strokeStyle='#00e5ff';ctx.lineWidth=1;
@@ -585,7 +584,7 @@ function drawHelm(t){
   ctx.globalAlpha=.18;ctx.beginPath();ctx.arc(hx,hy,2,0,TAU);ctx.stroke();
   ctx.globalAlpha=1;
 }
-/* 方案 6 专属：世界小地图，带五个星系的名字（候选位自动避让，不叠字） */
+/* 世界小地图：标出五颗星与当前视野，名字自动避让 */
 function drawMinimap(t){
   if(!M.mapOn)return;
   const A=M.mapA;
