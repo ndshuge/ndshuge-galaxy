@@ -250,8 +250,8 @@ body.enter #grain{animation:fadeIn 1.6s ease .5s both}
   </div>
 
   <div class="hud" id="br">
-    <div class="lg"><span class="sw" style="background:rgba(157,178,196,.9)"></span><span>计曲线 · 每 5 条加粗并注真高程</span></div>
-    <div class="lg"><span class="sw" style="background:linear-gradient(90deg,#123a24,#3c6a2c,#7a7e2a,#b08038,#c89c60,#e0c8a8)"></span><span>分层设色 · 低地绿、中山黄、高峰米白</span></div>
+    <div class="lg"><span class="sw" style="background:rgba(198,209,224,.7)"></span><span>等高线 · 坡度定浓淡，计曲线注真高程</span></div>
+    <div class="lg"><span class="sw" style="background:linear-gradient(90deg,#0e2a1a,#224620,#42501e,#6e5a1e,#a28438,#ccb080)"></span><span>分层设色 · 低地绿、中山黄、高峰米白</span></div>
     <div class="lg"><span class="sw" style="background:rgba(74,107,130,.85)"></span><span>水系 · 八水绕长安（实测）</span></div>
     <div class="lg"><span class="sw" style="background:rgba(46,125,110,.7)"></span><span>道路 · 现代干道</span></div>
     <div class="lg"><span class="sw" style="background:rgba(200,118,58,.9)"></span><span>读数光斑 · 赭石</span></div>
@@ -581,7 +581,7 @@ function renderTerrain(){
   }
 
   /* --- 5.4 等高线 --- */
-  const NB=7, bcnt=new Int32Array(NB);     /* 后 1 桶专装计曲线（索引线） */
+  const NB=6, bcnt=new Int32Array(NB);
   if(!S.buf||S.buf[0].length<90000*4){ S.buf=[]; for(let b=0;b<NB;b++) S.buf.push(new Float32Array(120000)); }
   const buf=S.buf;
   const labelStep=Ifine*10;
@@ -605,9 +605,8 @@ function renderTerrain(){
         let al=prom(V)*(isMain?1:gSub)*(0.50+0.86*dens);
         if(al<=0.045) continue;
         if(INVAL){ const dv=(revealH-V)/revBand; if(dv<=0) continue; al*=Math.min(1,dv*1.6); }
-        /* 计曲线单独一桶：等高距过渡完成后一律最浓最粗，撑起"层级"的骨架 */
-        const isIdx=isMain&&gSub>0.5;
-        let bk=isIdx?NB-1:((al*5.999)|0);
+        /* 浓度按 alpha 自然分桶，不再给计曲线单独开一桶 */
+        let bk=((al*5.999)|0);
         if(bk<0)bk=0; if(bk>NB-1)bk=NB-1;
         const arr=buf[bk]; let n=bcnt[bk];
         const idx=(a>V?8:0)|(b>V?4:0)|(d>V?2:0)|(c>V?1:0);
@@ -649,7 +648,7 @@ function renderTerrain(){
       }
     }
   }
-  const ALPHA=[0.09,0.15,0.22,0.30,0.38,0.46,0.94], LW=[0.58,0.66,0.74,0.84,0.94,1.06,1.85];
+  const ALPHA=[0.09,0.15,0.22,0.30,0.38,0.46], LW=[0.58,0.66,0.74,0.84,0.94,1.06];
   for(let b=0;b<NB;b++){
     const n=bcnt[b]; if(!n) continue;
     const arr=buf[b];
