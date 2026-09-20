@@ -251,7 +251,7 @@ body.enter #grain{animation:fadeIn 1.6s ease .5s both}
 
   <div class="hud" id="br">
     <div class="lg"><span class="sw" style="background:rgba(157,178,196,.9)"></span><span>计曲线 · 每 5 条加粗并注真高程</span></div>
-    <div class="lg"><span class="sw" style="background:linear-gradient(90deg,rgba(186,200,220,.5),rgba(200,118,58,.85))"></span><span>海拔色阶 · 越高越亮越暖</span></div>
+    <div class="lg"><span class="sw" style="background:linear-gradient(90deg,#123a24,#3c6a2c,#7a7e2a,#b08038,#c89c60,#e0c8a8)"></span><span>分层设色 · 低地绿、中山黄、高峰米白</span></div>
     <div class="lg"><span class="sw" style="background:rgba(74,107,130,.85)"></span><span>水系 · 八水绕长安（实测）</span></div>
     <div class="lg"><span class="sw" style="background:rgba(46,125,110,.7)"></span><span>道路 · 现代干道</span></div>
     <div class="lg"><span class="sw" style="background:rgba(200,118,58,.9)"></span><span>读数光斑 · 赭石</span></div>
@@ -535,29 +535,31 @@ function renderTerrain(){
      色带边界对齐计曲线（Q = Icoarse 的整数倍），免得出现第二套互不相干的分级 */
   {
     const Q=Math.max(20,Math.round(200/Icoarse)*Icoarse);
-    const bw=Math.max(1e-5,0.075*span);
+    const bw=Math.max(1e-5,0.06*span);
     if(!S.tintCv||S.tintCv.width!==NX||S.tintCv.height!==NY){
       S.tintCv=document.createElement('canvas'); S.tintCv.width=NX; S.tintCv.height=NY;
       S.tintCtx=S.tintCv.getContext('2d');
       S.tintImg=S.tintCtx.createImageData(NX,NY);
       S.tint32=new Uint32Array(S.tintImg.data.buffer);
     }
+    /* 分层设色：低地深绿 → 黄绿 → 土黄 → 赭褐 → 峰顶米白
+       色相变化集中在 400~1500m（西安的活动区），再往上转为明度上升的白化 */
+    const THB=[400,600,800,1000,1200,1500,1800,2100,2400,2800];
+    const THR=[ 14, 22, 34, 66,110,138,162,184,204,220];
+    const THG=[ 42, 56, 70, 80, 90,110,132,154,176,196];
+    const THZ=[ 26, 30, 32, 30, 30, 38, 56, 96,128,164];
+    const THA=[.80,.82,.84,.84,.84,.86,.88,.88,.88,.88];
     const px=S.tint32;
     for(let k=0;k<NX*NY;k++){
       const h=H[k];
       const q0=Math.floor(h/Q), qt=h/Q-q0;
-      /* 带内只在前 20% 过渡，其余保持恒定 → 一档一档的阶地感 */
-      const hE=(q0+(qt<0.20?qt/0.20:1))*Q;
-      let t=(hE-420)/2150; if(t<0)t=0; else if(t>1)t=1;
-      /* 低地保持未着墨的底（保住铜版蚀刻的空白），中高海拔才逐级亮起来，最高段带暖 */
-      let a,r,g,b;
-      if(t<0.13){ a=0.014*(t/0.13); r=188; g=202; b=222; }
-      else if(t<0.36){ const u=(t-0.13)/0.23; a=0.014+0.032*u; r=188; g=202; b=222; }
-      else if(t<0.64){ const u=(t-0.36)/0.28; a=0.046+0.048*u; r=190+6*u; g=200-16*u; b=220-32*u; }
-      else { const u=(t-0.64)/0.36; a=0.094+0.052*u; r=196+10*u; g=184-34*u; b=188-58*u; }
+      const hE=(q0+(qt<0.12?qt/0.12:1))*Q;     /* 带边界只留 12% 过渡，其余恒定 */
+      let ti=0; while(ti<THB.length-2 && hE>=THB[ti+1]) ti++;
+      const r=THR[ti], g=THG[ti], b=THZ[ti];
+      let a=THA[ti];
       if(INVAL){ const dv=(revealH-h)/bw; if(dv<=0){ px[k]=0; continue; } a*=Math.min(1,dv*1.6); }
       const A=(a*255)|0;
-      px[k]=(A<<24)|((b|0)<<16)|((g|0)<<8)|(r|0);
+      px[k]=(A<<24)|(b<<16)|(g<<8)|r;
     }
     S.tintCtx.putImageData(S.tintImg,0,0);
     ctx.save();
