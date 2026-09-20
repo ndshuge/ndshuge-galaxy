@@ -168,10 +168,26 @@ body::after{ /* grain: frozen, brand substrate */
 #hud .bottom span{display:inline-flex;align-items:center;gap:.5em}
 #hud .bottom i{font-style:normal;color:var(--gold)}
 #progress{
-  position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 4.6rem);
-  transform:translateX(-50%);width:min(220px,42vw);height:1px;background:var(--bone-07);
+  position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 7.6rem);
+  transform:translateX(-50%);width:min(220px,42vw);height:1px;background:var(--bone-12);
 }
-#progress i{display:block;height:100%;width:0;background:var(--gold-38);transition:width .25s linear}
+#progress i{display:block;height:100%;width:0;background:var(--gold);transition:width .25s linear}
+/* the page keeps going below the hall; say so, or nobody scrolls */
+#scrollcue{
+  position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 4.5rem);
+  transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.3em;color:var(--gold);
+  pointer-events:none;transition:opacity .5s var(--ease);
+}
+#scrollcue i{
+  display:block;width:1px;height:36px;
+  background:linear-gradient(180deg,var(--gold-38),transparent);
+  animation:cue 2.6s ease-in-out infinite;
+}
+@keyframes cue{
+  0%,100%{opacity:.3;transform:scaleY(.62);transform-origin:50% 0}
+  50%{opacity:1;transform:scaleY(1);transform-origin:50% 0}
+}
 
 /* ---------- 取出 ---------- */
 #focus{position:fixed;inset:0;z-index:940;display:none}
@@ -179,11 +195,12 @@ body::after{ /* grain: frozen, brand substrate */
 #veil{position:absolute;inset:0;background:rgba(8,7,6,.90);opacity:0;transition:opacity .55s var(--ease)}
 #focus.on #veil{opacity:1}
 #fimg{
-  position:fixed;object-fit:cover;filter:saturate(.84) contrast(1.05) brightness(1.10);
-  border:1px solid var(--bone-12);
-  transition:left .68s var(--ease),top .68s var(--ease),
-             width .68s var(--ease),height .68s var(--ease),filter .5s var(--ease);
-  will-change:left,top,width,height;
+  position:fixed;object-fit:cover;left:0;top:0;
+  filter:saturate(.84) contrast(1.05) brightness(1.10);
+  border:1px solid var(--bone-12);transform-origin:50% 50%;
+  transition:transform .74s var(--ease),left .74s var(--ease),top .74s var(--ease),
+             width .74s var(--ease),height .74s var(--ease),filter .5s var(--ease);
+  will-change:transform,left,top,width,height;
 }
 #flabel{
   position:fixed;opacity:0;transform:translateY(18px);
@@ -311,6 +328,7 @@ window.addEventListener('error', function(e){
         <span id="counter">FRAME 01 / 12</span>
       </div>
       <div id="progress"><i></i></div>
+      <div id="scrollcue" aria-hidden="true"><i></i><span>向下</span></div>
       <div class="bottom">
         <span><i>拖动</i> 转向</span>
         <span><i>滚动</i> 靠近</span>
@@ -383,6 +401,7 @@ window.addEventListener('error', function(e){
   var wrap = document.getElementById('hallwrap');
   var hud = document.getElementById('hud');
   var progressBar = document.querySelector('#progress i');
+  var scrollCue = document.getElementById('scrollcue');
   var counter = document.getElementById('counter');
   var intro = document.getElementById('intro');
 
@@ -504,6 +523,7 @@ window.addEventListener('error', function(e){
     var e = 1 - Math.pow(1 - p, 2.15);
     radiusTarget = R_FAR() - e * (R_FAR() - R_NEAR());
     progressBar.style.width = (p * 100).toFixed(1) + '%';
+    scrollCue.style.opacity = p > 0.05 ? '0' : '1';
     if (p > 0.93) hud.style.opacity = String(clamp((1 - p) / 0.07, 0, 1));
     else hud.style.opacity = '1';
     if (!dragging) lastInteract = performance.now();
@@ -525,7 +545,8 @@ window.addEventListener('error', function(e){
     var dx = x - lastX;
     lastX = x;
     moved += Math.abs(dx);
-    var turn = dx * 0.19;
+    /* rot up turns the room left, so a rightward drag has to turn it down */
+    var turn = -dx * 0.19;
     rot += turn;
     vel = turn;
     lastInteract = performance.now();
@@ -548,20 +569,33 @@ window.addEventListener('error', function(e){
   var fimg = document.getElementById('fimg');
   var flabel = document.getElementById('flabel');
 
+  function fimgBox(){
+    return { left: parseFloat(fimg.style.left) || 0, top: parseFloat(fimg.style.top) || 0,
+             width: parseFloat(fimg.style.width) || 1, height: parseFloat(fimg.style.height) || 1 };
+  }
+  /* where the frame hangs on the ring has to be reachable from where the image now sits */
+  function flyTransform(from, to, deg){
+    var sx = from.width / to.width, sy = from.height / to.height;
+    var tx = (from.left + from.width / 2) - (to.left + to.width / 2);
+    var ty = (from.top + from.height / 2) - (to.top + to.height / 2);
+    return 'perspective(1300px) translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) ' +
+           'scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + ') rotateY(' + deg + 'deg)';
+  }
+
   function openFocus(i){
     if (focused >= 0) return;
     focused = i;
     var d = DATA[i];
     var src = panels[i].querySelector('img');
-    var r = src.getBoundingClientRect();
+    var r0 = src.getBoundingClientRect();
 
-    fimg.src = B + d.p + '?w=1400&q=82&fm=jpg';
+    /* show the already-loaded thumbnail at once, then swap in the large file behind it */
+    fimg.src = src.currentSrc || src.src;
     fimg.alt = d.d;
-    fimg.style.transition = 'none';
-    fimg.style.left = r.left + 'px';
-    fimg.style.top = r.top + 'px';
-    fimg.style.width = r.width + 'px';
-    fimg.style.height = r.height + 'px';
+    var big = new Image();
+    big.decoding = 'async';
+    big.onload = function(){ if (focused === i) fimg.src = big.src; };
+    big.src = B + d.p + '?w=1400&q=82&fm=jpg';
 
     flabel.querySelector('.no').textContent = 'FRAME ' + String(d.no).padStart(2,'0') + ' / ' + N;
     flabel.querySelector('h2').textContent = d.d;
@@ -573,9 +607,14 @@ window.addEventListener('error', function(e){
     ring.setAttribute('inert', '');
     document.getElementById('close').focus();
 
+    /* park the image at its final slot, then fly it in flipping from where it hung */
+    fimg.style.transition = 'none';
+    layoutFocus();
+    fimg.style.transform = flyTransform(r0, fimgBox(), -66);
+    void fimg.offsetWidth;
     requestAnimationFrame(function(){
-      layoutFocus();
       fimg.style.transition = '';
+      fimg.style.transform = 'perspective(1300px) rotateY(0deg)';
     });
   }
 
@@ -611,12 +650,9 @@ window.addEventListener('error', function(e){
   function closeFocus(){
     if (focused < 0) return;
     var back = panels[focused];
-    var src = back.querySelector('img');
-    var r = src.getBoundingClientRect();
-    fimg.style.left = r.left + 'px';
-    fimg.style.top = r.top + 'px';
-    fimg.style.width = r.width + 'px';
-    fimg.style.height = r.height + 'px';
+    var r0 = back.querySelector('img').getBoundingClientRect();
+    /* put it back where it came from, flipping the other way */
+    fimg.style.transform = flyTransform(r0, fimgBox(), 62);
     focusEl.classList.remove('on');
     focusEl.setAttribute('aria-hidden', 'true');
     ring.removeAttribute('inert');
@@ -653,6 +689,14 @@ window.addEventListener('error', function(e){
     onScroll();
     if (RM){
       radiusTarget = R_NEAR(); radius = R_NEAR();
+    }
+    /* warm the large files in the background so opening one is instant */
+    if (!RM){
+      setTimeout(function(){
+        DATA.forEach(function(d, k){
+          setTimeout(function(){ var im = new Image(); im.src = B + d.p + '?w=1400&q=82&fm=jpg'; }, k * 620);
+        });
+      }, 2400);
     }
   }
   document.getElementById('enter').addEventListener('click', start);
