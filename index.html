@@ -22,15 +22,13 @@ body{font-family:"Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospa
      display:flex;align-items:center;gap:8px;pointer-events:auto;cursor:pointer}
 #sysDot{width:8px;height:8px;background:#69f0ae;box-shadow:0 0 8px #69f0ae;animation:blink 1.3s steps(1) infinite}
 #sndTag{color:var(--cyan)}
-#title{position:fixed;left:0;right:0;top:6vh;text-align:center;pointer-events:none;z-index:5;transition:opacity .3s}
-#title h1{font-size:48px;letter-spacing:12px;color:var(--ink);font-weight:normal;min-height:1.1em;
+#title{position:fixed;left:0;right:0;top:5vh;text-align:center;pointer-events:none;z-index:5;transition:opacity .3s}
+#title h1{font-size:44px;letter-spacing:12px;color:var(--ink);font-weight:normal;min-height:1.1em;
   text-shadow:0 0 10px rgba(0,229,255,.95),0 0 30px rgba(0,229,255,.5),0 0 70px rgba(0,229,255,.3);
   animation:breathe 3.4s ease-in-out infinite}
-#title .caret{display:inline-block;width:22px;height:40px;margin-left:8px;background:var(--cyan);
-  box-shadow:0 0 12px var(--cyan);vertical-align:-4px;animation:blink .8s steps(1) infinite}
 #title .line{width:140px;height:2px;margin:14px auto 0;background:linear-gradient(90deg,transparent,var(--cyan),transparent);
   box-shadow:0 0 8px var(--cyan)}
-#title .sub{margin-top:10px;font-size:12px;letter-spacing:.5em;color:var(--dim);opacity:0;transition:opacity .9s}
+#title .sub{margin-top:6px;font-size:12px;letter-spacing:.5em;color:var(--dim);opacity:0;transition:opacity .9s}
 #title .sub.show{opacity:1}
 body.warping #title,body.warping #brand,body.warping #sys{opacity:0}
 #brand,#sys{transition:opacity .3s}
@@ -56,9 +54,8 @@ body.warping #title,body.warping #brand,body.warping #sys{opacity:0}
 #term .prompt{color:var(--yellow)}
 @keyframes breathe{0%,100%{opacity:.9}50%{opacity:1}}
 @keyframes blink{50%{opacity:0}}
-@media (max-width:640px){
-  #title h1{font-size:36px;letter-spacing:8px}
-  #title .caret{width:16px;height:30px}
+@media (max-width:760px){
+  #title h1{font-size:32px;letter-spacing:8px}
   #hud #hintTxt{display:none}
 }
 @media (orientation:portrait){
@@ -66,16 +63,16 @@ body.warping #title,body.warping #brand,body.warping #sys{opacity:0}
   #space{-webkit-mask-image:linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent);
          mask-image:linear-gradient(to bottom,transparent,#000 9%,#000 91%,transparent)}
 }
-@media (prefers-reduced-motion:reduce){#title h1{animation:none}#title .caret{animation:none}#sysDot{animation:none}}
+@media (prefers-reduced-motion:reduce){#title h1{animation:none}#sysDot{animation:none}}
 </style>
 </head>
 <body>
 <canvas id="space" width="480" height="270"></canvas>
 <div id="crt"></div>
-<div id="brand">◆ SHUGE GALAXY OS <b>v1.3</b></div>
+<div id="brand">◆ SHUGE GALAXY OS <b>v1.4</b></div>
 <div id="sys"><i id="sysDot"></i>SYS ONLINE <b id="sndTag">[M]♪ON</b></div>
 <div id="title"><h1 id="titleText"></h1><div class="line"></div><div class="sub" id="titleSub">S H U G E · G A L A X Y</div></div>
-<div id="hud"><span id="clock">--:--:--</span><span id="hintTxt">点击星系跃迁 · 「/」终端 · 「M」音效</span><span id="visits"></span></div>
+<div id="hud"><span id="clock">--:--:--</span><span id="hintTxt">移动鼠标漫游 · 点击星系跃迁 · 「/」终端 · 「T」星图 · 「M」音效</span><span id="visits"></span></div>
 <div id="term">
   <div id="termBar"><span>SHUGE-TERM · 跃迁控制台</span><span id="termClose">×</span></div>
   <div id="termOut"></div>
@@ -89,15 +86,15 @@ window.addEventListener('error',function(ev){
   d.textContent='页面脚本出错：'+ev.message+'（第'+ev.lineno+'行）——把这行字告诉拉里';
   document.body.appendChild(d);});
 /* ============ 配置区 ============
-   每一项 = 一个迷你星系（中心恒星 + 绕圈行星），填了 name 和 url 才会显示名字并可以跃迁。
-   name 为空 = 未命名星系，点击只抖动不跳转。
-   moons = 星系里绕圈的行星数量，不填默认 3。想增删星系，直接增删数组项。 */
+   每一项 = 一个迷你星系（中心核球 + 旋臂 + 盘面星点）。
+   armsN = 旋臂条数，可写 2~6；不写则按 z 自动分配（越近的星系臂越多）。
+   moons = 盘面漂移亮点的数量。想增删星系，直接增删数组项。 */
 const PROJECTS = [
   { name: "鼠哥学院",   desc: "五院共通 · 硬课一起啃",     url: "https://ndshuge.github.io/ndshuge-academy/",   color: "#69f0ae", glow: "#b9ffd5", z: 6,  moons: 5 },
   { name: "鼠哥游戏厅", desc: "实验品与半成品 · 接受拍砖", url: "https://ndshuge.github.io/ndshuge-game/",      color: "#ffd54f", glow: "#fff2a8", z: 7,  moons: 4 },
   { name: "课堂笔记",   desc: "录音转结构化笔记",         url: "https://ndshuge.github.io/ndshuge-classnote/", color: "#b388ff", glow: "#d7bfff", z: 8,  moons: 3 },
-  { name: "环廊", desc: "十二帧摄影装置 · 站在圆心", url: "https://ndshuge.github.io/ndshuge-galaxy/rotunda/", color: "#ff5c8a", glow: "#ff9ec4", z: 9,  moons: 2 },
-  { name: "西安勘测", desc: "真地形 · 从市域推到沟谷", url: "https://ndshuge.github.io/ndshuge-galaxy/xian/", color: "#4fc3ff", glow: "#a8e3ff", z: 10, moons: 2 }
+  { name: "环廊",       desc: "十二帧摄影装置 · 站在圆心", url: "https://ndshuge.github.io/ndshuge-galaxy/rotunda/", color: "#ff5c8a", glow: "#ff9ec4", z: 9,  moons: 2 },
+  { name: "西安勘测",   desc: "真地形 · 从市域推到沟谷", url: "https://ndshuge.github.io/ndshuge-galaxy/xian/", color: "#4fc3ff", glow: "#a8e3ff", z: 10, moons: 2 }
 ];
 /* ============ 引擎 ============ */
 const W=480,H=270,CX=W/2,CY=H/2,FOCAL=12,TAU=Math.PI*2;
@@ -108,7 +105,6 @@ ctx.imageSmoothingEnabled=false;
 const rnd=(a,b)=>a+Math.random()*(b-a);
 const clamp=(v,a,b)=>v<a?a:v>b?b:v;
 const lerp=(a,b,k)=>a+(b-a)*k;
-const wrap=(v,m)=>((v%m)+m)%m;
 function shade(hex,f){const n=parseInt(hex.slice(1),16);let r=n>>16&255,g=n>>8&255,b=n&255;
   if(f>=0){r+=(255-r)*f;g+=(255-g)*f;b+=(255-b)*f}else{r*=1+f;g*=1+f;b*=1+f}
   return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')';}
@@ -116,16 +112,10 @@ function hexA(hex,a){const n=parseInt(hex.slice(1),16);
   return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';}
 function fit(){
   const portrait=innerHeight>innerWidth;
-  /* 竖屏 contain 保全景，横屏 cover 铺满 */
   const s=portrait?Math.min(innerWidth/W,innerHeight/H):Math.max(innerWidth/W,innerHeight/H);
   cv.style.width=Math.ceil(W*s)+'px';cv.style.height=Math.ceil(H*s)+'px';}
 addEventListener('resize',fit);fit();
 
-const SPOTS=[[.24,.36],[.72,.26],[.82,.60],[.16,.70],[.50,.52]];
-function spot(i){if(i<SPOTS.length)return[SPOTS[i][0]*W,SPOTS[i][1]*H];
-  const a=i*2.39996;return[CX+Math.cos(a)*(58+(i%3)*26),CY+Math.sin(a)*(36+(i%3)*16)];}
-
-/* 星系数据：中心恒星 + 行星绕椭圆轨道公转 */
 function makeMoons(n,color){
   const rings=[.45,.68,.92],list=[];
   for(let i=0;i<n;i++){
@@ -134,30 +124,66 @@ function makeMoons(n,color){
       sp:rnd(.28,.5)*(i%2?1:-1)/(ring*2),
       mr:rnd(.05,.08),c:shade(color,i%2?-.15:.3)});}
   return list;}
-/* 旋臂：两条对数螺旋点列 */
 function makeArms(){
   const pts=[];
   for(let arm=0;arm<2;arm++)for(let i=0;i<14;i++){
     const t2=i/13;
     pts.push({t:t2,off:arm*Math.PI+rnd(-.14,.14)});}
   return pts;}
-const systems=PROJECTS.map((p,i)=>{
-  const s=spot(i);
-  return Object.assign({},p,{hx:s[0],hy:s[1],x:s[0],y:s[1],r:1,baseR:22,zEff:p.z,
+
+/* ============ 世界与相机 ============
+   世界比屏幕大：五颗星系散落在 760 x 430 的世界里，屏幕只看到其中一块。
+   鼠标指向屏幕哪一处，相机就缓缓移向世界的那一片；飞船同时飘向鼠标。
+   右上小地图（T 键开关）标出五颗星的位置和当前视野。 */
+const WX=[150,610,700,110,380],WY=[110,105,340,350,225];
+const WWS=760,WHS=430;
+const M={vx:0,vy:0,driveX:WX[4]-CX,driveY:WY[4]-CY,mapA:1,mapOn:true};
+
+const systems=PROJECTS.map(function(p,i){
+  return Object.assign({},p,{hx:CX,hy:CY,x:CX,y:CY,r:1,baseR:22,zEff:p.z,z0:p.z,_fade:1,
+    armsN:(p.armsN||clamp(Math.round(12-p.z),2,6)),
     hover:0,shake:0,flash:0,floatPh:rnd(0,TAU),rotA:rnd(0,TAU),
     moons:makeMoons(p.moons||3,p.color),arms:makeArms()});});
 
+let gdt=1/60,mouseX=CX,mouseY=CY,mox=0,moy=0,shakeT=0,whitePop=0,flameAcc=0,lastHover=null;
+
+function setStar(s,hx,hy,ze){
+  if(warp.active&&s===warp.target)return;
+  s.hx=hx;s.hy=hy;s.zEff=ze;s.z=ze;}
+
+function updateView(dt,t){
+  const camTx=(clamp(mouseX,0,W)/W)*(WWS-W);
+  const camTy=(clamp(mouseY,0,H)/H)*(WHS-H);
+  const rtx=clamp(mouseX,20,W-20),rty=clamp(mouseY,36,H-46);
+  const ppx=rocket.x,ppy=rocket.y;
+  M.driveX+=(camTx-M.driveX)*Math.min(1,dt*1.5);
+  M.driveY+=(camTy-M.driveY)*Math.min(1,dt*1.5);
+  rocket.x+=(rtx-rocket.x)*Math.min(1,dt*1.2);
+  rocket.y+=(rty-rocket.y)*Math.min(1,dt*1.2);
+  M.vx=(rocket.x-ppx)/Math.max(dt,0.0001);
+  M.vy=(rocket.y-ppy)/Math.max(dt,0.0001);
+  mox=-M.driveX*0.22;moy=-M.driveY*0.22;
+  for(let i=0;i<systems.length;i++){const s=systems[i];
+    setStar(s,WX[i]-M.driveX,WY[i]-M.driveY,s.z0);}
+}
+function resetView(){
+  M.vx=0;M.vy=0;
+  M.driveX=WX[4]-CX;M.driveY=WY[4]-CY;
+  rocket.x=CX;rocket.y=206;
+  updateView(1/60,0);
+  for(let i=0;i<systems.length;i++){const s=systems[i];
+    s._fade=1;s.x=s.hx;s.y=s.hy;}
+}
+
+/* ============ 背景星野（与线上版一致） ============ */
 const stars=[];
 for(let i=0;i<110;i++)stars.push({a:rnd(0,TAU),d:rnd(2,300),sp:rnd(6,26),tw:rnd(.8,2.6),
   ph:rnd(0,TAU),s:Math.random()<.85?1:2,par:rnd(.3,1),px:-999,py:-999,
   c:Math.random()<.68?'#ffffff':(Math.random()<.5?'#00e5ff':'#ffd54f')});
-/* 远景小行星带 */
 const rocks=[];
 for(let i=0;i<12;i++)rocks.push({a:rnd(0,TAU),sp:rnd(.05,.1),rx:rnd(150,208),ry:rnd(50,74),s:Math.random()<.7?1:2});
-/* 曲率隧道星（仅跃迁时激活） */
 const wstars=[];
 for(let i=0;i<42;i++)wstars.push({a:rnd(0,TAU),d:rnd(4,300),sp:rnd(260,620),px:-999,py:-999});
-/* 银河带 + 亮星十字 */
 const band=[];
 for(let i=0;i<70;i++){
   const u=rnd(-20,W+20),v=CY+Math.sin(-.28)*(u-CX)+rnd(-34,34);
@@ -166,12 +192,10 @@ const brights=[];
 for(let i=0;i<6;i++)brights.push({x:rnd(20,W-20),y:rnd(30,H-60),ph:rnd(0,TAU)});
 
 const parts=[];
-const rocket={x:CX,y:206,salute:0,clicks:0,last:0,intro:REDUCED?1:0,hop:0,_y:206};
+const rocket={x:CX,y:206,salute:0,clicks:0,last:0,intro:REDUCED?1:0,hop:0,_y:206,tilt:0};
 const warp={active:false,t:0,k:0,target:null,url:'',gentle:false};
 const flash={active:false,t:0,gentle:false};
-let gdt=1/60,mouseX=CX,mouseY=CY,mox=0,moy=0,shakeT=0,whitePop=0,flameAcc=0,lastHover=null;
 
-/* 静态渐变只创建一次 */
 const bgGrad=ctx.createLinearGradient(0,0,0,H);
 bgGrad.addColorStop(0,'#070a1e');bgGrad.addColorStop(1,'#03040e');
 const nebula=[[110,85,150,'rgba(0,110,150,.10)'],[360,180,130,'rgba(96,44,150,.10)'],[300,55,90,'rgba(130,100,30,.06)']]
@@ -180,7 +204,7 @@ const nebula=[[110,85,150,'rgba(0,110,150,.10)'],[360,180,130,'rgba(96,44,150,.1
 const vign=ctx.createRadialGradient(CX,CY,90,CX,CY,310);
 vign.addColorStop(0,'rgba(0,0,0,0)');vign.addColorStop(1,'rgba(0,0,14,.5)');
 
-/* ============ 音效（合成） ============ */
+/* ============ 音效 ============ */
 let actx=null,master=null,muted=false;
 function audio(){if(actx)return;
   try{actx=new (window.AudioContext||window.webkitAudioContext)();
@@ -219,7 +243,7 @@ function toggleMute(){audio();muted=!muted;
   document.getElementById('sndTag').textContent=muted?'[M]♪OFF':'[M]♪ON';}
 document.getElementById('sys').addEventListener('click',toggleMute);
 
-/* 输入 */
+/* ============ 输入 ============ */
 function toGame(e){const r=cv.getBoundingClientRect();
   return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height];}
 cv.addEventListener('pointermove',function(e){const p=toGame(e);mouseX=p[0];mouseY=p[1];});
@@ -234,11 +258,9 @@ cv.addEventListener('pointerdown',function(e){
   if(Math.abs(mx-rocket.x)<18&&my>rocket.y-26&&my<rocket.y+14)rocketClick();
 });
 function clickPlanet(p){
-  if(!p.name||!p.url){p.shake=1;SND.pick();return;}   /* 未配置：只抖动提示，不闪不跳 */
   const u=p.url.indexOf('http')===0?p.url:'https://'+p.url;
-  if(REDUCED){gentleWarp(p,u);return;}   /* 系统要求减少动效：温和跃迁（短放大+白幕淡出） */
-  startWarp(p,u,false);
-}
+  if(REDUCED){gentleWarp(p,u);return;}
+  startWarp(p,u,false);}
 function startWarp(p,u,gentle){warp.active=true;warp.t=0;warp.k=0;warp.target=p;warp.url=u;
   warp.gentle=!!gentle;hideTerm();
   if(gentle)tone('sine',440,660,.3,.06);
@@ -255,7 +277,9 @@ function boom(){rocket.salute=2.4;shakeT=REDUCED?0:.7;whitePop=REDUCED?0:.12;SND
       age:0,life:rnd(.5,1.3),s:Math.random()<.5?1:2,
       c:['#ffffff','#00e5ff','#ffd54f','#ff5c8a','#69f0ae'][Math.random()*5|0]});}}
 
-/* 终端 */
+/* ============ 方案切换 UI ============ */
+
+/* ============ 终端 ============ */
 const term=document.getElementById('term'),termOut=document.getElementById('termOut'),termIn=document.getElementById('termIn');
 function termPrint(s){const d=document.createElement('div');d.textContent=s;termOut.appendChild(d);termOut.scrollTop=termOut.scrollHeight;}
 function openTerm(){term.classList.add('open');termIn.focus();SND.term();
@@ -276,14 +300,16 @@ function runCmd(raw){const c=raw.trim();if(!c)return;
     else termPrint('暂无项目');}}
 addEventListener('keydown',function(e){
   audio();
-  if(e.key==='/'&&document.activeElement!==termIn){e.preventDefault();
+  const inTerm=document.activeElement===termIn;
+  if(!inTerm&&(e.key==='t'||e.key==='T')){M.mapOn=!M.mapOn;SND.term();return;}
+  if(e.key==='/'&&!inTerm){e.preventDefault();
     term.classList.contains('open')?hideTerm():openTerm();}
   else if(e.key==='Escape')hideTerm();
-  else if((e.key==='m'||e.key==='M')&&document.activeElement!==termIn)toggleMute();
-  else if(e.key==='Enter'&&document.activeElement===termIn){const v=termIn.value;termIn.value='';runCmd(v);}});
+  else if((e.key==='m'||e.key==='M')&&!inTerm)toggleMute();
+  else if(e.key==='Enter'&&inTerm){const v=termIn.value;termIn.value='';runCmd(v);}});
 document.getElementById('termClose').addEventListener('click',hideTerm);
 
-/* 状态栏 */
+/* ============ 状态栏 ============ */
 const clockEl=document.getElementById('clock'),visitsEl=document.getElementById('visits');
 function tick(){const d=new Date();
   clockEl.textContent=[d.getHours(),d.getMinutes(),d.getSeconds()].map(function(n){return String(n).padStart(2,'0');}).join(':');}
@@ -292,9 +318,9 @@ let visits=1;
 try{const K='shuge-galaxy-visits';
   visits=(parseInt(localStorage.getItem(K)||'0',10)||0)+1;localStorage.setItem(K,String(visits));}catch(err){}
 visitsEl.textContent='第 '+visits+' 次到访';
-if(IS_TOUCH)document.getElementById('hintTxt').textContent='点星系跃迁 · 点右上角切音效';
+if(IS_TOUCH)document.getElementById('hintTxt').textContent='拖动漫游 · 点击星系跃迁';
 
-/* 标题打字机 */
+/* ============ 标题打字机 ============ */
 const titleText=document.getElementById('titleText'),titleSub=document.getElementById('titleSub');
 const TITLE='鼠哥星系';
 if(REDUCED){titleText.textContent=TITLE;titleSub.classList.add('show');}
@@ -302,31 +328,25 @@ else{let i=0;const iv=setInterval(function(){i++;
   if(i>=TITLE.length){titleText.textContent=TITLE;clearInterval(iv);titleSub.classList.add('show');}
   else titleText.innerHTML=TITLE.slice(0,i)+'<span class="caret"></span>';},240);}
 
+/* ============ 主循环 ============ */
 function update(dt,t){
   gdt=dt;
-  mox+=(clamp((mouseX-CX)*.05,-9,9)-mox)*Math.min(1,dt*6);
-  moy+=(clamp((mouseY-CY)*.04,-7,7)-moy)*Math.min(1,dt*6);
-  if(REDUCED){mox=0;moy=0;}
   if(rocket.intro<1)rocket.intro=Math.min(1,rocket.intro+dt/1.3);
   rocket.hop=Math.max(0,rocket.hop-dt*2.4);
-  /* 曲率飞行：跃迁后半程火箭冲向目标星系方向 */
-  if(warp.active&&!warp.gentle){
-    const ft=clamp((warp.t-.38)/.62,0,1),e=ft*ft*ft;
-    rocket.flyX=(warp.target.x-rocket.x)*.7*ft*ft;
-    rocket.flyY=-(H+120)*e;
-    rocket.flying=ft>0;}
-  else{rocket.flyX=0;rocket.flyY=0;rocket.flying=false;}
+  rocket.tilt=clamp(-M.vx*0.05,-10,10);
+  updateView(dt,t);
   if(warp.active){warp.t=Math.min(1,warp.t+dt/(warp.gentle?1:1.35));
     warp.k=warp.t*warp.t*(3-2*warp.t);
     if(!flash.active){const zEnd=warp.gentle?.5:.32;
       const tz=lerp(warp.target.z,zEnd,warp.k);
       if(warp.target.baseR*FOCAL/tz>=(warp.gentle?210:300)){
-        flash.active=true;flash.gentle=warp.gentle;flash.t=warp.gentle?.45:.5;}}}
+        flash.active=true;flash.gentle=warp.gentle;flash.t=.8;}}}
   if(flash.active){flash.t-=dt;
     if(flash.t<=0){flash.active=false;location.href=warp.url;return;}}
   for(let i=0;i<systems.length;i++){const s=systems[i];
-    s.zEff=warp.active?(s===warp.target?lerp(s.z,warp.gentle?.5:.32,warp.k):(warp.gentle?s.z:s.z*(1+warp.k*9))):s.z;
+    if(warp.active&&s===warp.target)s.zEff=lerp(s.z,warp.gentle?.5:.32,warp.k);
     s.r=s.baseR*FOCAL/s.zEff*(1+.06*s.hover);
+    s.fade=(warp.active&&s!==warp.target)?1-warp.k:(s._fade===undefined?1:s._fade);
     let x=s.hx+mox*.35,y=s.hy+moy*.3;
     if(!REDUCED)y+=Math.sin(t*.9+s.floatPh)*2.2;
     if(warp.active){const k=warp.k;
@@ -335,31 +355,30 @@ function update(dt,t){
     if(s.shake>0){s.shake=Math.max(0,s.shake-dt*2.2);x+=Math.sin(t*60)*3.5*s.shake;}
     if(s.flash>0)s.flash=Math.max(0,s.flash-dt*3.5);
     s.x=x;s.y=y;
-    /* 行星公转：跃迁时加速旋转 */
-    const spinUp=(warp.active&&s===warp.target&&!warp.gentle)?1+warp.k*14:1;
+    const spinUp=(warp.active&&s===warp.target)?Math.max(.2,1-warp.k*1.2):1;
     s.rotA+=.06*gdt*spinUp*(REDUCED?.3:1);
     for(let j=0;j<s.moons.length;j++){const m=s.moons[j];
       m.a+=m.sp*gdt*spinUp*(REDUCED?.3:1);}}
   for(let i=0;i<rocks.length;i++){const rk=rocks[i];rk.a+=rk.sp*dt*(REDUCED?.3:1);}
-  /* 隧道星推进 */
   if(warp.active&&!warp.gentle){for(let i=0;i<wstars.length;i++){const ws=wstars[i];
     ws.d+=ws.sp*gdt*(1+warp.k*2.5);
     if(ws.d>320){ws.d=rnd(2,14);ws.a=rnd(0,TAU);ws.px=-999;ws.py=-999;}}}
-  /* 悬停检测 */
   let hp=null;
+  const mmw=128,mmh=78,mmx=W-mmw-10,mmy=42;
+  const inMap=(mouseX>mmx-12&&mouseX<mmx+mmw+12&&mouseY>mmy-12&&mouseY<mmy+mmh+12);
+  M.mapA+=((inMap?0.26:1)-M.mapA)*Math.min(1,dt*4.5);
   if(!warp.active){const sorted=systems.slice().sort(function(a,b){return a.zEff-b.zEff;});
     for(let i=0;i<sorted.length;i++){const q=sorted[i];
       const hr=Math.max(q.r,IS_TOUCH?30:20),dx=mouseX-q.x,dy=mouseY-q.y;
       if(dx*dx+dy*dy<=hr*hr){hp=q;break;}}}
   if(hp&&hp!==lastHover)SND.hover();
   lastHover=hp;
-  const overRocket=!warp.active&&Math.abs(mouseX-rocket.x)<18&&mouseY>rocket.y-26&&mouseY<rocket.y+14;
-  cv.style.cursor=(hp||overRocket)?'pointer':'default';
+  cv.style.cursor='none';
   for(let i=0;i<systems.length;i++){const s=systems[i];
     s.hover+=((s===hp?1:0)-s.hover)*Math.min(1,dt*9);}
-  /* 尾焰粒子 */
   const flyBoost=rocket.flying?(1+clamp((warp.t-.38)/.62,0,1)*14):0;
-  const fb=(warp.active&&!warp.gentle)?(4+warp.k*4+flyBoost):((REDUCED?.5:1)+(rocket.intro<1?2.2:0));
+  const shipSpeed=clamp(Math.hypot(M.vx,M.vy)/140,0,1.4);
+  const fb=(warp.active&&!warp.gentle)?(4+warp.k*4+flyBoost):((REDUCED?.5:1)+(rocket.intro<1?2.2:0)+shipSpeed);
   flameAcc+=dt*26*fb;
   while(flameAcc>=1){flameAcc--;
     if(parts.length<420)parts.push({x:rocket.x+rnd(-2,2),y:rocket._y+9,
@@ -378,7 +397,7 @@ function drawStars(t,boost){
     s.d+=s.sp*boost*gdt;
     if(s.d>320){s.d=rnd(1,18);s.a=rnd(0,TAU);s.px=-999;s.py=-999;}
     const x=CX+Math.cos(s.a)*s.d+mox*s.par,y=CY+Math.sin(s.a)*s.d*.78+moy*s.par;
-    const a=REDUCED?.6:(.3+.7*Math.pow(Math.sin(t*s.tw+s.ph)*.5+.5,2));
+    const a=warp.active?.55:(REDUCED?.6:(.3+.7*Math.pow(Math.sin(t*s.tw+s.ph)*.5+.5,2)));
     const dx=x-s.px,dy=y-s.py;
     ctx.globalAlpha=a;ctx.fillStyle=s.c;ctx.strokeStyle=s.c;
     if(boost>3&&dx*dx+dy*dy>9){ctx.lineWidth=s.s;ctx.beginPath();ctx.moveTo(s.px,s.py);ctx.lineTo(x,y);ctx.stroke();}
@@ -392,106 +411,124 @@ function drawRocks(){
     const x=(CX+Math.cos(rk.a)*rk.rx+mox*.25)|0,y=(CY+Math.sin(rk.a)*rk.ry+moy*.2)|0;
     ctx.fillRect(x,y,rk.s,rk.s);}
 }
-
-/* 迷你星系：星云雾 + 轨道 + 行星 + 恒星 */
+/* 迷你星系：两条主旋臂的对数螺旋，臂点按弧长连续（步长约 1px），
+   盘面散星与核球刻意压暗压小，把对比度全部让给旋臂。 */
 function drawSystem(s,t){
   if(s.zEff>60||s.r<.5)return;
+  const F=(s.fade===undefined)?1:s.fade;
+  if(F<.03)return;
   const x=s.x|0,y=s.y|0,r=Math.max(1,s.r);
   const near=clamp((12-s.zEff)/6,.25,1);
   const breath=.5+.5*Math.sin(t*2+s.floatPh);
   const hoverK=s.hover*(REDUCED?.6:(.55+.45*breath));
-  /* 未命名星系：悬停呼吸光晕 */
-  if((!s.name||!s.url)&&hoverK>.02){
-    const hg=ctx.createRadialGradient(x,y,r*.4,x,y,r*1.3);
-    hg.addColorStop(0,'rgba(0,0,0,0)');
-    hg.addColorStop(.72,hexA(s.glow,.16*hoverK*(.6+.4*breath)));
-    hg.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=hg;ctx.beginPath();ctx.arc(x,y,r*1.3,0,TAU);ctx.fill();}
-  /* 星云雾底 */
-  const ng=ctx.createRadialGradient(x,y,0,x,y,r);
-  ng.addColorStop(0,hexA(s.color,.09*near+.05*hoverK));
+  let seed=((s.floatPh*7919)^((s.z0||8)*131)^0x9e37)|0;seed=seed>>>0;
+  const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};
+  const sq=.60+.14*rnd();
+  const k=.38+.10*rnd();
+  const dir=rnd()<.5?-1:1;
+  const NA=clamp(s.armsN||2,2,6);
+  const dim=Math.pow(2/NA,.35);
+  /* 1) 盘面雾底：压扁椭圆，很淡 */
+  ctx.save();ctx.translate(x,y);ctx.scale(1,sq);
+  const ng=ctx.createRadialGradient(0,0,0,0,0,r);
+  ng.addColorStop(0,hexA(s.color,.09*near+.04*hoverK));
+  ng.addColorStop(.6,hexA(s.color,.032*near));
   ng.addColorStop(1,hexA(s.color,0));
-  ctx.fillStyle=ng;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill();
-  /* 旋臂：两条对数螺旋点列，整体缓转 */
-  for(let i=0;i<s.arms.length;i++){const a2=s.arms[i];
-    const ang=a2.t*4.6+a2.off+s.rotA;
-    const rad=r*(.18+.82*a2.t);
-    ctx.globalAlpha=(1-a2.t)*(.26+.2*hoverK)*near;
-    ctx.fillStyle=s.color;
-    ctx.fillRect((x+Math.cos(ang)*rad)|0,(y+Math.sin(ang)*rad*.42)|0,a2.t<.3?2:1,a2.t<.3?2:1);}
-  ctx.globalAlpha=1;
-  /* 轨道环 */
-  const ORB=[.45,.68,.92];
-  for(let i=0;i<ORB.length;i++){
-    ctx.globalAlpha=(.16+.14*hoverK)*near;
-    ctx.strokeStyle=s.color;ctx.lineWidth=1;
-    ctx.beginPath();ctx.ellipse(x,y,r*ORB[i],r*ORB[i]*.42,0,0,TAU);ctx.stroke();}
-  if(hoverK>.02){ctx.globalAlpha=.3*hoverK*near;
-    ctx.strokeStyle=s.glow;
-    ctx.beginPath();ctx.ellipse(x,y,r*.92,r*.92*.42,0,0,TAU);ctx.stroke();}
-  ctx.globalAlpha=1;
-  /* 行星（rect 像素点） */
+  ctx.globalAlpha=F;ctx.fillStyle=ng;
+  ctx.beginPath();ctx.arc(0,0,r,0,TAU);ctx.fill();
+  ctx.restore();
+  /* 2) 盘面散星：只做底噪 */
+  const discN=Math.max(9,(r*0.85)|0);
+  for(let i=0;i<discN;i++){
+    const rr=r*(.20+.80*Math.sqrt(rnd()));
+    const aa=rnd()*TAU;
+    ctx.globalAlpha=((.10*(1-rr/r)+.02)*near*(1+.5*hoverK))*F;
+    ctx.fillStyle=rr<r*.3?s.glow:s.color;
+    ctx.fillRect((x+Math.cos(aa)*rr)|0,(y+Math.sin(aa)*rr*sq)|0,1,1);
+  }
+  /* 3) 两条主旋臂：对数螺旋，弧长步进保证连线不断 */
+  const R=r*.98,R0=r*(.18+(NA-2)*.022);
+  const thMax=Math.log(R/R0)/k;
+  const bwBase=r>58?3:(r>28?2:1);
+  const bw=NA>=5?Math.max(1,bwBase-1):bwBase;
+  for(let arm=0;arm<NA;arm++){
+    const off=arm*TAU/NA;
+    let th=0;
+    while(th<thMax){
+      const rr=R0*Math.exp(k*th);
+      const ang=dir*th+off+s.rotA;
+      const px=x+Math.cos(ang)*rr,py=y+Math.sin(ang)*rr*sq;
+      const u=rr/R;
+      const aa=(u<.4?(.95-.35*u):(.85*(1-u)+.25))*near*(1+.45*hoverK)*F*dim;
+      const knot=(Math.abs(u-.36)<.045||Math.abs(u-.70)<.045);
+      ctx.globalAlpha=clamp(knot?aa*1.5:aa,0,1);
+      ctx.fillStyle=u<.4?s.glow:s.color;
+      ctx.fillRect(px|0,py|0,bw,bw);
+      if(rnd()<.40*dim){
+        const pa=ang+Math.PI/2;
+        const sp=(rnd()-.5)*r*.24*(1.15-u);
+        ctx.globalAlpha=clamp(aa*.5,0,1);
+        ctx.fillRect((x+Math.cos(ang)*rr+Math.cos(pa)*sp)|0,
+                     (y+Math.sin(ang)*rr*sq+Math.sin(pa)*sp*sq)|0,1,1);
+      }
+      th+=1/Math.max(2.2,rr);
+    }
+  }
+  /* 3b) 盘面亮星：随盘面缓慢漂移的高亮点 */
   for(let i=0;i<s.moons.length;i++){const m=s.moons[i];
-    const or=r*m.orbitR;
-    const mx=x+Math.cos(m.a)*or,my=y+Math.sin(m.a)*or*.42;
-    const mr=Math.max(1,(r*m.mr)|0);
-    ctx.globalAlpha=clamp(near+.15,0,1);ctx.fillStyle=m.c;
-    ctx.fillRect((mx-mr/2)|0,(my-mr/2)|0,mr,mr);}
-  ctx.globalAlpha=1;
-  /* 中心恒星：白核 + 色晕 + 呼吸 */
-  const sr=r*.20*(1+.10*breath);
-  const g=ctx.createRadialGradient(x,y,0,x,y,sr*2.4);
+    const aa=m.a*0.55+s.rotA*1.4;
+    const rr=r*(0.34+m.orbitR*0.55);
+    ctx.globalAlpha=clamp((.50+.35*hoverK)*near,0,1)*F;
+    ctx.fillStyle=s.glow;
+    ctx.fillRect((x+Math.cos(aa)*rr)|0,(y+Math.sin(aa)*rr*sq)|0,1,1);}
+  /* 4) 核球：小而亮，不吞内臂 */
+  const cr=r*.17*(1+.07*breath+.10*hoverK);
+  ctx.save();ctx.translate(x,y);ctx.scale(1,sq);
+  const g=ctx.createRadialGradient(0,0,0,0,0,cr*2.2);
   g.addColorStop(0,'#ffffff');
-  g.addColorStop(.32,s.color);
+  g.addColorStop(.28,s.color);
   g.addColorStop(1,hexA(s.color,0));
-  ctx.globalAlpha=clamp(.8+.2*near+.15*hoverK,0,1);
-  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,sr*2.4,0,TAU);ctx.fill();
-  ctx.globalAlpha=1;
-  /* 名字（配置了才显示） */
+  ctx.globalAlpha=clamp(.88+.12*near+.15*hoverK,0,1)*F;
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,cr*2.2,0,TAU);ctx.fill();
+  ctx.restore();
+  /* 5) 名字 */
   if(s.name&&s.url&&r>8&&!warp.active){
-    ctx.globalAlpha=clamp(near+.25,0,1)*(.55+.45*s.hover);
+    ctx.globalAlpha=clamp(near+.25,0,1)*(.55+.45*s.hover)*F;
     ctx.font='12px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
     ctx.textAlign='center';
     ctx.fillStyle='rgba(0,0,10,.8)';
     ctx.fillText(s.name,x+1,(y+r+11)|0);
     ctx.fillStyle='#eafcff';
     ctx.fillText(s.name,x,(y+r+10)|0);ctx.textAlign='left';ctx.globalAlpha=1;}
-  if(s.flash>0){ctx.globalAlpha=s.flash*.85;ctx.fillStyle='#ffffff';
+  if(s.flash>0){ctx.globalAlpha=s.flash*.85*F;ctx.fillStyle='#ffffff';
     ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill();ctx.globalAlpha=1;}
+  ctx.globalAlpha=1;
 }
-
 function drawRocket(t){
   const ie=1-Math.pow(1-rocket.intro,3);
-  const introY=(1-ie)*124;                 /* 开场从屏幕下方升入 */
+  const introY=(1-ie)*124;
   const bob=Math.sin(t*2.1)*1.6;
   const drift=Math.sin(t*.6)*2.5;
   const jit=(warp.active&&!warp.gentle)?rnd(-.8,.8):0;
   const hopY=rocket.hop>0?-Math.sin((1-rocket.hop)*Math.PI)*3.2:0;
-  const x=(rocket.x+drift+(rocket.flyX||0)+jit)|0;
+  const x=(rocket.x+drift+rocket.tilt+jit)|0;
   const y=(rocket.y+bob+introY+hopY+(rocket.flyY||0)+jit*.5)|0;
   rocket._y=y;
-  /* 尾巴：末端摆动 */
   ctx.strokeStyle='rgba(207,216,220,.85)';ctx.lineWidth=1;
   const tw=Math.sin(t*3.2)*2;
   ctx.beginPath();ctx.moveTo(x+6,y-1);ctx.quadraticCurveTo(x+13+tw,y+3,x+11+tw*.6,y+9);ctx.stroke();
-  /* 尾焰核心：开场点火更长 */
   const fl=6+Math.sin(t*31)*1.5+(rocket.intro<1?5:0)+((warp.active&&!warp.gentle)?8+(rocket.flying?6:0):0);
   ctx.fillStyle='#ffd54f';ctx.fillRect(x-2,y+6,4,3);
   ctx.fillStyle='rgba(255,213,79,.55)';ctx.fillRect(x-1,y+9,2,fl|0);
   ctx.fillStyle='#ffffff';ctx.fillRect(x-1,y+6,2,2);
-  /* 鳍 */
   ctx.fillStyle='#ff4757';ctx.fillRect(x-8,y-3,3,9);ctx.fillRect(x+5,y-3,3,9);
-  /* 机身 */
   ctx.fillStyle='#cfd8dc';ctx.fillRect(x-5,y-14,10,18);
   ctx.fillStyle='#ffffff';ctx.fillRect(x+1,y-14,2,18);
   ctx.fillStyle='rgba(10,25,60,.25)';ctx.fillRect(x-5,y-14,2,18);
-  /* 鼻锥 */
   ctx.fillStyle='#ff4757';
   ctx.fillRect(x-1,y-18,2,2);ctx.fillRect(x-3,y-16,6,2);ctx.fillRect(x-5,y-14,10,2);
   ctx.fillRect(x-5,y+1,10,2);
-  /* 喷口 */
   ctx.fillStyle='rgba(10,25,60,.55)';ctx.fillRect(x-3,y+4,6,3);
-  /* 舷窗里的老鼠宇航员：会环顾四周、会眨眼 */
   const look=Math.sin(t*.55)*.9;
   const blink=(t%3.4)<.14;
   const wx=x+look,wy=y-7;
@@ -506,7 +543,6 @@ function drawRocket(t){
   ctx.strokeStyle='#00e5ff';ctx.lineWidth=1;
   ctx.beginPath();ctx.arc(wx,wy,4.5,0,TAU);ctx.stroke();
   ctx.fillStyle='rgba(255,255,255,.85)';ctx.fillRect(wx-3,wy-3,1,1);
-  /* 彩蛋：敬礼 + 头顶闪星 */
   if(rocket.salute>0){ctx.fillStyle='#cfd8dc';ctx.fillRect(x+5,y-16,2,7);
     ctx.fillStyle='#ffffff';ctx.fillRect(x+5,y-18,2,2);
     const tw2=Math.sin(t*12)*.5+.5;
@@ -520,39 +556,101 @@ function drawParts(){
     ctx.fillRect(q.x|0,q.y|0,s,s);}
   ctx.globalAlpha=1;
 }
-function drawTunnel(){
-  /* 曲率隧道：高速放射光线 */
-  for(let i=0;i<wstars.length;i++){const ws=wstars[i];
-    const x=CX+Math.cos(ws.a)*ws.d,y=CY+Math.sin(ws.a)*ws.d*.78;
-    const dx=x-ws.px,dy=y-ws.py;
-    ctx.globalAlpha=.7;ctx.strokeStyle=i%3?'#ffffff':'#00e5ff';ctx.lineWidth=1;
-    if(dx*dx+dy*dy>4){ctx.beginPath();ctx.moveTo(ws.px,ws.py);ctx.lineTo(x,y);ctx.stroke();}
-    else ctx.fillRect(x|0,y|0,1,1);
-    ws.px=x;ws.py=y;}
+/* 方案 4 / 6 专属：屏幕外的星系指示 */
+function drawOffscreen(t){
+  for(let i=0;i<systems.length;i++){const s=systems[i];
+    if(s.x>16&&s.x<W-16&&s.y>16&&s.y<H-16)continue;
+    const px=clamp(s.x,12,W-12)|0,py=clamp(s.y,12,H-12)|0;
+    const p=.35+.65*Math.abs(Math.sin(t*1.8+i));
+    ctx.globalAlpha=p;ctx.fillStyle=s.color;
+    const bx=s.x<12?-1:(s.x>W-12?1:0);
+    const by=s.y<12?-1:(s.y>H-12?1:0);
+    if(bx===-1)ctx.fillRect(px-1,py-3,4,6);
+    else if(bx===1)ctx.fillRect(px-3,py-3,4,6);
+    else ctx.fillRect(px-3,py-1,6,4);
+    if(bx&&by)ctx.fillRect(px-1,py-1,2,2);
+  }
+  ctx.globalAlpha=1;
+}
+/* 方案 6 专属：跟手的航向准星（就在鼠标处，中心留出断口） */
+function drawHelm(t){
+  const hx=clamp(mouseX,0,W)|0,hy=clamp(mouseY,0,H)|0;
+  ctx.strokeStyle='#00e5ff';ctx.lineWidth=1;
+  ctx.globalAlpha=.62;
+  ctx.beginPath();ctx.moveTo(hx-7,hy);ctx.lineTo(hx-2,hy);
+  ctx.moveTo(hx+2,hy);ctx.lineTo(hx+7,hy);
+  ctx.moveTo(hx,hy-7);ctx.lineTo(hx,hy-2);
+  ctx.moveTo(hx,hy+2);ctx.lineTo(hx,hy+7);ctx.stroke();
+  ctx.globalAlpha=.3;ctx.beginPath();ctx.arc(hx,hy,10,0,TAU);ctx.stroke();
+  ctx.globalAlpha=.18;ctx.beginPath();ctx.arc(hx,hy,2,0,TAU);ctx.stroke();
+  ctx.globalAlpha=1;
+}
+/* 方案 6 专属：世界小地图，带五个星系的名字（候选位自动避让，不叠字） */
+function drawMinimap(t){
+  if(!M.mapOn)return;
+  const A=M.mapA;
+  const mw=128,mh=78,mx=W-mw-10,my=42;
+  const ix=mx+4,iy=my+4,iw=mw-8,ih=mh-8;
+  ctx.fillStyle='rgba(4,8,24,'+(0.66*A).toFixed(3)+')';ctx.fillRect(mx,my,mw,mh);
+  ctx.strokeStyle='rgba(0,229,255,'+(0.26*A).toFixed(3)+')';ctx.lineWidth=1;
+  ctx.strokeRect(mx+.5,my+.5,mw-1,mh-1);
+  const sx=iw/WWS,sy=ih/WHS;
+  ctx.strokeStyle='rgba(255,255,255,'+(0.34*A).toFixed(3)+')';
+  ctx.strokeRect((ix+M.driveX*sx)|0,(iy+M.driveY*sy)|0,
+    Math.max(6,(W*sx)|0),Math.max(4,(H*sy)|0));
+  ctx.font='8px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+  ctx.textAlign='left';
+  const P=[],LAB=[];
+  for(let i=0;i<systems.length;i++){const s=systems[i];
+    P.push([(ix+WX[i]*sx)|0,(iy+WY[i]*sy)|0,s]);}
+  function fits(r){
+    if(r[0]<ix-1||r[2]>ix+iw+1||r[1]<iy-1||r[3]>iy+ih+1)return false;
+    for(let k=0;k<LAB.length;k++){const q=LAB[k];
+      if(!(r[0]>q[2]+3||q[0]>r[2]+3||r[1]>q[3]+2||q[1]>r[3]+2))return false;}
+    return true;}
+  for(let i=0;i<P.length;i++){const px=P[i][0],py=P[i][1],s=P[i][2];
+    const w=Math.ceil(ctx.measureText(s.name).width);
+    const cands=[[px+5,py-7],[px-4-w,py-7],[px-Math.round(w/2),py+6],
+                 [px-Math.round(w/2),py-15],[px+5,py+5],[px-4-w,py+5]];
+    let r=null;
+    for(let c=0;c<cands.length;c++){const q=cands[c];
+      const box=[q[0],q[1],q[0]+w,q[1]+8];
+      if(fits(box)){r=box;break;}}
+    if(r)LAB.push(r);
+    ctx.globalAlpha=A;ctx.fillStyle=s.color;ctx.fillRect(px-1,py-1,3,3);}
+  for(let i=0;i<P.length;i++){const s=P[i][2];
+    const w=Math.ceil(ctx.measureText(s.name).width);
+    const cands=[[P[i][0]+5,P[i][1]-7],[P[i][0]-4-w,P[i][1]-7],[P[i][0]-Math.round(w/2),P[i][1]+6],
+                 [P[i][0]-Math.round(w/2),P[i][1]-15],[P[i][0]+5,P[i][1]+5],[P[i][0]-4-w,P[i][1]+5]];
+    let r=null;
+    for(let c=0;c<cands.length;c++){const q=cands[c];
+      const box=[q[0],q[1],q[0]+w,q[1]+8];
+      if(LAB.indexOf(box)>=0){r=box;break;}}
+    if(!r)continue;
+    ctx.globalAlpha=0.9*A;ctx.fillStyle='rgba(4,8,24,1)';ctx.fillRect(r[0]-1,r[1]-1,w+2,10);
+    ctx.globalAlpha=A;ctx.fillStyle=s.color;ctx.fillText(s.name,r[0],r[1]+6);}
+  ctx.globalAlpha=A;ctx.fillStyle='rgba(150,215,255,1)';
+  ctx.fillText('星图',mx,my-3);
   ctx.globalAlpha=1;
 }
 function render(t){
   ctx.setTransform(1,0,0,1,0,0);
   if(shakeT>0)ctx.translate(rnd(-3,3)*shakeT*2,rnd(-3,3)*shakeT*2);
-  /* 相机推进：跃迁时轻微向中心放大 */
   if(warp.active&&!warp.gentle){const z=1+warp.k*.05;
     ctx.translate(CX,CY);ctx.scale(z,z);ctx.translate(-CX,-CY);}
   ctx.fillStyle=bgGrad;ctx.fillRect(-8,-8,W+16,H+16);
   for(let i=0;i<nebula.length;i++){ctx.fillStyle=nebula[i];ctx.fillRect(0,0,W,H);}
-  /* 银河带雾 */
   ctx.save();ctx.translate(CX,CY);ctx.rotate(-.28);
   const mg=ctx.createRadialGradient(0,0,10,0,0,240);
   mg.addColorStop(0,'rgba(140,170,255,.05)');mg.addColorStop(1,'rgba(140,170,255,0)');
   ctx.fillStyle=mg;ctx.fillRect(-260,-52,520,104);ctx.restore();
   const boost=REDUCED?0:1;
   drawStars(t,boost);
-  /* 银河带星 */
   for(let i=0;i<band.length;i++){const b2=band[i];
     ctx.globalAlpha=b2.a*(REDUCED?.8:(.7+.3*Math.sin(t*.8+i)));
     ctx.fillStyle='#cfd8ff';ctx.fillRect((b2.x+mox*.15)|0,(b2.y+moy*.1)|0,1,1);}
   ctx.globalAlpha=1;
   drawRocks();
-  /* 亮星十字 */
   for(let i=0;i<brights.length;i++){const b3=brights[i];
     const tw3=REDUCED?.6:(.5+.5*Math.sin(t*1.6+b3.ph));
     const bx=(b3.x+mox*.2)|0,by=(b3.y+moy*.15)|0;
@@ -562,35 +660,27 @@ function render(t){
     ctx.fillRect(bx-4,by,3,1);ctx.fillRect(bx+2,by,3,1);
     ctx.fillRect(bx,by-4,1,3);ctx.fillRect(bx,by+2,1,3);}
   ctx.globalAlpha=1;
-  if(false)drawTunnel();
-  if(false){ctx.fillStyle='rgba(0,229,255,'+(warp.k*.09)+')';ctx.fillRect(0,0,W,H);}
   const sorted=systems.slice().sort(function(a,b){return b.zEff-a.zEff;});
   for(let i=0;i<sorted.length;i++)drawSystem(sorted[i],t);
   drawRocket(t);
   drawParts();
-  /* 隧道中心辉光（温和跃迁也有，柔和无频闪） */
-  if(warp.active){
-    const gk=0;
-    const cg=ctx.createRadialGradient(CX,CY,0,CX,CY,90+warp.k*70);
-    cg.addColorStop(0,'rgba(200,245,255,'+((.12+.45*warp.k)*gk)+')');
-    cg.addColorStop(1,'rgba(200,245,255,0)');
-    ctx.fillStyle=cg;ctx.fillRect(0,0,W,H);}
+  drawOffscreen(t);
+  drawMinimap(t);drawHelm(t);
   ctx.setTransform(1,0,0,1,0,0);
   ctx.fillStyle=vign;ctx.fillRect(0,0,W,H);
   if(whitePop>0){ctx.fillStyle='rgba(255,255,255,'+(whitePop/.12*.5)+')';ctx.fillRect(0,0,W,H);}
-  if(flash.active){   /* 渐黑收场：星系放大后画面缓缓暗下，落到游戏选择界面再亮起 */
-    var bd=flash.gentle?.45:.5;
-    ctx.fillStyle='rgba(2,3,10,'+(clamp(1-flash.t/bd,0,1))+')';
-    ctx.fillRect(0,0,W,H);}
+  if(flash.active){var bd=flash.gentle?.45:.5;
+    ctx.fillStyle='rgba(2,3,10,'+(clamp(1-flash.t/bd,0,1))+')';ctx.fillRect(0,0,W,H);}
 }
 let last=performance.now();
 function frame(now){const dt=clamp((now-last)/1000,0,.05);last=now;
   update(dt,now/1000);render(now/1000);requestAnimationFrame(frame);}
+resetView();
 requestAnimationFrame(frame);
-/* 调试钩子（只读快照，不影响运行） */
-window.__gx=function(){return{warp:warp.active,gentle:warp.gentle,
-  systems:systems.map(function(s){return{name:s.name,moons:s.moons.length,r:Math.round(s.r)};}),
-  visits:visits,muted:muted,parts:parts.length,title:document.getElementById('titleText').textContent};};
+window.__gx=function(){return{
+  stars:systems.map(function(s){return{name:s.name,x:Math.round(s.x),y:Math.round(s.y),r:Math.round(s.r),arms:s.armsN};}),
+  cam:[Math.round(M.driveX),Math.round(M.driveY)],map:M.mapOn,muted:muted,
+  visits:visits,parts:parts.length,title:document.getElementById('titleText').textContent};};
 </script>
 </body>
 </html>
