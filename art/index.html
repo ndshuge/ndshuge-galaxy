@@ -87,7 +87,10 @@ var WORKS=[
     href:'./verdigris/', c:'#8fb894', g:'#c8dcc6', like:'art-verdigris', motif:'patina' },
   { no:'07', t:'声场',   en:'CHLADNI',    sub:'驻波图形', medium:'声学装置', year:'2026', fresh:true,
     line:'压上弓，撒一层沙，看它自己走到该站的地方。',
-    href:'./chladni/', c:'#a78bfa', g:'#d9c6ff', like:'art-chladni', motif:'chladni' }
+    href:'./chladni/', c:'#a78bfa', g:'#d9c6ff', like:'art-chladni', motif:'chladni' },
+  { no:'08', t:'体素晶体', en:'VOXEL',   sub:'生长与崩解', medium:'三维装置', year:'2026', fresh:true,
+    line:'五百多块立方体，一道生长波从核心往外走，点一下就炸开。',
+    href:'./voxel/', c:'#ff4d3d', g:'#ffb3a8', like:'art-voxel', motif:'voxel' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
 var CN=['零','一','二','三','四','五','六','七','八','九','十'];   /* 件数写中文，加作品时不用改文案 */
@@ -248,6 +251,97 @@ function drawPillar(idx){
   pbar(x,RY,1,Math.max(2,p.floorY-RY-p.ph),'rgba(255,255,255,.05)');
 }
 
+/* ---------- 体素晶体牌位：同一族立方八面体（半宽 2 / 截距 4）的等轴测小像 ----------
+   展品里那块是半宽 4 / 截距 8 的同族大件，这张是它的小像，用的是同一套三档位次法。
+   开机现画一次，缓成 34×28 的小图；之后每帧只贴一次 + 点几个波形高光。 */
+var VOXICON=(function(){
+  var H2=2,C2=4,IW=34,IH=28,FI=132,CZ=24,YW=0.62,PT=0.40;
+  var pts=[],a,b,c,k;
+  for(a=-H2;a<=H2;a++)for(b=-H2;b<=H2;b++)for(c=-H2;c<=H2;c++)
+    if(Math.abs(a)+Math.abs(b)+Math.abs(c)<=C2)pts.push([a,b,c]);
+  var cw=Math.cos(YW),sw=Math.sin(YW),cp2=Math.cos(PT),sp2=Math.sin(PT);
+  var ax=[cw,-sw*sp2,-sw*cp2], ay=[0,cp2,-sp2], az=[sw,cw*sp2,cw*cp2];
+  var sg=[ax[2]<0?1:-1,ay[2]<0?1:-1,az[2]<0?1:-1];
+  var nx=[ax[0]*sg[0],ay[0]*sg[1],az[0]*sg[2]];
+  var ny=[ax[1]*sg[0],ay[1]*sg[1],az[1]*sg[2]];
+  var tone=[0,0,0],top=0,i0=-1,i1=-1;
+  if(ny[1]>ny[top])top=1;
+  if(ny[2]>ny[top])top=2;
+  for(k=0;k<3;k++){if(k===top)continue;if(i0<0)i0=k;else i1=k;}
+  tone[top]=0;
+  if(nx[i0]<=nx[i1]){tone[i0]=1;tone[i1]=2;}else{tone[i0]=2;tone[i1]=1;}
+  var ord=[];
+  for(k=0;k<pts.length;k++){
+    var pf=pts[k],q1=-pf[0]*sw+pf[2]*cw;
+    ord.push({i:k,d:-pf[1]*sp2+q1*cp2,x:pf[0]*cw+pf[2]*sw,y:pf[1]*cp2+q1*sp2});
+  }
+  ord.sort(function(A,B){return A.d-B.d;});                 /* 远的先画 */
+  var W0=WORKS[motifIndex('voxel')];
+  var CO=[W0.g,W0.c,shade(W0.c,-0.44)];
+  /* 先算几何（投影尺度取 1），再整体缩放居中：不管怎么调角度都一定装得进小图 */
+  var U=[[ax[0]*0.5,-ax[1]*0.5],[ay[0]*0.5,-ay[1]*0.5],[az[0]*0.5,-az[1]*0.5]];
+  var CVQ2=[[1,1],[1,-1],[-1,-1],[-1,1]];
+  var polys=[],cent=[],bx0=1e9,bx1=-1e9,by0=1e9,by1=-1e9;
+  for(k=0;k<ord.length;k++){
+    var e3=ord[k],sl=1/(e3.d+CZ);
+    var sxp=e3.x*sl,syp=-e3.y*sl;
+    cent.push([sxp,syp]);
+    for(a=0;a<3;a++){
+      var S=sg[a],fA,fB,su,sv,sw2;
+      var v0=[0,0],v1=[0,0],v2=[0,0],v3=[0,0];
+      for(b=0;b<4;b++){
+        fA=CVQ2[b][0];fB=CVQ2[b][1];
+        if(a===0){su=S;sv=fA;sw2=fB;} else if(a===1){su=fA;sv=S;sw2=fB;} else {su=fA;sv=fB;sw2=S;}
+        var qx=sxp+(su*U[0][0]+sv*U[1][0]+sw2*U[2][0])*sl;
+        var qy=syp+(su*U[0][1]+sv*U[1][1]+sw2*U[2][1])*sl;
+        if(b===0){v0[0]=qx;v0[1]=qy;} else if(b===1){v1[0]=qx;v1[1]=qy;}
+        else if(b===2){v2[0]=qx;v2[1]=qy;} else {v3[0]=qx;v3[1]=qy;}
+        if(qx<bx0)bx0=qx; if(qx>bx1)bx1=qx;
+        if(qy<by0)by0=qy; if(qy>by1)by1=qy;
+      }
+      polys.push([v0[0],v0[1],v1[0],v1[1],v2[0],v2[1],v3[0],v3[1],tone[a]]);
+    }
+  }
+  var bw=bx1-bx0,bh=by1-by0;
+  var sc2=Math.min((IW-2)/bw,(IH-2)/bh);
+  var ox2=(IW-bw*sc2)/2-bx0*sc2, oy2=(IH-bh*sc2)/2-by0*sc2;
+  var cn=document.createElement('canvas');cn.width=IW;cn.height=IH;
+  var g=cn.getContext('2d'),savedC=ctx;ctx=g;
+  function iq(px0,py0,px1,py1,px2,py2,px3,py3,col){
+    var minY=Math.floor(Math.min(py0,py1,py2,py3)),maxY=Math.ceil(Math.max(py0,py1,py2,py3));
+    var vxq=[px0,px1,px2,px3],vyq=[py0,py1,py2,py3];
+    for(var y=minY;y<maxY;y++){
+      var yc=y+0.5,xa=1e9,xb=-1e9,e,e2,q0,q1v,xx;
+      for(e=0;e<4;e++){
+        e2=(e+1)&3;q0=vyq[e];q1v=vyq[e2];
+        if((q0<=yc&&q1v>yc)||(q1v<=yc&&q0>yc)){
+          xx=vxq[e]+(yc-q0)/(q1v-q0)*(vxq[e2]-vxq[e]);
+          if(xx<xa)xa=xx;if(xx>xb)xb=xx;
+        }
+      }
+      if(xb<xa)continue;
+      var r0=Math.max(0,Math.ceil(xa-0.5)),r1=Math.min(IW-1,Math.ceil(xb-0.5)-1);
+      if(r1<r0)continue;
+      ctx.fillStyle=col;ctx.fillRect(r0,y,r1-r0+1,1);
+    }
+  }
+  for(k=0;k<polys.length;k++){
+    var p9=polys[k];
+    iq(p9[0]*sc2+ox2,p9[1]*sc2+oy2,p9[2]*sc2+ox2,p9[3]*sc2+oy2,
+       p9[4]*sc2+ox2,p9[5]*sc2+oy2,p9[6]*sc2+ox2,p9[7]*sc2+oy2,CO[p9[8]]);
+  }
+  ctx=savedC;
+  var PTS=[],HL=[];
+  for(k=0;k<cent.length;k++){
+    var cx2=cent[k][0]*sc2+ox2,cy2=cent[k][1]*sc2+oy2;
+    PTS.push({x:cx2,y:cy2});
+    /* 波形高光在哪：归一化半径，0 核心 1 外缘 */
+    HL.push([cx2,cy2,Math.min(1,Math.sqrt((cx2-IW/2)*(cx2-IW/2)+(cy2-IH/2)*(cy2-IH/2))/(IW*0.5))]);
+  }
+  return {cv:cn,w:IW,h:IH,hl:HL,pts:PTS,tones:tone.slice(),
+    ext:[bx0*sc2+ox2,by0*sc2+oy2,bx1*sc2+ox2,by1*sc2+oy2]};
+})();
+
 /* ---------- 牌位（画框里那张画）：全部程序化，无外部资源 ---------- */
 function motifIndex(name){for(var i=0;i<WORKS.length;i++)if(WORKS[i].motif===name)return i;return 0;}
 
@@ -359,6 +453,20 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
     }
     pbar(sx0,sy0,side,1,'rgba(167,139,250,.55)');pbar(sx0,sy0+side-1,side,1,'rgba(167,139,250,.55)');
     pbar(sx0,sy0,1,side,'rgba(167,139,250,.55)');pbar(sx0+side-1,sy0,1,side,'rgba(167,139,250,.55)');
+  } else if(name==='voxel'){
+    /* 体素晶体：同一族立方八面体的小像，一道生长波从核心往外扫 */
+    pbar(x,y,w,h,'#140708');
+    var ic=VOXICON;
+    var sc3=Math.min(1,(w-2)/ic.w,(h-2)/ic.h);
+    var dw=Math.max(10,Math.round(ic.w*sc3)),dh2=Math.max(10,Math.round(ic.h*sc3));
+    var ox0=x+Math.round((w-dw)/2),oy0=y+Math.round((h-dh2)/2);
+    ctx.drawImage(ic.cv,ox0,oy0,dw,dh2);
+    var tw=(t*0.55)%1;
+    for(i=0;i<ic.hl.length;i++){
+      var qh=ic.hl[i];
+      if(Math.abs(qh[2]-tw)<0.09)px(ox0+Math.round(qh[0]*sc3),oy0+Math.round(qh[1]*sc3),wg);
+    }
+    pbar(x,y,1,h,'rgba(255,77,61,.14)');
   } else {
     /* 深渊：从水面到 2640 米，声呐一路向下ping */
     for(i=0;i<14;i++){
@@ -777,6 +885,7 @@ window.__arc={
   rects:function(){return lastRects.slice();},
   plate:function(){return lastPlate;},
   pillars:function(){return PILLARS.map(function(p){return p.d;});},
+  icon:function(){return VOXICON?{w:VOXICON.w,h:VOXICON.h,pts:VOXICON.pts,tones:VOXICON.tones,ext:VOXICON.ext}:null;},
   step:function(i){select(i);},
   snap:function(i){select(i);rot=rotT;},        /* 测试用：瞬间转到正面，不等弹簧收敛 */
   enter:function(){enter();},
