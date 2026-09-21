@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080d09">
+<title>苔痕 · VERDIGRIS — 鼠哥艺术回廊 №06</title>
+<meta name="description" content="石面上的一场生长：降水、长苔、干季退边。点石面就是下一滴雨。">
+<link rel="stylesheet" href="https://fontsapi.zeoseven.com/570/main/result.css" />
+<style>
+:root{
+  --stone:#080d09; --stone2:#0e150f;
+  --moss:#8fb894; --moss-deep:#3f5a45; --wet:#c8dcc6;
+  --dim:rgba(150,196,158,.55); --line:rgba(143,184,148,.30);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;background:var(--stone)}
+body{font-family:"Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace;
+  color:#c3dcc6;user-select:none;-webkit-user-select:none;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 42%,#0d140e,#050806 72%)}
+#stage{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+#moss{image-rendering:crisp-edges;image-rendering:pixelated;touch-action:none;
+  box-shadow:0 0 0 1px rgba(143,184,148,.22),0 18px 60px rgba(0,0,0,.75)}
+#crt{position:fixed;inset:0;z-index:6;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px)}
+#brand{position:fixed;top:12px;left:16px;z-index:5;font-size:12px;letter-spacing:1px;color:var(--dim)}
+#brand b{color:var(--moss);font-weight:normal}
+#brand s{color:rgba(143,184,148,.45);text-decoration:none}
+#sysbar{position:fixed;top:12px;right:16px;z-index:5;display:flex;gap:8px;align-items:center}
+.gh{font-size:12px;letter-spacing:1px;color:var(--moss);text-decoration:none;
+  border:1px solid var(--line);padding:5px 10px;background:rgba(8,14,9,.72)}
+.gh:active{background:rgba(143,184,148,.16)}
+#snd{font-size:12px;letter-spacing:1px;color:var(--moss);border:1px solid var(--line);
+  padding:5px 10px;background:rgba(8,14,9,.72);cursor:pointer;font-family:inherit}
+#panel{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;
+  padding:8px 12px;border:1px solid var(--line);background:rgba(6,11,7,.82);max-width:min(720px,94vw)}
+#panel label{font-size:12px;letter-spacing:1px;color:var(--dim);display:flex;gap:6px;align-items:center}
+#panel button{font-size:12px;letter-spacing:1px;color:var(--moss);border:1px solid var(--line);
+  background:rgba(8,14,9,.7);padding:5px 9px;cursor:pointer;font-family:inherit}
+#panel button:active{background:rgba(143,184,148,.16)}
+#mos{width:132px;accent-color:#8fb894;background:transparent}
+#stat{font-size:12px;letter-spacing:1px;color:var(--wet);white-space:nowrap}
+#hint{position:fixed;top:44px;left:0;right:0;z-index:5;font-size:12px;letter-spacing:1px;
+  color:rgba(143,184,148,.42);text-align:center;pointer-events:none}
+#boot{position:fixed;inset:0;z-index:50;background:#060a07;pointer-events:none;
+  animation:bootin 1.3s ease-in .25s forwards}
+@keyframes bootin{to{opacity:0}}
+@media (max-width:820px){
+  #hint{font-size:11px;top:40px}
+  #panel{gap:8px;padding:7px 9px}
+  #mos{width:92px}
+  #stat{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){#boot{animation-duration:.3s}}
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="moss" width="480" height="270"></canvas></div>
+<div id="crt"></div>
+<div id="brand"><s>№06</s> 苔痕 <b>VERDIGRIS</b></div>
+<div id="sysbar"><a class="gh" href="../index.html">← 回廊</a><button id="snd">♪ 声 ON</button></div>
+<div id="hint">点石面 = 下一滴雨 · 拖滑块 = 湿度 · 空格暂停 · R 重置 · D 干 / W 湿</div>
+<div id="panel">
+  <label>湿度<input id="mos" type="range" min="0" max="100" value="62"></label>
+  <button id="auto">自动季节 ON</button>
+  <button id="pause">暂停</button>
+  <button id="reset">重置</button>
+  <span id="stat">…</span>
+</div>
+<div id="boot"></div>
+<script>
+/* 苔痕 · VERDIGRIS ----------------------------------------------------------
+   石面上的一场生长。480×270 原生像素，全部程序化，无外部资源。
+   模型三层：
+     1. 石底：值噪声做颗粒与层理，几道石纹、铁锈点、蚀孔（预渲染一次）。
+     2. 苔群：Eden 生长。每个群落维护一条「生长前沿」（空细胞的候选表），
+        每步从前沿取若干候选，按 湿度 × 距心衰减 × 噪声 决定是否落苔。
+     3. 干季：湿度低时，从外缘（最新的一批）往回枯，群落退边而不消失。
+   湿度可以自己按 48 秒一轮呼吸（自动季节），也可以被手拖住。
+   同一种子必得同一幅苔：所有随机都走 mulberry32，不碰 Math.random。
+--------------------------------------------------------------------------- */
+(function(){
+'use strict';
+var W=480,H=270,N=W*H,TAU=Math.PI*2;
+var REDUCED=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ---------- 随机与噪声 ---------- */
+var seed=20260921,rnd=null;
+function mulberry32(a){
+  return function(){
+    a|=0;a=a+0x6D2B79F5|0;
+    var t=Math.imul(a^a>>>15,1|a);
+    t=t+Math.imul(t^t>>>7,61|t)^t;
+    return((t^t>>>14)>>>0)/4294967296;
+  };
+}
+var NP=64,nz=new Float32Array(NP*NP);
+function rebuildNoise(){for(var i=0;i<NP*NP;i++)nz[i]=rnd();}
+function noise(x,y){
+  var xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi;
+  var a=((xi%NP)+NP)%NP,b=((yi%NP)+NP)%NP,c=(a+1)%NP,d=(b+1)%NP;
+  var u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);
+  var n00=nz[b*NP+a],n10=nz[b*NP+c],n01=nz[d*NP+a],n11=nz[d*NP+c];
+  return (n00*(1-u)+n10*u)*(1-v)+(n01*(1-u)+n11*u)*v;
+}
+
+/* ---------- 世界 ---------- */
+/* cell: 0 空石 / 1 活苔 / 2 苔痕（枯过的暗印，会自己褪回石头） */
+var cell=new Uint8Array(N);      /* 0 空石 / 1 苔 / 2 苔痕 */
+var born=new Float32Array(N);    /* 出生时刻（秒） */
+var died=new Float32Array(N);    /* 枯掉的时刻（秒），用来算苔痕褪到多淡 */
+var cid=new Uint16Array(N);      /* 群落号 */
+var candOf=new Uint16Array(N);   /* 该格是哪个群落的前沿候选（+1） */
+var HUES=new Int8Array(48);      /* 每个群落一点点色偏 */
+var cols=[],tsim=0,mos=0.62,mosTarget=0.62,auto=true,paused=false;
+var mosPhase=0,area=0,trace=0,scanIdx=0,scanIdx2=0,births=0,deaths=0,peak=0,nowT=0,clock0=0,dryRun=0;
+var ripples=[];
+var FADE=150;                    /* 苔痕完全化回石头要多久（秒） */
+
+var PAL=[[204,224,202],[162,196,166],[124,164,132],[96,133,105],[72,101,80],[52,74,60]];
+var PALT=[0.7,2.4,6,14,28];      /* 每档年龄上限（秒）：越新越亮，湿边自己会发光 */
+var PAL2=[[88,106,90],[64,78,67],[46,58,49],[34,44,37]];   /* 苔痕：越旧越化回石头 */
+
+function resetWorld(s){
+  if(s!=null)seed=s;
+  rnd=mulberry32(seed);rebuildNoise();
+  cell=new Uint8Array(N);born=new Float32Array(N);died=new Float32Array(N);cid=new Uint16Array(N);candOf=new Uint16Array(N);
+  cols=[];tsim=0;area=0;trace=0;births=0;deaths=0;peak=0;scanIdx=0;scanIdx2=0;ripples=[];mosPhase=rnd()*TAU;dryRun=0;
+  for(var i=0;i<48;i++)HUES[i]=((rnd()*13)|0)-6;
+}
+function seedColony(x,y,force){
+  if(cols.length>=44&&!force)return null;
+  var x0=Math.max(1,Math.min(W-2,Math.round(x))),y0=Math.max(1,Math.min(H-2,Math.round(y)));
+  var c={x:x0,y:y0,front:[],cur:0,n:0,r0:2.4+noise(x0*0.02,y0*0.02)*3,
+    reach:0.72+rnd()*0.74,nl:2+((rnd()*3)|0),lobes:[]};
+  for(var L=0;L<c.nl;L++)c.lobes.push(rnd()*TAU);   /* 裂片方向：苔不是圆的 */
+  var ci=cols.length;cols.push(c);
+  if(ci<48)HUES[ci]=(((x0*7+y0*13)%13))-6;
+  for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++)grow(ci,(y0+dy)*W+(x0+dx));
+  return c;
+}
+function pushFront(ci,p){
+  if(cell[p]===1||candOf[p])return;          /* 苔痕可作候选：湿季先复绿苔痕 */
+  candOf[p]=ci+1;cols[ci].front.push(p);
+}
+function grow(ci,p){
+  if(cell[p]===1)return;
+  if(cell[p]===2)trace--;                    /* 苔痕被复绿 */
+  cell[p]=1;born[p]=tsim;cid[p]=ci;candOf[p]=0;
+  area++;births++;cols[ci].n++;if(area>peak)peak=area;
+  var x=p%W,y=(p/W)|0;
+  if(x>0)pushFront(ci,p-1);
+  if(x<W-1)pushFront(ci,p+1);
+  if(y>0)pushFront(ci,p-W);
+  if(y<H-1)pushFront(ci,p+W);
+}
+function stepSim(dt){
+  tsim+=dt;
+  if(auto){mosPhase+=dt/48;mos=0.52+0.44*Math.sin(mosPhase);}
+  else mos=mosTarget;
+  var reach=22+mos*58,budget=Math.round(5+mos*26);   /* reach 只当基准，每个群落再乘自己的伸展半径 */
+  for(var k=0;k<cols.length;k++){
+    var c=cols[k];
+    if(!c.front.length){c.stalled=(c.stalled||0)+dt;continue;}
+    c.stalled=0;
+    for(var s=0;s<budget;s++){
+      var fl=c.front;if(!fl.length)break;
+      if(c.cur>=fl.length)c.cur=0;
+      var pos=c.cur++,p=fl[pos];
+      var x=p%W,y=(p/W)|0,dx=x-c.x,dy=y-c.y,d=Math.sqrt(dx*dx+dy*dy);
+      var ang=Math.atan2(dy,dx),lb=0;
+      for(var L2=0;L2<c.nl;L2++){
+        var cs=Math.cos(ang-c.lobes[L2]);
+        if(cs>0){var w2=cs*cs;w2=w2*w2*w2;if(w2>lb)lb=w2;}
+      }
+      var rl=reach*c.reach;
+      var fall=d<=c.r0?1:Math.max(0,1-Math.pow((d-c.r0)/rl,1.5));
+      var pr=mos*fall*(0.42+noise(x*0.045,y*0.045)*1.05)*(0.55+0.45*noise(x*0.13+7,y*0.13))*(0.62+0.85*lb);
+      if(rnd()<pr*0.5){
+        grow(k,p);
+        fl[pos]=fl[fl.length-1];fl.pop();
+        if(c.cur>fl.length)c.cur=0;
+      }
+    }
+  }
+  /* 干季退边：不是消失，是留下苔痕；干得越久往里吃得越深 */
+  var dry=Math.max(0,(0.42-mos)/0.42);
+  if(dry>0.02){
+    dryRun+=dt;
+    var th=8+dryRun*2.2;
+    var scans=Math.round(N*0.035*(0.4+dry));
+    for(var q=0;q<scans;q++){
+      scanIdx++;if(scanIdx>=N)scanIdx=0;
+      if(cell[scanIdx]===1&&tsim-born[scanIdx]<th&&rnd()<dry*0.40){
+        var ci2=cid[scanIdx];
+        cell[scanIdx]=2;died[scanIdx]=tsim;area--;trace++;deaths++;
+        if(cols[ci2]){
+          if(cols[ci2].n>0)cols[ci2].n--;
+          pushFront(ci2,scanIdx);              /* 枯过的格子回到前沿：湿季能复绿 */
+        }
+      }
+    }
+  } else dryRun=Math.max(0,dryRun-dt*2);
+  /* 苔痕自己褪回石头：一场一场盖过去，石面不会越积越满 */
+  var fades=Math.round(N*0.02);
+  for(var q2=0;q2<fades;q2++){
+    scanIdx2++;if(scanIdx2>=N)scanIdx2=0;
+    if(cell[scanIdx2]===2&&tsim-died[scanIdx2]>FADE){cell[scanIdx2]=0;trace--;}
+  }
+  /* 自播：湿透了会自己冒新群落（宁少而大，不要碎成一片） */
+  if(mos>0.74&&rnd()<dt*0.035&&cols.length<18){
+    var nx=rnd()*W,ny=rnd()*H;
+    if(!cell[((ny|0)*W)+(nx|0)])seedColony(nx,ny);
+  }
+  /* 只留活着的群落：被剔掉的群落要把它占的前沿候选格交还出来 */
+  for(var k2=cols.length-1;k2>=0;k2--){
+    var c2=cols[k2];
+    if(!c2.front.length&&c2.n>0&&(c2.stalled||0)>14)c2.dead=true;
+    if(c2.n<=0&&(c2.stalled||0)>3){
+      for(var f2=0;f2<c2.front.length;f2++)candOf[c2.front[f2]]=0;
+      cols.splice(k2,1);
+    }
+  }
+}
+
+/* ---------- 石底（预渲染一次） ---------- */
+var stone=null;
+function buildStone(bc){
+  var img=bc.createImageData(W,H),d=img.data;
+  for(var y=0;y<H;y++)for(var x=0;x<W;x++){
+    var i=(y*W+x)*4;
+    var n=noise(x*0.055,y*0.055),m=noise(x*0.29,y*0.21),f=noise(x*0.9,y*0.9),big=noise(x*0.012+3,y*0.012);
+    var bed=Math.sin(y*0.083+noise(x*0.014,y*0.014)*4)*0.5+0.5;
+    var v=24+n*13+m*6+bed*7+f*3+(big-0.5)*9;
+    d[i]=v*0.90;d[i+1]=v;d[i+2]=v*0.84;d[i+3]=255;
+  }
+  /* 石纹：几道斜着的深痕 */
+  for(var b=0;b<7;b++){
+    var y0=b*(H/7)+rnd()*18,sl=(rnd()-0.5)*0.5;
+    for(var xx=0;xx<W;xx++){
+      var yy=Math.round(y0+xx*sl+noise(xx*0.02,b)*4);
+      if(yy<0||yy>=H)continue;
+      var p0=(yy*W+xx)*4;
+      d[p0]*=0.62;d[p0+1]*=0.66;d[p0+2]*=0.62;
+    }
+  }
+  /* 铁锈点：石里有铁，偶尔泛一点赭 */
+  for(var r=0;r<160;r++){
+    var rx=(rnd()*W)|0,ry=(rnd()*H)|0,rr=1+rnd()*2.4;
+    for(var yy2=-rr;yy2<=rr;yy2++)for(var xx2=-rr;xx2<=rr;xx2++){
+      if(xx2*xx2+yy2*yy2>rr*rr)continue;
+      var px2=((rx+xx2)|0),py2=((ry+yy2)|0);
+      if(px2<0||px2>=W||py2<0||py2>=H)continue;
+      var p1=(py2*W+px2)*4,k=1-Math.sqrt(xx2*xx2+yy2*yy2)/rr;
+      d[p1]+=44*k;d[p1+1]+=26*k;d[p1+2]+=14*k;
+    }
+  }
+  /* 蚀孔：凹下去的小坑，右下亮一线 */
+  for(var h2=0;h2<26;h2++){
+    var hx=(rnd()*W)|0,hy=(rnd()*H)|0,hr=1+rnd()*2.6;
+    for(var yy3=-hr;yy3<=hr;yy3++)for(var xx3=-hr;xx3<=hr;xx3++){
+      if(xx3*xx3+yy3*yy3>hr*hr)continue;
+      var qx=((hx+xx3)|0),qy=((hy+yy3)|0);
+      if(qx<0||qx>=W||qy<0||qy>=H)continue;
+      var p2=(qy*W+qx)*4;
+      d[p2]*=0.55;d[p2+1]*=0.58;d[p2+2]*=0.55;
+      if(xx3>hr*0.45&&yy3>hr*0.45){d[p2]+=22;d[p2+1]+=24;d[p2+2]+=20;}
+    }
+  }
+  /* 展台灯：四边压暗，中间偏亮 */
+  for(var y4=0;y4<H;y4++)for(var x4=0;x4<W;x4++){
+    var p3=(y4*W+x4)*4;
+    var ux=(x4/W-0.5)*2,uy=(y4/H-0.5)*2;
+    var k2=1-0.34*Math.min(1,Math.sqrt(ux*ux*0.8+uy*uy*1.1));
+    d[p3]*=k2;d[p3+1]*=k2;d[p3+2]*=k2;
+  }
+  return img;
+}
+
+/* ---------- 画面 ---------- */
+var cv=document.getElementById('moss'),ctx=cv.getContext('2d',{alpha:false});
+var bcv=document.createElement('canvas');bcv.width=W;bcv.height=H;
+var bctx=bcv.getContext('2d');
+var buf=null;
+function fit(){
+  var s=Math.min(innerWidth*0.96/W,(innerHeight-76)/H);
+  if(s>=1)s=Math.floor(s);
+  s=Math.max(0.42,s);
+  cv.style.width=Math.round(W*s)+'px';cv.style.height=Math.round(H*s)+'px';
+}
+function start(){
+  resetWorld(seed);
+  stone=buildStone(bctx);
+  buf=bctx.createImageData(W,H);
+  fit();
+  /* 开场不要是一块空石：先长过一场，再进入自己的季节 */
+  var keep=auto;auto=false;mosTarget=0.86;mos=0.86;
+  var n0=REDUCED?3:2+((rnd()*2)|0);
+  for(var i=0;i<n0;i++)seedColony(W*(0.22+i*0.28)+rnd()*30,H*(0.32+rnd()*0.36));
+  for(var j=0;j<(REDUCED?520:420);j++)stepSim(1/12);
+  auto=keep;mosPhase=0.6+rnd()*0.5;
+}
+function draw(t){
+  var d=buf.data;
+  d.set(stone.data);
+  var now=tsim;
+  for(var i=0;i<N;i++){
+    if(!cell[i])continue;
+    var p=i<<2;
+    if(cell[i]===2){
+      var dg=(tsim-died[i])/FADE,di=dg<0.22?0:(dg<0.5?1:(dg<0.78?2:3));
+      var c2=PAL2[di];
+      d[p]=c2[0];d[p+1]=c2[1];d[p+2]=c2[2];d[p+3]=255;
+      continue;
+    }
+    var a=now-born[i],col;
+    if(a<PALT[0])col=PAL[0];
+    else if(a<PALT[1])col=PAL[1];
+    else if(a<PALT[2])col=PAL[2];
+    else if(a<PALT[3])col=PAL[3];
+    else if(a<PALT[4])col=PAL[4];
+    else col=PAL[5];
+    var hu=HUES[cid[i]]||0;
+    d[p]=col[0]+hu;d[p+1]=col[1];d[p+2]=col[2]-hu;d[p+3]=255;
+  }
+  ctx.putImageData(buf,0,0);
+  drawGlass(t);
+}
+/* 场记：底边一条湿度计 + 年岁 + 落雨的涟漪 */
+function drawGlass(t){
+  ctx.save();
+  var gw=132,gy=H-13,gx=8;
+  ctx.fillStyle='rgba(6,11,7,.62)';ctx.fillRect(0,H-17,W,17);
+  ctx.fillStyle='rgba(143,184,148,.22)';ctx.fillRect(gx,gy,gw,6);
+  ctx.fillStyle='#8fb894';ctx.fillRect(gx,gy,Math.round(gw*mos),6);
+  ctx.fillStyle='rgba(200,220,198,.9)';
+  ctx.font='8px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+  ctx.textAlign='left';
+  ctx.fillText('湿 '+Math.round(mos*100)+'%',gx+gw+8,gy+6);
+  ctx.textAlign='right';
+  ctx.fillText('苔积 '+(area/N*100).toFixed(1)+'%  苔痕 '+(trace/N*100).toFixed(1)+'%  群落 '+cols.length+
+    '  年岁 '+String(Math.floor(tsim/60)).padStart(2,'0')+':'+
+    String(Math.floor(tsim%60)).padStart(2,'0'),W-8,gy+6);
+  ctx.textAlign='left';
+  for(var i=ripples.length-1;i>=0;i--){
+    var rp=ripples[i],age=t-rp.t;
+    if(age>0.75){ripples.splice(i,1);continue;}
+    var rr=1+age*11,a2=Math.max(0,1-age/0.75);
+    ctx.strokeStyle='rgba(200,220,198,'+(a2*0.55).toFixed(2)+')';
+    ctx.lineWidth=1;
+    pEllipse(rp.x,rp.y,rr,rr*0.72);
+  }
+  ctx.restore();
+}
+function pEllipse(x,y,rx,ry){
+  ctx.beginPath();
+  for(var a=0;a<24;a++){
+    var th=a/24*TAU,px=Math.round(x+Math.cos(th)*rx)+0.5,py=Math.round(y+Math.sin(th)*ry)+0.5;
+    if(a===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+  }
+  ctx.closePath();ctx.stroke();
+}
+
+/* ---------- 声音 ---------- */
+var AC=null,sndOn=true;
+function ac(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();return AC;}
+function tone(type,f0,f1,dur,peak,delay){
+  if(!sndOn)return;
+  try{
+    var a=ac(),t=delay||0,o=a.createOscillator(),g=a.createGain();
+    o.type=type;o.frequency.setValueAtTime(f0,a.currentTime+t);
+    o.frequency.exponentialRampToValueAtTime(Math.max(40,f1),a.currentTime+t+dur);
+    g.gain.setValueAtTime(0,a.currentTime+t);
+    g.gain.linearRampToValueAtTime(peak,a.currentTime+t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0004,a.currentTime+t+dur);
+    o.connect(g);g.connect(a.destination);o.start(a.currentTime+t);o.stop(a.currentTime+t+dur+0.03);
+  }catch(e){}
+}
+function sndDrop(){tone('sine',760,190,0.24,0.06);tone('sine',1520,420,0.13,0.018);}
+function sndTick(){tone('square',420,520,0.05,0.03);}
+
+/* ---------- 输入 ---------- */
+function toGame(e){
+  var r=cv.getBoundingClientRect();
+  return [(e.clientX-r.left)/(r.width/W),(e.clientY-r.top)/(r.height/H)];
+}
+cv.addEventListener('pointerdown',function(e){
+  e.preventDefault();
+  var p=toGame(e);
+  if(p[0]<0||p[0]>=W||p[1]<0||p[1]>=H)return;
+  seedColony(p[0],p[1],true);
+  ripples.push({x:p[0],y:p[1],t:nowT});
+  sndDrop();
+});
+var elMos=document.getElementById('mos'),elAuto=document.getElementById('auto'),
+    elPause=document.getElementById('pause'),elReset=document.getElementById('reset'),
+    elStat=document.getElementById('stat'),elSnd=document.getElementById('snd');
+elMos.addEventListener('input',function(){
+  mosTarget=Number(elMos.value)/100;
+  if(auto){auto=false;elAuto.textContent='自动季节 OFF';}
+});
+elAuto.addEventListener('click',function(){
+  auto=!auto;elAuto.textContent='自动季节 '+(auto?'ON':'OFF');
+});
+elPause.addEventListener('click',function(){
+  paused=!paused;elPause.textContent=paused?'继续':'暂停';elPause.blur();
+});
+elReset.addEventListener('click',function(){
+  resetWorld((seed*1103515245+12345)%2147483647);start();sndTick();elPause.blur();
+});
+elSnd.addEventListener('click',function(){
+  sndOn=!sndOn;elSnd.textContent='♪ 声 '+(sndOn?'ON':'OFF');elSnd.blur();
+});
+window.addEventListener('keydown',function(e){
+  var k=(e.key||'').toLowerCase();
+  if(k===' '){paused=!paused;elPause.textContent=paused?'继续':'暂停';e.preventDefault();}
+  else if(k==='r'){elReset.click();}
+  else if(k==='w'){auto=false;mosTarget=0.94;elMos.value=94;elAuto.textContent='自动季节 OFF';}
+  else if(k==='d'){auto=false;mosTarget=0.04;elMos.value=4;elAuto.textContent='自动季节 OFF';}
+  else if(k==='arrowleft'||k==='arrowright'){
+    auto=false;elAuto.textContent='自动季节 OFF';
+    mosTarget=Math.max(0,Math.min(1,mosTarget+(k==='arrowright'?0.06:-0.06)));
+    elMos.value=Math.round(mosTarget*100);e.preventDefault();
+  }
+});
+
+/* ---------- 主循环 ---------- */
+var last=0,acc=0,SIMDT=1/12,statAcc=0;
+function loop(ts){
+  var t=(ts-clock0)/1000;
+  var dt=Math.min(0.05,last?t-last:1/60);last=t;
+  nowT=t;
+  if(!paused){
+    acc+=dt;
+    var guard=0;
+    while(acc>=SIMDT&&guard++<6){stepSim(SIMDT);acc-=SIMDT;}
+  }
+  draw(t);
+  statAcc+=dt;
+  if(statAcc>0.35){statAcc=0;updateStat();}
+  requestAnimationFrame(loop);
+}
+function mmss(s){var m=Math.floor(s/60);return m+':'+String(Math.floor(s%60)).padStart(2,'0');}
+function updateStat(){
+  elStat.textContent='苔积 '+(area/N*100).toFixed(1)+'% · 苔痕 '+(trace/N*100).toFixed(1)+
+    '% · 群落 '+cols.length+' · '+mmss(tsim);
+}
+start();
+clock0=performance.now();
+acc=0;last=0;
+requestAnimationFrame(loop);
+updateStat();
+
+/* ---------- 自检钩子（node 里也能驱动） ---------- */
+window.__moss={
+  W:W,H:H,N:N,
+  reset:function(s){resetWorld(s);stone=buildStone(bctx);buf=bctx.createImageData(W,H);},
+  step:function(n,dt){dt=dt||1/12;for(var i=0;i<n;i++)stepSim(dt);},
+  seed:function(x,y){return !!seedColony(x,y,true);},
+  setMos:function(v){auto=false;mosTarget=v;mos=v;},
+  setAuto:function(b){auto=!!b;},
+  setPause:function(b){paused=!!b;},
+  draw:function(t){draw(t||0);},
+  state:function(){return{area:area,cols:cols.length,mos:mos,tsim:tsim,paused:paused,
+    auto:auto,seed:seed,births:births,deaths:deaths,peak:peak,dryRun:dryRun,
+    trace:trace,season:mosPhase};},
+  hash:function(){
+    var h=2166136261>>>0;
+    for(var i=0;i<N;i+=7){h^=cell[i]?1:0;h=Math.imul(h,16777619)>>>0;}
+    return h;
+  },
+  cellAt:function(x,y){return cell[y*W+x];},
+  palette:function(){return PAL.slice();},
+  ping:function(){return 'verdigris';}
+};
+})();
+</script>
+</body>
+</html>
