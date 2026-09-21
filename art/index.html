@@ -90,7 +90,10 @@ var WORKS=[
     href:'./chladni/', c:'#a78bfa', g:'#d9c6ff', like:'art-chladni', motif:'chladni' },
   { no:'08', t:'体素晶体', en:'VOXEL',   sub:'生长与崩解', medium:'三维装置', year:'2026', fresh:true,
     line:'五百多块立方体，一道生长波从核心往外走，点一下就炸开。',
-    href:'./voxel/', c:'#ff4d3d', g:'#ffb3a8', like:'art-voxel', motif:'voxel' }
+    href:'./voxel/', c:'#ff4d3d', g:'#ffb3a8', like:'art-voxel', motif:'voxel' },
+  { no:'09', t:'体素晶体 · 辉光', en:'CRYSTAL', sub:'立方八面体晶格', medium:'三维装置', year:'2026', fresh:true,
+    line:'589 个方块长成一座立方八面体晶格，一道波从核里推向棱角。',
+    href:'./voxel-webgl/', c:'#f0b429', g:'#ffd98a', like:'art-voxel-webgl', motif:'crystal' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
 var CN=['零','一','二','三','四','五','六','七','八','九','十'];   /* 件数写中文，加作品时不用改文案 */
@@ -467,6 +470,42 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
       if(Math.abs(qh[2]-tw)<0.09)px(ox0+Math.round(qh[0]*sc3),oy0+Math.round(qh[1]*sc3),wg);
     }
     pbar(x,y,1,h,'rgba(255,77,61,.14)');
+  } else if(name==='crystal'){
+    /* 晶体：立方八面体点阵的等轴投影。棱亮、体暗，按进深分三档；
+       一道生长波从核推向外缘，波峰那几块弹出去并亮一线。
+       投影外框先量一遍再缩放 —— 画框尺寸随透视变，硬编码比例会溢出。 */
+    pbar(x,y,w,h,'#0c0906');
+    var cvx=[],g1,g2,g3,caf=Math.cos(t*0.42),saf=Math.sin(t*0.42);
+    for(g1=-2;g1<=2;g1++)for(g2=-2;g2<=2;g2++)for(g3=-2;g3<=2;g3++){
+      if(Math.abs(g1)+Math.abs(g2)+Math.abs(g3)>4) continue;
+      if(((g1+g2+g3)%2+2)%2) continue;                    /* 与作品本体同一套点阵规则 */
+      var rx1=g1*caf-g3*saf, rz1=g1*saf+g3*caf;
+      cvx.push({x:rx1-rz1, y:(rx1+rz1)*0.44-g2*0.9, d:g1+g2+g3,
+        r:Math.sqrt(g1*g1+g2*g2+g3*g3)});
+    }
+    var bxo=1e9,bxi=-1e9,byo=1e9,byi=-1e9,vi;
+    for(vi=0;vi<cvx.length;vi++){
+      if(cvx[vi].x<bxo)bxo=cvx[vi].x; if(cvx[vi].x>bxi)bxi=cvx[vi].x;
+      if(cvx[vi].y<byo)byo=cvx[vi].y; if(cvx[vi].y>byi)byi=cvx[vi].y;
+    }
+    var kk=Math.min((w-8)/Math.max(1,bxi-bxo),(h-6)/Math.max(1,byi-byo));
+    var cxf=x+w/2, cyf=y+h/2+1, mdx=(bxo+bxi)/2, mdy=(byo+byi)/2;
+    var wf=((t*0.5)%1.8)/1.8*3.1;                         /* 波前半径：0 → 3.1 */
+    cvx.sort(function(p,q4){return p.d-q4.d;});            /* 远的先画 */
+    for(vi=0;vi<cvx.length;vi++){
+      var vx1=cvx[vi];
+      var sx=Math.round(cxf+(vx1.x-mdx)*kk), sy=Math.round(cyf+(vx1.y-mdy)*kk);
+      var hot=Math.abs(vx1.r-wf)<0.6;
+      var dxs=sx-cxf, dys=sy-cyf, dl=Math.sqrt(dxs*dxs+dys*dys)||1;
+      if(hot){ sx+=Math.round(dxs/dl*2); sy+=Math.round(dys/dl*2); }
+      var dep=(vx1.d+6)/12;
+      var col=hot?'#ffeab4' : dep>0.62?'#f0b429' : dep>0.30?'#a8791a':'#5f4410';
+      var sz1=hot?3:2;
+      pbar(sx-(hot?1:0),sy-(hot?1:0),sz1,sz1,col);
+      if(hot&&(vi%3===0)) px(sx,sy-2,'#fff6df');
+    }
+    pbar(x,y,w,1,'rgba(240,180,41,.20)');
+    pbar(x,y+h-1,w,1,'rgba(240,180,41,.10)');
   } else {
     /* 深渊：从水面到 2640 米，声呐一路向下ping */
     for(i=0;i<14;i++){
