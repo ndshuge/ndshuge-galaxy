@@ -252,8 +252,7 @@ footer b{color:var(--paper);font-weight:700}
 }
 </style>
 </head>
-<body><a id="arc-back" href="../index.html" title="回到艺术回廊" style="position:fixed;left:10px;bottom:10px;z-index:2147483000;font:12px/1.7 system-ui,-apple-system,'Microsoft YaHei',sans-serif;color:#d8e8ff;background:rgba(6,10,20,.74);border:1px solid rgba(150,200,255,.38);border-radius:3px;padding:5px 10px;text-decoration:none;letter-spacing:.5px;backdrop-filter:blur(2px)">&#8592; &#22238; &#24266;</a>
-
+<body>
 
 <nav aria-label="主导航">
   <div class="word-mark">INK&nbsp;MOTION<em>&nbsp;THEATRE</em></div>
@@ -340,7 +339,7 @@ footer b{color:var(--paper);font-weight:700}
         <canvas aria-label="落雪装置：点击生成涟漪"></canvas>
         <span class="title-big" aria-hidden="true">RIPPLE</span>
         <span class="zoom-hint" aria-hidden="true">点击进全屏</span>
-        <p class="tips"><kbd>拖动进度条</kbd> 换展品 · <kbd>点击</kbd> 进全屏 · 在全屏里点任何一点，荡开朱砂涟漪。</p>
+        <p class="tips"><kbd>拖动进度条</kbd> 换展品 · <kbd>点击</kbd> 进全屏 · 点画布任意一处，荡开朱砂涟漪。</p>
       </article>
 
     </div>
@@ -410,18 +409,47 @@ footer b{color:var(--paper);font-weight:700}
 
   /* canvas 初始化（DPR 适配） */
   function initCanvas(c){
+    /* 防呆：绝不能传 context 进来（context 没有 getBoundingClientRect，
+       会在指针回调里抛 TypeError 静默弄死交互） */
+    if (!c || typeof c.getBoundingClientRect !== "function"){
+      console.warn("[ink] initCanvas expects a <canvas> element, got", c);
+      return null;
+    }
     var dpr = clamp(devicePixelRatio||1,1,2);
     var r = c.getBoundingClientRect();
-    /* 布局未就绪时 rect 可能为 0：退回 CSS 尺寸或父级，避免画布被压成 1px */
+    /* 布局未就绪时 rect 可能为 0，此时不能拿 300×150 当真实尺寸——
+       那会让画布被 CSS(width:100%)拉伸，指针坐标与绘制坐标就错开了。
+       改为：用 CSS 盒模型尺寸优先，实在拿不到就标记待重测。 */
     var w = r.width || c.clientWidth || (c.parentNode ? c.parentNode.clientWidth : 0);
     var h = r.height || c.clientHeight || (c.parentNode ? c.parentNode.clientHeight : 0);
-    if (!w || !h){ w = w || 300; h = h || 150; }
+    if (!w || !h){
+      /* 保留标志：尺寸未知时不写死，只设置一个占位，等 resize/可见时重测 */
+      c.__needRemesure = true;
+      w = w || 1; h = h || 1;
+    }
     c.width = Math.round(Math.max(1,w*dpr));
     c.height = Math.round(Math.max(1,h*dpr));
     var ctx = c.getContext("2d");
     ctx.setTransform(dpr,0,0,dpr,0,0);
     ctx.W = w; ctx.H = h;
+    ctx.__canvas = c;
     return ctx;
+  }
+
+  /* 尺寸修正：布局未就绪时 initCanvas 会拿到错的尺寸，
+     下一帧或可见时重测一次；坐标错位的根因就是“画的尺寸≠显示的尺寸” */
+  function fixCanvasSize(c){
+    if (!c || typeof c.getBoundingClientRect !== "function") return;
+    var r = c.getBoundingClientRect();
+    if (r.width <= 0 || r.height <= 0) return;
+    var dpr = clamp(devicePixelRatio||1,1,2);
+    var wantW = Math.round(r.width*dpr), wantH = Math.round(r.height*dpr);
+    if (c.width === wantW && c.height === wantH) return false;
+    c.width = wantW; c.height = wantH;
+    var ctx = c.getContext("2d");
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.W = r.width; ctx.H = r.height;
+    return true;
   }
 
   /* HERO 墨场 */
@@ -469,13 +497,20 @@ footer b{color:var(--paper);font-weight:700}
   var swarm = [];
   for (i=0;i<260;i++) swarm.push({x:rand(0,c1.W),y:rand(0,c1.H),s:rand(.5,1.4)});
   var p1 = {x:c1.W/2,y:c1.H/2,on:false};
+  var cx1 = ex1.querySelector("canvas");   /* 量坐标必须用 canvas 元素，c1 是 2D context，没有 getBoundingClientRect */
   ex1.addEventListener("pointermove", function(e){
-    var r = c1.getBoundingClientRect();
+    var r = cx1.getBoundingClientRect();
     p1.x = e.clientX-r.left; p1.y = e.clientY-r.top; p1.on = true;
-  });
+  }, {passive:true});
   ex1.addEventListener("pointerleave", function(){p1.on=false});
   var swirlT = 0;
   function swirlStep(){
+    /* 尺寸对齐：画的尺寸必须等于显示的尺寸，否则粒子与指针落点错开 */
+    if (fixCanvasSize(cx1)){
+      c1 = cx1.getContext("2d");
+      swarm.length = 0;
+      for (var s=0;s<260;s++) swarm.push({x:rand(0,c1.W),y:rand(0,c1.H),s:rand(.5,1.4)});
+    }
     c1.fillStyle="rgba(20,22,29,.16)"; c1.fillRect(0,0,c1.W,c1.H);
     swirlT += 1;
     /* 无指针时不用中心点吸引（会把粒子吸成一个点），改成全场缓慢绕行 */
@@ -512,13 +547,19 @@ footer b{color:var(--paper);font-weight:700}
   var filings = [];
   for (i=0;i<420;i++) filings.push({x:rand(20,c2.W-20),y:rand(20,c2.H-20),r:rand(0,Math.PI*2)});
   var p2 = {x:c2.W/2,y:c2.H/2,on:false};
+  var cx2 = ex2.querySelector("canvas");
   ex2.addEventListener("pointermove", function(e){
-    var r = c2.getBoundingClientRect();
+    var r = cx2.getBoundingClientRect();
     p2.x = e.clientX-r.left; p2.y = e.clientY-r.top; p2.on = true;
-  });
+  }, {passive:true});
   ex2.addEventListener("pointerleave", function(){p2.on=false});
   var filingsT = 0;
   function filingsStep(){
+    if (fixCanvasSize(cx2)){
+      c2 = cx2.getContext("2d");
+      filings.length = 0;
+      for (var s=0;s<420;s++) filings.push({x:rand(20,c2.W-20),y:rand(20,c2.H-20),r:rand(0,Math.PI*2)});
+    }
     c2.fillStyle="rgba(20,22,29,.3)"; c2.fillRect(0,0,c2.W,c2.H);
     c2.lineWidth = 1.2;
     filingsT += 1;
@@ -584,19 +625,39 @@ footer b{color:var(--paper);font-weight:700}
   /* 装置 04 涟漪雪 */
   var ex4 = document.querySelector('[data-ex="004"]');
   var c4 = initCanvas(ex4.querySelector("canvas"));
+  var cx4 = ex4.querySelector("canvas");
   var ripples = [];
   var pointerDownAt = 0;
   ex4.addEventListener("pointerdown", function(e){
     pointerDownAt = performance.now();
-    if (ex4.classList.contains("full")){
-      var r = c4.getBoundingClientRect();
-      ripples.push({x:e.clientX-r.left,y:e.clientY-r.top,r:2,o:1});
-      if (ripples.length>24) ripples.shift();
+    /* 圆心 = 视口坐标 − canvas rect 左上。
+       前提：cx4 的 backing store 与 CSS 显示尺寸一致。
+       若不一致（初始化时布局未就绪），先把尺寸对齐再算坐标。 */
+    var r = cx4.getBoundingClientRect();
+    if (r.width <= 0 || r.height <= 0) return;
+    var dpr = clamp(devicePixelRatio||1,1,2);
+    var wantW = Math.round(r.width*dpr), wantH = Math.round(r.height*dpr);
+    if (cx4.width !== wantW || cx4.height !== wantH){
+      cx4.width = wantW; cx4.height = wantH;
+      var nc = cx4.getContext("2d");
+      nc.setTransform(dpr,0,0,dpr,0,0);
+      nc.W = r.width; nc.H = r.height;
+      c4 = nc;
+      flakes.length = 0;
+      for (var f=0;f<44;f++) flakes.push({x:rand(0,c4.W),y:rand(0,c4.H),s:rand(.5,1.8)});
     }
+    ripples.push({ x:e.clientX - r.left, y:e.clientY - r.top, r:2, o:1 });
+    if (ripples.length>24) ripples.shift();
   });
   var flakes = [];
-  for (i=0;i<44;i++) flakes.push({x:rand(0,c4.W),y:rand(0,c4.H),s:rand(.5,1.8)});
+  if (c4) for (i=0;i<44;i++) flakes.push({x:rand(0,c4.W),y:rand(0,c4.H),s:rand(.5,1.8)});
   function rippleStep(now){
+    /* 每帧确保画布尺寸与显示尺寸一致（尺寸不符会让涟漪落点偏移） */
+    if (fixCanvasSize(cx4)){
+      c4 = cx4.getContext("2d");
+      flakes.length = 0;
+      for (var q=0;q<44;q++) flakes.push({x:rand(0,c4.W),y:rand(0,c4.H),s:rand(.5,1.8)});
+    }
     c4.fillStyle="rgba(20,22,29,.25)"; c4.fillRect(0,0,c4.W,c4.H);
     for (var i=0;i<flakes.length;i++){
       var f = flakes[i];
@@ -887,8 +948,8 @@ footer b{color:var(--paper);font-weight:700}
   document.querySelectorAll(".exhibit").forEach(function(el){
     el.addEventListener("click", function(e){
       if (el.classList.contains("full")) return;
-      /* 在全屏里刚点过（制造涟漪）的回弹 click，不要当成开全屏 */
-      if (performance.now() - pointerDownAt < 350 && el === ex4 && pointerDownAt > 0) return;
+      /* 全屏里点一下是造涟漪，别把它当成开全屏的回弹 */
+      if (el === ex4 && el.classList.contains("full")) return;
       if (e.target.closest && e.target.closest(".tips, .close-btn")) return;
       openFull(el);
     });
