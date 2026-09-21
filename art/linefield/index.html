@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>经纬 · 五种让线变形的规则</title>
-<meta name="description" content="一件可以动手的交互图版：灯丝、摆波、摩尔纹、谐波仪、排版场。横的线、竖的线、绕起来的线，各走各的规则。">
+<title>经纬 · 八种让线变形的规则</title>
+<meta name="description" content="一件可以动手的交互图版：灯丝、摆波、摩尔纹、谐波仪、排版场、织机、交缠、弦板。横的线、竖的线、绕起来的线，各走各的规则。">
 <style>
 /* finesse · register=brand · A=off-black+tan+one-rust-signal · B=CJK宋体极致尺度+mono读数
  * C=全幅仪器屏+偏置栏 · D=Canvas2D场线(R5 唯一重拍)+CSS/SVG · E=textile & thread
@@ -312,6 +312,40 @@ a{color:inherit}
 .typerow--2 .ch:hover{color:var(--ink)}
 .typebox{display:grid;gap:clamp(14px,2vw,26px);padding:clamp(30px,6vh,80px) 0}
 
+/* ── 图版 VI · 梭（Canvas 2D · 织机） ───────────────────── */
+.loom{
+  position:relative;margin:0 var(--pad) 0 calc(var(--gut) + var(--pad));
+  border:1px solid var(--rule-2);border-radius:var(--r);background:#E9EAE8;
+  overflow:hidden;cursor:crosshair;touch-action:none
+}
+.loom canvas{display:block;width:100%;height:clamp(300px,54vh,520px)}
+.loom__plate{
+  position:absolute;left:14px;bottom:11px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.2em;color:var(--ink-3);pointer-events:none;padding:3px 10px;
+  border:1px solid var(--rule);border-radius:999px;background:rgba(233,234,232,.84)
+}
+
+/* ── 图版 VII · 辫（Canvas 2D · 交缠） ──────────────────── */
+.plait{
+  position:relative;margin:0 var(--pad) 0 calc(var(--gut) + var(--pad));
+  border:1px solid var(--rule-2);border-radius:var(--r);background:#E9EAE8;
+  overflow:hidden;cursor:grab;touch-action:none
+}
+.plait.is-drag{cursor:grabbing}
+.plait canvas{display:block;width:100%;height:clamp(320px,58vh,560px)}
+
+/* ── 图版 VIII · 弦（Canvas 2D · 弦板） ─────────────────── */
+.wind{
+  position:relative;margin:0 var(--pad) 0 calc(var(--gut) + var(--pad));
+  border:1px solid var(--rule-2);border-radius:var(--r);background:#E9EAE8;
+  overflow:hidden;cursor:crosshair;touch-action:none
+}
+.wind canvas{display:block;width:100%;height:clamp(340px,62vh,620px)}
+.wind__legend{
+  position:absolute;right:16px;top:14px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.12em;color:var(--ink-3);pointer-events:none;text-align:right;line-height:1.75
+}
+
 /* ── 收束 ───────────────────────────────────────────────── */
 .coda{min-height:88svh;display:grid;align-content:center;gap:clamp(26px,5vw,64px);
   padding:clamp(60px,12vh,140px) var(--pad) clamp(50px,9vh,110px) calc(var(--gut) + var(--pad));
@@ -369,7 +403,7 @@ a{color:inherit}
     </svg>
     经纬
   </span>
-  <p class="topbar__sub">五种让线变形的规则</p>
+  <p class="topbar__sub">八种让线变形的规则</p>
   <div class="topbar__right">
     <button class="mini" id="motion-toggle" type="button" aria-pressed="true">
       <span class="rail__stillon">静</span><span class="rail__stilloff">动</span>
@@ -391,9 +425,12 @@ a{color:inherit}
     <a href="#plate-3" data-plate="plate-3">III<span>织 · 摩尔纹</span></a>
     <a href="#plate-4" data-plate="plate-4">IV<span>画 · 谐波仪</span></a>
     <a href="#plate-5" data-plate="plate-5">V<span>字 · 排版场</span></a>
+    <a href="#plate-6" data-plate="plate-6">VI<span>梭 · 织机</span></a>
+    <a href="#plate-7" data-plate="plate-7">VII<span>辫 · 交缠</span></a>
+    <a href="#plate-8" data-plate="plate-8">VIII<span>弦 · 弦板</span></a>
     <a href="#coda" data-plate="coda">收<span>收束</span></a>
   </div>
-  <span class="rail__hint">按 1-6 跳屏 · S 切静</span>
+  <span class="rail__hint">按 1-9 跳屏 · S 切静</span>
 </nav>
 
 <main id="main">
@@ -408,7 +445,7 @@ a{color:inherit}
       <div class="field__title">
         <div class="field__glyph" aria-hidden="true">灼</div>
         <h1 class="h-display" id="t1" style="font-size:clamp(26px,4.6vw,58px);color:var(--heat-1)">
-          经纬 <span style="color:var(--heat-2)">五种让线变形的规则</span>
+          经纬 <span style="color:var(--heat-2)">八种让线变形的规则</span>
         </h1>
         <p class="lead" style="color:rgba(233,226,210,.82);max-width:38ch">
           一根通着电的丝，最先学会发光。指针是第三个磁极，<b style="color:var(--heat-1)">拖动</b>它，
@@ -566,17 +603,115 @@ a{color:inherit}
   </div>
 </section>
 
+<!-- ═══ 图版 VI · 梭 ═══ Canvas 2D 织机：经线阵列 + 纬线穿行，三种组织 ═══ -->
+<section class="plate" id="plate-6" aria-labelledby="t6">
+  <div class="plate__no mono">图版 VI</div>
+  <div class="plate__head">
+    <div class="caption">
+      <h2 class="h2" id="t6">一根纬线来回走，布一格一格长出来</h2>
+      <p class="lead">一二百根经线绷直了等在那里，梭子横着穿一趟，就把它们一层压一层地锁住。平纹、斜纹、缎纹，是同一个动作换了抬线顺序。</p>
+    </div>
+    <span class="hint"><i></i>点 = 换组织 · 左右拖 = 织速 · 上下拖 = 经密</span>
+  </div>
+  <div class="plate__stage">
+    <div class="loom" id="loom-root" role="group" aria-label="织机：经线阵列与穿行的纬线">
+      <canvas id="loom-canvas" role="img"
+        aria-label="浅色布面上，一排竖着的经线绷在织口，一根朱红的纬线横向穿过，布从织口向下逐格织出。"></canvas>
+      <span class="loom__plate" id="loom-org">平纹</span>
+    </div>
+  </div>
+  <div class="plate__foot foot-2">
+    <div class="caption">
+      <p class="lead">布的组织只由一件事决定：每一次投纬，哪些经线抬起来、哪些落下去。平纹一上一下，斜纹两上一下依次错开，缎纹让每根经线在很长一段距离里只抬一次。</p>
+      <p class="small">经面率是经线压住纬线的交叉点占比。平纹 50%，斜纹 67%，五枚缎纹 80%，这个数直接决定布是硬挺还是垂顺。画面上每一格都是一次真实的抬落：竖纱压在横纱上，就亮一段；让过去，就暗一段。</p>
+    </div>
+    <div class="readout" id="ro-loom">
+      <div class="readout__head"><span class="tag">现场读数</span><span class="tag" id="loom-state">投纬中</span></div>
+      <div class="readout__row"><span class="readout__k">组织</span><span class="readout__v" data-k="org">平纹</span><span class="readout__u"></span></div>
+      <div class="readout__row"><span class="readout__k">经线</span><span class="readout__v" data-k="n">0</span><span class="readout__u">根</span></div>
+      <div class="readout__row"><span class="readout__k">织速</span><span class="readout__v" data-k="v">0</span><span class="readout__u">行/s</span></div>
+      <div class="readout__row"><span class="readout__k">经面率</span><span class="readout__v" data-k="cover">0</span><span class="readout__u">%</span></div>
+      <div class="readout__row"><span class="readout__k">已织</span><span class="readout__v" data-k="row">0</span><span class="readout__u">行</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 图版 VII · 辫 ═══ Canvas 2D：多股交缠，交叉处真的分前后 ═══ -->
+<section class="plate" id="plate-7" aria-labelledby="t7">
+  <div class="plate__no mono">图版 VII</div>
+  <div class="plate__head">
+    <div class="caption">
+      <h2 class="h2" id="t7">几股线各自转圈，转着转着就咬在一起</h2>
+      <p class="lead">每股都沿同一条正弦走，只差一个等分的相位。它们相遇的地方永远一上一下压过去，谁在上由相位决定，不是画上去的假象。</p>
+    </div>
+    <span class="hint"><i></i>点 = 换股数 · 左右拖 = 编速 · 上下拖 = 摆幅</span>
+  </div>
+  <div class="plate__stage">
+    <div class="plait" id="plait-root" role="group" aria-label="多股线交缠成的辫">
+      <canvas id="plait-canvas" role="img"
+        aria-label="几条深灰的线沿同一路径互相穿绕，交叉处前一根压过后一根，盘成一条纵向的辫。"></canvas>
+    </div>
+  </div>
+  <div class="plate__foot foot-2">
+    <div class="caption">
+      <p class="lead">股数是奇数时，辫子盘成规整的柱；偶数股会压成扁平的一条。真实的绳、缆、发辫都守着这条规矩，因为它们要的是一根能承力的连续结构，而不是一堆并排的线。</p>
+      <p class="small">第 i 股的横向位置 x = A·sin(ky + 2πi/n)。谁压在谁上面由该点的相位余弦决定，所以每走完一个节距，各股的上下次序就整体轮转一圈，辫子沿线复现。</p>
+    </div>
+    <div class="readout" id="ro-plait">
+      <div class="readout__head"><span class="tag">现场读数</span><span class="tag" id="plait-state">编结中</span></div>
+      <div class="readout__row"><span class="readout__k">股数</span><span class="readout__v" data-k="n">0</span><span class="readout__u">股</span></div>
+      <div class="readout__row"><span class="readout__k">编速</span><span class="readout__v" data-k="v">0</span><span class="readout__u">节/s</span></div>
+      <div class="readout__row"><span class="readout__k">摆幅</span><span class="readout__v" data-k="amp">0</span><span class="readout__u">px</span></div>
+      <div class="readout__row"><span class="readout__k">节距</span><span class="readout__v" data-k="pitch">0</span><span class="readout__u">px</span></div>
+      <div class="readout__row"><span class="readout__k">交叉点</span><span class="readout__v" data-k="x">0</span><span class="readout__u">个</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 图版 VIII · 弦 ═══ Canvas 2D：一根线绕着圆走，走出的包络 ═══ -->
+<section class="plate" id="plate-8" aria-labelledby="t8">
+  <div class="plate__no mono">图版 VIII</div>
+  <div class="plate__head">
+    <div class="caption">
+      <h2 class="h2" id="t8">一根线绕着圆走，走到后来长出一个形状</h2>
+      <p class="lead">圆边上钉一圈钉子，线从这一枚牵到隔着几枚的那一枚，一路牵下去。牵的人只管跨固定的步数，形状自己浮出来：多边形、星、花冠、心。</p>
+    </div>
+    <span class="hint"><i></i>左右拖 = 跨步 · 上下拖 = 钉数 · 点 = 让它自己走</span>
+  </div>
+  <div class="plate__stage">
+    <div class="wind" id="wind-root" role="group" aria-label="弦线图案">
+      <canvas id="wind-canvas" role="img"
+        aria-label="圆环上一圈均匀分布的端点，彼此之间牵满细线，在中间盘出一层有明晰包络的图案。"></canvas>
+      <div class="wind__legend" id="wind-legend"></div>
+    </div>
+  </div>
+  <div class="plate__foot foot-2">
+    <div class="caption">
+      <p class="lead">跨步数 k 与钉数 N 互质，一根线就能把所有钉子串成一个闭环；不互质时，它会散成 gcd(N,k) 个各自闭合的环。那条漂亮的轮廓没有画，它是所有弦共同挤出来的边。</p>
+      <p class="small">这类图形在 19 世纪被当作绘图课习题，后来成了弦艺。当 k 约为 N 的 0.382 倍时，包络最接近心形，那是黄金分割的近亲。</p>
+    </div>
+    <div class="readout" id="ro-wind">
+      <div class="readout__head"><span class="tag">现场读数</span><span class="tag" id="wind-state">自走中</span></div>
+      <div class="readout__row"><span class="readout__k">钉数 N</span><span class="readout__v" data-k="n">0</span><span class="readout__u">枚</span></div>
+      <div class="readout__row"><span class="readout__k">跨步 k</span><span class="readout__v" data-k="k">0</span><span class="readout__u"></span></div>
+      <div class="readout__row"><span class="readout__k">弦数</span><span class="readout__v" data-k="ch">0</span><span class="readout__u">根</span></div>
+      <div class="readout__row"><span class="readout__k">闭合环</span><span class="readout__v" data-k="gcd">0</span><span class="readout__u">条</span></div>
+      <div class="readout__row"><span class="readout__k">包络</span><span class="readout__v" data-k="env">—</span><span class="readout__u"></span></div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <!-- ═══ 收束 ═══ StrokeText：描边走完再灌注填充 ═══ -->
-<footer class="coda" id="coda" aria-labelledby="t6">
+<footer class="coda" id="coda" aria-labelledby="t-coda">
   <div class="caption">
-    <h2 class="visually-hidden" id="t6">收束</h2>
+    <h2 class="visually-hidden" id="t-coda">收束</h2>
     <span class="coda__word" aria-hidden="true">
       <span class="coda__stroke">收束</span>
       <span class="coda__fill">收束</span>
     </span>
-    <p class="lead">五块图版用的是五条不同的规则，写在同一张纸上：把线画出来，让线自己动起来，然后看它服从谁。</p>
+    <p class="lead">八块图版用的是八条不同的规则，写在同一张纸上：把线画出来，让线自己动起来，然后看它服从谁。</p>
   </div>
   <div class="btnrow">
     <button class="btn" id="replay-all" type="button">让全部线重新走一遍</button>
@@ -592,6 +727,9 @@ a{color:inherit}
         <dt>摩尔纹</dt><dd>三层 CSS 渐变，只转 transform</dd>
         <dt>曲线</dt><dd>SVG 路径，1500 个采样点</dd>
         <dt>排版场</dt><dd>DOM 字块，逐帧位移合成</dd>
+        <dt>织机</dt><dd>Canvas 2D，经纬交叉逐格画纱，三种组织</dd>
+        <dt>交缠</dt><dd>Canvas 2D，逐段按相位定先后，真压真抬</dd>
+        <dt>弦板</dt><dd>Canvas 2D，N 枚钉子牵 k 步，包络自现</dd>
       </dl>
     </div>
     <div>
@@ -1335,6 +1473,425 @@ function createType(root){
 }
 
 /* ──────────────────────────────────────────────────────────
+   图版 VI · 梭：Canvas 2D 织机。经线绷直，纬线横穿，组织决定抬落
+   ────────────────────────────────────────────────────────── */
+function createLoom(root){
+  var canvas = document.getElementById('loom-canvas');
+  var ctx = canvas.getContext('2d', { alpha:false });
+  var out = reader(document.getElementById('ro-loom'));
+  var stEl = document.getElementById('loom-state');
+  var orgEl = document.getElementById('loom-org');
+  var off = document.createElement('canvas');
+  var octx = off.getContext('2d');
+  var BG = '#E9EAE8';
+
+  /* 三种基础组织。on(i,j) = 第 i 根经线在第 j 行抬起来（压在纬线之上） */
+  var ORGS = [
+    { name:'平纹', m:2, on:function(i,j){ return ((i + j) % 2) === 0; } },
+    { name:'斜纹', m:3, on:function(i,j){ return ((i + j) % 3) !== 0; } },
+    { name:'缎纹', m:5, on:function(i,j){ return ((i + 2*j) % 5) !== 0; } }
+  ];
+  var cover = ORGS.map(function(o){
+    var up = 0, tot = 0;
+    for(var i=0;i<o.m;i++) for(var j=0;j<o.m;j++){ tot++; if(o.on(i,j)) up++; }
+    return Math.round(up/tot*100);
+  });
+
+  var W=0, H=0, DPR=1, dw=7, ch=6, N=0, ROWS=1;
+  var row=0, lastRow=0, hold=0, speed=4.4, orgIdx=0, dens=0.45;
+
+  function measure(){
+    var r = canvas.getBoundingClientRect();
+    W = Math.max(280, Math.round(r.width));
+    H = Math.max(200, Math.round(r.height));
+    DPR = Math.min(window.devicePixelRatio || 1, 1.75);
+    canvas.width = Math.round(W*DPR); canvas.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    off.width = canvas.width; off.height = canvas.height;
+    octx.setTransform(DPR,0,0,DPR,0,0);
+    dw = clamp(3.6 + dens*9.4, 3.6, 13);
+    ch = Math.max(3, dw*0.86);
+    N = Math.max(24, Math.floor(W/dw));
+    ROWS = Math.max(12, Math.round(H/ch));
+  }
+  /* 胚布：底色 + 全部还没被压住的经线 */
+  function base(){
+    octx.fillStyle = BG;
+    octx.fillRect(0,0,W,H);
+    octx.fillStyle = 'rgba(20,23,26,.115)';
+    for(var i=0;i<N;i++) octx.fillRect(i*dw + dw*0.5 - 0.5, 0, 1, H);
+  }
+  /* 一个交叉点：抬起的经线画成竖纱，让过去的画成横纱 */
+  function cell(c, x, y, i, j){
+    if(ORGS[orgIdx].on(i,j)){
+      c.fillStyle = 'rgba(20,23,26,.60)';
+      c.fillRect(x + dw*0.5 - 0.8, y - 0.4, 1.6, ch + 0.8);
+    } else {
+      c.fillStyle = 'rgba(20,23,26,.24)';
+      c.fillRect(x - 0.4, y + ch*0.5 - 0.8, dw + 0.8, 1.6);
+    }
+  }
+  function weaveRow(j){ for(var i=0;i<N;i++) cell(octx, i*dw, j*ch, i, j); }
+  function reset(){ row = 0; lastRow = 0; hold = 0; base(); out('row', 0); }
+
+  function paint(){
+    ctx.drawImage(off, 0, 0, W, H);
+    var j = lastRow;
+    if(j >= ROWS) return;
+    var p = clamp(row - lastRow, 0, 1);
+    var xEnd = p*W;
+    for(var i=0;i<N;i++){
+      var x = i*dw;
+      if(x > xEnd) break;
+      cell(ctx, x, j*ch, i, j);
+    }
+    /* 织口与梭 */
+    ctx.fillStyle = 'rgba(203,63,34,.18)';
+    ctx.fillRect(0, j*ch, W, 1);
+    var sy = j*ch + ch*0.5;
+    ctx.beginPath(); ctx.arc(xEnd, sy, 9, 0, TAU);
+    ctx.fillStyle = 'rgba(203,63,34,.13)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(xEnd, sy, 2.7, 0, TAU);
+    ctx.fillStyle = '#CB3F22'; ctx.fill();
+  }
+
+  function frame(T, dt){
+    if(state.motion){
+      if(lastRow < ROWS){
+        row += speed*dt;
+        while(row - lastRow >= 1 && lastRow < ROWS){
+          weaveRow(lastRow); lastRow++;
+          out('row', lastRow);
+        }
+        if(lastRow >= ROWS) stEl.textContent = '整匹织完';
+        else stEl.textContent = '投纬中';
+      } else {
+        hold += dt;
+        if(hold > 1.5) reset();
+      }
+    }
+    paint();
+  }
+  function still(){
+    base();
+    var stop = Math.max(1, Math.round(ROWS*0.62));
+    for(var j=0;j<stop;j++) weaveRow(j);
+    lastRow = stop; row = stop + 0.66; hold = 0;
+    out('row', stop);
+    stEl.textContent = '定格';
+    paint();
+  }
+
+  var drag = null;
+  root.addEventListener('pointerdown', function(e){
+    drag = { x:e.clientX, y:e.clientY, speed:speed, dens:dens, moved:false, axis:null };
+    try{ if(root.setPointerCapture && e.pointerId != null) root.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  root.addEventListener('pointermove', function(e){
+    if(!drag) return;
+    var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if(Math.abs(dx) + Math.abs(dy) > 6) drag.moved = true;
+    if(!drag.axis && drag.moved) drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    if(drag.axis === 'x'){
+      speed = clamp(drag.speed + dx*0.035, 0.4, 24);
+      out('v', speed.toFixed(1));
+    } else if(drag.axis === 'y'){
+      var nd = clamp(drag.dens + dy*0.0045, 0, 1);
+      if(Math.abs(nd - dens) > 0.012){ dens = nd; measure(); reset(); out('n', N); }
+    }
+  });
+  function endDrag(e){
+    if(!drag) return;
+    var tap = !drag.moved;
+    drag = null;
+    if(root.releasePointerCapture && e && e.pointerId != null){
+      try{ root.releasePointerCapture(e.pointerId); }catch(err){}
+    }
+    if(tap){
+      orgIdx = (orgIdx + 1) % ORGS.length;
+      orgEl.textContent = ORGS[orgIdx].name;
+      out('org', ORGS[orgIdx].name);
+      out('cover', cover[orgIdx]);
+      reset();
+    }
+  }
+  root.addEventListener('pointerup', endDrag);
+  root.addEventListener('pointercancel', endDrag);
+
+  var engine = registerEngine(root, { frame:frame, still:still });
+  /* 尺寸一变 canvas 就被清空，无论动还是静，必须当场重画回去 */
+  function repaint(){
+    base();
+    var upto = Math.min(lastRow, ROWS);
+    for(var j=0;j<upto;j++) weaveRow(j);
+    paint();
+  }
+  var ro = new ResizeObserver(function(){ measure(); repaint(); });
+  ro.observe(canvas);
+  measure(); reset(); still();
+  out('org', ORGS[0].name); out('n', N); out('v', speed.toFixed(1)); out('cover', cover[0]);
+  return engine;
+}
+
+/* ──────────────────────────────────────────────────────────
+   图版 VII · 辫：多股正弦交缠，交叉处按相位分前后
+   ────────────────────────────────────────────────────────── */
+function createPlait(root){
+  var canvas = document.getElementById('plait-canvas');
+  var ctx = canvas.getContext('2d', { alpha:false });
+  var out = reader(document.getElementById('ro-plait'));
+  var stEl = document.getElementById('plait-state');
+  var COUNTS = [3,4,5,6];
+  var BG = '#E9EAE8';
+  var W=0,H=0,DPR=1,cx=0,cy=0,k=0,amp=0,pitch=0;
+  var nIdx=0, n=3, speed=0.85, ampK=0.30, phase=0, LW=3;
+  var SEGN=132, list=[], buckets=[], BANDS=18;
+
+  for(var b=0;b<BANDS;b++) buckets.push([]);
+
+  function measure(){
+    var r = canvas.getBoundingClientRect();
+    W = Math.max(240, Math.round(r.width));
+    H = Math.max(200, Math.round(r.height));
+    DPR = Math.min(window.devicePixelRatio || 1, 1.75);
+    canvas.width = Math.round(W*DPR); canvas.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    cx = W*0.5; cy = H*0.5;
+    pitch = H/2.6;
+    k = TAU/pitch;
+    amp = W*ampK;
+    LW = clamp(Math.min(W,H)*0.0085, 2.2, 4.2);
+  }
+  function alloc(){
+    list = [];
+    for(var i=0;i<n*SEGN;i++) list.push({ x0:0,y0:0,x1:0,y1:0,d:0 });
+  }
+
+  function paint(){
+    ctx.fillStyle = BG;
+    ctx.fillRect(0,0,W,H);
+    var segH = H/SEGN, idx = 0, i, s;
+    for(i=0;i<n;i++){
+      var phi = phase + i*TAU/n;
+      for(s=0;s<SEGN;s++){
+        var y0 = s*segH, y1 = y0 + segH;
+        var a0 = k*y0 + phi, a1 = k*y1 + phi;
+        var it = list[idx++];
+        it.x0 = cx + amp*Math.sin(a0); it.y0 = y0;
+        it.x1 = cx + amp*Math.sin(a1); it.y1 = y1;
+        it.d  = Math.cos((a0+a1)*0.5);   /* 余弦 > 0 = 正在向前走 = 压在上面 */
+      }
+    }
+    /* 分桶按前后顺序绘制，桶内的段同色，全局只用少量 stroke */
+    for(i=0;i<BANDS;i++) buckets[i].length = 0;
+    for(i=0;i<list.length;i++){
+      var bi = clamp(Math.floor((list[i].d+1)*0.5*BANDS), 0, BANDS-1);
+      buckets[bi].push(list[i]);
+    }
+    ctx.lineCap = 'round';
+    ctx.lineWidth = LW;
+    for(i=0;i<BANDS;i++){
+      var arr = buckets[i];
+      if(!arr.length) continue;
+      ctx.beginPath();
+      for(s=0;s<arr.length;s++){ ctx.moveTo(arr[s].x0, arr[s].y0); ctx.lineTo(arr[s].x1, arr[s].y1); }
+      ctx.strokeStyle = 'rgba(20,23,26,' + (0.19 + 0.53*((i+0.5)/BANDS)).toFixed(3) + ')';
+      ctx.stroke();
+    }
+  }
+
+  function readout(){
+    out('n', n);
+    out('v', speed.toFixed(2));
+    out('amp', Math.round(amp));
+    out('pitch', Math.round(pitch));
+    out('x', Math.round(n*(n-1)*(H/pitch)));
+  }
+
+  function frame(T, dt){
+    if(state.motion) phase -= TAU*speed*dt;
+    paint();
+  }
+  function still(){
+    phase = -0.85;
+    stEl.textContent = '定格';
+    paint();
+  }
+
+  var drag = null;
+  root.addEventListener('pointerdown', function(e){
+    drag = { x:e.clientX, y:e.clientY, speed:speed, ampK:ampK, moved:false, axis:null };
+    root.classList.add('is-drag');
+    try{ if(root.setPointerCapture && e.pointerId != null) root.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  root.addEventListener('pointermove', function(e){
+    if(!drag) return;
+    var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if(Math.abs(dx) + Math.abs(dy) > 6) drag.moved = true;
+    if(!drag.axis && drag.moved) drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    if(drag.axis === 'x'){
+      speed = clamp(drag.speed + dx*0.006, 0.12, 3.4);
+      out('v', speed.toFixed(2));
+    } else if(drag.axis === 'y'){
+      ampK = clamp(drag.ampK - dy*0.0012, 0.07, 0.48);
+      amp = W*ampK;
+      out('amp', Math.round(amp));
+    }
+  });
+  function endDrag(e){
+    if(!drag) return;
+    var tap = !drag.moved;
+    drag = null;
+    root.classList.remove('is-drag');
+    if(root.releasePointerCapture && e && e.pointerId != null){
+      try{ root.releasePointerCapture(e.pointerId); }catch(err){}
+    }
+    if(tap){
+      nIdx = (nIdx + 1) % COUNTS.length;
+      n = COUNTS[nIdx];
+      alloc(); readout(); paint();
+    }
+  }
+  root.addEventListener('pointerup', endDrag);
+  root.addEventListener('pointercancel', endDrag);
+
+  var engine = registerEngine(root, { frame:frame, still:still });
+  var ro = new ResizeObserver(function(){ measure(); alloc(); paint(); });
+  ro.observe(canvas);
+  measure(); alloc(); still(); readout();
+  return engine;
+}
+
+/* ──────────────────────────────────────────────────────────
+   图版 VIII · 弦：圆上 N 枚钉子，牵 k 步，让包络自己浮出来
+   ────────────────────────────────────────────────────────── */
+function createWind(root){
+  var canvas = document.getElementById('wind-canvas');
+  var ctx = canvas.getContext('2d', { alpha:false });
+  var out = reader(document.getElementById('ro-wind'));
+  var stEl = document.getElementById('wind-state');
+  var legEl = document.getElementById('wind-legend');
+  var BG = '#E9EAE8';
+  var W=0,H=0,DPR=1,cx=0,cy=0,R=0;
+  var N=186, Nt=186, kk=71, kt=71;
+  var auto=true, wasAuto=true, lastKey='';
+
+  function gcd(a,b){ a=Math.abs(Math.round(a)); b=Math.abs(Math.round(b)); while(b){ var t=a%b; a=b; b=t; } return a||1; }
+  function envName(n,k){
+    if(k <= 1) return '正多边形';
+    var r = k/n;
+    if(r < 0.14) return '星芒';
+    if(r < 0.24) return '花瓣';
+    if(r < 0.335) return '花冠';
+    if(r < 0.428) return '心形';
+    if(r < 0.478) return '卵形';
+    return '圆盘';
+  }
+  function measure(){
+    var r = canvas.getBoundingClientRect();
+    W = Math.max(260, Math.round(r.width));
+    H = Math.max(240, Math.round(r.height));
+    DPR = Math.min(window.devicePixelRatio || 1, 1.75);
+    canvas.width = Math.round(W*DPR); canvas.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    cx = W*0.5; cy = H*0.5;
+    R = Math.min(W,H)*0.435;
+  }
+
+  function paint(){
+    ctx.fillStyle = BG;
+    ctx.fillRect(0,0,W,H);
+    var n = Math.max(12, Math.round(N));
+    var k = clamp(Math.round(kk), 1, Math.max(1, Math.floor(n/2)));
+    var step = TAU/n, G = 5, g, i;
+    var cosT = new Array(n), sinT = new Array(n);
+    for(i=0;i<n;i++){
+      var a = -Math.PI*0.5 + i*step;
+      cosT[i] = Math.cos(a); sinT[i] = Math.sin(a);
+    }
+    ctx.lineWidth = 1;
+    for(g=0;g<G;g++){
+      var lo = g/G, hi = (g+1)/G;
+      ctx.beginPath();
+      var drew = false;
+      for(i=0;i<n;i++){
+        var t = (i+0.5)/n;
+        if(t < lo || t >= hi) continue;
+        var j = (i + k) % n;
+        ctx.moveTo(cx + R*cosT[i], cy + R*sinT[i]);
+        ctx.lineTo(cx + R*cosT[j], cy + R*sinT[j]);
+        drew = true;
+      }
+      if(!drew) continue;
+      ctx.strokeStyle = 'rgba(20,23,26,' + (0.125 + 0.145*((g+0.5)/G)).toFixed(3) + ')';
+      ctx.stroke();
+    }
+    if(n <= 260){
+      ctx.beginPath();
+      for(i=0;i<n;i++){ ctx.moveTo(cx + R*cosT[i] + 1.2, cy + R*sinT[i]); ctx.arc(cx + R*cosT[i], cy + R*sinT[i], 1.2, 0, TAU); }
+      ctx.fillStyle = 'rgba(20,23,26,.34)';
+      ctx.fill();
+    }
+  }
+
+  function readout(){
+    var n = Math.max(12, Math.round(N));
+    var k = clamp(Math.round(kk), 1, Math.max(1, Math.floor(n/2)));
+    var key = n + '/' + k;
+    if(key === lastKey) return;
+    lastKey = key;
+    var gr = gcd(n,k);
+    out('n', n); out('k', k); out('ch', n); out('gcd', gr); out('env', envName(n,k));
+    legEl.textContent = 'N ' + n + ' · k ' + k + ' · gcd ' + gr;
+  }
+
+  function frame(T, dt){
+    if(state.motion){
+      if(auto){
+        kt = Math.max(1, N*(0.155 + 0.155*(1 + Math.sin(T*0.145))));
+        stEl.textContent = '自走中';
+      }
+      kk = smooth(kk, kt, 2.2, dt);
+      N  = smooth(N, Nt, 2.0, dt);
+      readout();
+    }
+    paint();
+  }
+  function still(){
+    wasAuto = auto;
+    auto = false;
+    stEl.textContent = '定格';
+    readout(); paint();
+  }
+
+  root.addEventListener('pointermove', function(e){
+    if(e.buttons === 0 && !FINEQ.matches) return;
+    var r = canvas.getBoundingClientRect();
+    var x = clamp((e.clientX - r.left)/r.width, 0, 1);
+    var y = clamp((e.clientY - r.top)/r.height, 0, 1);
+    auto = false;
+    stEl.textContent = '手牵';
+    kt = clamp(1 + x*(N/2 - 1), 1, N/2);
+    Nt = clamp(70 + (1-y)*290, 40, 360);
+    if(!state.motion){ kk = kt; N = Nt; readout(); paint(); }
+  }, { passive:true });
+  root.addEventListener('pointerdown', function(){
+    auto = !auto;
+    stEl.textContent = auto ? '自走中' : '手牵';
+  });
+
+  var engine = registerEngine(root, {
+    frame: frame,
+    enter: function(){ if(state.motion) auto = wasAuto; },
+    still: still
+  });
+  var ro = new ResizeObserver(function(){ measure(); paint(); });
+  ro.observe(canvas);
+  measure(); paint(); readout();
+  return engine;
+}
+
+/* ──────────────────────────────────────────────────────────
    索引、进度引信、键盘、收束
    ────────────────────────────────────────────────────────── */
 function initChrome(){
@@ -1409,7 +1966,7 @@ function initChrome(){
   /* 键盘：1-6 跳屏，S 切静 */
   document.addEventListener('keydown', function(e){
     if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    if(e.key >= '1' && e.key <= '6'){
+    if(e.key >= '1' && e.key <= '9'){
       var idx = parseInt(e.key,10)-1;
       if(links[idx]) links[idx].click();
     }
@@ -1452,6 +2009,9 @@ function init(){
   createMoire(document.getElementById('moire-root'));
   createHarmo(document.getElementById('harmo-pad'));
   createType(document.getElementById('type-root'));
+  createLoom(document.getElementById('loom-root'));
+  createPlait(document.getElementById('plait-root'));
+  createWind(document.getElementById('wind-root'));
 
   var io = new IntersectionObserver(function(ents){
     ents.forEach(function(en){
@@ -1478,7 +2038,7 @@ function init(){
   if(!state.motion) applyMotion(false);
 
   /* 文件体积：页内读不到自身文件大小（DOM 序列化会多出一大截），所以直接写实测值 */
-  document.getElementById('file-size').textContent = '单文件 HTML，68 KB';
+  document.getElementById('file-size').textContent = '单文件 HTML，95 KB';
 }
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
