@@ -3,82 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080d09">
-<title>苔痕 · VERDIGRIS — 鼠哥艺术回廊 №06</title>
-<meta name="description" content="石面上的一场生长：降水、长苔、干季退边。点石面就是下一滴雨。">
+<meta name="theme-color" content="#0a0c0b">
+<title>石衣 · SAXICOLOUS — 鼠哥艺术回廊 №06</title>
+<meta name="description" content="石面上的一场争夺：苔保水，地衣促干。湿度是它们各造各的小气候，而石头只有一个终局。">
 <link rel="stylesheet" href="https://fontsapi.zeoseven.com/570/main/result.css" />
 <style>
 :root{
-  --stone:#080d09; --stone2:#0e150f;
-  --moss:#8fb894; --moss-deep:#3f5a45; --wet:#c8dcc6;
-  --dim:rgba(150,196,158,.55); --line:rgba(143,184,148,.30);
+  --mineral:#0a0c0b; --mineral2:#0f1210;
+  --moss:#8fb894; --lichen:#cfc9b4; --wet:#c8dcc6;
+  --dim:rgba(180,196,178,.55); --line:rgba(160,190,165,.28);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;background:var(--stone)}
+html,body{width:100%;height:100%;background:var(--mineral)}
 body{font-family:"Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace;
-  color:#c3dcc6;user-select:none;-webkit-user-select:none;overflow:hidden;
-  background:radial-gradient(120% 90% at 50% 42%,#0d140e,#050806 72%)}
+  color:#c6d2c2;user-select:none;-webkit-user-select:none;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 42%,#101410,#050706 72%)}
 #stage{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
-#moss{image-rendering:crisp-edges;image-rendering:pixelated;touch-action:none;
-  box-shadow:0 0 0 1px rgba(143,184,148,.22),0 18px 60px rgba(0,0,0,.75)}
+#sax{image-rendering:crisp-edges;image-rendering:pixelated;touch-action:none;
+  box-shadow:0 0 0 1px rgba(160,190,165,.20),0 18px 60px rgba(0,0,0,.78)}
 #crt{position:fixed;inset:0;z-index:6;pointer-events:none;
-  background:repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px)}
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.020) 0 1px,transparent 1px 3px)}
 #brand{position:fixed;top:12px;left:16px;z-index:5;font-size:12px;letter-spacing:1px;color:var(--dim)}
 #brand b{color:var(--moss);font-weight:normal}
-#brand s{color:rgba(143,184,148,.45);text-decoration:none}
+#brand i{color:var(--lichen);font-style:normal}
+#brand s{color:rgba(160,190,165,.42);text-decoration:none}
 #sysbar{position:fixed;top:12px;right:16px;z-index:5;display:flex;gap:8px;align-items:center}
 .gh{font-size:12px;letter-spacing:1px;color:var(--moss);text-decoration:none;
-  border:1px solid var(--line);padding:5px 10px;background:rgba(8,14,9,.72)}
+  border:1px solid var(--line);padding:5px 10px;background:rgba(8,12,9,.72)}
 .gh:active{background:rgba(143,184,148,.16)}
 #snd{font-size:12px;letter-spacing:1px;color:var(--moss);border:1px solid var(--line);
-  padding:5px 10px;background:rgba(8,14,9,.72);cursor:pointer;font-family:inherit}
+  padding:5px 10px;background:rgba(8,12,9,.72);cursor:pointer;font-family:inherit}
 #panel{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:5;
-  display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;
-  padding:8px 12px;border:1px solid var(--line);background:rgba(6,11,7,.82);max-width:min(720px,94vw)}
-#panel label{font-size:12px;letter-spacing:1px;color:var(--dim);display:flex;gap:6px;align-items:center}
-#panel button{font-size:12px;letter-spacing:1px;color:var(--moss);border:1px solid var(--line);
-  background:rgba(8,14,9,.7);padding:5px 9px;cursor:pointer;font-family:inherit}
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;
+  padding:8px 12px;border:1px solid var(--line);background:rgba(6,10,7,.84);max-width:min(800px,95vw);
+  opacity:0;transition:opacity .45s ease}
+#panel.show{opacity:1}
+#sub{position:fixed;left:0;right:0;bottom:76px;z-index:7;text-align:center;
+  font-size:13px;letter-spacing:2px;color:rgba(228,240,224,.95);
+  text-shadow:0 2px 14px rgba(0,0,0,.92),0 0 3px rgba(0,0,0,.85);pointer-events:none;
+  padding:0 18px;line-height:1.9;opacity:0;transition:opacity .6s ease}
+#sub.on{opacity:1}
+#panel button{font-size:12px;letter-spacing:1px;color:var(--dim);border:1px solid var(--line);
+  background:rgba(8,12,9,.7);padding:5px 9px;cursor:pointer;font-family:inherit}
 #panel button:active{background:rgba(143,184,148,.16)}
-#mos{width:132px;accent-color:#8fb894;background:transparent}
+#panel button.on{color:#08110b;background:var(--moss);border-color:var(--moss)}
+#panel button#bL.on{background:var(--lichen);border-color:var(--lichen);color:#12100c}
+#panel .sep{width:1px;height:18px;background:var(--line);margin:0 2px}
 #stat{font-size:12px;letter-spacing:1px;color:var(--wet);white-space:nowrap}
+#stat em{font-style:normal;color:var(--moss)}
+#stat b{font-weight:normal;color:var(--lichen)}
 #hint{position:fixed;top:44px;left:0;right:0;z-index:5;font-size:12px;letter-spacing:1px;
-  color:rgba(143,184,148,.42);text-align:center;pointer-events:none}
-#boot{position:fixed;inset:0;z-index:50;background:#060a07;pointer-events:none;
-  animation:bootin 1.3s ease-in .25s forwards}
-@keyframes bootin{to{opacity:0}}
+  color:rgba(160,190,165,.42);text-align:center;pointer-events:none;
+  opacity:0;transition:opacity .45s ease}
+#hint.show{opacity:1}
+#boot{position:fixed;inset:0;z-index:50;background:#05070600;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;animation:bootout 3.2s ease-in .6s forwards}
+#boot div{max-width:min(34ch,80vw);text-align:center;font-size:13px;line-height:2.1;
+  letter-spacing:1px;color:rgba(200,220,198,.86);background:rgba(5,7,6,.88);
+  padding:22px 26px;border:1px solid rgba(160,190,165,.22)}
+#boot s{display:block;text-decoration:none;color:var(--dim);font-size:11px;margin-top:10px}
+@keyframes bootout{0%{opacity:1}78%{opacity:1}100%{opacity:0;visibility:hidden}}
 @media (max-width:820px){
   #hint{font-size:11px;top:40px}
-  #panel{gap:8px;padding:7px 9px}
-  #mos{width:92px}
-  #stat{font-size:11px}
+  #panel{gap:6px;padding:7px 9px}
+  #stat{font-size:11px;width:100%;text-align:center}
 }
-@media (prefers-reduced-motion:reduce){#boot{animation-duration:.3s}}
+@media (prefers-reduced-motion:reduce){#boot{animation-duration:.4s}}
 </style>
 </head>
 <body>
-<div id="stage"><canvas id="moss" width="480" height="270"></canvas></div>
+<div id="stage"><canvas id="sax" width="480" height="270"></canvas></div>
 <div id="crt"></div>
-<div id="brand"><s>№06</s> 苔痕 <b>VERDIGRIS</b></div>
+<div id="brand"><s>№06</s> 石衣 <b>SAXICOLOUS</b> <i>苔 × 地衣</i></div>
 <div id="sysbar"><a class="gh" href="../index.html">← 回廊</a><button id="snd">♪ 声 ON</button></div>
-<div id="hint">点石面 = 下一滴雨 · 拖滑块 = 湿度 · 空格暂停 · R 重置 · D 干 / W 湿</div>
-<div id="panel">
-  <label>湿度<input id="mos" type="range" min="0" max="100" value="62"></label>
-  <button id="auto">自动季节 ON</button>
-  <button id="pause">暂停</button>
-  <button id="reset">重置</button>
+<div id="hint" class="show">点石面 = 施放当前工具（1 雨 / 2 播苔 / 3 播衣 / 4 酸雨 / 5 雾霾）· 按住拖动可连施 · 滚轮拉近 · 空格暂停 · R 重置</div>
+<div id="sub"></div>
+<div id="boot"><div>这块石头本身，两种居民都住不下去。<br>苔先把自己脚下弄湿，地衣先把自己脚下弄干。<br><s>你给的那一小块，要么活过临界，要么被石头消化掉。</s></div></div>
+<div id="panel" class="show">
+  <button id="bR" class="on">☂ 雨</button>
+  <button id="bM">苔</button>
+  <button id="bL">衣</button>
+  <span class="sep"></span>
+  <button id="bA">☣ 酸雨</button>
+  <button id="bS">▤ 雾霾</button>
+  <span class="sep"></span>
+  <button id="bSp">速 ×1</button>
+  <button id="bPause">暂停</button>
+  <button id="bReset">重置</button>
   <span id="stat">…</span>
 </div>
-<div id="boot"></div>
+<div id="err" style="display:none;position:fixed;left:12px;right:12px;bottom:64px;z-index:99;font-size:12px;line-height:1.7;color:#ffc0b4;background:rgba(34,10,8,.93);border:1px solid rgba(255,150,130,.42);padding:9px 12px"></div>
 <script>
-/* 苔痕 · VERDIGRIS ----------------------------------------------------------
-   石面上的一场生长。480×270 原生像素，全部程序化，无外部资源。
-   模型三层：
-     1. 石底：值噪声做颗粒与层理，几道石纹、铁锈点、蚀孔（预渲染一次）。
-     2. 苔群：Eden 生长。每个群落维护一条「生长前沿」（空细胞的候选表），
-        每步从前沿取若干候选，按 湿度 × 距心衰减 × 噪声 决定是否落苔。
-     3. 干季：湿度低时，从外缘（最新的一批）往回枯，群落退边而不消失。
-   湿度可以自己按 48 秒一轮呼吸（自动季节），也可以被手拖住。
-   同一种子必得同一幅苔：所有随机都走 mulberry32，不碰 Math.random。
+window.addEventListener('error',function(e){
+  var el=document.getElementById('err');
+  if(el){el.style.display='block';el.textContent='启动出错：'+(e.message||e.type)+' @'+(e.lineno||'?');}
+});
+/* 石衣 · SAXICOLOUS · 鼠哥艺术回廊 №06 --------------------------------------
+   480×270 原生像素，全程序化，无外部资源。
+
+   故事只有一句：这块石头，苔和地衣原本都住不下去。
+     1 = 苔    它在的地方蒸发慢，把脚下弄湿（局部湿度 → 0.85）
+     2 = 地衣  分泌地衣酸咬石面，把脚下弄干（局部湿度 → 0.19）
+     3 = 苔痕  4 = 地衣痕  死后的印子，会自己褪回石头
+
+   关键：湿度不是全局气候，是一张会扩散的场（30×17 个宏观格）。
+   石头本底湿度 0.50，正好是两种居民都不舒服的中间带：
+     苔要 h>0.58 才长，地衣要 h<0.44 才长。
+   所以一小块苔自己把脚下抬到 0.85，可周围是 0.50，扩散会把它摊平。
+   只有斑块大到湿岛撑得住中心，它才能活；小的会被石头消化掉。
+   这就是临界核。你播下多大一块，决定它活还是死。
+
+   第三层：居民改造石头。苔留下腐殖质让石面保水，地衣酸让石面疏水，
+   而保水度又反过来决定湿度场。规则归居民所有，它们改的是石头本身。
+
+   第二幕：僵持够久，缝里会长出第三种东西（混生体 = 5）。
+   苔嫌干（要 h>0.57），地衣嫌湿（要 h<0.50），中间那条缝两种都长不动；
+   而边界战只吃「已经有主」的格子，永远吃不进空格；再加上每条群落有自己的
+   推送半径（离中心约 120px 就衰减到 0），几块大空地谁也够不着。
+   两条加起来，就是锁死后永远空着的那 10%。
+   混生体的耐受带是 0.24~0.72，只有它进得去。它两头都被封死（苔心 0.85、
+   衣心 0.20 都在它带外），所以它只活得在中间带，赢不光。
+   它也不改造石面，只是把石头拉回中间值——苔要湿、地衣要干，
+   而混生体要的，就是石头本来的样子。
+
+   决定论：mulberry32。同种子 + 同初始条件 + 同干预 ⇒ 同一条战史。
 --------------------------------------------------------------------------- */
 (function(){
 'use strict';
@@ -86,7 +134,7 @@ var W=480,H=270,N=W*H,TAU=Math.PI*2;
 var REDUCED=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
 
 /* ---------- 随机与噪声 ---------- */
-var seed=20260921,rnd=null;
+var seed=20260922,rnd=null;
 function mulberry32(a){
   return function(){
     a|=0;a=a+0x6D2B79F5|0;
@@ -104,79 +152,390 @@ function noise(x,y){
   var n00=nz[b*NP+a],n10=nz[b*NP+c],n01=nz[d*NP+a],n11=nz[d*NP+c];
   return (n00*(1-u)+n10*u)*(1-v)+(n01*(1-u)+n11*u)*v;
 }
+function clamp(v,a,b){return v<a?a:(v>b?b:v);}
+
+/* ---------- 宏观湿度网格 ---------- */
+var CW=4,GW=Math.ceil(W/CW),GH=Math.ceil(H/CW),G=GW*GH;
+var gOf=new Uint16Array(N);      /* 每格属于哪个宏观格 */
+var gCnt=new Int16Array(G);      /* 该宏观格实际有多少像素 */
+var gMoss=new Int16Array(G),gLich=new Int16Array(G);
+var gRet=new Float32Array(G);
+var h=new Float32Array(G),h2=new Float32Array(G);   /* 局部湿度场 */
+(function(){
+  for(var gy=0;gy<GH;gy++)for(var gx=0;gx<GW;gx++){
+    var g=gy*GW+gx,n=0;
+    for(var y=gy*CW;y<Math.min(H,gy*CW+CW);y++)
+      for(var x=gx*CW;x<Math.min(W,gx*CW+CW);x++){gOf[y*W+x]=g;n++;}
+    gCnt[g]=n;
+  }
+})();
 
 /* ---------- 世界 ---------- */
-/* cell: 0 空石 / 1 活苔 / 2 苔痕（枯过的暗印，会自己褪回石头） */
-var cell=new Uint8Array(N);      /* 0 空石 / 1 苔 / 2 苔痕 */
-var born=new Float32Array(N);    /* 出生时刻（秒） */
-var died=new Float32Array(N);    /* 枯掉的时刻（秒），用来算苔痕褪到多淡 */
-var cid=new Uint16Array(N);      /* 群落号 */
-var candOf=new Uint16Array(N);   /* 该格是哪个群落的前沿候选（+1） */
-var HUES=new Int8Array(48);      /* 每个群落一点点色偏 */
-var cols=[],tsim=0,mos=0.62,mosTarget=0.62,auto=true,paused=false;
-var mosPhase=0,area=0,trace=0,scanIdx=0,scanIdx2=0,births=0,deaths=0,peak=0,nowT=0,clock0=0,dryRun=0;
-var ripples=[];
-var FADE=150;                    /* 苔痕完全化回石头要多久（秒） */
+var cell=new Uint8Array(N);      /* 0 石 1 苔 2 地衣 3 苔痕 4 地衣痕 5 混生体 6 混生痕 */
+var born=new Float32Array(N);
+var died=new Float32Array(N);
+var cid=new Uint16Array(N);
+var candM=new Uint16Array(N);
+var candL=new Uint16Array(N);
+var candP=new Uint16Array(N);
+var ret0=new Float32Array(N),ret=new Float32Array(N);
 
-var PAL=[[204,224,202],[162,196,166],[124,164,132],[96,133,105],[72,101,80],[52,74,60]];
-var PALT=[0.7,2.4,6,14,28];      /* 每档年龄上限（秒）：越新越亮，湿边自己会发光 */
-var PAL2=[[88,106,90],[64,78,67],[46,58,49],[34,44,37]];   /* 苔痕：越旧越化回石头 */
+var cols=[];
+var HUES=new Int8Array(128);
+var tsim=0,mos=0.50,areaM=0,areaL=0,areaP=0,traceM=0,traceL=0,traceP=0,climT=0;
+var births=0,flips=0,wipedM=false,wipedL=false,lastWin=-1;
+var scanDie=0,scanFade=0,scanRet=0,scanB=0,scanP=0,retSum=0;
+var ripples=[],trendPts=[],phaseT=0,TREND_N=180,trendDt=0.5;   /* 采样间隔随倍速伸缩：窗口永远覆盖约 90 秒真实观看量 */
+var efRing=[],efT=0,stuckT=0,gateOpen=false,sporeT=0,act2=false,subHold=0;
+var acid=new Float32Array(G),smog=new Float32Array(G);   /* 人留下的酸与霾 */
+var burned=new Uint8Array(N);                             /* 人烧过的地方，久不愈合 */
+var hotDots=[],hotT=0,fieldAmt=0;                          /* 交界上的火线 / 湿度场强度 */
+
+var FADE_M=150,FADE_L=260,FADE_P=215;
+
+/* 湿度方程 ----------------------------------------------------------------
+   两层：每个宏观格有自己的局部气候，同时苔的覆盖率把整块石头的底水抬起来
+   （苔层持水、蒸腾，真实世界里一块长满苔的石头确实比裸石潮）。
+   局部造岛 + 全局抬底，两个正反馈共用同一口水，这就是双稳态的来源。 */
+var BASE_IN=0.28;   /* 石缝渗水 + 夜露 */
+var HOLD   =0.67;   /* 苔把水留在自己脚下 */
+var BG_GAIN=0.35;   /* 苔的覆盖率把整块石头的底水抬高多少 */
+var EVAP   =1.07;   /* 基础蒸发 */
+var LICHDRY=1.00;   /* 地衣酸咬过之后，蒸发多快 */
+var KR     =0.12;   /* 湿度场向局部平衡松弛的速率（1/s）：慢，水在石上挂得住 */
+var DIFF   =2.60;   /* 扩散系数：湿岛的关联长度 ≈ sqrt(D/KR) ≈ 4.7 格 ≈ 19px */
+var MOS0   =0.40;   /* 裸石本底的湿度：地衣勉强能先立足，苔立不住脚 */
+/* 适应性阈值 */
+var M_LO=0.57,M_HI=0.78;   /* 苔：h>0.57 才长，0.78 满速 */
+var L_HI=0.50,L_LO=0.24;   /* 地衣：h<0.50 才长，0.24 满速（区间反过来） */
+var M_DIE=0.50;            /* 苔在 h<0.50 枯退 */
+var L_DIE=0.55;            /* 地衣在 h>0.55 脱落 */
+var BUD_M=110,BUD_L=140;   /* 每步从各自前沿里取多少个候选打量 */
+var SEED_R=8;              /* 移栽铺开的半径（宏观格，≈32px） */
+var SEED_H=0.95;           /* 移栽浇的水 */
+var SEED_RET=0.90;         /* 移栽带的那捧原土 */
+var DRIP_T=16;             /* 缓苗期：移栽后头十几秒持续补水 */
+var CLIM_A=0.045;          /* 气候摆幅：全场的底水慢慢涨落 */
+var CLIM_P=210;            /* 一轮干湿多少秒 */
+var BEAT=0.0025;           /* 边界上挨着吃一口的概率 */
+
+/* 人手：局部污染。酸雨偏心衣，雾霾偏心苔，都不是判决，是慢性病 */
+var ACID_HL=55;            /* 酸蚀痕的半衰期（秒） */
+var SMOG_HL=65;            /* 雾霾沉降的半衰期 */
+var TOOL_R=58;             /* 施放半径（像素） */
+var TOOL_AMT=0.62;         /* 一次施放的污染量 */
+var POL_HARM=0.90;         /* 污染对敏感方的压制权重 */
+var POL_KILL=0.30;         /* 污染催命的速度，要快过边界反扑 */
+
+/* 第三幕：混生体。苔攀在地衣上的复合体（真实存在的生态现象），cell=5。
+   它不是比两者都强，它只是能站在两者都站不住的那条缝里。
+   耐受带宽，两头封死：苔心 0.85 / 衣心 0.20 都在它带外，它赢不光。 */
+var P_LO=0.24,P_HI=0.72;    /* 混生体耐受带 */
+var P_E_LO=0.10,P_E_HI=0.06; /* 边沿各多宽才降到 0 */
+var P_BUD=72;               /* 每步打量多少前沿格：比苔衣都慢，它慢 */
+var P_MAX=5;                /* 最多几个混生体群落，别让它泛滥 */
+var P_GAP=115;              /* 僵持期内两颗孢子的间隔（模拟秒） */
+var P_HOLD=0.55;            /* 它把石面保水拉回哪个值 */
+var PWET=0.50;              /* 混生体按几分之一个苔、抬整块石头的底水。
+                               这个旋钮只挪最后谁占大头（0.5→苔15/衣54，0.85→苔50/衣15），
+                               对种子敏感，不是机制。取 0.5：不加额外全局耦合。 */
+var STUCK_D=0.004;          /* 空地率一分钟内变化多小算「僵住」 */
+var STUCK_T=90;             /* 僵住这么久就开闸 */
+var STUCK_EF=0.13;          /* 空地率得先低到这个数以下，才谈得上僵持 */
+var STUCK_MIN=240;          /* 头四分钟不算僵持，还在铺开 */
+var G_MULM=0.85,G_MULL=1.05,G_MULP=0.78;   /* 三方各自的推进乘子 */
+/* 表面张力：一格的「自己人」四邻数 → 被播动的难易。
+   孤零零一格站不住（被迅速吃掉），被自己人围住的边难撬。
+   没有这一条，边界战会把拼图磨成椒盐——碎块会无限变多、永远不再合并。 */
+var COH=[3.0,1.0,0.30,0.06,0.01];
+
+var PALM=[[186,224,172],[146,198,146],[112,170,118],[86,140,96],[62,110,74],[44,84,58]];
+var PALM_T=[0.7,2.6,7,16,34];
+var PALL=[[242,234,216],[218,204,178],[190,170,138],[160,136,106],[128,106,80],[98,80,58]];
+var PALL_T=[0.8,3.0,8,18,40];
+var PALT_M=[[88,106,90],[64,78,67],[46,58,49],[34,44,37]];
+var PALT_L=[[112,116,110],[88,92,88],[66,70,66],[48,52,50]];
+/* 混生体：苔绿上覆了一层地衣的霜。偏青，跟苔的黄绿和地衣的骨白都能拉开 */
+var PALP=[[198,226,216],[156,200,196],[120,172,172],[90,140,142],[62,104,108],[42,74,78]];
+var PALP_T=[0.8,3.0,8,18,38];
+var PALT_P=[[104,124,124],[78,98,100],[56,74,76],[38,54,56]];
 
 function resetWorld(s){
   if(s!=null)seed=s;
   rnd=mulberry32(seed);rebuildNoise();
-  cell=new Uint8Array(N);born=new Float32Array(N);died=new Float32Array(N);cid=new Uint16Array(N);candOf=new Uint16Array(N);
-  cols=[];tsim=0;area=0;trace=0;births=0;deaths=0;peak=0;scanIdx=0;scanIdx2=0;ripples=[];mosPhase=rnd()*TAU;dryRun=0;
-  for(var i=0;i<48;i++)HUES[i]=((rnd()*13)|0)-6;
+  cell=new Uint8Array(N);born=new Float32Array(N);died=new Float32Array(N);
+  cid=new Uint16Array(N);candM=new Uint16Array(N);candL=new Uint16Array(N);candP=new Uint16Array(N);
+  cols=[];tsim=0;areaM=0;areaL=0;areaP=0;traceM=0;traceL=0;traceP=0;
+  births=0;flips=0;wipedM=false;wipedL=false;lastWin=-1;
+  scanDie=0;scanFade=0;scanRet=0;scanB=0;scanP=0;ripples=[];trendPts=[];phaseT=0;acid.fill(0);smog.fill(0);burned.fill(0);hotDots.length=0;
+  efRing=[];efT=0;stuckT=0;gateOpen=false;sporeT=0;act2=false;subHold=0;
+  for(var i=0;i<128;i++)HUES[i]=((rnd()*13)|0)-6;
+  climT=rnd()*CLIM_P;
+  buildRet();
+  buildHumid();
 }
-function seedColony(x,y,force){
-  if(cols.length>=44&&!force)return null;
-  var x0=Math.max(1,Math.min(W-2,Math.round(x))),y0=Math.max(1,Math.min(H-2,Math.round(y)));
-  var c={x:x0,y:y0,front:[],cur:0,n:0,r0:2.4+noise(x0*0.02,y0*0.02)*3,
-    reach:0.72+rnd()*0.74,nl:2+((rnd()*3)|0),lobes:[]};
-  for(var L=0;L<c.nl;L++)c.lobes.push(rnd()*TAU);   /* 裂片方向：苔不是圆的 */
+
+/* 石头保水底子：大尺度渗水差异 + 水窝 + 干脊 */
+function buildRet(){
+  ret0=new Float32Array(N);ret=new Float32Array(N);
+  var i,x,y;
+  for(y=0;y<H;y++)for(x=0;x<W;x++){
+    i=y*W+x;
+    var v=0.24+0.62*noise(x*0.016+11,y*0.016+7)+0.10*noise(x*0.055+3,y*0.055);
+    ret0[i]=clamp(v,0.05,0.95);
+  }
+  for(var b=0;b<4;b++){
+    var cx=rnd()*W,cy=rnd()*H,rr=24+rnd()*42;
+    var x0=Math.max(0,(cx-rr)|0),x1=Math.min(W,(cx+rr)|0);
+    var y0=Math.max(0,(cy-rr)|0),y1=Math.min(H,(cy+rr)|0);
+    for(y=y0;y<y1;y++)for(x=x0;x<x1;x++){
+      var dx=x-cx,dy=y-cy,d2=Math.sqrt(dx*dx+dy*dy);
+      if(d2>=rr)continue;
+      var k=1-d2/rr,ii=y*W+x;
+      ret0[ii]=Math.min(1,ret0[ii]+0.52*k*k);
+    }
+  }
+  for(var c=0;c<3;c++){
+    var sy=rnd()*H,slope=(rnd()-0.5)*0.9,amt=0.20+rnd()*0.22;
+    for(x=0;x<W;x++){
+      var yy=sy+x*slope+noise(x*0.03,c*7)*10;
+      var band=5+rnd()*4;
+      for(var dy2=-band;dy2<=band;dy2++){
+        var py=Math.round(yy+dy2);
+        if(py<0||py>=H)continue;
+        var kk=1-Math.abs(dy2)/band,jj=py*W+x;
+        ret0[jj]=Math.max(0.03,ret0[jj]-amt*kk*kk);
+      }
+    }
+  }
+  ret.set(ret0);
+  retSum=0;for(i=0;i<N;i++)retSum+=ret0[i];
+}
+/* 湿度场初值：全场是石头本底，只有一点渗水的微差 */
+function buildHumid(){
+  gMoss.fill(0);gLich.fill(0);gRet.fill(0);
+  for(var i=0;i<N;i++){
+    var g=gOf[i];
+    gRet[g]+=ret[i];
+  }
+  for(var gy=0;gy<GH;gy++)for(var gx=0;gx<GW;gx++){
+    var g=gy*GW+gx;
+    var x=gx*CW+CW*0.5,y=gy*CW+CW*0.5;
+    h[g]=MOS0+(noise(x*0.02+31,y*0.02+17)-0.5)*0.075;
+  }
+  h2.set(h);
+}
+
+/* ---------- 群落 ---------- */
+function seedColony(x,y,sp,force){
+  if(cols.length>=128&&!force)return null;
+  var x0=clamp(Math.round(x),1,W-2),y0=clamp(Math.round(y),1,H-2);
+  var mp=(sp===5);
+  var c={sp:sp,x:x0,y:y0,front:[],cur:0,n:0,drip:mp?0:DRIP_T,
+    r0:(sp===1?2.2:(mp?2.6:1.8))+noise(x0*0.02,y0*0.02)*(sp===1?3.0:(mp?3.4:2.2)),
+    reach:sp===1?(0.72+rnd()*0.68):(mp?(0.70+rnd()*0.60):(0.64+rnd()*0.58)),
+    nl:sp===1?(2+((rnd()*3)|0)):(mp?(3+((rnd()*3)|0)):(2+((rnd()*2)|0))),lobes:[]};
+  for(var L=0;L<c.nl;L++)c.lobes.push(rnd()*TAU);
   var ci=cols.length;cols.push(c);
-  if(ci<48)HUES[ci]=(((x0*7+y0*13)%13))-6;
-  for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++)grow(ci,(y0+dy)*W+(x0+dx));
+  if(ci<128)HUES[ci]=((x0*7+y0*13)%13)-6;
+  for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++)pushFront(ci,(y0+dy)*W+(x0+dx));
+  seedPatch(x0,y0,sp);
+  births++;
   return c;
 }
+/* 移栽：带一丛、一捧原土、一桶水。落到哪，就先把它需要的那点小气候铺到哪 */
+function seedPatch(x0,y0,sp){
+  var gx0=(x0/CW)|0,gy0=(y0/CW)|0,NR=(sp===5)?4:SEED_R;
+  for(var dy=-NR;dy<=NR;dy++)for(var dx=-NR;dx<=NR;dx++){
+    var gx=gx0+dx,gy=gy0+dy;
+    if(gx<0||gx>=GW||gy<0||gy>=GH)continue;
+    var di=Math.sqrt(dx*dx+dy*dy);
+    if(di>NR)continue;
+    var k=1-di/NR,g=gy*GW+gx;
+    if(sp===1){
+      h[g]=Math.max(h[g],MOS0+(SEED_H-MOS0)*k);
+      paintRet(gx,gy,0.30+(SEED_RET-0.30)*k,true);
+    }else if(sp===2){
+      h[g]=Math.min(h[g],MOS0-(MOS0-0.14)*k);
+      paintRet(gx,gy,0.44-(0.44-0.05)*k,false);
+    }else{
+      /* 混生体不替自己造气候，只把落脚那小块拨回中间值——它要的就是石头本来的样子 */
+      paintRetMid(gx,gy,P_HOLD,k*0.7);
+    }
+  }
+}
+function paintRet(gx,gy,val,up){
+  for(var y=gy*CW;y<Math.min(H,gy*CW+CW);y++)
+    for(var x=gx*CW;x<Math.min(W,gx*CW+CW);x++){
+      var i=y*W+x;
+      if(up){ if(ret[i]<val){var dv=val-ret[i];ret[i]=val;retSum+=dv;gRet[gy*GW+gx]+=dv;} }
+      else{ if(ret[i]>val){var dv2=val-ret[i];ret[i]=val;retSum+=dv2;gRet[gy*GW+gx]+=dv2;} }
+    }
+}
+/* 把一小块石头的保水度往中间值拉：混生体不选湿也不选干 */
+function paintRetMid(gx,gy,mid,k){
+  for(var y=gy*CW;y<Math.min(H,gy*CW+CW);y++)
+    for(var x=gx*CW;x<Math.min(W,gx*CW+CW);x++){
+      var i=y*W+x,nv=ret[i]+(mid-ret[i])*k,dv=nv-ret[i];
+      ret[i]=nv;retSum+=dv;gRet[gy*GW+gx]+=dv;
+    }
+}
 function pushFront(ci,p){
-  if(cell[p]===1||candOf[p])return;          /* 苔痕可作候选：湿季先复绿苔痕 */
-  candOf[p]=ci+1;cols[ci].front.push(p);
+  if(p<0||p>=N)return;
+  var c=cols[ci];if(!c)return;
+  if(cell[p]===c.sp&&cid[p]===ci)return;
+  var tab=(c.sp===1)?candM:(c.sp===2?candL:candP);
+  if(tab[p])return;
+  tab[p]=ci+1;c.front.push(p);
 }
 function grow(ci,p){
-  if(cell[p]===1)return;
-  if(cell[p]===2)trace--;                    /* 苔痕被复绿 */
-  cell[p]=1;born[p]=tsim;cid[p]=ci;candOf[p]=0;
-  area++;births++;cols[ci].n++;if(area>peak)peak=area;
+  var c=cols[ci];if(!c)return;
+  var sp=c.sp;
+  if(cell[p]===sp&&cid[p]===ci)return;
+  var old=cell[p],g=gOf[p];
+  if(burned[p]&&(old!==1&&old!==2&&old!==5))return;   /* 人的手烧过的地方，谁都填不回去 */
+  if(old===1||old===2||old===5){
+    var vic=cid[p];
+    if(cols[vic]){
+      if(cols[vic].n>0)cols[vic].n--;
+      pushFront(vic,p);
+      if(cols[vic].sp!==sp)flips++;   /* 异主易手才算战线，同物种换群落不算 */
+    }
+    if(old===1){areaM--;gMoss[g]--;}
+    else if(old===2){areaL--;gLich[g]--;}
+    else areaP--;
+  }else if(old===3){traceM--;}
+  else if(old===4){traceL--;}
+  else if(old===6){traceP--;}
+  cell[p]=sp;born[p]=tsim;cid[p]=ci;
+  if(sp===1){candM[p]=0;areaM++;gMoss[g]++;}
+  else if(sp===2){candL[p]=0;areaL++;gLich[g]++;}
+  else{candP[p]=0;areaP++;}
+  c.n++;
   var x=p%W,y=(p/W)|0;
   if(x>0)pushFront(ci,p-1);
   if(x<W-1)pushFront(ci,p+1);
   if(y>0)pushFront(ci,p-W);
   if(y<H-1)pushFront(ci,p+W);
 }
+function dieAt(p,sp,hand){
+  var ci=cid[p],g=gOf[p];
+  cell[p]=(sp===1)?3:(sp===2?4:6);died[p]=tsim;burned[p]=hand?1:0;
+  if(sp===1){areaM--;gMoss[g]--;traceM++;}
+  else if(sp===2){areaL--;gLich[g]--;traceL++;}
+  else{areaP--;traceP++;}
+  if(cols[ci]){
+    if(cols[ci].n>0)cols[ci].n--;
+    pushFront(ci,p);
+  }
+}
+function hAt(p){return h[gOf[p]];}
+
+/* ---------- 一步 ---------- */
 function stepSim(dt){
   tsim+=dt;
-  if(auto){mosPhase+=dt/48;mos=0.52+0.44*Math.sin(mosPhase);}
-  else mos=mosTarget;
-  var reach=22+mos*58,budget=Math.round(5+mos*26);   /* reach 只当基准，每个群落再乘自己的伸展半径 */
+
+  /* 0. 人手留下的东西，会自己散 */
+  var kAc=Math.exp(-dt/ACID_HL),kSm=Math.exp(-dt/SMOG_HL);
+  for(var gq=0;gq<G;gq++){
+    if(acid[gq]>1e-4)acid[gq]*=kAc;
+    if(smog[gq]>1e-4)smog[gq]*=kSm;
+  }
+
+  /* 1. 湿度场：每个宏观格向自己的局部平衡松弛，再在宏观格之间扩散 */
+  climT+=dt;
+  var clim=CLIM_A*Math.sin(climT*TAU/CLIM_P);   /* 气候：整块石头的底水慢慢涨落 */
+  for(var g=0;g<G;g++){
+    var n=gCnt[g];if(!n)continue;
+    var mf=gMoss[g]/n,lf=gLich[g]/n,ra=gRet[g]/n;
+    var inflow =BASE_IN+clim+BG_GAIN*(areaM/N+PWET*areaP/N)+HOLD*mf*(0.30+1.40*ra);
+    var outflow=EVAP*(0.45+LICHDRY*lf)*(0.55+0.65*(1-ra));
+    var tgt=inflow/(inflow+outflow);
+    h[g]+=(tgt-h[g])*KR*dt;
+  }
+  var dd=DIFF*dt;
+  for(var gy=0;gy<GH;gy++)for(var gx=0;gx<GW;gx++){
+    var i=gy*GW+gx;
+    var c0=h[i];
+    var up=(gy>0)?h[i-GW]:c0;
+    var dn=(gy<GH-1)?h[i+GW]:c0;
+    var lf2=(gx>0)?h[i-1]:c0;
+    var rt=(gx<GW-1)?h[i+1]:c0;
+    h2[i]=c0+dd*((up+dn+lf2+rt)*0.25-c0);
+  }
+  var tmp=h;h=h2;h2=tmp;
+
+  /* 缓苗期：刚移栽的群落由人替它浇着一块地，撑到它自己能站住 */
+  for(var kk=0;kk<cols.length;kk++){
+    var ck=cols[kk];
+    if(!(ck.drip>0))continue;
+    ck.drip-=dt;
+    var dx0=(ck.x/CW)|0,dy0=(ck.y/CW)|0;
+    var NR=SEED_R;
+    for(var ddy=-NR;ddy<=NR;ddy++)for(var ddx=-NR;ddx<=NR;ddx++){
+      var ggx=dx0+ddx,ggy=dy0+ddy;
+      if(ggx<0||ggx>=GW||ggy<0||ggy>=GH)continue;
+      var dd=Math.sqrt(ddx*ddx+ddy*ddy);
+      if(dd>NR)continue;
+      var k2=Math.min(1,(1-dd/NR)*1.9),gd=ggy*GW+ggx;
+      if(ck.sp===1)h[gd]=Math.max(h[gd],MOS0+(0.90-MOS0)*k2);
+      else h[gd]=Math.min(h[gd],MOS0-(MOS0-0.12)*k2);
+    }
+  }
+
+  /* 2. 全局湿度（用于读数与相图） */
+  var sum=0;for(var q=0;q<G;q++)sum+=h[q];
+  mos=sum/G;
+
+  /* 3. 前沿推进。每格看自己脚下的湿度过日子 */
   for(var k=0;k<cols.length;k++){
     var c=cols[k];
     if(!c.front.length){c.stalled=(c.stalled||0)+dt;continue;}
     c.stalled=0;
+    var sp=c.sp;
+    var budget=(sp===1)?BUD_M:(sp===2?BUD_L:P_BUD);
+    var fl=c.front;
     for(var s=0;s<budget;s++){
-      var fl=c.front;if(!fl.length)break;
+      if(!fl.length)break;
       if(c.cur>=fl.length)c.cur=0;
       var pos=c.cur++,p=fl[pos];
-      var x=p%W,y=(p/W)|0,dx=x-c.x,dy=y-c.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(p===undefined)break;
+      var x=p%W,y=(p/W)|0,dx=x-c.x,dy=y-c.y;
+      var d=Math.sqrt(dx*dx+dy*dy);
+      var hp=h[gOf[p]];
+      var act=(sp===1)?clamp((hp-M_LO)/(M_HI-M_LO),0,1)
+                     :(sp===2?clamp((L_HI-hp)/(L_HI-L_LO),0,1)
+                             :clamp((hp-P_LO)/P_E_LO,0,1)*clamp((P_HI-hp)/P_E_HI,0,1));
+      var pol=(sp===1)?smog[gOf[p]]:(sp===2?acid[gOf[p]]:(acid[gOf[p]]+smog[gOf[p]])*0.6);
+      if(pol>0.02)act*=Math.max(0,1-pol*POL_HARM);   /* 苔怕霾，地衣怕酸，混生体两头都沾一点 */
+      if(act<=0.002)continue;
       var ang=Math.atan2(dy,dx),lb=0;
       for(var L2=0;L2<c.nl;L2++){
         var cs=Math.cos(ang-c.lobes[L2]);
-        if(cs>0){var w2=cs*cs;w2=w2*w2*w2;if(w2>lb)lb=w2;}
+        if(cs>0){
+          var w=cs*cs;w=w*w*w;
+          if(sp===2){w=w*w;w=w*Math.sqrt(w);}   /* 地衣：瓣更窄，长成辐条 */
+          if(w>lb)lb=w;
+        }
       }
-      var rl=reach*c.reach;
-      var fall=d<=c.r0?1:Math.max(0,1-Math.pow((d-c.r0)/rl,1.5));
-      var pr=mos*fall*(0.42+noise(x*0.045,y*0.045)*1.05)*(0.55+0.45*noise(x*0.13+7,y*0.13))*(0.62+0.85*lb);
+      var rl=c.reach*(52+hp*120)*(sp===1?1:(sp===2?0.9:0.95));
+      var fall;
+      if(d<=c.r0)fall=1;
+      else if(sp===1)fall=Math.max(0,1-Math.pow((d-c.r0)/rl,1.6));
+      else if(sp===2)fall=Math.max(0,1-Math.pow((d-c.r0)/rl,0.7));
+      else fall=Math.max(0,1-Math.pow((d-c.r0)/rl,1.4));
+      var pr=act*fall*(0.42+noise(x*0.045,y*0.045)*1.05)
+             *(0.58+0.42*noise(x*0.13+7,y*0.13))
+             *(0.60+((sp===1)?G_MULM:(sp===2?G_MULL:G_MULP))*lb);
+      if(cell[p]&&cell[p]!==sp){
+        /* 在别人地盘上先要打赢守军；但守军要是孤零零一格，就好打得多 */
+        var oc=cell[p],ost=0,px2=p%W,py2=(p/W)|0;
+        if(px2>0&&cell[p-1]===oc)ost++;
+        if(px2<W-1&&cell[p+1]===oc)ost++;
+        if(py2>0&&cell[p-W]===oc)ost++;
+        if(py2<H-1&&cell[p+W]===oc)ost++;
+        pr*=0.42*COH[ost>4?4:ost];
+      }
       if(rnd()<pr*0.5){
         grow(k,p);
         fl[pos]=fl[fl.length-1];fl.pop();
@@ -184,47 +543,141 @@ function stepSim(dt){
       }
     }
   }
-  /* 干季退边：不是消失，是留下苔痕；干得越久往里吃得越深 */
-  var dry=Math.max(0,(0.42-mos)/0.42);
-  if(dry>0.02){
-    dryRun+=dt;
-    var th=8+dryRun*2.2;
-    var scans=Math.round(N*0.035*(0.4+dry));
-    for(var q=0;q<scans;q++){
-      scanIdx++;if(scanIdx>=N)scanIdx=0;
-      if(cell[scanIdx]===1&&tsim-born[scanIdx]<th&&rnd()<dry*0.40){
-        var ci2=cid[scanIdx];
-        cell[scanIdx]=2;died[scanIdx]=tsim;area--;trace++;deaths++;
-        if(cols[ci2]){
-          if(cols[ci2].n>0)cols[ci2].n--;
-          pushFront(ci2,scanIdx);              /* 枯过的格子回到前沿：湿季能复绿 */
-        }
+
+  /* 4. 枯退：苔在干里退边，地衣在湿里脱落。都留痕，不消失 */
+  var scansM=Math.round(N*0.036);
+  for(var q1=0;q1<scansM;q1++){
+    scanDie++;if(scanDie>=N)scanDie=0;
+    if(cell[scanDie]===1){
+      var hm=h[gOf[scanDie]],sm0=smog[gOf[scanDie]];
+      var pk=0;
+      if(hm<M_DIE&&tsim-born[scanDie]<26)pk+=clamp((M_DIE-hm)/M_DIE,0,1)*0.42;
+      if(sm0>0.30)pk+=sm0*POL_KILL;      /* 霾不挑年龄，成熟的苔也闷得死 */
+      if(pk>0&&rnd()<pk)dieAt(scanDie,1,sm0>0.35);
+    }
+  }
+  var scansL=Math.round(N*0.036);
+  for(var q2=0;q2<scansL;q2++){
+    scanDie++;if(scanDie>=N)scanDie=0;
+    if(cell[scanDie]===2){
+      var hl=h[gOf[scanDie]],ac0=acid[gOf[scanDie]];
+      var pk2=0;
+      if(hl>L_DIE&&tsim-born[scanDie]<30)pk2+=clamp((hl-L_DIE)/(1-L_DIE),0,1)*0.42;
+      if(ac0>0.30)pk2+=ac0*POL_KILL;     /* 酸不挑年龄，成熟的地衣也保不住 */
+      if(pk2>0&&rnd()<pk2)dieAt(scanDie,2,ac0>0.35);
+    }
+  }
+  /* 混生体：两头极端都活不了；酸剥掉它地衣那层，霾闷死它苔那层 */
+  var scansP=Math.round(N*0.030);
+  for(var q7=0;q7<scansP;q7++){
+    scanP++;if(scanP>=N)scanP=0;
+    if(cell[scanP]===5){
+      var hp2=h[gOf[scanP]],acp=acid[gOf[scanP]],smp=smog[gOf[scanP]];
+      var pk3=0;
+      if((hp2<P_LO||hp2>P_HI)&&tsim-born[scanP]<30)pk3+=0.42;
+      pk3+=(acp+smp)*POL_KILL*0.55;
+      if(pk3>0&&rnd()<pk3)dieAt(scanP,5,(acp>0.35||smp>0.35));
+    }
+  }
+
+  /* 4b. 边界：相邻就是战争。不管谁脚下的湿度合不合意，挨着就是一口一口吃 */
+  var bscans=Math.round(N*0.05);
+  for(var q5=0;q5<bscans;q5++){
+    scanB++;if(scanB>=N)scanB=0;
+    var cb=cell[scanB];
+    if(cb!==1&&cb!==2)continue;
+    var bx=scanB%W,by=(scanB/W)|0,opp=(cb===1)?2:1,nOpp=0;
+    if(bx>0&&cell[scanB-1]===opp)nOpp++;
+    if(bx<W-1&&cell[scanB+1]===opp)nOpp++;
+    if(by>0&&cell[scanB-W]===opp)nOpp++;
+    if(by<H-1&&cell[scanB+W]===opp)nOpp++;
+    if(!nOpp)continue;
+    if(rnd()<BEAT*nOpp){
+      var tgt=-1,rr=rnd()*nOpp,ac2=0;
+      if(bx>0&&cell[scanB-1]===opp){ac2++;if(tgt<0&&ac2>rr)tgt=scanB-1;}
+      if(bx<W-1&&cell[scanB+1]===opp){ac2++;if(tgt<0&&ac2>rr)tgt=scanB+1;}
+      if(by>0&&cell[scanB-W]===opp){ac2++;if(tgt<0&&ac2>rr)tgt=scanB-W;}
+      if(by<H-1&&cell[scanB+W]===opp){ac2++;if(tgt<0&&ac2>rr)tgt=scanB+W;}
+      if(tgt>=0){
+        var tc=cell[tgt],tx=tgt%W,ty=(tgt/W)|0,st=0;
+        if(tx>0&&cell[tgt-1]===tc)st++;
+        if(tx<W-1&&cell[tgt+1]===tc)st++;
+        if(ty>0&&cell[tgt-W]===tc)st++;
+        if(ty<H-1&&cell[tgt+W]===tc)st++;
+        if(rnd()<COH[st])grow(cid[scanB],tgt);
       }
     }
-  } else dryRun=Math.max(0,dryRun-dt*2);
-  /* 苔痕自己褪回石头：一场一场盖过去，石面不会越积越满 */
+  }
+
+  /* 5. 痕迹自己褪回石头 */
   var fades=Math.round(N*0.02);
-  for(var q2=0;q2<fades;q2++){
-    scanIdx2++;if(scanIdx2>=N)scanIdx2=0;
-    if(cell[scanIdx2]===2&&tsim-died[scanIdx2]>FADE){cell[scanIdx2]=0;trace--;}
+  for(var q3=0;q3<fades;q3++){
+    scanFade++;if(scanFade>=N)scanFade=0;
+    if(cell[scanFade]===3&&tsim-died[scanFade]>FADE_M*(burned[scanFade]?4:1)){cell[scanFade]=0;burned[scanFade]=0;traceM--;}
+    else if(cell[scanFade]===4&&tsim-died[scanFade]>FADE_L*(burned[scanFade]?4:1)){cell[scanFade]=0;burned[scanFade]=0;traceL--;}
+    else if(cell[scanFade]===6&&tsim-died[scanFade]>FADE_P*(burned[scanFade]?4:1)){cell[scanFade]=0;burned[scanFade]=0;traceP--;}
   }
-  /* 自播：湿透了会自己冒新群落（宁少而大，不要碎成一片） */
-  if(mos>0.74&&rnd()<dt*0.035&&cols.length<18){
-    var nx=rnd()*W,ny=rnd()*H;
-    if(!cell[((ny|0)*W)+(nx|0)])seedColony(nx,ny);
-  }
-  /* 只留活着的群落：被剔掉的群落要把它占的前沿候选格交还出来 */
-  for(var k2=cols.length-1;k2>=0;k2--){
-    var c2=cols[k2];
-    if(!c2.front.length&&c2.n>0&&(c2.stalled||0)>14)c2.dead=true;
-    if(c2.n<=0&&(c2.stalled||0)>3){
-      for(var f2=0;f2<c2.front.length;f2++)candOf[c2.front[f2]]=0;
-      cols.splice(k2,1);
+
+  /* 6. 改造石头：苔留腐殖质，地衣留酸。规则归居民所有 */
+  var touches=Math.round(N*0.10);
+  for(var q4=0;q4<touches;q4++){
+    scanRet++;if(scanRet>=N)scanRet=0;
+    var cc=cell[scanRet],gg=gOf[scanRet];
+    if(cc===1){
+      if(ret[scanRet]<0.98){
+        var up1=Math.min(0.98-ret[scanRet],0.0075*dt*10);
+        ret[scanRet]+=up1;retSum+=up1;gRet[gg]+=up1;
+      }
+    }else if(cc===2){
+      if(ret[scanRet]>0.03){
+        var dn1=Math.min(ret[scanRet]-0.03,0.0115*dt*10);
+        ret[scanRet]-=dn1;retSum-=dn1;gRet[gg]-=dn1;
+      }
+    }else if(cc===5){                 /* 混生体：不改石头的保水，只把它拨回中间值 */
+      var dm=P_HOLD-ret[scanRet];
+      if(dm>0.004||dm<-0.004){
+        var st=(dm>0?1:-1)*Math.min(Math.abs(dm),0.0060*dt*10);
+        ret[scanRet]+=st;retSum+=st;gRet[gg]+=st;
+      }
     }
+  }
+
+  /* 6b. 僵持：空地率一分钟不动，就是锁死了。锁死本身是第二幕的扳机 */
+  efT+=dt;
+  if(efT>=2){
+    efT=0;
+    efRing.push([tsim,1-(areaM+areaL+areaP)/N]);
+    if(efRing.length>80)efRing.shift();
+  }
+  var ef=1-(areaM+areaL+areaP)/N;
+  if(!gateOpen){
+    if(tsim<STUCK_MIN||ef>STUCK_EF)stuckT=0;
+    else{
+      var past=null;
+      for(var i2=efRing.length-1;i2>=0;i2--){if(tsim-efRing[i2][0]>=60){past=efRing[i2][1];break;}}
+      if(past!=null&&Math.abs(ef-past)<STUCK_D)stuckT+=dt;else stuckT=0;
+      if(stuckT>=STUCK_T){gateOpen=true;sporeT=P_GAP;}
+    }
+  }
+  if(gateOpen){
+    sporeT+=dt;
+    if(sporeT>=P_GAP&&mixColonies()<P_MAX&&sprout())sporeT=0;
+  }
+
+  /* 7. 战局播报 */
+  if(!wipedM&&areaM/N<0.004&&tsim>40){wipedM=true;lastWin=2;}
+  if(!wipedL&&areaL/N<0.004&&tsim>40){wipedL=true;lastWin=1;}
+
+  /* 8. 战况采样：趋势窗每半秒记一笔 */
+  phaseT+=dt;
+  if(phaseT>=trendDt){
+    phaseT=0;
+    trendPts.push([areaM/N,areaL/N,areaP/N]);
+    if(trendPts.length>TREND_N)trendPts.shift();
   }
 }
 
-/* ---------- 石底（预渲染一次） ---------- */
+/* ---------- 石底 ---------- */
 var stone=null;
 function buildStone(bc){
   var img=bc.createImageData(W,H),d=img.data;
@@ -232,10 +685,9 @@ function buildStone(bc){
     var i=(y*W+x)*4;
     var n=noise(x*0.055,y*0.055),m=noise(x*0.29,y*0.21),f=noise(x*0.9,y*0.9),big=noise(x*0.012+3,y*0.012);
     var bed=Math.sin(y*0.083+noise(x*0.014,y*0.014)*4)*0.5+0.5;
-    var v=24+n*13+m*6+bed*7+f*3+(big-0.5)*9;
-    d[i]=v*0.90;d[i+1]=v;d[i+2]=v*0.84;d[i+3]=255;
+    var v=22+n*12+m*6+bed*7+f*3+(big-0.5)*9;
+    d[i]=v*0.90;d[i+1]=v;d[i+2]=v*0.85;d[i+3]=255;
   }
-  /* 石纹：几道斜着的深痕 */
   for(var b=0;b<7;b++){
     var y0=b*(H/7)+rnd()*18,sl=(rnd()-0.5)*0.5;
     for(var xx=0;xx<W;xx++){
@@ -245,19 +697,17 @@ function buildStone(bc){
       d[p0]*=0.62;d[p0+1]*=0.66;d[p0+2]*=0.62;
     }
   }
-  /* 铁锈点：石里有铁，偶尔泛一点赭 */
-  for(var r=0;r<160;r++){
+  for(var r=0;r<150;r++){
     var rx=(rnd()*W)|0,ry=(rnd()*H)|0,rr=1+rnd()*2.4;
     for(var yy2=-rr;yy2<=rr;yy2++)for(var xx2=-rr;xx2<=rr;xx2++){
       if(xx2*xx2+yy2*yy2>rr*rr)continue;
       var px2=((rx+xx2)|0),py2=((ry+yy2)|0);
       if(px2<0||px2>=W||py2<0||py2>=H)continue;
       var p1=(py2*W+px2)*4,k=1-Math.sqrt(xx2*xx2+yy2*yy2)/rr;
-      d[p1]+=44*k;d[p1+1]+=26*k;d[p1+2]+=14*k;
+      d[p1]+=40*k;d[p1+1]+=24*k;d[p1+2]+=13*k;
     }
   }
-  /* 蚀孔：凹下去的小坑，右下亮一线 */
-  for(var h2=0;h2<26;h2++){
+  for(var h2c=0;h2c<26;h2c++){
     var hx=(rnd()*W)|0,hy=(rnd()*H)|0,hr=1+rnd()*2.6;
     for(var yy3=-hr;yy3<=hr;yy3++)for(var xx3=-hr;xx3<=hr;xx3++){
       if(xx3*xx3+yy3*yy3>hr*hr)continue;
@@ -265,26 +715,47 @@ function buildStone(bc){
       if(qx<0||qx>=W||qy<0||qy>=H)continue;
       var p2=(qy*W+qx)*4;
       d[p2]*=0.55;d[p2+1]*=0.58;d[p2+2]*=0.55;
-      if(xx3>hr*0.45&&yy3>hr*0.45){d[p2]+=22;d[p2+1]+=24;d[p2+2]+=20;}
+      if(xx3>hr*0.45&&yy3>hr*0.45){d[p2]+=20;d[p2+1]+=22;d[p2+2]+=19;}
     }
   }
-  /* 展台灯：四边压暗，中间偏亮 */
   for(var y4=0;y4<H;y4++)for(var x4=0;x4<W;x4++){
     var p3=(y4*W+x4)*4;
     var ux=(x4/W-0.5)*2,uy=(y4/H-0.5)*2;
-    var k2=1-0.34*Math.min(1,Math.sqrt(ux*ux*0.8+uy*uy*1.1));
+    var k2=1-0.32*Math.min(1,Math.sqrt(ux*ux*0.8+uy*uy*1.1));
     d[p3]*=k2;d[p3+1]*=k2;d[p3+2]*=k2;
   }
   return img;
 }
+/* 「石头 + 被改造的保水度 + 此刻的气候」合成一张底图。气候是看得见的 */
+var baseB=null;
+function rebuildBase(){
+  var d=baseB.data,sd=stone.data;
+  for(var i=0;i<N;i++){
+    var p=i<<2,g=gOf[i];
+    var dv=ret[i]-ret0[i];
+    var dh=h[g]-MOS0;                 /* 局部湿度相对石头本底 */
+    var rr=sd[p],gg=sd[p+1],bb=sd[p+2];
+    if(dv>0.002){rr-=dv*14;gg+=dv*15;bb-=dv*5;}
+    else if(dv<-0.002){rr+=(-dv)*17;gg+=(-dv)*19;bb+=(-dv)*14;}
+    if(dh>0.004){rr-=dh*26;gg-=dh*10;bb-=dh*22;}        /* 湿处发暗发沉 */
+    else if(dh<-0.004){rr+=(-dh)*20;gg+=(-dh)*18;bb+=(-dh)*26;}  /* 干处泛白 */
+    d[p]=clamp(rr,0,255);d[p+1]=clamp(gg,0,255);d[p+2]=clamp(bb,0,255);d[p+3]=255;
+  }
+}
 
 /* ---------- 画面 ---------- */
-var cv=document.getElementById('moss'),ctx=cv.getContext('2d',{alpha:false});
+var cv=document.getElementById('sax'),ctx=cv.getContext('2d',{alpha:false});
 var bcv=document.createElement('canvas');bcv.width=W;bcv.height=H;
 var bctx=bcv.getContext('2d');
-var buf=null;
+var ss=document.createElement('canvas');ss.width=W;ss.height=H;
+var sctx=ss.getContext('2d');
+var buf=null,baseAcc=0;
+var osc=document.createElement('canvas');osc.width=W;osc.height=H;
+var octx=osc.getContext('2d');
+var cam={x:W/2,y:H/2,z:1};      /* 视口：开场运镜靠它推拉平移 */
+var elSub=null,elPanel=null,elHint=null;
 function fit(){
-  var s=Math.min(innerWidth*0.96/W,(innerHeight-76)/H);
+  var s=Math.min(innerWidth*0.96/W,(innerHeight-110)/H);
   s=Math.max(0.42,s);
   /* 整数倍最锐；只有整数倍浪费掉四成以上空间时，才退到实际比例把画面撑满 */
   var k=Math.floor(s);
@@ -294,65 +765,357 @@ function fit(){
 /* 窗口尺寸一变就重量一次：否则页面按打开那一瞬的窗口大小定死，之后拉大也不长 */
 var fitT=0;
 addEventListener('resize',function(){clearTimeout(fitT);fitT=setTimeout(fit,150);});
-function start(){
-  resetWorld(seed);
-  stone=buildStone(bctx);
+function start(keepSeed){
+  if(!keepSeed)resetWorld(seed);
+  stone=buildStone(sctx);
   buf=bctx.createImageData(W,H);
+  baseB=bctx.createImageData(W,H);
+  rebuildBase();
   fit();
-  /* 开场不要是一块空石：先长过一场，再进入自己的季节 */
-  var keep=auto;auto=false;mosTarget=0.86;mos=0.86;
-  var n0=REDUCED?3:2+((rnd()*2)|0);
-  for(var i=0;i<n0;i++)seedColony(W*(0.22+i*0.28)+rnd()*30,H*(0.32+rnd()*0.36));
-  for(var j=0;j<(REDUCED?520:420);j++)stepSim(1/12);
-  auto=keep;mosPhase=0.6+rnd()*0.5;
+  /* 开场：三块苔、四块地衣，错开摆在同一块石头上。这个配比正好压在分界线上 */
+  for(var i=0;i<3;i++)seedColony(W*(0.17+i*0.31)+rnd()*22,H*(0.30+rnd()*0.40),1);
+  for(var j=0;j<4;j++)seedColony(W*(0.13+j*0.25)+rnd()*20,H*(0.24+rnd()*0.52),2);
+  var steps=REDUCED?260:720;
+  for(var s=0;s<steps;s++)stepSim(1/12);
+  trendPts=[];phaseT=0;
+  startIntro();
 }
 function draw(t){
   var d=buf.data;
-  d.set(stone.data);
-  var now=tsim;
+  d.set(baseB.data);
+  var fld=fieldAmt>0.01?fieldAmt:0;
   for(var i=0;i<N;i++){
-    if(!cell[i])continue;
+    var c=cell[i];
+    if(!c)continue;
     var p=i<<2;
-    if(cell[i]===2){
-      var dg=(tsim-died[i])/FADE,di=dg<0.22?0:(dg<0.5?1:(dg<0.78?2:3));
-      var c2=PAL2[di];
-      d[p]=c2[0];d[p+1]=c2[1];d[p+2]=c2[2];d[p+3]=255;
-      continue;
+    if(c===3){
+      var dg=(tsim-died[i])/FADE_M,di=dg<0.22?0:(dg<0.5?1:(dg<0.78?2:3));
+      var cm=PALT_M[di];
+      d[p]=cm[0];d[p+1]=cm[1];d[p+2]=cm[2];
+    }else if(c===4){
+      var dg2=(tsim-died[i])/FADE_L,di2=dg2<0.25?0:(dg2<0.55?1:(dg2<0.8?2:3));
+      var cl2=PALT_L[di2];
+      d[p]=cl2[0];d[p+1]=cl2[1];d[p+2]=cl2[2];
+    }else if(c===6){
+      var dg3=(tsim-died[i])/FADE_P,di3=dg3<0.22?0:(dg3<0.5?1:(dg3<0.78?2:3));
+      var cp3=PALT_P[di3];
+      d[p]=cp3[0];d[p+1]=cp3[1];d[p+2]=cp3[2];
+    }else{
+      var a=tsim-born[i],col,hu=(HUES[cid[i]]||0);
+      if(c===1){
+        if(a<PALM_T[0])col=PALM[0];
+        else if(a<PALM_T[1])col=PALM[1];
+        else if(a<PALM_T[2])col=PALM[2];
+        else if(a<PALM_T[3])col=PALM[3];
+        else if(a<PALM_T[4])col=PALM[4];
+        else col=PALM[5];
+        d[p]=col[0]+hu;d[p+1]=col[1];d[p+2]=col[2]-hu;
+      }else if(c===2){
+        if(a<PALL_T[0])col=PALL[0];
+        else if(a<PALL_T[1])col=PALL[1];
+        else if(a<PALL_T[2])col=PALL[2];
+        else if(a<PALL_T[3])col=PALL[3];
+        else if(a<PALL_T[4])col=PALL[4];
+        else col=PALL[5];
+        d[p]=col[0]+hu;d[p+1]=col[1]+hu;d[p+2]=col[2]-hu;
+      }else{
+        if(a<PALP_T[0])col=PALP[0];
+        else if(a<PALP_T[1])col=PALP[1];
+        else if(a<PALP_T[2])col=PALP[2];
+        else if(a<PALP_T[3])col=PALP[3];
+        else if(a<PALP_T[4])col=PALP[4];
+        else col=PALP[5];
+        d[p]=col[0]+hu*0.6;d[p+1]=col[1];d[p+2]=col[2]-hu*0.4;
+      }
     }
-    var a=now-born[i],col;
-    if(a<PALT[0])col=PAL[0];
-    else if(a<PALT[1])col=PAL[1];
-    else if(a<PALT[2])col=PAL[2];
-    else if(a<PALT[3])col=PAL[3];
-    else if(a<PALT[4])col=PAL[4];
-    else col=PAL[5];
-    var hu=HUES[cid[i]]||0;
-    d[p]=col[0]+hu;d[p+1]=col[1];d[p+2]=col[2]-hu;d[p+3]=255;
+    var gg=gOf[i];
+    if(fld){                                   /* 湿度场：把看不见的物理铺到脸上，但要薄，透出底下的居民 */
+      var u=clamp((h[gg]-0.18)/0.70,0,1),k=fld*0.44;
+      d[p]  =d[p]  *(1-k)+(206-120*u)*k;
+      d[p+1]=d[p+1]*(1-k)+(124+ 70*u)*k;
+      d[p+2]=d[p+2]*(1-k)+( 82+140*u)*k;
+    }
+    var aA=acid[gg],aS=smog[gg];
+    if(aA>0.02){                               /* 酸蚀：把颜色抽掉，冷灰蓝，像被剥了一层 */
+      var ka=aA*0.72,ga=(d[p]*0.299+d[p+1]*0.587+d[p+2]*0.114);
+      d[p]  =d[p]  *(1-ka)+(ga*0.70+ 20)*ka;
+      d[p+1]=d[p+1]*(1-ka)+(ga*0.78+ 32)*ka;
+      d[p+2]=d[p+2]*(1-ka)+(ga*0.96+ 58)*ka;
+    }
+    if(aS>0.02){                               /* 霾沉：抽掉颜色，淡灰白，一层浮尘闷住 */
+      var ks=aS*0.82,gs=(d[p]*0.299+d[p+1]*0.587+d[p+2]*0.114);
+      d[p]  =d[p]  *(1-ks)+(gs*0.78+100)*ks;
+      d[p+1]=d[p+1]*(1-ks)+(gs*0.78+102)*ks;
+      d[p+2]=d[p+2]*(1-ks)+(gs*0.76+ 92)*ks;
+    }
+    if((c===3||c===4||c===6)&&burned[i]){             /* 焦痕：人的手留下的印子更深，压在最后一层 */
+      d[p]*=0.60;d[p+1]*=0.56;d[p+2]*=0.52;
+    }
+    d[p+3]=255;
   }
-  ctx.putImageData(buf,0,0);
+  /* 火线：苔与地衣贴在一起的地方就是战场 */
+  hotT++;
+  if(hotT%4===0)sampleHot();
+  var pu=0.34+0.66*(0.5+0.5*Math.sin(t*5.5));
+  for(var q6=0;q6<hotDots.length;q6++){
+    var pp=hotDots[q6]<<2;
+    d[pp]  =d[pp]  *0.34+238*0.66*pu;
+    d[pp+1]=d[pp+1]*0.34+176*0.66*pu;
+    d[pp+2]=d[pp+2]*0.34+ 98*0.66*pu;
+  }
+  /* 从视口看这块石头：源上裁一块，整块贴满画布，宁可不平滑也要保住像素的棱角 */
+  var sw=W/cam.z,sh=H/cam.z;
+  var sx=Math.round(clamp(cam.x-sw/2,0,W-sw)),sy=Math.round(clamp(cam.y-sh/2,0,H-sh));
+  octx.putImageData(buf,0,0);
+  ctx.imageSmoothingEnabled=false;
+  ctx.drawImage(osc,sx,sy,Math.round(sw),Math.round(sh),0,0,W,H);
+  drawTrend(t);
   drawGlass(t);
 }
-/* 场记：底边一条湿度计 + 年岁 + 落雨的涟漪 */
+/* ---------- 开场运镜：六个镜头，每镜一句实话 ---------- */
+var mossSpot={x:W*0.5,y:H*0.5},lichSpot={x:W*0.5,y:H*0.5};
+var intro={on:false,t:0,shot:-1};
+var SHOTS=[
+  {dur:2.4,to:null,  z:1.0,sub:'',                                        fld:0},
+  {dur:3.4,to:'moss',z:2.3,sub:'苔。先把自己脚下弄湿。',                        fld:0.55},
+  {dur:3.0,to:'lich',z:2.3,sub:'地衣。先把自己脚下弄干。',                      fld:1},
+  {dur:3.2,to:null,  z:1.0,sub:'湿度不是天气。是它们各自造的小气候。',            fld:1},
+  {dur:4.6,to:'moss',z:3.0,sub:'太小的一块会被石头消化。够大的，才撑得住一个岛。',  fld:1},
+  {dur:3.4,to:null,  z:1.0,sub:'石头是它们的。手是你的。',                      fld:0}
+];
+var INTRO_DUR=0;for(var si=0;si<SHOTS.length;si++)INTRO_DUR+=SHOTS[si].dur;
+function shotCam(s){
+  if(s.to==='moss')return {x:mossSpot.x,y:mossSpot.y,z:s.z};
+  if(s.to==='lich')return {x:lichSpot.x,y:lichSpot.y,z:s.z};
+  return {x:W/2,y:H/2,z:s.z};
+}
+function easeIO(u){return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)*0.5;}
+/* 镜头落点得自己找：每个种子长出来的苔丛地衣丛都不一样 */
+function findSpots(){
+  var bestM=-1,bestL=-1;
+  for(var gy=1;gy<GH-1;gy++)for(var gx=1;gx<GW-1;gx++){
+    var sm=0,sl=0;
+    for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++){
+      var g=(gy+dy)*GW+(gx+dx);sm+=gMoss[g];sl+=gLich[g];
+    }
+    if(sm>bestM){bestM=sm;mossSpot={x:(gx+0.5)*CW,y:(gy+0.5)*CW};}
+    if(sl>bestL){bestL=sl;lichSpot={x:(gx+0.5)*CW,y:(gy+0.5)*CW};}
+  }
+}
+function setSub(s){
+  if(!elSub)return;
+  if(elSub.textContent===s)return;
+  elSub.textContent=s;
+  elSub.className=s?'on':'';
+}
+function startIntro(){
+  findSpots();
+  intro.on=true;intro.t=0;intro.shot=-1;
+  fieldAmt=0;
+  cam.x=W/2;cam.y=H/2;cam.z=1;
+  if(elPanel){elPanel.classList.remove('show');}
+  if(elHint){elHint.classList.remove('show');}
+}
+function skipIntro(){
+  if(!intro.on)return;
+  intro.on=false;
+  fieldAmt=0;
+  cam.x=W/2;cam.y=H/2;cam.z=1;
+  setSub('');
+  if(elPanel){elPanel.classList.add('show');}
+  if(elHint){elHint.classList.add('show');}
+}
+function stepIntro(dt){
+  intro.t+=dt;
+  var acc=0,prev={x:W/2,y:H/2,z:1},cur=null;
+  for(var i=0;i<SHOTS.length;i++){
+    var s=SHOTS[i],tgt=shotCam(s);
+    if(intro.t<acc+s.dur){
+      var u=(intro.t-acc)/s.dur,e=easeIO(Math.min(1,u));
+      cur={x:prev.x+(tgt.x-prev.x)*e,y:prev.y+(tgt.y-prev.y)*e,z:prev.z+(tgt.z-prev.z)*e};
+      if(intro.shot!==i){intro.shot=i;setSub(s.sub);}
+      var fPrev=(i===0)?0:SHOTS[i-1].fld;
+      fieldAmt=fPrev+(s.fld-fPrev)*Math.min(1,u*1.6);
+      break;
+    }
+    acc+=s.dur;prev=tgt;
+  }
+  if(cur){cam.x=cur.x;cam.y=cur.y;cam.z=cur.z;}
+  if(intro.t>=INTRO_DUR)skipIntro();
+}
+
+function sampleHot(){
+  hotDots.length=0;
+  for(var i=0;i<N;i++){
+    var c=cell[i];
+    if(c!==1&&c!==2)continue;
+    if(i%W<W-1){
+      var r=cell[i+1];
+      if((r===1&&c===2)||(r===2&&c===1)){hotDots.push(i);continue;}
+    }
+    if(i<N-W){
+      var dn2=cell[i+W];
+      if((dn2===1&&c===2)||(dn2===2&&c===1))hotDots.push(i);
+    }
+  }
+}
+
+/* ---------- 第二幕的孢子 ------------------------------------------------
+   苔和地衣只能从自己长出去，push 半径一到（约 120px）就再也推不动；
+   混生体的孢子是落进缝里发芽的，所以它进得去那几块谁也够不着的大空地。 */
+function mixColonies(){
+  var n=0;
+  for(var i=0;i<cols.length;i++)if(cols[i].sp===5)n++;
+  return n;
+}
+function hottestSpot(){
+  sampleHot();
+  if(!hotDots.length)return null;
+  var sd=hotDots[(rnd()*hotDots.length)|0];
+  var sx=sd%W,sy=(sd/W)|0,cx=0,cy=0,n=0;
+  for(var i=0;i<hotDots.length;i++){
+    var p=hotDots[i],x=p%W,y=(p/W)|0;
+    if((x-sx)*(x-sx)+(y-sy)*(y-sy)<1600){cx+=x;cy+=y;n++;}
+  }
+  if(!n)return {x:sx,y:sy};
+  return {x:cx/n,y:cy/n};
+}
+function macroEmpty(gx,gy){
+  if(gx<0||gy<0||gx>=GW||gy>=GH)return false;
+  var x=gx*CW,y=gy*CW;
+  if(x>=W||y>=H)return true;
+  return cell[y*W+x]===0;
+}
+function pocketSpot(){
+  var best=null,bestS=-1;
+  for(var k=0;k<260;k++){
+    var gx=2+((rnd()*(GW-4))|0),gy=2+((rnd()*(GH-4))|0);
+    if(!macroEmpty(gx,gy))continue;
+    var hv=h[gy*GW+gx];
+    if(hv<P_LO+0.04||hv>P_HI-0.04)continue;
+    var s=0;
+    for(var dy=-4;dy<=4;dy++)for(var dx=-4;dx<=4;dx++)
+      if(macroEmpty(gx+dx,gy+dy))s++;
+    if(s>bestS){bestS=s;best={x:gx*CW+CW*0.5,y:gy*CW+CW*0.5};}
+  }
+  return best;
+}
+function sprout(){
+  var sp=(mixColonies()===0)?hottestSpot():pocketSpot();
+  if(!sp)sp=hottestSpot();
+  if(!sp)return false;
+  if(!seedColony(sp.x,sp.y,5,true))return false;
+  ripples.push({x:sp.x,y:sp.y,t:nowT});
+  if(!act2){
+    act2=true;
+    announce('僵住了。缝里长出第三种东西。',7);
+    sndSprout();
+  }
+  return true;
+}
+function announce(s,d){if(elSub){elSub.textContent=s;elSub.className='on';}subHold=d;}
+function sndSprout(){tone('sine',540,900,0.50,0.030);tone('sine',270,320,0.95,0.020,0.07);}
+/* 战况窗：时间轴上的两条线。绿是苔，骨是地衣，谁在涨一眼能看出来 */
+var TW=140,TH=88,TX=W-140-6,TY=6;
+function drawTrend(t){
+  ctx.save();
+  ctx.fillStyle='rgba(5,8,6,.80)';ctx.fillRect(TX,TY,TW,TH);
+  ctx.strokeStyle='rgba(160,190,165,.26)';ctx.lineWidth=1;
+  ctx.strokeRect(TX+.5,TY+.5,TW-1,TH-1);
+  var x0=TX+14,x1=TX+TW-9,y0=TY+TH-11,y1=TY+12;
+  var fw=x1-x0,fh=y0-y1;
+  ctx.setLineDash([2,3]);
+  ctx.strokeStyle='rgba(200,220,198,.16)';
+  ctx.beginPath();ctx.moveTo(x0,y0-0.5*fh);ctx.lineTo(x1,y0-0.5*fh);ctx.stroke();
+  ctx.setLineDash([]);
+  var n=trendPts.length;
+  var TC=act2?['#7ec98a','#e0d9c2','#7fd2cb']:['#7ec98a','#e0d9c2'];
+  var TD=act2?['#b6f0be','#f2ecd8','#b3f2ee']:['#b6f0be','#f2ecd8'];
+  if(n>1){
+    for(var s=0;s<TC.length;s++){
+      ctx.strokeStyle=TC[s];
+      ctx.lineWidth=1;
+      ctx.beginPath();
+      for(var i=0;i<n;i++){
+        var px=x0+fw*(i/(n-1)),py=y0-clamp(trendPts[i][s],0,1)*fh;
+        if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+      }
+      ctx.stroke();
+      var ly=y0-clamp(trendPts[n-1][s],0,1)*fh;
+      ctx.fillStyle=TD[s];
+      ctx.fillRect(x1-1.5,ly-1.5,3,3);
+    }
+  }
+  ctx.font='7px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+  ctx.textAlign='left';
+  ctx.fillStyle='rgba(143,184,148,.85)';ctx.fillText('苔',TX+5,TY+TH-3);
+  ctx.fillStyle='rgba(224,217,194,.85)';ctx.fillText('衣',TX+13,TY+TH-3);
+  if(act2){ctx.fillStyle='rgba(134,208,202,.9)';ctx.fillText('混',TX+21,TY+TH-3);}
+  ctx.textAlign='right';
+  ctx.fillStyle='rgba(160,190,165,.38)';ctx.fillText('100%',x1+1,y1+1);
+  var spin=trendDt*TREND_N;
+  ctx.fillText(spin<110?('近 '+Math.round(spin)+' 秒'):('近 '+Math.round(spin/60)+' 分'),x1+1,TY+TH-3);
+  ctx.restore();
+}
 function drawGlass(t){
   ctx.save();
-  var gw=132,gy=H-13,gx=8;
-  ctx.fillStyle='rgba(6,11,7,.62)';ctx.fillRect(0,H-17,W,17);
-  ctx.fillStyle='rgba(143,184,148,.22)';ctx.fillRect(gx,gy,gw,6);
-  ctx.fillStyle='#8fb894';ctx.fillRect(gx,gy,Math.round(gw*mos),6);
-  ctx.fillStyle='rgba(200,220,198,.9)';
+  var BAR=32,yTop=H-BAR;
+  ctx.fillStyle='rgba(5,9,6,.82)';ctx.fillRect(0,yTop,W,BAR);
+  ctx.fillStyle='rgba(160,190,165,.18)';ctx.fillRect(0,yTop,W,1);
   ctx.font='8px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+
+  /* 上排：这口水的读数 */
+  var gw=104,gy=yTop+4,gx=8;
+  ctx.fillStyle='rgba(143,184,148,.16)';ctx.fillRect(gx,gy,gw,6);
+  var mg=ctx.createLinearGradient(gx,0,gx+gw,0);
+  mg.addColorStop(0,'#cfc9b4');mg.addColorStop(0.5,'#9fae96');mg.addColorStop(1,'#8fb894');
+  ctx.fillStyle=mg;ctx.fillRect(gx,gy,Math.round(gw*clamp(mos,0,1)),6);
+  ctx.fillStyle='rgba(230,242,226,.7)';ctx.fillRect(gx+Math.round(gw*0.51),gy-1,1,8);
   ctx.textAlign='left';
-  ctx.fillText('湿 '+Math.round(mos*100)+'%',gx+gw+8,gy+6);
+  ctx.fillStyle='rgba(200,220,198,.92)';
+  ctx.fillText('湿 '+Math.round(mos*100)+'%',gx+gw+6,gy+6);
   ctx.textAlign='right';
-  ctx.fillText('苔积 '+(area/N*100).toFixed(1)+'%  苔痕 '+(trace/N*100).toFixed(1)+'%  群落 '+cols.length+
-    '  年岁 '+String(Math.floor(tsim/60)).padStart(2,'0')+':'+
-    String(Math.floor(tsim%60)).padStart(2,'0'),W-8,gy+6);
+  var mm=Math.floor(tsim/60),ssc=Math.floor(tsim%60);
+  var tail='   战线 '+flips+'   群落 '+cols.length+'   痕 '+(traceM+traceL+traceP);
+  if(act2)tail='   混 '+((areaP/N)*100).toFixed(1)+'%'+tail;
+  ctx.fillText('年岁 '+String(mm).padStart(2,'0')+':'+String(ssc).padStart(2,'0')+tail,W-8,gy+6);
+
+  /* 下排：势力条。左边苔，右边衣，中间那条缝就是还没被占的石头 */
+  var bx0=72,bx1=W-72,by=yTop+16,bh=8,span=bx1-bx0;
+  ctx.fillStyle='rgba(255,255,255,.05)';ctx.fillRect(bx0,by,span,bh);
+  var wM=clamp(areaM/N,0,1)*span,wL=clamp(areaL/N,0,1)*span;
+  if(wM>0.5){
+    var g1=ctx.createLinearGradient(bx0,0,bx0+wM,0);
+    g1.addColorStop(0,'#2f6b45');g1.addColorStop(1,'#8ede9a');
+    ctx.fillStyle=g1;ctx.fillRect(bx0,by,wM,bh);
+  }
+  if(wL>0.5){
+    var g2=ctx.createLinearGradient(bx1,0,bx1-wL,0);
+    g2.addColorStop(0,'#efe8d0');g2.addColorStop(1,'#8c8360');
+    ctx.fillStyle=g2;ctx.fillRect(bx1-wL,by,wL,bh);
+  }
+  /* 第三种颜色：从缝（中间）往外长。它占的就是原来剩的那截空 */
+  var wP=clamp(areaP/N,0,1)*span;
+  if(wP>0.5){
+    var px0=bx0+(span-wP)*0.5;
+    var g3=ctx.createLinearGradient(px0,0,px0+wP,0);
+    g3.addColorStop(0,'#35706f');g3.addColorStop(0.5,'#8ed7d2');g3.addColorStop(1,'#35706f');
+    ctx.fillStyle=g3;ctx.fillRect(px0,by,wP,bh);
+  }
+  ctx.fillStyle='rgba(230,242,226,.45)';ctx.fillRect(bx0+span*0.5,by-1,1,bh+2);
+  ctx.textAlign='right';
+  ctx.fillStyle='#8ede9a';
+  ctx.fillText('苔 '+(areaM/N*100).toFixed(1)+'%',bx0-5,by+7);
   ctx.textAlign='left';
+  ctx.fillStyle='#efe8d0';
+  ctx.fillText('衣 '+(areaL/N*100).toFixed(1)+'%',bx1+5,by+7);
+  ctx.textAlign='left';
+
   for(var i=ripples.length-1;i>=0;i--){
     var rp=ripples[i],age=t-rp.t;
-    if(age>0.75){ripples.splice(i,1);continue;}
-    var rr=1+age*11,a2=Math.max(0,1-age/0.75);
-    ctx.strokeStyle='rgba(200,220,198,'+(a2*0.55).toFixed(2)+')';
+    if(age>0.8){ripples.splice(i,1);continue;}
+    var rr=1+age*12,a2=Math.max(0,1-age/0.8);
+    ctx.strokeStyle='rgba(210,228,208,'+(a2*0.5).toFixed(2)+')';
     ctx.lineWidth=1;
     pEllipse(rp.x,rp.y,rr,rr*0.72);
   }
@@ -382,65 +1145,135 @@ function tone(type,f0,f1,dur,peak,delay){
     o.connect(g);g.connect(a.destination);o.start(a.currentTime+t);o.stop(a.currentTime+t+dur+0.03);
   }catch(e){}
 }
-function sndDrop(){tone('sine',760,190,0.24,0.06);tone('sine',1520,420,0.13,0.018);}
-function sndTick(){tone('square',420,520,0.05,0.03);}
+function sndRain(){tone('sine',720,180,0.26,0.055);tone('sine',1440,400,0.14,0.016);}
+function sndSeed(sp){
+  if(sp===1)tone('sine',300,520,0.22,0.035);
+  else tone('triangle',190,120,0.30,0.034);
+}
+function sndTick(){tone('square',420,520,0.05,0.025);}
 
 /* ---------- 输入 ---------- */
+var mode=0;   /* 0 雨 1 播苔 2 播衣 3 酸雨 4 雾霾 */
+function setMode(m){
+  mode=m;
+  elBR.className=(m===0?'on':'');elBM.className=(m===1?'on':'');elBL.className=(m===2?'on':'');
+  var eA=document.getElementById('bA'),eS=document.getElementById('bS');
+  if(eA)eA.className=(m===3?'on':'');
+  if(eS)eS.className=(m===4?'on':'');
+}
+/* 人手：把酸或霾捧到石面的一小块上 */
+function sprayAt(x,y,m){
+  var r=TOOL_R;
+  for(var gy=0;gy<GH;gy++)for(var gx=0;gx<GW;gx++){
+    var cx=gx*CW+CW*0.5,cy=gy*CW+CW*0.5;
+    var dx=cx-x,dy=cy-y,dd=Math.sqrt(dx*dx+dy*dy);
+    if(dd>r)continue;
+    var k=1-dd/r,gi=gy*GW+gx;
+    if(m===3)acid[gi]=Math.min(1,acid[gi]+TOOL_AMT*k*k);
+    else smog[gi]=Math.min(1,smog[gi]+TOOL_AMT*k*k);
+  }
+}
+var painting=false,lastSpray=-9;
+function useTool(p,force){
+  if(p[0]<0||p[0]>=W||p[1]<0||p[1]>=H)return;
+  if(mode>=3){
+    if(!force&&nowT-lastSpray<0.06)return;
+    lastSpray=nowT;
+    sprayAt(p[0],p[1],mode);
+    ripples.push({x:p[0],y:p[1],t:nowT});
+    sndTick();
+    return;
+  }
+  if(mode===0){
+    /* 一场雨：落下的是水，不是判决 */
+    for(var gy=0;gy<GH;gy++)for(var gx=0;gx<GW;gx++){
+      var gx2=gx*CW+CW*0.5,gy2=gy*CW+CW*0.5;
+      var dx=gx2-p[0],dy=gy2-p[1],dd=Math.sqrt(dx*dx+dy*dy);
+      if(dd>170)continue;
+      h[gy*GW+gx]=Math.min(1,h[gy*GW+gx]+0.26*(1-dd/170));
+    }
+    ripples.push({x:p[0],y:p[1],t:nowT});
+    sndRain();
+  }else{
+    var c=seedColony(p[0],p[1],mode,true);
+    if(c){ripples.push({x:p[0],y:p[1],t:nowT});sndSeed(mode);}
+  }
+}
 function toGame(e){
   var r=cv.getBoundingClientRect();
   return [(e.clientX-r.left)/(r.width/W),(e.clientY-r.top)/(r.height/H)];
 }
 cv.addEventListener('pointerdown',function(e){
   e.preventDefault();
-  var p=toGame(e);
-  if(p[0]<0||p[0]>=W||p[1]<0||p[1]>=H)return;
-  seedColony(p[0],p[1],true);
-  ripples.push({x:p[0],y:p[1],t:nowT});
-  sndDrop();
+  panelT=nowT;
+  if(intro.on){skipIntro();return;}     /* 开场里点一下就是跳过 */
+  painting=true;
+  useTool(toGame(e),true);
 });
-var elMos=document.getElementById('mos'),elAuto=document.getElementById('auto'),
-    elPause=document.getElementById('pause'),elReset=document.getElementById('reset'),
-    elStat=document.getElementById('stat'),elSnd=document.getElementById('snd');
-elMos.addEventListener('input',function(){
-  mosTarget=Number(elMos.value)/100;
-  if(auto){auto=false;elAuto.textContent='自动季节 OFF';}
+cv.addEventListener('pointermove',function(e){
+  if(!painting||intro.on)return;
+  useTool(toGame(e),false);
 });
-elAuto.addEventListener('click',function(){
-  auto=!auto;elAuto.textContent='自动季节 '+(auto?'ON':'OFF');
-});
-elPause.addEventListener('click',function(){
-  paused=!paused;elPause.textContent=paused?'继续':'暂停';elPause.blur();
-});
+cv.addEventListener('wheel',function(e){
+  if(intro.on)return;
+  e.preventDefault();
+  cam.z=clamp(cam.z*(e.deltaY>0?0.88:1.14),1,3.4);
+}, {passive:false});
+window.addEventListener('pointerup',function(){painting=false;});
+window.addEventListener('pointercancel',function(){painting=false;});
+var elBR=document.getElementById('bR'),elBM=document.getElementById('bM'),elBL=document.getElementById('bL'),
+    elSp=document.getElementById('bSp'),elPause=document.getElementById('bPause'),
+    elReset=document.getElementById('bReset'),elStat=document.getElementById('stat'),
+    elSnd=document.getElementById('snd'),elBA=document.getElementById('bA'),elBS=document.getElementById('bS');
+elSub=document.getElementById('sub');elPanel=document.getElementById('panel');elHint=document.getElementById('hint');
+var speeds=[1,3,8,16,32,64],spI=0,paused=false;
+elBR.addEventListener('click',function(){setMode(0);elBR.blur();});
+elBM.addEventListener('click',function(){setMode(1);elBM.blur();});
+elBL.addEventListener('click',function(){setMode(2);elBL.blur();});
+elBA.addEventListener('click',function(){setMode(3);elBA.blur();});
+elBS.addEventListener('click',function(){setMode(4);elBS.blur();});
+elSp.addEventListener('click',function(){spI=(spI+1)%speeds.length;elSp.textContent='速 ×'+speeds[spI];elSp.blur();});
+elPause.addEventListener('click',function(){paused=!paused;elPause.textContent=paused?'继续':'暂停';elPause.blur();});
 elReset.addEventListener('click',function(){
-  resetWorld((seed*1103515245+12345)%2147483647);start();sndTick();elPause.blur();
+  resetWorld((seed*1103515245+12345)%2147483647);start(true);sndTick();elPause.blur();
 });
-elSnd.addEventListener('click',function(){
-  sndOn=!sndOn;elSnd.textContent='♪ 声 '+(sndOn?'ON':'OFF');elSnd.blur();
-});
+elSnd.addEventListener('click',function(){sndOn=!sndOn;elSnd.textContent='♪ 声 '+(sndOn?'ON':'OFF');elSnd.blur();});
 window.addEventListener('keydown',function(e){
   var k=(e.key||'').toLowerCase();
+  if(intro.on){skipIntro();e.preventDefault();return;}
   if(k===' '){paused=!paused;elPause.textContent=paused?'继续':'暂停';e.preventDefault();}
   else if(k==='r'){elReset.click();}
-  else if(k==='w'){auto=false;mosTarget=0.94;elMos.value=94;elAuto.textContent='自动季节 OFF';}
-  else if(k==='d'){auto=false;mosTarget=0.04;elMos.value=4;elAuto.textContent='自动季节 OFF';}
-  else if(k==='arrowleft'||k==='arrowright'){
-    auto=false;elAuto.textContent='自动季节 OFF';
-    mosTarget=Math.max(0,Math.min(1,mosTarget+(k==='arrowright'?0.06:-0.06)));
-    elMos.value=Math.round(mosTarget*100);e.preventDefault();
-  }
+  else if(k==='1'){setMode(0);}
+  else if(k==='2'){setMode(1);}
+  else if(k==='3'){setMode(2);}
+  else if(k==='4'){setMode(3);}
+  else if(k==='5'){setMode(4);}
 });
 
 /* ---------- 主循环 ---------- */
-var last=0,acc=0,SIMDT=1/12,statAcc=0;
+var last=0,acc=0,SIMDT=1/12,statAcc=0,nowT=0,clock0=0,panelT=-9;
+document.addEventListener('pointermove',function(){
+  panelT=nowT;
+  if(!intro.on&&elPanel){elPanel.classList.add('show');elHint.classList.add('show');}
+});
 function loop(ts){
   var t=(ts-clock0)/1000;
   var dt=Math.min(0.05,last?t-last:1/60);last=t;
   nowT=t;
   if(!paused){
-    acc+=dt;
-    var guard=0;
-    while(acc>=SIMDT&&guard++<6){stepSim(SIMDT);acc-=SIMDT;}
+    var spI2=intro.on?1:spI;                 /* 开场一律常速，让镜头看得清 */
+    var spx=speeds[spI2];
+    trendDt=0.5*spx;                         /* 高速时窗随之拉宽，曲线才看得出走势 */
+    acc+=dt*spx;
+    var guard=0,gmax=6*spx;
+    while(acc>=SIMDT&&guard++<gmax){stepSim(SIMDT);acc-=SIMDT;}
+    if(acc>SIMDT*8)acc=0;
   }
+  baseAcc+=dt;
+  if(baseAcc>0.5){baseAcc=0;rebuildBase();}
+  if(intro.on)stepIntro(dt);
+  if(elPanel&&!intro.on&&nowT-panelT>3.5){elPanel.classList.remove('show');elHint.classList.remove('show');}
+  if(subHold>0){subHold-=dt;if(subHold<=0&&!intro.on)setSub('');}
   draw(t);
   statAcc+=dt;
   if(statAcc>0.35){statAcc=0;updateStat();}
@@ -448,36 +1281,89 @@ function loop(ts){
 }
 function mmss(s){var m=Math.floor(s/60);return m+':'+String(Math.floor(s%60)).padStart(2,'0');}
 function updateStat(){
-  elStat.textContent='苔积 '+(area/N*100).toFixed(1)+'% · 苔痕 '+(trace/N*100).toFixed(1)+
-    '% · 群落 '+cols.length+' · '+mmss(tsim);
+  elStat.innerHTML='苔 <em>'+(areaM/N*100).toFixed(1)+'%</em> · 衣 <b>'+(areaL/N*100).toFixed(1)+
+    '%</b> · '+(act2?('混 <i style="font-style:normal;color:#7fd2cb">'+(areaP/N*100).toFixed(1)+'%</i> · '):'')+
+    '战线 '+flips+' · '+mmss(tsim);
 }
-start();
+start(false);
 clock0=performance.now();
 acc=0;last=0;
 requestAnimationFrame(loop);
 updateStat();
 
-/* ---------- 自检钩子（node 里也能驱动） ---------- */
-window.__moss={
-  W:W,H:H,N:N,
-  reset:function(s){resetWorld(s);stone=buildStone(bctx);buf=bctx.createImageData(W,H);},
-  step:function(n,dt){dt=dt||1/12;for(var i=0;i<n;i++)stepSim(dt);},
-  seed:function(x,y){return !!seedColony(x,y,true);},
-  setMos:function(v){auto=false;mosTarget=v;mos=v;},
-  setAuto:function(b){auto=!!b;},
-  setPause:function(b){paused=!!b;},
-  draw:function(t){draw(t||0);},
-  state:function(){return{area:area,cols:cols.length,mos:mos,tsim:tsim,paused:paused,
-    auto:auto,seed:seed,births:births,deaths:deaths,peak:peak,dryRun:dryRun,
-    trace:trace,season:mosPhase};},
-  hash:function(){
-    var h=2166136261>>>0;
-    for(var i=0;i<N;i+=7){h^=cell[i]?1:0;h=Math.imul(h,16777619)>>>0;}
-    return h;
+/* ---------- 自检钩子 ---------- */
+window.__sax={
+  W:W,H:H,N:N,GW:GW,GH:GH,
+  reset:function(s){
+    resetWorld(s);stone=buildStone(sctx);
+    buf=bctx.createImageData(W,H);baseB=bctx.createImageData(W,H);rebuildBase();
   },
+  step:function(n,dt){dt=dt||1/12;for(var i=0;i<n;i++)stepSim(dt);},
+  sow:function(x,y,sp){return !!seedColony(x,y,sp,true);},
+  rain:function(x,y,amp,r){
+    amp=amp||0.26;r=r||170;
+    for(var gy=0;gy<GH;gy++)for(var gx=0;gx<GW;gx++){
+      var gx2=gx*CW+CW*0.5,gy2=gy*CW+CW*0.5;
+      var dx=gx2-x,dy=gy2-y,dd=Math.sqrt(dx*dx+dy*dy);
+      if(dd>r)continue;
+      h[gy*GW+gx]=Math.min(1,h[gy*GW+gx]+amp*(1-dd/r));
+    }
+  },
+  setH:function(g,v){h[g]=v;},
+  hAt:function(g){return h[g];},
+  setSpeed:function(i){spI=i;},
+  state:function(){
+    return{mos:mos,mossFrac:areaM/N,lichFrac:areaL/N,mixFrac:areaP/N,retAvg:retSum/N,
+      traceM:traceM,traceL:traceL,traceP:traceP,cols:cols.length,tsim:tsim,flips:flips,
+      wipedM:wipedM,wipedL:wipedL,lastWin:lastWin,
+      act2:act2,gateOpen:gateOpen,stuckT:stuckT,mixCols:mixColonies()};
+  },
+  openGate:function(){gateOpen=true;sporeT=P_GAP;},
+  spore:function(){return sprout();},
+  mixCols:function(){return mixColonies();},
+  pAct:function(g){var hv=h[g];return clamp((hv-P_LO)/P_E_LO,0,1)*clamp((P_HI-hv)/P_E_HI,0,1);},
+  pRange:function(){return[P_LO,P_HI];},
+  count:function(sp){var n=0;for(var i=0;i<N;i++)if(cell[i]===sp)n++;return n;},
   cellAt:function(x,y){return cell[y*W+x];},
-  palette:function(){return PAL.slice();},
-  ping:function(){return 'verdigris';}
+  tune:function(o){
+    if(o.KR!=null)KR=o.KR; if(o.DIFF!=null)DIFF=o.DIFF;
+    if(o.M_LO!=null)M_LO=o.M_LO; if(o.M_HI!=null)M_HI=o.M_HI;
+    if(o.L_HI!=null)L_HI=o.L_HI; if(o.L_LO!=null)L_LO=o.L_LO;
+    if(o.HOLD!=null)HOLD=o.HOLD; if(o.EVAP!=null)EVAP=o.EVAP;
+    if(o.BASE_IN!=null)BASE_IN=o.BASE_IN; if(o.MOS0!=null)MOS0=o.MOS0;
+    if(o.BG_GAIN!=null)BG_GAIN=o.BG_GAIN;
+    if(o.BUD_M!=null)BUD_M=o.BUD_M; if(o.BUD_L!=null)BUD_L=o.BUD_L;
+    if(o.SEED_H!=null)SEED_H=o.SEED_H; if(o.SEED_RET!=null)SEED_RET=o.SEED_RET;
+    if(o.DRIP_T!=null)DRIP_T=o.DRIP_T; if(o.SEED_R!=null)SEED_R=o.SEED_R;
+    if(o.BEAT!=null)BEAT=o.BEAT; if(o.CLIM_A!=null)CLIM_A=o.CLIM_A;
+    if(o.PWET!=null)PWET=o.PWET;
+    if(o.M_DIE!=null)M_DIE=o.M_DIE; if(o.L_DIE!=null)L_DIE=o.L_DIE;
+    return {KR:KR,DIFF:DIFF,M_LO:M_LO,HOLD:HOLD,BG_GAIN:BG_GAIN,BUD_M:BUD_M,SEED_H:SEED_H,SEED_RET:SEED_RET,DRIP_T:DRIP_T};
+  },
+  pixels:function(t){draw(t||tsim);return buf.data;},
+  spray:function(x,y,m,amt){
+    amt=(amt==null)?TOOL_AMT:amt;
+    var r=TOOL_R;
+    for(var gy=0;gy<GH;gy++)for(var gx=0;gx<GW;gx++){
+      var cx=gx*CW+CW*0.5,cy=gy*CW+CW*0.5;
+      var dx=cx-x,dy=cy-y,dd=Math.sqrt(dx*dx+dy*dy);
+      if(dd>r)continue;
+      var k=1-dd/r,gi=gy*GW+gx;
+      if(m===3)acid[gi]=Math.min(1,acid[gi]+amt*k*k);
+      else smog[gi]=Math.min(1,smog[gi]+amt*k*k);
+    }
+  },
+  polAt:function(x,y){var gi=gOf[((y|0)*W+(x|0))];return[acid[gi],smog[gi]];},
+  field:function(v){fieldAmt=(v==null)?1:v;},
+  hotCount:function(){sampleHot();return hotDots.length;},
+  intro:function(t){
+    if(t==null)return intro.on;
+    if(!intro.on){intro.on=true;findSpots();}
+    intro.t=t;intro.shot=-1;stepIntro(0);
+  },
+  shots:function(){var o=[];for(var i=0;i<SHOTS.length;i++)o.push({i:i,dur:SHOTS[i].dur,sub:SHOTS[i].sub,z:SHOTS[i].z,fld:SHOTS[i].fld});return o;},
+  cams:function(){return {x:cam.x,y:cam.y,z:cam.z};},
+  ping:function(){return 'saxicolous';}
 };
 })();
 </script>
