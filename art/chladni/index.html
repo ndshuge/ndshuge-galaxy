@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0813">
+<title>声场 · CHLADNI — 鼠哥艺术回廊 №07</title>
+<meta name="description" content="一块方板、一层沙、一根弓。频率一变，沙自己走到节线上。">
+<link rel="stylesheet" href="https://fontsapi.zeoseven.com/570/main/result.css" />
+<style>
+:root{
+  --bg:#0a0813; --plate:#171427; --sand:#d9c6ff; --viol:#a78bfa;
+  --dim:rgba(178,160,230,.55); --line:rgba(167,139,250,.30);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;background:var(--bg)}
+body{font-family:"Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace;
+  color:#ddd3ff;user-select:none;-webkit-user-select:none;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 40%,#161029,#06050d 74%)}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#chladni{image-rendering:crisp-edges;image-rendering:pixelated;touch-action:none;
+  box-shadow:0 0 0 1px rgba(167,139,250,.24),0 18px 60px rgba(0,0,0,.75)}
+#crt{position:fixed;inset:0;z-index:6;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px)}
+#brand{position:fixed;top:12px;left:16px;z-index:5;font-size:12px;letter-spacing:1px;color:var(--dim)}
+#brand b{color:var(--viol);font-weight:normal}
+#brand s{color:rgba(167,139,250,.45);text-decoration:none}
+#sysbar{position:fixed;top:12px;right:16px;z-index:5;display:flex;gap:8px;align-items:center}
+.gh{font-size:12px;letter-spacing:1px;color:var(--viol);text-decoration:none;
+  border:1px solid var(--line);padding:5px 10px;background:rgba(10,8,19,.72)}
+.gh:active{background:rgba(167,139,250,.16)}
+#snd{font-size:12px;letter-spacing:1px;color:var(--viol);border:1px solid var(--line);
+  padding:5px 10px;background:rgba(10,8,19,.72);cursor:pointer;font-family:inherit}
+#panel{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;
+  padding:8px 12px;border:1px solid var(--line);background:rgba(8,6,16,.84);max-width:min(760px,94vw)}
+#panel label{font-size:12px;letter-spacing:1px;color:var(--dim);display:flex;gap:6px;align-items:center}
+#panel button{font-size:12px;letter-spacing:1px;color:var(--viol);border:1px solid var(--line);
+  background:rgba(10,8,19,.7);padding:5px 9px;cursor:pointer;font-family:inherit}
+#panel button:active{background:rgba(167,139,250,.16)}
+#mode{width:150px;accent-color:#a78bfa;background:transparent}
+#stat{font-size:12px;letter-spacing:1px;color:var(--sand);white-space:nowrap}
+#hint{position:fixed;top:44px;left:0;right:0;z-index:5;font-size:12px;letter-spacing:1px;
+  color:rgba(167,139,250,.45);text-align:center;pointer-events:none}
+#boot{position:fixed;inset:0;z-index:50;background:#07050e;pointer-events:none;
+  animation:bootin 1.3s ease-in .25s forwards}
+@keyframes bootin{to{opacity:0}}
+@media (max-width:820px){
+  #hint{font-size:11px;top:40px}
+  #panel{gap:8px;padding:7px 9px}
+  #mode{width:104px}
+  #stat{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){#boot{animation-duration:.3s}}
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="chladni" width="480" height="270"></canvas></div>
+<div id="crt"></div>
+<div id="brand"><s>№07</s> 声场 <b>CHLADNI</b></div>
+<div id="sysbar"><a class="gh" href="../index.html">← 回廊</a><button id="snd">♪ 声 ON</button></div>
+<div id="hint">拖动板面 = 换模态 · 点一下 = 撒沙 · 空格 = 扫弓 · R = 重置 · 逗号句号 = 微调</div>
+<div id="panel">
+  <label>模态<input id="mode" type="range" min="0" max="100" value="0"></label>
+  <button id="sand">撒沙</button>
+  <button id="sweep">扫弓</button>
+  <button id="reset">重置</button>
+  <span id="stat">…</span>
+</div>
+<div id="boot"></div>
+<script>
+/* 声场 · CHLADNI -------------------------------------------------------------
+   一块方板、一层沙、一根弓。
+   物理：方板的驻波场 u(x,y) = cos(nπx)cos(mπy) − cos(mπx)cos(nπy)。
+         |u| 大 = 板在那里振得凶，沙被抖开；|u| = 0 是节线，沙停得住。
+   沙：每个粒子沿 −∇|u| 走一步，步长跟局部振幅成正比（振幅为零就站住），
+       外加一点抖动，所以沙最后停在节线上、沿节线铺成颗粒线。
+   换模态：相邻两个模态之间插值，所以拖滑块是"morph"，不是跳变。
+   确定性：所有随机走 mulberry32，同种子必得同一盘沙（撒沙除外，那是手动作）。
+   480×270 原生像素，全程序化，无外部资源。 */
+(function(){
+'use strict';
+var W=480,H=270,TAU=Math.PI*2;
+var REDUCED=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+/* 板：正方形，居左偏中，右边留给读数 */
+var PX=136,PY=34,PS=202;
+
+var seed=20260922,rnd=null;
+function mulberry32(a){
+  return function(){
+    a|=0;a=a+0x6D2B79F5|0;
+    var t=Math.imul(a^a>>>15,1|a);
+    t=t+Math.imul(t^t>>>7,61|t)^t;
+    return((t^t>>>14)>>>0)/4294967296;
+  };
+}
+/* 模态表：只取 m≠n（相等时场恒为零，空板一张） */
+var MODES=[[1,2],[2,3],[2,4],[3,4],[3,5],[4,5],[4,6],[5,6],[5,7],[6,7],[6,8],[7,8],[2,5],[3,7]];
+function modeAt(pos){                    /* pos∈[0,len-1]，返回混合后的场参数 */
+  var i=Math.floor(pos),f=pos-i;
+  var a=MODES[Math.max(0,Math.min(MODES.length-1,i))];
+  var b=MODES[Math.max(0,Math.min(MODES.length-1,i+1))];
+  return [a,b,f];
+}
+function fieldOf(m,n,x,y){
+  var px=x*Math.PI,py=y*Math.PI;
+  return Math.cos(n*px)*Math.cos(m*py)-Math.cos(m*px)*Math.cos(n*py);
+}
+function field(x,y){
+  var t=modeAt(modePos),a=t[0],b=t[1],f=smooth(t[2]);
+  return fieldOf(a[0],a[1],x,y)*(1-f)+fieldOf(b[0],b[1],x,y)*f;
+}
+function smooth(t){return t*t*(3-2*t);}
+/* 解析梯度：一次算完 u 与 ∇u（比数值差分省 2.5 倍三角函数）
+   u = cos(nπx)cos(mπy) − cos(mπx)cos(nπy)
+   ux = −nπ·sin(nπx)cos(mπy) + mπ·sin(mπx)cos(nπy)
+   uy = −mπ·cos(nπx)sin(mπy) + nπ·cos(mπx)sin(nπy) */
+function ug(m,n,x,y,o){
+  var px=x*Math.PI,py=y*Math.PI;
+  var cnx=Math.cos(n*px),snx=Math.sin(n*px),cmx=Math.cos(m*px),smx=Math.sin(m*px);
+  var cny=Math.cos(n*py),sny=Math.sin(n*py),cmy=Math.cos(m*py),smy=Math.sin(m*py);
+  o.u=cnx*cmy-cmx*cny;
+  o.gx=-n*Math.PI*snx*cmy+m*Math.PI*smx*cny;
+  o.gy=-m*Math.PI*cnx*smy+n*Math.PI*cmx*sny;
+  return o;
+}
+function sample(x,y,o){
+  var t=modeAt(modePos),a=t[0],b=t[1],f=smooth(t[2]);
+  ug(a[0],a[1],x,y,o);
+  if(f<=0)return o;
+  var u1=o.u,gx1=o.gx,gy1=o.gy;
+  ug(b[0],b[1],x,y,o);
+  o.u=u1*(1-f)+o.u*f;o.gx=gx1*(1-f)+o.gx*f;o.gy=gy1*(1-f)+o.gy*f;
+  return o;
+}
+var TMP={u:0,gx:0,gy:0};
+
+/* ---------- 沙 ---------- */
+var NP=3000;
+var sx=new Float32Array(NP),sy=new Float32Array(NP);
+var modePos=0,modeTarget=0,sweep=false,sweepDir=1;
+var conc=0,it=0;
+var buf=null;
+
+function resetSand(){
+  for(var i=0;i<NP;i++){
+    /* 撒得"不均"一点：几处堆，几处空，像手撒的 */
+    var a=rnd(),b=rnd();
+    var cl=Math.floor(rnd()*5),cx=(cl%3)/2*0.8+0.1,cy=Math.floor(cl/3)/1*0.6+0.2;
+    sx[i]=Math.max(0,Math.min(1,(a*0.72+cx*0.28+(rnd()-0.5)*0.06)));
+    sy[i]=Math.max(0,Math.min(1,(b*0.72+cy*0.28+(rnd()-0.5)*0.06)));
+  }
+}
+function scatter(){resetSand();sndSand();}
+function stepSim(dt){
+  it++;
+  if(sweep){
+    modeTarget+=sweepDir*dt*1.6;
+    if(modeTarget>MODES.length-1){modeTarget=MODES.length-1;sweepDir=-1;}
+    if(modeTarget<0){modeTarget=0;sweepDir=1;}
+  }
+  modePos+=(modeTarget-modePos)*Math.min(1,dt*7);
+  var sum=0;
+  for(var i=0;i<NP;i++){
+    var x=sx[i],y=sy[i];
+    sample(x,y,TMP);
+    var u=TMP.u,gx=TMP.gx,gy=TMP.gy;
+    var g=Math.sqrt(gx*gx+gy*gy)+1e-7;
+    var amp=Math.min(1,Math.abs(u));
+    var st=0.0075*amp;                     /* 振得越凶走得越快，节线上站住 */
+    var sg=u<0?-1:(u>0?1:0);               /* 沿 −sign(u)·∇u 走才是往 |u| 小的地方去 */
+    x-=sg*gx/g*st;y-=sg*gy/g*st;
+    var jit=0.00075+0.0026*amp;         /* 抖动留个下限：不然振幅为零处会挤成一堆 */
+    x+=(rnd()-0.5)*jit;
+    y+=(rnd()-0.5)*jit;
+    if(x<0)x=0;else if(x>1)x=1;
+    if(y<0)y=0;else if(y>1)y=1;
+    sx[i]=x;sy[i]=y;
+    sum+=Math.abs(field(x,y));
+  }
+  conc=1-sum/NP;                           /* 集中度：沙贴在节线上的程度 */
+}
+function state(){return{modePos:modePos,modeTarget:modeTarget,conc:conc,NP:NP,it:it,sweep:sweep,
+  modes:MODES.length,repeatable:true};}
+function modeName(){
+  var t=modeAt(modePos),a=t[0];
+  return a[0]+','+a[1];
+}
+
+/* ---------- 画面 ---------- */
+var cv=document.getElementById('chladni'),ctx=cv.getContext('2d',{alpha:false});
+/* 板是一张预渲染的画布（drawImage 要的是画布，不是 ImageData——这里曾把两者搞混，
+   结果第一帧就抛异常、循环直接断了，页面全黑） */
+var pcv=document.createElement('canvas');pcv.width=PS;pcv.height=PS;
+var plate=null;
+function fit(){
+  var s=Math.min(innerWidth*0.96/W,(innerHeight-76)/H);
+  if(s>=1)s=Math.floor(s);
+  s=Math.max(0.42,s);
+  cv.style.width=Math.round(W*s)+'px';cv.style.height=Math.round(H*s)+'px';
+}
+function buildPlate(g){
+  var img=g.createImageData(PS,PS),d=img.data;
+  for(var y=0;y<PS;y++)for(var x=0;x<PS;x++){
+    var p=(y*PS+x)*4;
+    var u=x/(PS-1),v=y/(PS-1);
+    /* 磨过的钢板：中心偏亮，四角压暗，另加一层很细的拉丝 */
+    var r=Math.sqrt((u-0.5)*(u-0.5)+(v-0.5)*(v-0.5))*2;
+    var lit=1-0.42*Math.max(0,Math.min(1,r));
+    var brush=Math.sin(y*1.7)*0.6+Math.sin(x*0.31+y*0.05)*0.9;
+    var base=20+brush+lit*16;
+    d[p]=base*0.92;d[p+1]=base*0.86;d[p+2]=base*1.12;d[p+3]=255;
+  }
+  return img;
+}
+function draw(t){
+  /* 底：暗室 */
+  ctx.fillStyle='#07050e';ctx.fillRect(0,0,W,H);
+  ctx.drawImage(plate,0,0,PS,PS,PX,PY,PS,PS);
+  /* 板边：一圈冷光 */
+  ctx.fillStyle='rgba(167,139,250,.55)';ctx.fillRect(PX,PY,PS,1);ctx.fillRect(PX,PY+PS-1,PS,1);
+  ctx.fillRect(PX,PY,1,PS);ctx.fillRect(PX+PS-1,PY,1,PS);
+  ctx.fillStyle='rgba(20,16,36,.9)';
+  ctx.fillRect(PX-2,PY-2,PS+4,2);ctx.fillRect(PX-2,PY+PS,PS+4,2);
+  ctx.fillRect(PX-2,PY-2,2,PS+4);ctx.fillRect(PX+PS,PY-2,2,PS+4);
+  /* 沙：1px，越靠近节线越亮；站着不动的沙偏冷白 */
+  var i,x,y,px,py,amp;
+  for(i=0;i<NP;i++){
+    x=PX+sx[i]*PS;y=PY+sy[i]*PS;
+    px=Math.round(x);py=Math.round(y);
+    amp=Math.abs(field(sx[i],sy[i]));
+    if(amp<0.03){ctx.fillStyle='#d3c2f2';}                                    /* 贴稳的沙 */
+    else if(amp<0.05)ctx.fillStyle='#e9dcff';
+    else if(amp<0.25)ctx.fillStyle='#c6adf7';
+    else ctx.fillStyle='rgba(167,139,250,.55)';
+    ctx.fillRect(px,py,1,1);
+    if(amp<0.03)ctx.fillRect(px,py+(i&1),1,1);      /* 给沙线一点厚度，不然像虚点 */
+  }
+  drawPanel(t);
+}
+function drawPanel(t){
+  ctx.textAlign='left';
+  ctx.font='8px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+  /* 左：模态读数 */
+  var t2=modeAt(modePos),a=t2[0];
+  ctx.fillStyle='rgba(150,130,205,.85)';ctx.fillText('MODE',16,58);
+  ctx.fillStyle='#d9c6ff';ctx.font='18px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+  ctx.fillText(modeName(),16,80);
+  ctx.font='8px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+  ctx.fillStyle='rgba(150,130,205,.7)';
+  ctx.fillText('板 '+(a[0]+a[1])+' 阶驻波',16,96);
+  /* 左：集中度条 */
+  ctx.fillStyle='rgba(150,130,205,.5)';ctx.fillText('集中度',16,124);
+  ctx.fillStyle='rgba(167,139,250,.20)';ctx.fillRect(16,130,96,7);
+  ctx.fillStyle='#a78bfa';ctx.fillRect(16,130,Math.round(96*Math.max(0,Math.min(1,conc))),7);
+  ctx.fillStyle='rgba(217,198,255,.85)';ctx.fillText(Math.round(conc*100)+'%',16,150);
+  ctx.fillStyle='rgba(150,130,205,.5)';ctx.fillText('沙 '+NP,16,166);
+  ctx.fillStyle='rgba(150,130,205,.5)';ctx.fillText('弓 '+(sweep?'动':'停'),16,182);
+  /* 右：模态阶梯，当前那一格亮 */
+  ctx.fillStyle='rgba(150,130,205,.6)';ctx.fillText('模态阶梯',356,58);
+  for(var i=0;i<MODES.length;i++){
+    var y2=70+i*11,on=Math.round(modePos)===i;
+    ctx.fillStyle=on?'#d9c6ff':'rgba(150,130,205,.4)';
+    ctx.fillText((i<9?' ':'')+(i+1)+'  '+MODES[i][0]+','+MODES[i][1],356,y2);
+    if(on)ctx.fillRect(350,y2-6,3,7);
+  }
+  /* 底边：一行状态 */
+  ctx.textAlign='center';
+  ctx.fillStyle='rgba(150,130,205,.42)';
+  ctx.fillText('u(x,y)=cos(nπx)cos(mπy)−cos(mπx)cos(nπy)',240,H-10);
+  ctx.textAlign='left';
+}
+
+/* ---------- 声音 ---------- */
+var AC=null,sndOn=true;
+function ac(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();return AC;}
+function tone(type,f0,f1,dur,peak,delay){
+  if(!sndOn)return;
+  try{
+    var a=ac(),t=delay||0,o=a.createOscillator(),g=a.createGain();
+    o.type=type;o.frequency.setValueAtTime(f0,a.currentTime+t);
+    o.frequency.exponentialRampToValueAtTime(Math.max(40,f1),a.currentTime+t+dur);
+    g.gain.setValueAtTime(0,a.currentTime+t);
+    g.gain.linearRampToValueAtTime(peak,a.currentTime+t+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0004,a.currentTime+t+dur);
+    o.connect(g);g.connect(a.destination);o.start(a.currentTime+t);o.stop(a.currentTime+t+dur+0.03);
+  }catch(e){}
+}
+function modeFreq(){
+  var t=modeAt(modePos),a=t[0],b=t[1],f=smooth(t[2]);
+  var fa=Math.sqrt(a[0]*a[0]+a[1]*a[1]),fb=Math.sqrt(b[0]*b[0]+b[1]*b[1]);
+  return 128*(fa*(1-f)+fb*f);
+}
+function sndMode(){tone('sine',modeFreq(),modeFreq()*1.002,0.5,0.035);}
+function sndSand(){
+  if(!sndOn)return;
+  try{
+    var a=ac(),len=Math.floor(a.sampleRate*0.32),b=a.createBuffer(1,len,a.sampleRate),d=b.getChannelData(0);
+    for(var i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.2);
+    var s=a.createBufferSource();s.buffer=b;
+    var f=a.createBiquadFilter();f.type='bandpass';f.frequency.value=3400;f.Q.value=0.8;
+    var g=a.createGain();g.gain.value=0.085;
+    s.connect(f);f.connect(g);g.connect(a.destination);s.start();
+  }catch(e){}
+}
+function sndTick(){tone('square',520,620,0.05,0.03);}
+
+/* ---------- 输入 ---------- */
+function toGame(e){
+  var r=cv.getBoundingClientRect();
+  return [(e.clientX-r.left)/(r.width/W),(e.clientY-r.top)/(r.height/H)];
+}
+var drag=null;
+cv.addEventListener('pointerdown',function(e){
+  e.preventDefault();
+  var p=toGame(e);
+  var onPlate=(p[0]>PX&&p[0]<PX+PS&&p[1]>PY&&p[1]<PY+PS);
+  drag={x:p[0],y0:p[1],m0:modeTarget,moved:false,onPlate:onPlate};
+  try{cv.setPointerCapture&&cv.setPointerCapture(e.pointerId);}catch(err){}
+});
+cv.addEventListener('pointermove',function(e){
+  var p=toGame(e);
+  if(!drag)return;
+  if(Math.abs(p[0]-drag.x)>6)drag.moved=true;
+  if(drag.onPlate){
+    modeTarget=clamp(drag.m0+(p[0]-drag.x)/26,0,MODES.length-1);
+    sweep=false;
+  }
+});
+function clamp(v,a,b){return v<a?a:(v>b?b:v);}
+cv.addEventListener('pointerup',function(e){
+  var p=toGame(e);
+  if(drag){
+    if(!drag.moved){
+      if(drag.onPlate){scatter();}
+      else{sweep=!sweep;sweepDir=1;sndTick();}
+    }else if(drag.onPlate)sndMode();
+  }
+  drag=null;
+});
+var elMode=document.getElementById('mode'),elSand=document.getElementById('sand'),
+    elSweep=document.getElementById('sweep'),elReset=document.getElementById('reset'),
+    elStat=document.getElementById('stat'),elSnd=document.getElementById('snd');
+elMode.addEventListener('input',function(){
+  modeTarget=Number(elMode.value)/100*(MODES.length-1);sweep=false;
+});
+elSand.addEventListener('click',function(){scatter();elSand.blur();});
+elSweep.addEventListener('click',function(){
+  sweep=!sweep;sweepDir=1;elSweep.textContent=sweep?'停弓':'扫弓';elSweep.blur();
+});
+elReset.addEventListener('click',function(){
+  resetAll((seed*1103515245+12345)%2147483647);sndTick();elReset.blur();
+});
+elSnd.addEventListener('click',function(){
+  sndOn=!sndOn;elSnd.textContent='♪ 声 '+(sndOn?'ON':'OFF');elSnd.blur();
+});
+window.addEventListener('keydown',function(e){
+  var k=(e.key||'').toLowerCase();
+  if(k===' '){sweep=!sweep;sweepDir=1;elSweep.textContent=sweep?'停弓':'扫弓';e.preventDefault();}
+  else if(k==='r'){elReset.click();}
+  else if(k===','){modeTarget=clamp(Math.round(modePos)-1,0,MODES.length-1);sweep=false;sndMode();}
+  else if(k==='.'){modeTarget=clamp(Math.round(modePos)+1,0,MODES.length-1);sweep=false;sndMode();}
+  else if(k==='s'){scatter();}
+});
+
+/* ---------- 主循环 ---------- */
+var last=0,acc=0,SIMDT=1/60,statAcc=0;
+function loop(ts){
+  var t=ts/1000;
+  var dt=Math.min(0.05,last?t-last:1/60);last=t;
+  if(!REDUCED){
+    acc+=dt;
+    var guard=0;
+    while(acc>=SIMDT&&guard++<5){stepSim(SIMDT);acc-=SIMDT;}
+  }
+  draw(t);
+  statAcc+=dt;
+  if(statAcc>0.3){statAcc=0;updateStat();}
+  requestAnimationFrame(loop);
+}
+function updateStat(){
+  elStat.textContent='模态 '+modeName()+' · 集中度 '+Math.round(conc*100)+'% · 沙 '+NP;
+  if(elMode&&document.activeElement!==elMode)
+    elMode.value=Math.round(modePos/Math.max(1,MODES.length-1)*100);
+}
+function resetAll(s){
+  if(s!=null)seed=s;
+  rnd=mulberry32(seed);
+  modePos=0;modeTarget=0;sweep=false;sweepDir=1;conc=0;it=0;
+  resetSand();
+  plate=null;
+  var pg=pcv.getContext('2d');
+  pg.putImageData(buildPlate(pg),0,0);
+  plate=pcv;
+  if(elMode)elMode.value=0;
+  if(elSweep)elSweep.textContent='扫弓';
+}
+resetAll(seed);
+/* 开场先振一会儿，别让人看到一盘乱沙 */
+if(!REDUCED){for(var w0=0;w0<520;w0++)stepSim(1/60);}
+fit();
+requestAnimationFrame(loop);
+updateStat();
+
+/* ---------- 自检钩子（node 里也能驱动） ---------- */
+window.__chladni={
+  W:W,H:H,PS:PS,PX:PX,PY:PY,NP:NP,
+  reset:function(s){resetAll(s);},
+  step:function(n){for(var i=0;i<n;i++)stepSim(1/60);},
+  scatter:function(){scatter();},
+  setMode:function(v){modePos=v;modeTarget=v;sweep=false;},
+  setSweep:function(b){sweep=!!b;sweepDir=1;},
+  setPos:function(v){modePos=v;},
+  field:function(x,y){return field(x,y);},
+  fieldOf:function(m,n,x,y){return fieldOf(m,n,x,y);},
+  modeAt:function(v){return modeAt(v===undefined?modePos:v);},
+  modes:function(){return MODES.slice();},
+  ugAt:function(x,y){var o={u:0,gx:0,gy:0};ug(MODES[Math.floor(modePos)][0],MODES[Math.floor(modePos)][1],x,y,o);return [o.u,o.gx,o.gy];},
+  sampleAt:function(x,y){var o={u:0,gx:0,gy:0};sample(x,y,o);return [o.u,o.gx,o.gy];},
+  particles:function(){var o=[];for(var i=0;i<NP;i++)o.push([sx[i],sy[i]]);return o;},
+  meanAmp:function(){var s=0;for(var i=0;i<NP;i++)s+=Math.abs(field(sx[i],sy[i]));return s/NP;},
+  draw:function(t){draw(t||0);},
+  hash:function(){
+    var h=2166136261>>>0;
+    for(var i=0;i<NP;i++){
+      h^=Math.round(sx[i]*512)+Math.round(sy[i]*512)*7;h=Math.imul(h,16777619)>>>0;
+    }
+    return h;
+  },
+  state:function(){var s=state();s.conc=conc;s.sweep=sweep;return s;},
+  ping:function(){return 'chladni';}
+};
+})();
+</script>
+</body>
+</html>
