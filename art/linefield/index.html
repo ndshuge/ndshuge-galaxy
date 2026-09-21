@@ -2013,15 +2013,20 @@ function init(){
   createPlait(document.getElementById('plait-root'));
   createWind(document.getElementById('wind-root'));
 
+  /* 只有可见性真的变了才加减计数。首次回调会一次性带上全部引擎，
+     下面看不见的那些不能当成「从可见变不可见」去扣——一扣，第一屏的计数就归零，
+     顶部的场线要等用户滚一下才醒。 */
   var io = new IntersectionObserver(function(ents){
     ents.forEach(function(en){
       var e = null;
       for(var i=0;i<engines.length;i++) if(engines[i].root === en.target) e = engines[i];
       if(!e) return;
       if(en.isIntersecting){
+        if(e.active) return;
         e.active = true; visibleN++;
         if(e.enter) e.enter();
       } else {
+        if(!e.active) return;
         e.active = false; visibleN = Math.max(0, visibleN-1);
         if(e.leave) e.leave();
       }
@@ -2047,6 +2052,8 @@ else init();
 window.linefield = {
   engines: engines,
   state: state,
+  visible: function(){ return visibleN; },
+  running: function(){ return !!rafId; },
   step: function(t){ tick(t); },
   motion: function(on){ applyMotion(!!on); }
 };
