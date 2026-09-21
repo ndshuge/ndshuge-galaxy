@@ -82,8 +82,8 @@ var WORKS=[
   { no:'05', t:'深渊观测站', en:'ABYSS',      sub:'下潜',     medium:'观测装置', year:'2026',
     line:'从水面到 2640 米，ROV-04 沿 214° 测线下潜，直到某个回波回来。',
     href:'./abyss/', c:'#4fc3ff', g:'#a8e3ff', like:'art-abyss', motif:'abyss' },
-  { no:'06', t:'苔痕',   en:'VERDIGRIS',  sub:'生长与退边', medium:'生态装置', year:'2026', fresh:true,
-    line:'石面上的一场生长：降水就长，干季就退，从来没有一幅苔是长完的。',
+  { no:'06', t:'石衣',   en:'SAXICOLOUS', sub:'保水与促干', medium:'生态装置', year:'2026', fresh:true,
+    line:'石面上的一个战场：苔保水，地衣促干。石头只有一个终局。',
     href:'./verdigris/', c:'#8fb894', g:'#c8dcc6', like:'art-verdigris', motif:'patina' },
   { no:'07', t:'声场',   en:'CHLADNI',    sub:'驻波图形', medium:'声学装置', year:'2026', fresh:true,
     line:'压上弓，撒一层沙，看它自己走到该站的地方。',
@@ -421,7 +421,7 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
     for(j=0;j<w-14;j++){var t2=j/(w-14);
       if(Math.sin(t2*2.4+t*.9)>0.1)pbar(x+7+j,cy+h*.30+Math.sin(t2*3.1)*1.2,1,1,'rgba(40,40,48,.55)');}
   } else if(name==='patina'){
-    /* 苔痕：石面上三片苔慢慢长，湿边亮一线，越里越深 */
+    /* 石衣：石面上苔与地衣对峙，缝里挤出一块混生体 */
     pbar(x,y,w,h,'#0a0f0b');
     for(i=0;i<3;i++){                             /* 石纹：三道不水平的深痕 */
       var ly=y+h*(0.24+i*0.26)+Math.sin(t*0.4+i)*0.6;
@@ -431,19 +431,19 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
       var hx=((i*37)%w),hy=((i*59)%h),hk=((i*23)%97)/97;
       pbar(x+hx,y+hy,1,1,hk>0.62?'rgba(62,78,65,.45)':'rgba(24,32,26,.6)');
     }
-    var ps=[[0.34,0.60,0.92],[0.66,0.36,1.14],[0.50,0.78,0.70]];
-    for(i=0;i<3;i++){
-      var cc=ps[i],ph=t*0.5+i*2.2;
-      var rr=Math.min(w,h)*0.20*cc[2]*(1+0.055*Math.sin(ph));
-      var qx=x+cc[0]*w,qy=y+cc[1]*h;
-      pDisc(qx,qy,rr+1.2,'rgba(200,220,198,.8)');  /* 湿边 */
-      pDisc(qx,qy,rr,'#6a8f72');
-      pDisc(qx+rr*0.18,qy-rr*0.12,rr*0.60,'#4e7059');
-      pDisc(qx+rr*0.30,qy-rr*0.22,rr*0.26,'#3a5544');
-    }
-    pbar(x+w*0.80,y+h*0.72,2,1,'rgba(150,110,70,.75)');   /* 铁锈：给灰绿一个暖的对位 */
-    pbar(x+w*0.17,y+h*0.23,1,1,'rgba(150,110,70,.55)');
-    pbar(x+w*0.44,y+h*0.12,2,1,'rgba(16,22,18,.8)');      /* 蚀孔 */
+    var bs=Math.min(w,h);
+    var mw=1+0.07*Math.sin(t*0.50);               /* 苔：保水，湿边亮一线 */
+    pDisc(x+w*0.30,y+h*0.64,bs*0.21*mw+1.1,'rgba(200,220,198,.78)');
+    pDisc(x+w*0.30,y+h*0.64,bs*0.21*mw,'#6a8f72');
+    pDisc(x+w*0.34,y+h*0.60,bs*0.11*mw,'#4e7059');
+    var lw=1+0.07*Math.sin(t*0.42+2.1);           /* 地衣：促干，干边泛白 */
+    pDisc(x+w*0.72,y+h*0.33,bs*0.19*lw+1.1,'rgba(228,216,182,.72)');
+    pDisc(x+w*0.72,y+h*0.33,bs*0.19*lw,'#9c8656');
+    pDisc(x+w*0.68,y+h*0.37,bs*0.10*lw,'#7a673f');
+    var bw2=1+0.06*Math.sin(t*0.58+4.0);          /* 混生体：从缝里就地长出来 */
+    pDisc(x+w*0.53,y+h*0.76,bs*0.15*bw2,'#4a7a80');
+    pDisc(x+w*0.55,y+h*0.74,bs*0.07*bw2,'#2f5459');
+    pbar(x+w*0.86,y+h*0.16,1,1,'rgba(150,110,70,.6)');   /* 铁锈 */
   } else if(name==='chladni'){
     /* 声场：方形钢板，沙铺在节线上，每一粒自己会闪一下 */
     var side=Math.min(w,h);
