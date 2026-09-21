@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#050514">
 <title>鼠哥艺术回廊 · NDSHUGE ART ARCADE</title>
-<meta name="description" content="环形回廊，五件作品挂在环上，你站在圆心。左右换作品，点进去就走进那件作品里。">
+<meta name="description" content="环形回廊，六件作品挂在环上，你站在圆心。左右换作品，点进去就走进那件作品里。">
 <link rel="stylesheet" href="https://fontsapi.zeoseven.com/570/main/result.css" />
 <style>
 :root{--bg:#050514;--pink:#ff5c8a;--pink2:#ff9ec4;--gold:#ffd54f;--cyan:#00e5ff;--ink:#eafcff;--dim:rgba(150,215,255,.55)}
@@ -81,9 +81,13 @@ var WORKS=[
     href:'./ink-motion/', c:'#e7e0cf', g:'#fff8e8', like:'art-inkmotion', motif:'ink' },
   { no:'05', t:'深渊观测站', en:'ABYSS',      sub:'下潜',     medium:'观测装置', year:'2026',
     line:'从水面到 2640 米，ROV-04 沿 214° 测线下潜，直到某个回波回来。',
-    href:'./abyss/', c:'#4fc3ff', g:'#a8e3ff', like:'art-abyss', motif:'abyss' }
+    href:'./abyss/', c:'#4fc3ff', g:'#a8e3ff', like:'art-abyss', motif:'abyss' },
+  { no:'06', t:'苔痕',   en:'VERDIGRIS',  sub:'生长与退边', medium:'生态装置', year:'2026', fresh:true,
+    line:'石面上的一场生长：降水就长，干季就退，从来没有一幅苔是长完的。',
+    href:'./verdigris/', c:'#8fb894', g:'#c8dcc6', like:'art-verdigris', motif:'patina' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
+var CN=['零','一','二','三','四','五','六','七','八','九','十'];   /* 件数写中文，加作品时不用改文案 */
 
 /* ============ 引擎 ============ */
 var W=480,H=270,TAU=Math.PI*2;
@@ -307,6 +311,30 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
       pDisc(gx+rad*.5,gy+rad*.35,rad*.4,'rgba(60,60,68,.7)');}
     for(j=0;j<w-14;j++){var t2=j/(w-14);
       if(Math.sin(t2*2.4+t*.9)>0.1)pbar(x+7+j,cy+h*.30+Math.sin(t2*3.1)*1.2,1,1,'rgba(40,40,48,.55)');}
+  } else if(name==='patina'){
+    /* 苔痕：石面上三片苔慢慢长，湿边亮一线，越里越深 */
+    pbar(x,y,w,h,'#0a0f0b');
+    for(i=0;i<3;i++){                             /* 石纹：三道不水平的深痕 */
+      var ly=y+h*(0.24+i*0.26)+Math.sin(t*0.4+i)*0.6;
+      for(j=0;j<w;j++)if(((j*7+i*13)%11)>3)pbar(x+j,ly+Math.round(j*0.05)-2,1,1,'rgba(30,40,33,.75)');
+    }
+    for(i=0;i<24;i++){                            /* 颗粒 */
+      var hx=((i*37)%w),hy=((i*59)%h),hk=((i*23)%97)/97;
+      pbar(x+hx,y+hy,1,1,hk>0.62?'rgba(62,78,65,.45)':'rgba(24,32,26,.6)');
+    }
+    var ps=[[0.34,0.60,0.92],[0.66,0.36,1.14],[0.50,0.78,0.70]];
+    for(i=0;i<3;i++){
+      var cc=ps[i],ph=t*0.5+i*2.2;
+      var rr=Math.min(w,h)*0.20*cc[2]*(1+0.055*Math.sin(ph));
+      var qx=x+cc[0]*w,qy=y+cc[1]*h;
+      pDisc(qx,qy,rr+1.2,'rgba(200,220,198,.8)');  /* 湿边 */
+      pDisc(qx,qy,rr,'#6a8f72');
+      pDisc(qx+rr*0.18,qy-rr*0.12,rr*0.60,'#4e7059');
+      pDisc(qx+rr*0.30,qy-rr*0.22,rr*0.26,'#3a5544');
+    }
+    pbar(x+w*0.80,y+h*0.72,2,1,'rgba(150,110,70,.75)');   /* 铁锈：给灰绿一个暖的对位 */
+    pbar(x+w*0.17,y+h*0.23,1,1,'rgba(150,110,70,.55)');
+    pbar(x+w*0.44,y+h*0.12,2,1,'rgba(16,22,18,.8)');      /* 蚀孔 */
   } else {
     /* 深渊：从水面到 2640 米，声呐一路向下ping */
     for(i=0;i<14;i++){
@@ -386,7 +414,7 @@ function drawBackWall(t){
   ctx.fillText('A R T   A R C A D E',240,44);
   pdotLine(150,50,330,50,'rgba(255,158,196,.28)',2);
   ctx.font=FB10;ctx.fillStyle='rgba(150,215,255,.42)';
-  ctx.fillText('五件作品 · '+N+' 个画框 · 你站在圆心',240,58);
+  ctx.fillText(CN[N]+'件作品 · '+N+' 个画框 · 你站在圆心',240,58);
   ctx.textAlign='left';
 }
 function drawDust(t){
@@ -426,6 +454,7 @@ function drawFrame(i,t){
       x=lerp(p.x-bw/2,240-fw/2,e);y=lerp(p.y-bh/2,135-fh/2,e);
     }
   }
+  lastRects.push({x:x,y:y,w:bw,h:bh,d:p.d});   /* 给自检验“相邻画框不互相压” */
   /* 地面倒影：一条被压扁的彩色痕 */
   if(p.d>0.15&&!trans.active){
     ctx.fillStyle=hexA(w.c,0.06+0.10*p.d);
@@ -574,6 +603,7 @@ function drawWarpFlash(){
      这里只留空壳，避免别处还有调用点没改。 */
 }
 var drawOrder=[];               /* 本帧的绘制深度顺序，自检拿它验穿模 */
+var lastRects=[];               /* 本帧每个画框的屏幕矩形，自检拿它验相邻不叠 */
 function render(t){
   ctx.clearRect(0,0,W,H);
   ctx.fillStyle='#05040f';ctx.fillRect(0,0,W,H);
@@ -583,6 +613,7 @@ function render(t){
   drawBackWall(t);
   /* 廊柱与画框同一张深度表：远的先画，谁也不压在谁身上 */
   hot.frame=[];
+  lastRects=[];
   var items=[],i;
   for(i=0;i<PILLARS.length;i++)items.push({d:PILLARS[i].d,i:i,kind:'p'});
   for(i=0;i<N;i++)items.push({d:depthOf(i),i:i,kind:'f'});
@@ -710,8 +741,10 @@ window.__arc={
   state:function(){return{cur:cur,rot:rot,rotT:rotT,warp:trans.active,k:trans.k,
     frames:hot.frame.length,enter:!!hot.enter,like:!!hot.like};},
   order:function(){return drawOrder.slice();},
+  rects:function(){return lastRects.slice();},
   pillars:function(){return PILLARS.map(function(p){return p.d;});},
   step:function(i){select(i);},
+  snap:function(i){select(i);rot=rotT;},        /* 测试用：瞬间转到正面，不等弹簧收敛 */
   enter:function(){enter();},
   tick:function(t){render(t||0);},
   ang:function(i){return angOf(i);},
