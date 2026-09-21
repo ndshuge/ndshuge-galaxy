@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>珂斯兰铜版勘测 · Koslan Copperplate Survey</title>
+<style>
+/* ============================================================
+   铜版蚀刻勘测图 — 单文件、零依赖
+   底色 #0A0C11（非纯黑）· 赭石 #DA6A3C · 铜绿 #DA6A3C · 水系 #2C82AE
+   ============================================================ */
+:root{
+  /* 版（冷族）—— 色板命名：色名 (hex) — 功能角色与约束 */
+  --ink:#0A0C11;        /* Void — 底。近黑，向版蓝偏 0.011 彩度；禁纯黑 */
+  --surface:#121620;    /* Deep — 面板/读数牌底，比底深一阶 */
+  --line:198,209,224;   /* Line — 等高线正色，C 0.024 冷白中性 */
+  --hydro:#2C82AE;      /* Hydro — 水面。唯一冷支撑，C≥0.10，跳出浑色区 */
+  --hydro2:140,188,218; /* HydroHi — 河道中线 / 滞漪 */
+  /* 赭（唯一暖强调，锁定全页：光斑 / 探针 / 地名高亮 / 道路） */
+  --ochre:#DA6A3C;      /* Ember — 5.69:1 vs Void */
+  --copper:#DA6A3C;     /* 已并入暖族（原铜绿取消，颜色锁定只需一个强调） */
+  --ochre2:255,196,158; /* EmberHi — 光标命中处的地名 */
+  --text:#E8EEF8;       /* 16.8:1 */
+  --text2:rgba(226,234,246,.80);
+  --text3:rgba(198,210,226,.64);
+  --hair:rgba(198,209,224,.18);
+  --mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Liberation Mono",monospace;
+  --sans:ui-sans-serif,system-ui,"Segoe UI","Microsoft YaHei UI","PingFang SC","Hiragino Sans GB",sans-serif;
+  --mx:50vw; --my:50vh;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--ink);overflow:hidden;overscroll-behavior:none}
+body{
+  color:var(--text);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  user-select:none;-webkit-user-select:none;
+  touch-action:none;
+}
+#app{position:fixed;inset:0;overflow:hidden;isolation:isolate;cursor:crosshair}
+
+/* ---------- 地图层 ---------- */
+#tBase{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+#spot{
+  position:absolute;left:0;top:0;width:344px;height:344px;display:block;
+  pointer-events:none;mix-blend-mode:screen;
+  transform:translate3d(-9999px,-9999px,0);
+  will-change:transform;
+}
+#warm1,#warm2{
+  position:absolute;left:0;top:0;width:420px;height:420px;pointer-events:none;
+  will-change:transform;transform:translate3d(-9999px,-9999px,0);
+}
+#warm1{background:radial-gradient(circle at 50% 50%, rgba(218,106,60,.10) 0%, rgba(218,106,60,.036) 38%, rgba(218,106,60,0) 66%)}
+#warm2{background:radial-gradient(circle at 50% 50%, rgba(140,188,218,.05) 0%, rgba(140,188,218,0) 62%)}
+
+/* ---------- 基底三件 ---------- */
+#glow{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(58vw 58vw at 2% -6%, rgba(218,106,60,.085), rgba(218,106,60,0) 62%),
+    radial-gradient(52vw 52vw at 104% 106%, rgba(140,188,218,.05), rgba(140,188,218,0) 62%);
+}
+#vig{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(118% 104% at 50% 46%, rgba(0,0,0,0) 34%, rgba(6,7,11,.46) 78%, rgba(6,7,11,.84) 100%);
+}
+#grain{
+  position:absolute;inset:0;pointer-events:none;opacity:.03;
+  background-repeat:repeat;background-size:168px 168px;mix-blend-mode:overlay;
+}
+
+/* ---------- 探针环 ---------- */
+#ring{
+  position:absolute;left:0;top:0;width:344px;height:344px;pointer-events:none;
+  will-change:transform;transform:translate3d(-9999px,-9999px,0);
+}
+#ring i,#ring b,#ring u,#ring s{
+  position:absolute;display:block;background:rgba(218,106,60,.42)
+}
+#ring .r{
+  left:6px;top:6px;width:332px;height:332px;border:1px solid rgba(218,106,60,.24);
+  border-radius:50%;background:none;
+  box-shadow:0 0 0 1px rgba(218,106,60,.05) inset;
+}
+#ring .a{left:171px;top:158px;width:2px;height:11px}
+#ring .b{left:171px;top:175px;width:2px;height:11px}
+#ring .c{left:158px;top:171px;width:11px;height:2px}
+#ring .d{left:175px;top:171px;width:11px;height:2px}
+#ring .tick{position:absolute;background:rgba(218,106,60,.34)}
+
+/* ---------- 光标读数 ---------- */
+#ro{
+  position:absolute;left:0;top:0;pointer-events:none;
+  will-change:transform;transform:translate3d(-9999px,-9999px,0);
+  background:linear-gradient(180deg, rgba(7,10,15,.72), rgba(7,10,15,.50));
+  border:1px solid rgba(218,106,60,.20);
+  border-left:2px solid rgba(218,106,60,.62);
+  padding:7px 10px 8px;min-width:186px;
+  backdrop-filter:blur(2px);
+}
+#ro .rn{
+  font-size:12px;letter-spacing:.14em;color:var(--ochre);
+  margin:-1px 0 5px;display:block;min-height:15px;
+}
+#ro .rn em{font-style:normal;color:var(--text3);letter-spacing:.1em;font-size:10px}
+#ro .rl{display:flex;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:11px;line-height:1.62;color:var(--text2)}
+#ro .rl span:last-child{color:var(--text)}
+#ro .rl small{font-family:var(--mono);font-size:10px;color:var(--text3)}
+#ro .bar{height:1px;background:var(--hair);margin:6px 0 5px}
+
+/* ---------- HUD ---------- */
+.hud{position:absolute;pointer-events:none}
+#tl{left:26px;top:22px}
+#tl .ttl{font-size:15px;letter-spacing:.36em;color:var(--text);text-indent:.1em}
+#tl .sub{font-family:var(--mono);font-size:9px;letter-spacing:.28em;color:var(--text3);margin-top:7px}
+#tl .hr{width:168px;height:1px;background:var(--hair);margin:11px 0 10px}
+#tl .kv{display:flex;gap:10px;font-family:var(--mono);font-size:10px;line-height:1.85;color:var(--text3);letter-spacing:.06em}
+#tl .kv b{font-weight:400;color:var(--text2);min-width:82px}
+#tl .kv b.hot{color:var(--ochre)}
+
+#bl{left:26px;bottom:20px}
+#bl .row{display:flex;align-items:baseline;gap:8px;font-family:var(--mono);font-size:12px;line-height:1.6}
+#bl .row .lb{font-size:9px;letter-spacing:.2em;color:var(--text3);width:20px}
+#bl .unit{font-size:10px;color:var(--text3)}
+#bl .sep{width:168px;height:1px;background:var(--hair);margin:8px 0 7px}
+#bl .hint{font-size:9.5px;letter-spacing:.14em;color:var(--text3);font-family:var(--mono)}
+
+/* 里程表（滚动数字） */
+.odo{display:inline-flex;align-items:baseline}
+.odo .sl{display:inline-block;height:1.6em;overflow:hidden;vertical-align:baseline;width:.62em}
+.odo .sl i{display:block;font-style:normal}
+.odo .sl i b{display:block;height:1.6em;line-height:1.6em;font-weight:400;text-align:center}
+.odo .lt{display:inline-block;height:1.6em;line-height:1.6em;color:var(--text3)}
+.odo .lt.sp{width:.34em}
+.rolling .sl i{transition:transform .34s cubic-bezier(.22,.9,.16,1)}
+
+#br{right:26px;bottom:20px;text-align:right}
+#br .lg{display:flex;justify-content:flex-end;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--text3);line-height:1.9}
+#br .sw{width:22px;height:1px}
+#br .lg:first-child .sw{height:2px}
+
+/* 尺度轴 */
+#ax{right:30px;top:50%;transform:translateY(-50%);pointer-events:auto;cursor:ns-resize}
+#ax .wrap{position:relative;width:126px;height:264px}
+#ax .line{position:absolute;right:0;top:0;width:1px;height:264px;background:var(--hair)}
+#ax .tk{position:absolute;right:0;height:1px;background:rgba(198,209,224,.22)}
+#ax .tk.mj{width:11px;background:rgba(198,209,224,.34)}
+#ax .tk.mn{width:5px}
+#ax .nm{position:absolute;right:17px;transform:translateY(-50%);font-size:9.5px;letter-spacing:.22em;color:var(--text3);white-space:nowrap}
+#ax .nm.on{color:var(--text2)}
+#ax .mk{position:absolute;right:-4px;width:22px;height:1px;background:var(--ochre);box-shadow:0 0 6px rgba(218,106,60,.55)}
+#ax .mkv{position:absolute;right:24px;width:6px;height:6px;border:1px solid var(--ochre);transform:translate(3px,-50%) rotate(45deg)}
+#ax .cap{position:absolute;right:0;bottom:-22px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--text3);white-space:nowrap}
+
+/* 幕布 */
+#veil{
+  position:absolute;inset:0;background:var(--ink);z-index:40;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .9s ease .1s;
+}
+#veil .box{text-align:center}
+#veil .t1{font-size:12px;letter-spacing:.42em;color:var(--text2);text-indent:.2em}
+#veil .t2{font-family:var(--mono);font-size:9px;letter-spacing:.3em;color:var(--text3);margin-top:12px}
+#veil .pr{width:210px;height:1px;background:rgba(198,209,224,.12);margin:20px auto 0;position:relative;overflow:hidden}
+#veil .pr i{position:absolute;left:0;top:0;height:1px;width:38%;background:var(--ochre);animation:sweep 1.15s linear infinite}
+@keyframes sweep{0%{transform:translateX(-100%)}100%{transform:translateX(365%)}}
+#veil.gone{opacity:0;pointer-events:none}
+
+#iso{position:absolute;right:30px;top:26px;pointer-events:none;text-align:right}
+#iso .n{font-size:11px;letter-spacing:.2em;color:var(--text3)}
+#iso .ln{width:1px;height:26px;background:linear-gradient(180deg,rgba(218,106,60,.5),rgba(218,106,60,0));margin:6px 0 0 auto}
+#dev{
+  position:absolute;left:26px;top:0;transform:translateY(-130%);pointer-events:none;
+  font-family:var(--mono);font-size:9.5px;color:var(--text3);white-space:pre;line-height:1.5;
+  opacity:0;transition:opacity .2s;
+}
+#dev.on{opacity:1}
+
+/* 入画动画：终态书写，从别处动画进来 */
+@keyframes fadeUp{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+#tl,#bl,#br,#ax,#iso{opacity:1}
+body.enter #tl{animation:fadeUp .9s cubic-bezier(.2,.7,.2,1) .55s both}
+body.enter #bl{animation:fadeUp .9s cubic-bezier(.2,.7,.2,1) .72s both}
+body.enter #br{animation:fadeIn 1.1s ease .95s both}
+body.enter #ax{animation:fadeIn 1.1s ease .82s both}
+body.enter #iso{animation:fadeIn 1.1s ease 1.1s both}
+body.enter #glow{animation:fadeIn 2.2s ease .1s both}
+body.enter #vig{animation:fadeIn 2.4s ease .1s both}
+body.enter #grain{animation:fadeIn 1.6s ease .5s both}
+
+@media (max-width:820px){
+  #tl{left:16px;top:14px} #bl{left:16px;bottom:14px} #br{display:none}
+  #ax{right:16px} #ax .wrap{width:104px;height:200px}
+  #tl .ttl{font-size:13px;letter-spacing:.28em}
+  #ring,#ro{font-size:10px}
+}
+@media (prefers-reduced-motion: reduce){
+  #veil{transition:none}
+  body.enter #tl,body.enter #bl,body.enter #br,body.enter #ax,body.enter #iso,
+  body.enter #glow,body.enter #vig,body.enter #grain{animation:none}
+  .rolling .sl i{transition:none}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <canvas id="tBase"></canvas>
+  <canvas id="spot" aria-hidden="true"></canvas>
+  <div id="warm2" aria-hidden="true"></div>
+  <div id="warm1" aria-hidden="true"></div>
+  <div id="glow" aria-hidden="true"></div>
+  <div id="grain" aria-hidden="true"></div>
+  <div id="vig" aria-hidden="true"></div>
+
+  <div id="ring" aria-hidden="true">
+    <i class="r"></i><b class="a"></b><u class="b"></u><s class="c"></s><b class="d"></b>
+  </div>
+
+  <div id="ro" aria-hidden="true">
+    <span class="rn">—</span>
+    <div class="rl"><span>海拔</span><span id="roE">—</span></div>
+    <div class="bar"></div>
+    <div class="rl"><span>坡度</span><span id="roS">—</span></div>
+    <div class="rl"><span>地貌</span><span id="roT">—</span></div>
+  </div>
+
+  <div class="hud" id="tl">
+    <div class="ttl">珂斯兰</div>
+    <div class="sub">KOSLAN · TERRITORIAL SURVEY</div>
+    <div class="hr"></div>
+    <div class="kv"><span>等级</span><b id="kGrade" class="hot">国土</b></div>
+    <div class="kv"><span>视域</span><b id="kVw">640.00 km</b></div>
+    <div class="kv"><span>比例</span><b id="kRatio">1:2 400 000</b></div>
+    <div class="kv"><span>等高距</span><b id="kCI">—</b></div>
+    <div class="kv"><span>解析</span><b id="kRes">—</b></div>
+    <div id="dev"></div>
+  </div>
+
+  <div class="hud" id="bl">
+    <div class="row"><span class="lb">E</span><span class="odo" id="oX"></span><span class="unit">m</span></div>
+    <div class="row"><span class="lb">N</span><span class="odo" id="oY"></span><span class="unit">m</span></div>
+    <div class="sep"></div>
+    <div class="row"><span class="lb">Z</span><span class="odo" id="oZ"></span><span class="unit">m</span></div>
+    <div class="row" style="margin-top:6px"><span class="hint" id="hint">滚轮推拉尺度 · 拖拽平移 · 光标读数</span></div>
+  </div>
+
+  <div class="hud" id="br">
+    <div class="lg"><span class="sw" style="background:rgba(198,209,224,.7)"></span><span>等高线 · 坡度定浓淡</span></div>
+    <div class="lg"><span class="sw" style="background:rgba(44,130,174,.85)"></span><span>水系 · 岸线与涟漪</span></div>
+    <div class="lg"><span class="sw" style="background:rgba(218,106,60,.8)"></span><span>路网 · 递归细分</span></div>
+    <div class="lg"><span class="sw" style="background:rgba(218,106,60,.9)"></span><span>读数光斑 · 赭石</span></div>
+  </div>
+
+  <div id="ax" aria-hidden="true">
+    <div class="wrap">
+      <div class="line"></div>
+      <div class="mk"></div>
+      <div class="mkv"></div>
+      <div class="cap" id="axCap">640 km</div>
+    </div>
+  </div>
+
+  <div id="iso" aria-hidden="true"><div class="n">N</div><div class="ln"></div></div>
+
+  <div id="veil"><div class="box">
+    <div class="t1">正在勘定基准</div>
+    <div class="t2">ETCHING PLATE · 程序地形</div>
+    <div class="pr"><i></i></div>
+  </div></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================================
+   0. 常量
+   ========================================================================= */
+const INK      = '#0A0C11';
+const OCHRE    = '#DA6A3C';
+const COPPER   = '218,106,60';
+const HYDRO    = '44,130,174';
+const INK_LN   = '198,209,224';      // 等高线墨色（冷灰蓝，非纯白）
+const SANS     = 'ui-sans-serif,system-ui,"Segoe UI","Microsoft YaHei UI","PingFang SC",sans-serif';
+const REDUCED  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const VW_MAX = 640000;    // 视域上限 640 km
+const VW_MIN = 34;        // 视域下限 34 m
+const WORLD  = 380000;    // 世界半径 380 km
+
+/* 高程八度阶梯（绝对波长，世界固定） ------------------------------------ */
+const LAM0 = 524288;      // 最粗波长 512 km
+const AMP0 = 1500;        // 该波长振幅
+const RATIO = Math.pow(2, -0.9);
+const OCT = [];
+for (let i=0;i<26;i++){
+  const r = mulberry(i*7919+13);
+  OCT.push({
+    f: 1/(LAM0*Math.pow(2,-i)),
+    a: AMP0*Math.pow(RATIO,i),
+    ox: r()*512, oy: r()*512,
+    s: 1+i,                       // 相位盐
+    c: Math.cos(r()*6.28318), sn: Math.sin(r()*6.28318)   // 每层旋转，破网格取向
+  });
+}
+const SEA_BIAS_INIT = 240;
+let SEA_BIAS = SEA_BIAS_INIT;   // 由 calibrateSea() 校准，保证约 1/3 是世界为海
+let SEA_Q = 0.32;
+
+/* 等高距阶梯 1-2-5 ------------------------------------------------------ */
+const LADDER = [];
+for (let e=-2;e<=7;e++){ const p=Math.pow(10,e); LADDER.push(p,p*2,p*5); }
+
+/* =========================================================================
+   1. 噪声与高程场
+   ========================================================================= */
+function mulberry(a){
+  return function(){ a|=0; a=a+0x6D2B79F5|0;
+    let t=Math.imul(a^a>>>15,1|a);
+    t=t+Math.imul(t^t>>>7,61|t)^t;
+    return ((t^t>>>14)>>>0)/4294967296; };
+}
+function hashi(i,j,s){
+  let n = Math.imul(i,374761393) + Math.imul(j,668265263) + Math.imul(s,1442695041);
+  n = Math.imul(n^(n>>>13),1274126177);
+  n = n^(n>>>16);
+  return (n>>>0)*2.3283064365386963e-10;
+}
+/* 平滑值噪声，返回 [-1,1] */
+function vn(x,y,s){
+  const I=Math.floor(x), J=Math.floor(y);
+  const fx=x-I, fy=y-J;
+  const u=fx*fx*(3-2*fx), v=fy*fy*(3-2*fy);
+  const a=hashi(I,J,s),   b=hashi(I+1,J,s),
+        c=hashi(I,J+1,s), d=hashi(I+1,J+1,s);
+  const top=a+(b-a)*u, bot=c+(d-c)*u;
+  return (top+(bot-top)*v)*2-1;
+}
+/* 未加海面基准的裸高程 */
+function rawElev(x,y,n){
+  let h=0;
+  for(let i=0;i<n;i++){
+    const o=OCT[i], f=o.f;
+    const rx=x*f*o.c - y*f*o.sn + o.ox;
+    const ry=x*f*o.sn + y*f*o.c + o.oy;
+    h += o.a*vn(rx,ry,o.s);
+  }
+  return h;
+}
+/* 完整高程：全部八度（读数、河流用） */
+function elevFull(x,y){
+  return SEA_BIAS + rawElev(x,y,24);
+}
+function elevCoarse(x,y,iMax){
+  return SEA_BIAS + rawElev(x,y,iMax);
+}
+/* 海面标定：把世界的低三分之一压到水面以下 */
+function calibrateSea(){
+  const N=52, v=[];
+  for(let j=0;j<N;j++) for(let i=0;i<N;i++){
+    const x=(i/(N-1)-0.5)*WORLD*2.15, y=(j/(N-1)-0.5)*WORLD*2.15;
+    v.push(rawElev(x,y,14));
+  }
+  v.sort((a,b)=>a-b);
+  SEA_BIAS = -v[Math.floor(v.length*SEA_Q)];
+  return SEA_BIAS;
+}
+function slopeAt(x,y,step,iMax){
+  const E = iMax? ((px,py)=>elevCoarse(px,py,iMax)) : elevFull;
+  const hx = E(x+step,y)-E(x-step,y);
+  const hy = E(x,y+step)-E(x,y-step);
+  return Math.hypot(hx,hy)/(2*step);
+}
+
+/* =========================================================================
+   2. 世界的生成：河网 / 城址 / 路网 / 地名
+   ========================================================================= */
+const RIVERS=[];
+const CITIES=[];
+const LABELS=[];
+let TARGET=null;
+
+/* 优先淹水填洼：保证每格都能流出边界，河网不断头 */
+function priorityFlood(N,D){
+  const OUT=new Float32Array(N*N);
+  const done=new Uint8Array(N*N);
+  const hi=new Int32Array(N*N+2), hk=new Float32Array(N*N+2);
+  let hn=0;
+  function push(i,k){
+    let p=hn++; hi[p]=i; hk[p]=k;
+    while(p>0){ const par=(p-1)>>1; if(hk[par]<=hk[p]) break;
+      const ti=hi[par],tk=hk[par]; hi[par]=hi[p]; hk[par]=hk[p]; hi[p]=ti; hk[p]=tk; p=par; }
+  }
+  function pop(){
+    const ti=hi[0], tk=hk[0]; hn--;
+    hi[0]=hi[hn]; hk[0]=hk[hn];
+    let p=0;
+    for(;;){ const l=p*2+1, r=l+1; let m=p;
+      if(l<hn&&hk[l]<hk[m])m=l; if(r<hn&&hk[r]<hk[m])m=r;
+      if(m===p)break;
+      const a=hi[m],b=hk[m]; hi[m]=hi[p]; hk[m]=hk[p]; hi[p]=a; hk[p]=b; p=m; }
+    return ti;
+  }
+  for(let j=0;j<N;j++) for(let i=0;i<N;i++){
+    const k=j*N+i;
+    if(i===0||j===0||i===N-1||j===N-1||D[k]<0){ OUT[k]=D[k]; done[k]=1; push(k,D[k]); }
+  }
+  const NB=[-1,1,-N,N];
+  while(hn>0){
+    const k=pop();
+    for(let a=0;a<4;a++){
+      const t=k+NB[a];
+      if(t<0||t>=N*N||done[t]) continue;
+      done[t]=1;
+      const v=Math.max(D[t], OUT[k]+0.02);
+      OUT[t]=v; push(t,v);
+    }
+  }
+  return OUT;
+}
+
+function genWorld(){
+  const R = mulberry(20260920);
+  /* ---- 2.1 水文：粗 DEM → 洼地填平 → D8 汇流累积 → 河道折线 ---- */
+  const DN=232, DST=(WORLD*2)/(DN-1);
+  const rawD=new Float32Array(DN*DN);
+  for(let j=0;j<DN;j++){
+    const wy=-WORLD+j*DST;
+    for(let i=0;i<DN;i++) rawD[j*DN+i]=elevCoarse(-WORLD+i*DST, wy, 10);
+  }
+  let dA=rawD;                                  // 两点平滑，去 DEM 采样锯齿
+  for(let pass=0;pass<2;pass++){
+    const dB=new Float32Array(DN*DN); dB.set(dA);
+    for(let j=1;j<DN-1;j++) for(let i=1;i<DN-1;i++){
+      const k=j*DN+i;
+      dB[k]=(dA[k]*4+dA[k-1]+dA[k+1]+dA[k-DN]+dA[k+DN])*0.125;
+    }
+    dA=dB;
+  }
+  const DEM=priorityFlood(DN,dA);
+  const NB=[-1,1,-DN,DN,-DN-1,-DN+1,DN-1,DN+1];
+  const FLOW=new Int32Array(DN*DN).fill(-1);
+  for(let j=1;j<DN-1;j++) for(let i=1;i<DN-1;i++){
+    const k=j*DN+i;
+    if(DEM[k]<0) continue;                      // 海面以下不再流
+    let best=-1, bv=DEM[k];
+    for(let a=0;a<8;a++){ const t=k+NB[a]; if(DEM[t]<bv){ bv=DEM[t]; best=t; } }
+    FLOW[k]=best;
+  }
+  // 汇流累积：按高程自高向低一次累加
+  const srt=Array.from({length:DN*DN},(_,k)=>k).sort((a,b)=>DEM[b]-DEM[a]);
+  const ACC=new Float32Array(DN*DN).fill(1);
+  for(let n=0;n<srt.length;n++){ const k=srt[n], t=FLOW[k]; if(t>=0) ACC[t]+=ACC[k]; }
+  // 河道：从每条“入口”（自己够大、而上游都还小）顺流而下，整张网恰好走一遍
+  const big=new Uint8Array(DN*DN);
+  const MINACC=3;
+  for(let k=0;k<DN*DN;k++) if(ACC[k]>=MINACC) big[k]=1;
+  const hasUp=new Uint8Array(DN*DN);
+  for(let k=0;k<DN*DN;k++){ if(big[k]){ const t=FLOW[k]; if(t>=0) hasUp[t]=1; } }
+  const seen=new Uint8Array(DN*DN);
+  for(let j=1;j<DN-1;j++) for(let i=1;i<DN-1;i++){
+    const k=j*DN+i;
+    if(!big[k] || hasUp[k]) continue;
+    const px=[], py=[], pa=[];
+    let cur=k, guard=0;
+    while(cur>=0 && guard++<5000 && ACC[cur]>=MINACC && !seen[cur]){
+      seen[cur]=1;
+      px.push(-WORLD+(cur%DN)*DST); py.push(-WORLD+(((cur/DN)|0))*DST);
+      pa.push(ACC[cur]);
+      cur=FLOW[cur];
+    }
+    if(px.length<2) continue;
+    const n=px.length, pts=new Float32Array(n*3);
+    let mnx=1e9,mny=1e9,mxx=-1e9,mxy=-1e9;
+    for(let t=0;t<n;t++){
+      pts[t*3]=px[t]; pts[t*3+1]=py[t]; pts[t*3+2]=pa[t];
+      if(px[t]<mnx)mnx=px[t]; if(px[t]>mxx)mxx=px[t];
+      if(py[t]<mny)mny=py[t]; if(py[t]>mxy)mxy=py[t];
+    }
+    RIVERS.push({pts, maxAcc:pa[pa.length-1], bb:[mnx,mny,mxx,mxy]});
+  }
+
+  /* ---- 2.2 城址：DEM 中平缓、河道规模适中的格子，避河 420 m ---- */
+  const cand=[];
+  for(let j=3;j<DN-3;j++) for(let i=3;i<DN-3;i++){
+    const k=j*DN+i, h=DEM[k];
+    if(!(h>10 && h<190)) continue;
+    const acc=ACC[k];
+    if(!(acc>=140 && acc<=9000)) continue;
+    const gx=(DEM[k+1]-DEM[k-1])/(2*DST), gy=(DEM[k+DN]-DEM[k-DN])/(2*DST);
+    const sl=Math.hypot(gx,gy);
+    if(sl>0.030) continue;
+    cand.push([-WORLD+i*DST, -WORLD+j*DST, h, sl, acc, k]);
+  }
+  cand.sort((a,b)=> (a[3]*900+(a[2]-70)*0.0015-a[4]*0.00002) - (b[3]*900+(b[2]-70)*0.0015-b[4]*0.00002));
+  const chosen=[];
+  for(const c of cand){
+    if(CITIES.length>=7) break;
+    let ok=true;
+    for(const u of chosen){ if(Math.hypot(u[0]-c[0],u[1]-c[1])<130000){ ok=false; break; } }
+    if(!ok) continue;
+    // 垂直于流向后退 420 m，把城放在河岸上而不是河里
+    const t=c[5]>=0?FLOW[c[5]]:-1;
+    let nx=1, ny=0;
+    if(t>=0){
+      const fx=(-WORLD+(t%DN)*DST)-c[0], fy=(-WORLD+(((t/DN)|0))*DST)-c[1];
+      const L=Math.hypot(fx,fy)||1; nx=-fy/L; ny=fx/L;
+    }
+    let best=null, bs=-1e9;
+    for(const s of [1,-1]){
+      const tx=c[0]+nx*420*s, ty=c[1]+ny*420*s;
+      const th=elevCoarse(tx,ty,12);
+      if(th<6||th>240) continue;
+      const sl=slopeAt(tx,ty,140,11);
+      const sc=-sl*1500;
+      if(sc>bs){ bs=sc; best=[tx,ty,th,sl]; }
+    }
+    if(!best) best=[c[0],c[1],c[2],c[3]];
+    chosen.push(best);
+    CITIES.push({x:best[0], y:best[1], h:elevFull(best[0],best[1]), rnd:mulberry(9001+CITIES.length*131)});
+  }
+  if(!CITIES.length) CITIES.push({x:0,y:0,h:elevFull(0,0),rnd:mulberry(5)});
+
+  /* ---- 2.3 路网：递归细分（KD 分割），附带建筑占地 ---- */
+  const CITY_R = 1420, DEPTH = 12;
+  const Sd=[]; for(let d=0;d<=DEPTH;d++) Sd.push(2*CITY_R/Math.pow(2,d/2));
+  for(const ct of CITIES){
+    const seg=[], bld=[];
+    (function split(x0,y0,x1,y1,d){
+      if(d>=DEPTH || (x1-x0<20&&y1-y0<20)){
+        if(d>=6){
+          const w=x1-x0, h=y1-y0;
+          const gap=1.4+1.6*ct.rnd();
+          const long=Math.max(w,h), short=Math.min(w,h);
+          const k=Math.max(1, Math.min(5, Math.round(long/19)));
+          for(let t=0;t<k;t++){
+            const ins=0.08+0.12*ct.rnd();
+            let bx0,by0,bx1,by1;
+            if(w>=h){
+              bx0=x0+w*(t/k)+gap; bx1=x0+w*((t+1)/k)-gap;
+              by0=y0+short*ins; by1=y1-short*ins;
+            } else {
+              by0=y0+h*(t/k)+gap; by1=y0+h*((t+1)/k)-gap;
+              bx0=x0+short*ins; bx1=x1-short*ins;
+            }
+            if(bx1-bx0<6||by1-by0<6) continue;
+            bld.push((bx0+bx1)/2,(by0+by1)/2,(bx1-bx0)/2,(by1-by0)/2,0,d);
+          }
+        }
+        return;
+      }
+      if(d>=5 && ct.rnd()<0.055 && (x1-x0)<520 && (y1-y0)<520) return;
+      const horiz=(x1-x0)>=(y1-y0);
+      const t=0.34+0.32*ct.rnd();
+      if(horiz){ const xs=x0+(x1-x0)*t; seg.push(xs,y0,xs,y1,d);
+        split(x0,y0,xs,y1,d+1); split(xs,y0,x1,y1,d+1); }
+      else { const ys=y0+(y1-y0)*t; seg.push(x0,ys,x1,ys,d);
+        split(x0,y0,x1,ys,d+1); split(x0,ys,x1,y1,d+1); }
+    })(ct.x-CITY_R, ct.y-CITY_R, ct.x+CITY_R, ct.y+CITY_R, 0);
+    ct.seg=Float32Array.from(seg);
+    ct.bld=Float32Array.from(bld);
+    ct.Sd=Sd; ct.range=CITY_R;
+  }
+
+  /* ---- 2.4 官道：城际连线（长距，带轻微摆动） ---- */
+  const links=[];
+  for(let i=0;i<CITIES.length;i++){
+    const a=CITIES[i];
+    const rest=CITIES.map((c,j)=>[j,Math.hypot(c.x-a.x,c.y-a.y)]).filter(p=>p[0]!==i).sort((p,q)=>p[1]-q[1]);
+    for(let k=0;k<Math.min(2,rest.length);k++){
+      const b=CITIES[rest[k][0]];
+      const d=rest[k][1];
+      if(d>320000) continue;
+      const ph=mulberry(i*977+k*31+3);
+      const pts=[];
+      const N=26;
+      for(let s=0;s<=N;s++){
+        const t=s/N;
+        const x=a.x+(b.x-a.x)*t, y=a.y+(b.y-a.y)*t;
+        const nx=-(b.y-a.y)/d, ny=(b.x-a.x)/d;
+        const w=Math.sin(t*Math.PI)*d*0.10*(ph()*2-1)+Math.sin(t*9.1+ph()*6)*d*0.02;
+        pts.push(x+nx*w, y+ny*w);
+      }
+      links.push(Float32Array.from(pts));
+    }
+  }
+
+  /* ---- 2.5 地名 ---- */
+  const R0=['北岭','灰湾','火口原','雾谷'];
+  const C1=['韦尔登','哈苏恩','提尔墨','阿什兰','莫尔登','塞尔比','卡莱什'];
+  const C2=['铁砧巷','盐仓街','织机坊','旧码头','钟楼广场','墨线胡同','铜匠弄','风车台','白石阶','鳕鱼市','水文坊','石阶下','窑口','渡口'];
+  const C3=['界碑','磨坊','大仓','泵房','老灯塔','缆车下站','采石场','水文站','哨塔','驿站'];
+  const rl=mulberry(4477);
+  R0.forEach((nm,i)=>{
+    const a=i/R0.length*6.28318+0.7;
+    LABELS.push({n:nm,x:Math.cos(a)*248000,y:Math.sin(a)*196000,r:0});
+  });
+  CITIES.forEach((ct,i)=>{
+    LABELS.push({n:C1[i%C1.length], x:ct.x, y:ct.y, r:1, city:i});
+    const n2=4+Math.floor(rl()*3);
+    for(let k=0;k<n2;k++){
+      const a=rl()*6.28318, d=140+rl()*CITY_R*0.92;
+      LABELS.push({n:C2[Math.floor(rl()*C2.length)], x:ct.x+Math.cos(a)*d, y:ct.y+Math.sin(a)*d, r:2, city:i});
+    }
+  });
+  // 主城最深处的建筑点，作为收尾落点
+  const cap=CITIES[0];
+  let bestD=1e9, bi=0;
+  for(let k=0;k<cap.bld.length;k+=6){
+    const d=Math.hypot(cap.bld[k]-cap.x, cap.bld[k+1]-cap.y);
+    if(d<bestD){ bestD=d; bi=k; }
+  }
+  TARGET={x:cap.bld[bi], y:cap.bld[bi+1], h:elevFull(cap.bld[bi],cap.bld[bi+1]), city:0};
+  const n3=7;
+  for(let k=0;k<n3;k++){
+    const a=rl()*6.28318, d=40+rl()*330;
+    LABELS.push({n:C3[Math.floor(rl()*C3.length)], x:TARGET.x+Math.cos(a)*d, y:TARGET.y+Math.sin(a)*d, r:3, city:0});
+  }
+  LABELS.push({n:'旧铸字厂', x:TARGET.x, y:TARGET.y, r:3, city:0, key:true});
+
+  const landC = landCentroid();
+  return {links, landC};
+}
+
+/* 陆地重心：决定开屏对准哪里 */
+let LAND_C={x:0,y:0};
+function landCentroid(){
+  let sx=0, sy=0, n=0;
+  for(let i=0;i<44;i++)for(let j=0;j<44;j++){
+    const x=(i/43-0.5)*WORLD*1.7, y=(j/43-0.5)*WORLD*1.7;
+    if(elevCoarse(x,y,7)>0){ sx+=x; sy+=y; n++; }
+  }
+  if(n) LAND_C={x:sx/n, y:sy/n};
+  return LAND_C;
+}
+
+/* =========================================================================
+   3. 摄像机 / 状态
+   ========================================================================= */
+const cv  = document.getElementById('tBase');
+const ctx = cv.getContext('2d', {alpha:false});
+const sc  = document.getElementById('spot');
+const sctx= sc.getContext('2d');
+const SPOT_CSS=344, SPOT_DPR=Math.min(2, Math.max(1, (window.devicePixelRatio||1)*0.75));
+
+const S = {
+  cssW:0, cssH:0, dpr:1,
+  cam:{x:0,y:0},
+  viewW:VW_MAX, tViewW:VW_MAX,
+  vel:{x:0,y:0},
+  drag:false, dragId:-1,
+  q:1, qAdj:1,
+  probe:{x:0,y:0}, probeOn:false,
+  pointer:{x:0,y:0,inside:false},
+  seq:{on:true, t:0, phase:'etch'},
+  revealT:0,
+  anchor:{x:0,y:0}, zRate:12,
+  moving:false, lastMove:0,
+  ci:10, ciDesired:10, levelOrigin:0, span:1,
+  cs:6, NX:0, NY:0, H:null,
+  links:null,
+  scr:null, hideX:false,
+  lastRenderMs:8,
+  probeName:null, probeNameD:0
+};
+
+/* =========================================================================
+   4. 尺寸
+   ========================================================================= */
+function applySize(){
+  const w=window.innerWidth, h=window.innerHeight;
+  let dpr=Math.min(2, window.devicePixelRatio||1);
+  while (w*h*dpr*dpr > 5.2e6 && dpr>1) dpr-=0.25;
+  S.cssW=w; S.cssH=h; S.dpr=dpr;
+  cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr);
+  sc.width=Math.round(SPOT_CSS*SPOT_DPR); sc.height=Math.round(SPOT_CSS*SPOT_DPR);
+  buildAxis();
+  S.scr=null;
+}
+
+/* =========================================================================
+   5. 地形渲染
+   ========================================================================= */
+function niceBelow(v){
+  let best=LADDER[0];
+  for(let i=0;i<LADDER.length;i++) if(LADDER[i]<=v*1.0000001) best=LADDER[i];
+  return best;
+}
+function nicePair(v){
+  for(let i=1;i<LADDER.length;i++) if(LADDER[i]>v*1.0000001) return [LADDER[i-1], LADDER[i]];
+  return [LADDER[LADDER.length-2], LADDER[LADDER.length-1]];
+}
+/* 等高线"圆整度"：靠近 1 / 2 / 5 尾数者更浓 */
+function prom(V){
+  if(V<=0) return .26;
+  const e=Math.floor(Math.log10(V));
+  const m=V/Math.pow(10,e);
+  let best=0;
+  best=Math.max(best, 1-Math.abs(m-1)/0.62);
+  best=Math.max(best, 0.80-Math.abs(m-2)/1.05);
+  best=Math.max(best, 0.62-Math.abs(m-5)/1.9);
+  return 0.24+0.76*Math.max(0,Math.min(1,best));
+}
+
+const OUT = [];   // 世界叠置缓存：河 / 路 / 房的屏幕坐标复用
+function renderTerrain(){
+  const t0=performance.now();
+  const cssW=S.cssW, cssH=S.cssH, dpr=S.dpr;
+  const mw=S.viewW/cssW;
+  const cam=S.cam;
+
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.fillStyle=INK; ctx.fillRect(0,0,cssW,cssH);
+
+  /* --- 5.0 网格参数 --- */
+  const q=S.q;
+  const cs = 4.35 + (1-q)*4.65;
+  S.cs=cs;
+  const NX=Math.ceil((cssW+2*cs)/cs)+1, NY=Math.ceil((cssH+2*cs)/cs)+1;
+  if(!S.H || S.H.length < NX*NY) S.H=new Float32Array(Math.ceil(NX*NY*1.3));
+  if(S.NX!==NX||S.NY!==NY) S.scr=null;
+  S.NX=NX; S.NY=NY;
+  const H=S.H;
+
+  const step = cs*mw;                      // 每格世界米
+  const wx0 = cam.x + (-cs - cssW/2)*mw;
+  const wy0 = cam.y - (-cs - cssH/2)*mw;
+
+  /* 最细/最粗可视八度：波长覆盖 [8px .. 6×视域] */
+  const lamFine = 8*mw, lamCoarse = 6*S.viewW;
+  let iFine = Math.ceil(Math.log2(LAM0/lamFine));
+  let iCoarse = Math.max(0, Math.floor(Math.log2(LAM0/lamCoarse)));
+  const nCap = Math.max(4, Math.round(5.6+4.4*q));
+  let nOct = iFine-iCoarse+1;
+  if(nOct>nCap){ iFine = iCoarse+nCap-1; nOct=nCap; }
+  const wLast = 1;   // 光滑的解析度衰减已由 nCap 连续变化承担
+
+  /* 粗尾用一阶平面近似 */
+  const dPlane = Math.max(S.viewW*0.5, 400);
+  const c0 = elevCoarse(cam.x,cam.y,iCoarse);
+  const bx = (elevCoarse(cam.x+dPlane,cam.y,iCoarse)-c0)/dPlane;
+  const by = (elevCoarse(cam.x,cam.y+dPlane,iCoarse)-c0)/dPlane;
+
+  /* --- 5.1 采样 --- */
+  const fArr=[], aArr=[], ocArr=[], osArr=[], oxArr=[], oyArr=[], sArr=[];
+  for(let i=iCoarse;i<=iFine;i++){
+    const o=OCT[i];
+    fArr.push(o.f); aArr.push(o.a*(i===iFine?wLast:1));
+    ocArr.push(o.c); osArr.push(o.sn); oxArr.push(o.ox); oyArr.push(o.oy); sArr.push(o.s);
+  }
+  const nO=nOct;
+  let mn=1e18, mx=-1e18;
+  for(let j=0;j<NY;j++){
+    const wy=wy0 - j*step;
+    const dy=wy-cam.y;
+    let row=j*NX;
+    for(let i=0;i<NX;i++){
+      const wx=wx0 + i*step;
+      let h = c0 + bx*(wx-cam.x) + by*dy;
+      for(let k=0;k<nO;k++){
+        const f=fArr[k];
+        const rx=wx*f*ocArr[k] - wy*f*osArr[k] + oxArr[k];
+        const ry=wx*f*osArr[k] + wy*f*ocArr[k] + oyArr[k];
+        const I=Math.floor(rx), J=Math.floor(ry);
+        const fx=rx-I, fy=ry-J;
+        const u=fx*fx*(3-2*fx), v=fy*fy*(3-2*fy);
+        const s=sArr[k];
+        const h00=hashi(I,J,s), h10=hashi(I+1,J,s), h01=hashi(I,J+1,s), h11=hashi(I+1,J+1,s);
+        const tp=h00+(h10-h00)*u, bt=h01+(h11-h01)*u;
+        h += aArr[k]*((tp+(bt-tp)*v)*2-1);
+      }
+      H[row+i]=h;
+      if(h<mn)mn=h; if(h>mx)mx=h;
+    }
+  }
+  const span=Math.max(1e-3, mx-mn);
+  S.span=span;
+
+  /* --- 5.2 等高距：连续目标值 → 1-2-5 阶梯 + 子集淡入 ---- */
+  const targets = span/22;
+  const pair = nicePair(targets);
+  const Ifine=pair[0], Icoarse=pair[1];      // 以细阶画，以粗阶作索引线
+  const rI = Icoarse/Ifine;
+  let u = (Icoarse/targets - 1)/(rI-1);
+  u=Math.max(0,Math.min(1,u));
+  const gSub = u*u*(3-2*u);
+  S.ci=Ifine;
+
+  const revealH = mn + span*S.revealT;
+  const INVAL = S.revealT < 0.999;
+  const revBand = Math.max(1e-5, 0.075*span);
+  const wa = Math.min(1, Math.max(0, (S.revealT-0.015)/0.10));
+
+  /* 屏幕坐标映射：样本 i 落在屏幕 (i-1)*cs */
+  const fx_ = i => (i-1)*cs;
+  const fy_ = j => (j-1)*cs;
+
+  /* --- 5.3 水系（先铺，后压等高线） --- */
+  if(wa>0 && mn<0){
+    ctx.save();
+    ctx.beginPath();
+    const q0 = -150;
+    const deep = mn<q0;
+    let run=-1;
+    for(let j=0;j<NY-1;j++){
+      const r0=j*NX, r1=(j+1)*NX, y=fy_(j);
+      run=-1;
+      for(let i=0;i<NX-1;i++){
+        const a=H[r0+i], b=H[r0+i+1], c=H[r1+i], d=H[r1+i+1];
+        let n=0; if(a<0)n++; if(b<0)n++; if(c<0)n++; if(d<0)n++;
+        if(n===4){ if(run<0) run=i; }
+        else{
+          if(run>=0){ ctx.rect(fx_(run), y, (i-run)*cs, cs); run=-1; }
+          if(n>0) waterPoly(ctx,H,r0,r1,i,j,cs,fx_,fy_,0);
+        }
+      }
+      if(run>=0) ctx.rect(fx_(run), y, (NX-1-run)*cs, cs);
+    }
+    ctx.globalAlpha=0.42*wa; ctx.fillStyle='rgb('+HYDRO+')'; ctx.fill();
+    if(deep){
+      ctx.beginPath(); run=-1;
+      for(let j=0;j<NY-1;j++){
+        const r0=j*NX, r1=(j+1)*NX, y=fy_(j); run=-1;
+        for(let i=0;i<NX-1;i++){
+          const a=H[r0+i], b=H[r0+i+1], c=H[r1+i], d=H[r1+i+1];
+          let n=0; if(a<q0)n++; if(b<q0)n++; if(c<q0)n++; if(d<q0)n++;
+          if(n===4){ if(run<0) run=i; }
+          else{ if(run>=0){ ctx.rect(fx_(run),y,(i-run)*cs,cs); run=-1; }
+                if(n>0) waterPoly(ctx,H,r0,r1,i,j,cs,fx_,fy_,q0); }
+        }
+        if(run>=0) ctx.rect(fx_(run),y,(NX-1-run)*cs,cs);
+      }
+      ctx.globalAlpha=0.30*wa; ctx.fillStyle='rgb('+HYDRO+')'; ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    /* 岸线 */
+    ctx.beginPath();
+    lineSet(ctx,H,0,NX,NY,cs,fx_,fy_);
+    ctx.strokeStyle='rgba('+HYDRO+','+(0.82*wa).toFixed(3)+')';
+    ctx.lineWidth=1; ctx.stroke();
+    ctx.restore();
+  }
+
+  /* --- 5.4 等高线：按浓淡分桶描边 --- */
+  const NB=6;
+  const bcnt=new Int32Array(NB);
+  if(!S.buf || S.buf[0].length < 90000*4){
+    S.buf=[]; for(let b=0;b<NB;b++) S.buf.push(new Float32Array(120000));
+  }
+  const buf=S.buf;
+  for(let j=0;j<NY-1;j++){
+    const r0=j*NX, r1=(j+1)*NX;
+    const y0=fy_(j), y1=y0+cs;
+    for(let i=0;i<NX-1;i++){
+      const a=H[r0+i], b=H[r0+i+1], c=H[r1+i], d=H[r1+i+1];
+      let lo=a, hi=a;
+      if(b<lo)lo=b; else if(b>hi)hi=b;
+      if(c<lo)lo=c; else if(c>hi)hi=c;
+      if(d<lo)lo=d; else if(d>hi)hi=d;
+      if(hi<=0) continue;
+      if(INVAL && lo>revealH) continue;
+      let k0=Math.ceil((lo-1e-9)/Ifine), k1=Math.floor(hi/Ifine);
+      if(k1<k0) continue;
+      const dens=Math.min(1,(hi-lo)/Ifine);
+      const x0=fx_(i), x1=x0+cs;
+      for(let k=k0;k<=k1;k++){
+        const V=k*Ifine; if(V<=0) continue;
+        const isMain = Math.abs(V/Icoarse-Math.round(V/Icoarse))<1e-4;
+        // 层级改按阶梯位置定：主（Icoarse 的倍数）线深、支线浅。
+        // 原用高程数值的十进制圆整度，只在粗等高距时有效；深推到 1560.4 这种量级时所有线权重几乎相同，层级消失。
+        let al = (isMain?1.0:0.52*gSub)*(0.58+0.80*dens)*(0.78+0.22*prom(V));
+        if(al<=0.05) continue;
+        if(INVAL){
+          const dv=(revealH-V)/revBand;
+          if(dv<=0) continue;
+          al *= Math.min(1, dv*1.6);
+        }
+        let bk=(al*5.999)|0; if(bk<0)bk=0; if(bk>NB-1)bk=NB-1;
+        const arr=buf[bk];
+        let n=bcnt[bk];
+        const idx=(a>V?8:0)|(b>V?4:0)|(d>V?2:0)|(c>V?1:0);
+        if(idx===0||idx===15) continue;
+        // 四条边交点
+        const tT=(V-a)/(b-a), tR=(V-b)/(d-b), tB=(V-c)/(d-c), tL=(V-a)/(c-a);
+        const eT_x=x0+cs*tT, eT_y=y0;
+        const eR_x=x1, eR_y=y0+cs*tR;
+        const eB_x=x0+cs*tB, eB_y=y1;
+        const eL_x=x0,   eL_y=y0+cs*tL;
+        switch(idx){
+          case 1:  n=push(arr,n,eL_x,eL_y,eB_x,eB_y); break;
+          case 2:  n=push(arr,n,eB_x,eB_y,eR_x,eR_y); break;
+          case 3:  n=push(arr,n,eL_x,eL_y,eR_x,eR_y); break;
+          case 4:  n=push(arr,n,eT_x,eT_y,eR_x,eR_y); break;
+          case 5:  n=push(arr,n,eL_x,eL_y,eT_x,eT_y); n=push(arr,n,eB_x,eB_y,eR_x,eR_y); break;
+          case 6:  n=push(arr,n,eT_x,eT_y,eB_x,eB_y); break;
+          case 7:  n=push(arr,n,eL_x,eL_y,eT_x,eT_y); break;
+          case 8:  n=push(arr,n,eT_x,eT_y,eL_x,eL_y); break;
+          case 9:  n=push(arr,n,eT_x,eT_y,eB_x,eB_y); break;
+          case 10: n=push(arr,n,eT_x,eT_y,eR_x,eR_y); n=push(arr,n,eL_x,eL_y,eB_x,eB_y); break;
+          case 11: n=push(arr,n,eT_x,eT_y,eR_x,eR_y); break;
+          case 12: n=push(arr,n,eL_x,eL_y,eR_x,eR_y); break;
+          case 13: n=push(arr,n,eB_x,eB_y,eR_x,eR_y); break;
+          case 14: n=push(arr,n,eL_x,eL_y,eB_x,eB_y); break;
+        }
+        bcnt[bk]=n;
+      }
+    }
+  }
+  const ALPHA=[0.30,0.40,0.51,0.63,0.78,0.95];
+  const LW   =[0.70,0.80,0.90,1.00,1.14,1.30];
+  for(let b=0;b<NB;b++){
+    const n=bcnt[b]; if(!n) continue;
+    const arr=buf[b];
+    ctx.beginPath();
+    for(let k=0;k<n;k+=4){ ctx.moveTo(arr[k],arr[k+1]); ctx.lineTo(arr[k+2],arr[k+3]); }
+    ctx.strokeStyle='rgba('+INK_LN+','+ALPHA[b]+')';
+    ctx.lineWidth=LW[b];
+    ctx.stroke();
+  }
+
+  /* --- 5.5 水系中轴：河道（按汇流量定宽、定显隐） --- */
+  {
+    const pad=70;
+    const hw=cssW*0.5*mw+pad*mw, hh=cssH*0.5*mw+pad*mw;
+    const logT = 0.477 + 0.70*Math.log10(Math.max(1,S.viewW/190));
+    const maxPx = Math.max(9, Math.min(26, cssW*0.018));
+    const Xs=[], Ys=[], Ws=[];
+    for(const rv of RIVERS){
+      const bb=rv.bb;
+      if(bb[0]-cam.x>hw || cam.x-bb[2]>hw) continue;
+      if(bb[1]-cam.y>hh || cam.y-bb[3]>hh) continue;
+      const alpha=Math.max(0, Math.min(1,(Math.log10(rv.maxAcc)-logT)/0.55));
+      if(alpha<0.05) continue;
+      const n=rv.pts.length/3;
+      let run=0;
+      const flush=()=>{
+        if(run<2){ run=0; return; }
+        ctx.beginPath();
+        for(let i=0;i<run;i++){
+          const i0=i>0?i-1:0, i1=i<run-1?i+1:run-1;
+          let dx=Xs[i1]-Xs[i0], dy=Ys[i1]-Ys[i0];
+          const L=Math.hypot(dx,dy)||1; dx/=L; dy/=L;
+          if(i===0) ctx.moveTo(Xs[i]-dy*Ws[i]*0.5, Ys[i]+dx*Ws[i]*0.5);
+          else ctx.lineTo(Xs[i]-dy*Ws[i]*0.5, Ys[i]+dx*Ws[i]*0.5);
+        }
+        for(let i=run-1;i>=0;i--){
+          const i0=i>0?i-1:0, i1=i<run-1?i+1:run-1;
+          let dx=Xs[i1]-Xs[i0], dy=Ys[i1]-Ys[i0];
+          const L=Math.hypot(dx,dy)||1; dx/=L; dy/=L;
+          ctx.lineTo(Xs[i]+dy*Ws[i]*0.5, Ys[i]-dx*Ws[i]*0.5);
+        }
+        ctx.closePath();
+        ctx.fillStyle='rgba('+HYDRO+','+(0.42*alpha).toFixed(3)+')';
+        ctx.fill();
+        if(alpha>0.4){ ctx.strokeStyle='rgba('+HYDRO+','+(0.62*alpha).toFixed(3)+')'; ctx.lineWidth=1; ctx.stroke(); }
+        ctx.beginPath();
+        for(let i=0;i<run;i++){ if(i===0) ctx.moveTo(Xs[i],Ys[i]); else ctx.lineTo(Xs[i],Ys[i]); }
+        ctx.strokeStyle='rgba(140,188,218,'+(0.34*alpha).toFixed(3)+')';
+        ctx.lineWidth=0.8; ctx.stroke();
+        run=0;
+      };
+      for(let i=0;i<n;i++){
+        const wx=rv.pts[i*3], wy=rv.pts[i*3+1], a=rv.pts[i*3+2];
+        const X=(wx-cam.x)/mw+cssW/2, Y=cssH/2-(wy-cam.y)/mw;
+        if(X<-pad||X>cssW+pad||Y<-pad||Y>cssH+pad){ flush(); continue; }
+        Xs[run]=X; Ys[run]=Y;
+        Ws[run]=Math.min(maxPx, Math.max(1.05, 0.5*Math.sqrt(a)/mw));
+        run++;
+      }
+      flush();
+    }
+  }
+
+  /* --- 5.6 路网 + 建筑 --- */
+  {
+    const showB = S.viewW<520;
+    for(const ct of CITIES){
+      const dx=Math.abs(ct.x-cam.x), dy=Math.abs(ct.y-cam.y);
+      const reach=ct.range+Math.max(cssW,cssH)*mw*0.8;
+      if(dx>reach||dy>reach) continue;
+      const areas=ct.seg;
+      const fadeC = Math.min(1, Math.max(0, Math.log(90000/S.viewW)/1.1));
+      if(fadeC>0.01){
+        ctx.beginPath();
+        for(let k=0;k<areas.length;k+=5){
+          const d=areas[k+4];
+          const Sd=ct.Sd[d];
+          if(S.viewW > 9.2*Sd) continue;
+          const a=areas[k], b=areas[k+1], c2=areas[k+2], d2=areas[k+3];
+          if(Math.min(a,c2)-cam.x>reach||cam.x-Math.max(a,c2)>reach) continue;
+          if(Math.min(b,d2)-cam.y>reach||cam.y-Math.max(b,d2)>reach) continue;
+          const X1=(a-cam.x)/mw+cssW/2, Y1=cssH/2-(b-cam.y)/mw;
+          const X2=(c2-cam.x)/mw+cssW/2, Y2=cssH/2-(d2-cam.y)/mw;
+          if((X1<-60&&X2<-60)||(X1>cssW+60&&X2>cssW+60)) continue;
+          if((Y1<-60&&Y2<-60)||(Y1>cssH+60&&Y2>cssH+60)) continue;
+          ctx.moveTo(X1,Y1); ctx.lineTo(X2,Y2);
+        }
+        ctx.strokeStyle='rgba('+COPPER+','+(0.46*fadeC).toFixed(3)+')';
+        ctx.lineWidth=0.85; ctx.stroke();
+      }
+      if(showB){
+        const fB=Math.min(1,Math.max(0,(520-S.viewW)/220));
+        ctx.beginPath();
+        for(let k=0;k<ct.bld.length;k+=6){
+          const d=ct.bld[k+5];
+          const Sd=ct.Sd[d|0];
+          if(S.viewW>7*Sd) continue;
+          const x=ct.bld[k], y=ct.bld[k+1], hw=ct.bld[k+2], hh=ct.bld[k+3], rot=ct.bld[k+4];
+          const X=(x-cam.x)/mw+cssW/2, Y=cssH/2-(y-cam.y)/mw;
+          if(X<-40||X>cssW+40||Y<-40||Y>cssH+40) continue;
+          const cr=Math.cos(rot), sr=Math.sin(rot);
+          const sw=hw/mw, sh=hh/mw;
+          if(sw<1.1||sh<1.1) continue;
+          const c1x= sw*cr-sh*sr, c1y= sw*sr+sh*cr;
+          const c2x=-sw*cr-sh*sr, c2y=-sw*sr+sh*cr;
+          const c3x=-sw*cr+sh*sr, c3y=-sw*sr-sh*cr;
+          const c4x= sw*cr+sh*sr, c4y= sw*sr-sh*cr;
+          ctx.moveTo(X+c1x,Y+c1y); ctx.lineTo(X+c2x,Y+c2y);
+          ctx.lineTo(X+c3x,Y+c3y); ctx.lineTo(X+c4x,Y+c4y); ctx.closePath();
+        }
+        ctx.strokeStyle='rgba('+COPPER+','+(0.56*fB).toFixed(3)+')';
+        ctx.lineWidth=0.9; ctx.stroke();
+        ctx.fillStyle='rgba('+COPPER+','+(0.10*fB).toFixed(3)+')';
+        ctx.fill();
+      }
+    }
+  }
+
+  /* --- 5.7 官道 --- */
+  if(S.links){
+    ctx.beginPath();
+    ctx.strokeStyle='rgba('+COPPER+',0.46)'; ctx.lineWidth=0.9;
+    for(const L of S.links){
+      let st=false;
+      for(let i=0;i<L.length;i+=2){
+        const X=(L[i]-cam.x)/mw+cssW/2, Y=cssH/2-(L[i+1]-cam.y)/mw;
+        if(X<-200||X>cssW+200||Y<-200||Y>cssH+200){ st=false; continue; }
+        if(!st){ ctx.moveTo(X,Y); st=true; } else ctx.lineTo(X,Y);
+      }
+    }
+    ctx.stroke();
+  }
+
+  /* --- 5.8 经纬网（极淡，仅示意尺度轴） --- */
+  {
+    const gstep=niceBelow(S.viewW/4.2);
+    const x0=Math.floor((cam.x-cssW/2*mw)/gstep)*gstep;
+    const y0=Math.floor((cam.y-cssH/2*mw)/gstep)*gstep;
+    ctx.beginPath();
+    for(let x=x0;x<cam.x+cssW/2*mw;x+=gstep){
+      const X=(x-cam.x)/mw+cssW/2; ctx.moveTo(X,0); ctx.lineTo(X,cssH);
+    }
+    for(let y=y0;y<cam.y+cssH/2*mw;y+=gstep){
+      const Y=cssH/2-(y-cam.y)/mw; ctx.moveTo(0,Y); ctx.lineTo(cssW,Y);
+    }
+    ctx.strokeStyle='rgba(198,209,224,0.14)'; ctx.lineWidth=1; ctx.stroke();
+  }
+
+  /* --- 5.9 地名 --- */
+  drawLabels(cssW,cssH,mw);
+
+  S.lastRenderMs=performance.now()-t0;
+}
+
+function push(a,n,x1,y1,x2,y2){
+  if(n+4>a.length) return n;
+  a[n]=x1; a[n+1]=y1; a[n+2]=x2; a[n+3]=y2;
+  return n+4;
+}
+function waterPoly(c,H,r0,r1,i,j,cs,fx_,fy_,lev){
+  const v=[H[r0+i],H[r0+i+1],H[r1+i+1],H[r1+i]];
+  const px=[fx_(i),fx_(i)+cs,fx_(i)+cs,fx_(i)];
+  const py=[fy_(j),fy_(j),fy_(j)+cs,fy_(j)+cs];
+  let n=0;
+  const ox=[], oy=[];
+  for(let k=0;k<4;k++){
+    const k2=(k+1)&3;
+    const h1=v[k]-lev, h2=v[k2]-lev;
+    if(h1<0){ ox.push(px[k]); oy.push(py[k]); n++; }
+    if((h1<0)!==(h2<0)){
+      const t=h1/(h1-h2);
+      ox.push(px[k]+(px[k2]-px[k])*t); oy.push(py[k]+(py[k2]-py[k])*t); n++;
+    }
+  }
+  if(n<3) return;
+  c.moveTo(ox[0],oy[0]);
+  for(let k=1;k<n;k++) c.lineTo(ox[k],oy[k]);
+  c.closePath();
+}
+/* 指定高度的等高线段（岸线） */
+function lineSet(c,H,lev,NX,NY,cs,fx_,fy_){
+  for(let j=0;j<NY-1;j++){
+    const r0=j*NX, r1=(j+1)*NX, y0=fy_(j), y1=y0+cs;
+    for(let i=0;i<NX-1;i++){
+      const a=H[r0+i], b=H[r0+i+1], c2=H[r1+i], d=H[r1+i+1];
+      let lo=a,hi=a;
+      if(b<lo)lo=b; else if(b>hi)hi=b;
+      if(c2<lo)lo=c2; else if(c2>hi)hi=c2;
+      if(d<lo)lo=d; else if(d>hi)hi=d;
+      if(lo>lev||hi<lev) continue;
+      const idx=(a>lev?8:0)|(b>lev?4:0)|(d>lev?2:0)|(c2>lev?1:0);
+      if(idx===0||idx===15) continue;
+      const x0=fx_(i), x1=x0+cs;
+      const tT=(lev-a)/(b-a), tR=(lev-b)/(d-b), tB=(lev-c2)/(d-c2), tL=(lev-a)/(c2-a);
+      const TX=x0+cs*tT, RY=y0+cs*tR, BX=x0+cs*tB, LY=y0+cs*tL;
+      switch(idx){
+        case 1: c.moveTo(x0,LY); c.lineTo(BX,y1); break;
+        case 2: c.moveTo(BX,y1); c.lineTo(x1,RY); break;
+        case 3: c.moveTo(x0,LY); c.lineTo(x1,RY); break;
+        case 4: c.moveTo(TX,y0); c.lineTo(x1,RY); break;
+        case 5: c.moveTo(x0,LY); c.lineTo(TX,y0); c.moveTo(BX,y1); c.lineTo(x1,RY); break;
+        case 6: c.moveTo(TX,y0); c.lineTo(BX,y1); break;
+        case 7: c.moveTo(x0,LY); c.lineTo(TX,y0); break;
+        case 8: c.moveTo(TX,y0); c.lineTo(x0,LY); break;
+        case 9: c.moveTo(TX,y0); c.lineTo(BX,y1); break;
+        case 10: c.moveTo(TX,y0); c.lineTo(x1,RY); c.moveTo(x0,LY); c.lineTo(BX,y1); break;
+        case 11: c.moveTo(TX,y0); c.lineTo(x1,RY); break;
+        case 12: c.moveTo(x0,LY); c.lineTo(x1,RY); break;
+        case 13: c.moveTo(BX,y1); c.lineTo(x1,RY); break;
+        case 14: c.moveTo(x0,LY); c.lineTo(BX,y1); break;
+      }
+    }
+  }
+}
+
+/* =========================================================================
+   6. 地名
+   ========================================================================= */
+const LS = {11:1, 10:1};
+function drawLabels(cssW,cssH,mw){
+  const cam=S.cam;
+  const boxes=[];
+  const probe=S.probeOn?S.probe:{x:cssW/2,y:cssH/2};
+  const hitR=118;
+  let bestName=null, bestD=hitR;
+
+  const vis=[];
+  for(const L of LABELS){
+    let a;
+    const vw=S.viewW;
+    switch(L.r){
+      case 0: a=fadeWin(vw, 60000, 2.0e6, 2.6); break;
+      case 1: a=fadeWin(vw, 1400, 320000, 2.6); break;
+      case 2: a=fadeWin(vw, 170, 14000, 2.4); break;
+      case 3: a=fadeWin(vw, 18, 1000, 2.4); break;
+    }
+    if(a<=0.02) continue;
+    const X=(L.x-cam.x)/mw+cssW/2, Y=cssH/2-(L.y-cam.y)/mw;
+    if(X<-140||X>cssW+140||Y<-60||Y>cssH+60) continue;
+    vis.push([L,X,Y,a]);
+  }
+  vis.sort((p,q)=>p[0].r-q[0].r);
+
+  for(const it of vis){
+    const L=it[0], X=it[1], Y=it[2]; let a=it[3];
+    const d=Math.hypot(X-probe.x, Y-probe.y);
+    const near = d<hitR ? 1-d/hitR : 0;
+    if(near>0 && L.r>=1 && d<bestD){ bestD=d; bestName=L.n; }
+    a = Math.min(1, a + near*0.55);
+
+    const fs = L.r===0?12:(L.r===1?11:10.5);
+    ctx.font = (L.r===0?400:400)+' '+fs+'px '+SANS;
+    const ls = L.r===0?4.2:2.0;
+    if(ctx.letterSpacing!==undefined) ctx.letterSpacing = ls+'px';
+    const tw = measureLabel(L.n, fs, ls);
+    const tx = X+9, ty = Y-9;
+    // 先量后避让（同级按由重到轻）
+    if(checkBox(boxes, tx-2, ty-fs*0.8, tw+6, fs*1.6)) continue;
+    boxes.push([tx-2, ty-fs*0.8, tw+6, fs*1.6]);
+
+    // 引线 + 标记点
+    ctx.beginPath();
+    ctx.moveTo(X+1.4,Y-1.4); ctx.lineTo(tx-4,ty+3.4);
+    ctx.strokeStyle = near>0.15 ? 'rgba(218,106,60,'+(0.82*a).toFixed(3)+')'
+                               : 'rgba(198,209,224,'+(0.46*a).toFixed(3)+')';
+    ctx.lineWidth=1; ctx.stroke();
+    ctx.beginPath();
+    if(L.r===0){ ctx.arc(X,Y,2.2,0,6.2832); }
+    else if(L.r>=2){ ctx.rect(X-2,Y-2,4,4); }
+    else { ctx.moveTo(X,Y-2.6); ctx.lineTo(X+2.6,Y); ctx.lineTo(X,Y+2.6); ctx.lineTo(X-2.6,Y); ctx.closePath(); }
+    ctx.fillStyle = near>0.15 ? 'rgba(218,106,60,'+(0.98*a).toFixed(3)+')'
+                              : 'rgba(198,209,224,'+(0.80*a).toFixed(3)+')';
+    ctx.fill();
+
+    ctx.fillStyle = near>0.15 ? 'rgba(255,196,158,'+(0.98*a).toFixed(3)+')'
+                              : 'rgba('+(L.r===0?'226,234,246':'214,223,238')+','+(a*(L.r===0?0.86:0.78)).toFixed(3)+')';
+    ctx.textBaseline='alphabetic';
+    ctx.fillText(L.n, tx, ty);
+    if(ctx.letterSpacing!==undefined) ctx.letterSpacing='0px';
+  }
+  S.probeName = bestName;
+}
+function measureLabel(t,fs,ls){
+  if(ctx.letterSpacing!==undefined){ ctx.letterSpacing=ls+'px'; const w=ctx.measureText(t).width; return w; }
+  return t.length*fs*1.02 + (t.length-1)*ls;
+}
+function checkBox(bs,x,y,w,h){
+  for(let i=0;i<bs.length;i++){
+    const b=bs[i];
+    if(x<b[0]+b[2] && x+w>b[0] && y<b[1]+b[3] && y+h>b[1]) return true;
+  }
+  return false;
+}
+function fadeWin(vw,lo,hi,soft){
+  const a=Math.log10(Math.max(lo,Math.min(hi,vw)));
+  const l0=Math.log10(lo), l1=Math.log10(hi);
+  const s=(l1-l0)/soft;
+  const t=Math.min((a-l0)/s, (l1-a)/s, 1);
+  return Math.max(0,Math.min(1,t));
+}
+
+/* =========================================================================
+   7. 读数光斑
+   ========================================================================= */
+function renderSpot(){
+  const M=SPOT_CSS, R=M/2;
+  const cx=S.probe.x, cy=S.probe.y;
+  const Sd=sc.width;
+  const kS=S.dpr, kD=SPOT_DPR;
+  sctx.setTransform(1,0,0,1,0,0);
+  sctx.clearRect(0,0,Sd,Sd);
+  sctx.drawImage(cv, (cx-R)*kS, (cy-R)*kS, M*kS, M*kS, 0,0,Sd,Sd);
+  sctx.globalCompositeOperation='destination-in';
+  const g=sctx.createRadialGradient(R*kD,R*kD,0,R*kD,R*kD,168*kD);
+  g.addColorStop(0,'rgba(255,255,255,1)');
+  g.addColorStop(0.34,'rgba(255,255,255,.80)');
+  g.addColorStop(0.62,'rgba(255,255,255,.36)');
+  g.addColorStop(0.83,'rgba(255,255,255,.09)');
+  g.addColorStop(1,'rgba(255,255,255,0)');
+  sctx.fillStyle=g; sctx.fillRect(0,0,Sd,Sd);
+  sctx.globalCompositeOperation='source-over';
+  const tr='translate3d('+(cx-R)+'px,'+(cy-R)+'px,0)';
+  sc.style.transform=tr;
+  document.getElementById('warm1').style.transform='translate3d('+(cx-210)+'px,'+(cy-210)+'px,0)';
+  document.getElementById('warm2').style.transform='translate3d('+(cx-188)+'px,'+(cy-226)+'px,0)';
+  document.getElementById('ring').style.transform=tr;
+}
+
+/* =========================================================================
+   8. HUD
+   ========================================================================= */
+function Odometer(el, tmpl){
+  this.el=el; el.className='odo';
+  this.tmpl=tmpl; this.cols=[];
+  let html='';
+  for(const ch of tmpl){
+    if(ch==='#'){
+      let strip='';
+      for(let d=0;d<10;d++) strip+='<b>'+d+'</b>';
+      html+='<span class="sl"><i>'+strip+'</i></span>';
+    } else {
+      html+='<span class="lt'+(ch===' '?' sp':'')+'">'+(ch===' '?'':ch)+'</span>';
+    }
+  }
+  el.innerHTML=html;
+  this.cols=el.querySelectorAll('.sl');
+  for(let i=0;i<this.cols.length;i++) this.cols[i].firstChild.style.transform='translateY(0px)';
+}
+Odometer.prototype.set=function(str){
+  const dg=String(str).replace(/[^0-9]/g,'');
+  let n=0;
+  for(let i=0;i<this.tmpl.length;i++){
+    if(this.tmpl[i]!=='#') continue;
+    const d = n<dg.length ? +dg[n] : 0; n++;
+    const box=this.cols[n-1]; if(!box) continue;
+    const c=box.firstChild;
+    if(c._d!==d){ c._d=d; c.style.transform='translateY('+(-d*1.6)+'em)'; }
+  }
+};
+let oX,oY,oZ;
+function initHud(){
+  oX=new Odometer(document.getElementById('oX'),'+### ###.##');
+  oY=new Odometer(document.getElementById('oY'),'+### ###.##');
+  oZ=new Odometer(document.getElementById('oZ'),'+####.##');
+  buildAxis();
+}
+function fmtCoord(v){
+  const s=v<0?'-':'+'; const a=Math.abs(v);
+  const ip=String(Math.floor(a)).padStart(6,'0');
+  return s+ip.slice(0,3)+' '+ip.slice(3)+'.'+String(Math.floor(a*100%100)).padStart(2,'0');
+}
+function fmtElev(v){
+  const s=v<0?'-':'+'; const a=Math.abs(v);
+  const ip=String(Math.floor(a)).padStart(4,'0');
+  return s+ip+'.'+String(Math.floor(a*100%100)).padStart(2,'0');
+}
+function fmtLen(m){
+  if(m>=1000) return (m/1000).toFixed(m>=100000?0:2)+' km';
+  if(m>=1) return m.toFixed(m>=100?0:1)+' m';
+  return (m*100).toFixed(0)+' cm';
+}
+function grade(){
+  const vw=S.viewW;
+  if(vw>=92000) return '国土';
+  if(vw>=6800) return '城市';
+  if(vw>=430) return '街区';
+  return '建筑';
+}
+function unitOf(v){ return Math.abs(v)>=1000 ? (v/1000).toFixed(2)+' km' : v.toFixed(1)+' m'; }
+
+const axEl=document.getElementById('ax');
+const axWrap=axEl.querySelector('.wrap');
+const axCap=document.getElementById('axCap');
+let axTicks=[];
+function buildAxis(){
+  const H=axWrap.clientHeight;
+  if(!H) return;
+  axWrap.querySelectorAll('.tk,.nm').forEach(e=>e.remove());
+  axTicks=[];
+  const names=[[92000,'国土'],[6800,'城市'],[430,'街区'],[34,'建筑']];
+  const L0=Math.log10(VW_MIN), L1=Math.log10(VW_MAX);
+  const pos=v=>H*(1-(Math.log10(v)-L0)/(L1-L0));
+  for(let e=Math.log10(VW_MIN);e<=Math.log10(VW_MAX);e++){
+    for(const m of [1,2,5]){
+      const v=m*Math.pow(10,e);
+      if(v<VW_MIN||v>VW_MAX) continue;
+      const p=pos(v);
+      const maj=(m===1);
+      const d=document.createElement('div');
+      d.className='tk '+(maj?'mj':'mn');
+      d.style.top=p+'px';
+      axWrap.appendChild(d);
+    }
+  }
+  for(const [v,nm] of names){
+    if(v<VW_MIN||v>VW_MAX) continue;
+    const p=pos(v);
+    const d=document.createElement('div');
+    d.className='nm'; d.style.top=p+'px'; d.textContent=nm; d.dataset.v=v;
+    axWrap.appendChild(d);
+  }
+}
+function updateAxis(){
+  const H=axWrap.clientHeight; if(!H) return;
+  const L0=Math.log10(VW_MIN), L1=Math.log10(VW_MAX);
+  const t=(Math.log10(S.viewW)-L0)/(L1-L0);
+  const p=H*(1-t);
+  axWrap.querySelector('.mk').style.top=p+'px';
+  axWrap.querySelector('.mkv').style.top=p+'px';
+  axCap.textContent=fmtLen(S.viewW);
+  axWrap.querySelectorAll('.nm').forEach(e=>{
+    e.classList.toggle('on', Math.abs(Math.log10(S.viewW)-Math.log10(+e.dataset.v))<0.85);
+  });
+}
+function updateHud(){
+  const cam=S.cam;
+  // 读数在场中心（探针）
+  const px=S.probe.x, py=S.probe.y;
+  const mw=S.viewW/S.cssW;
+  const wx=cam.x+(px-S.cssW/2)*mw, wy=cam.y-(py-S.cssH/2)*mw;
+  const h=elevFull(wx,wy);
+  const st=Math.max(mw*1.6,0.05);
+  const sl=slopeAt(wx,wy,st);
+
+  oX.set(fmtCoord(wx)); oY.set(fmtCoord(wy)); oZ.set(fmtElev(h));
+
+  const deg=Math.atan(sl)*180/Math.PI;
+  document.getElementById('roE').textContent=fmtElev(h)+' m';
+  document.getElementById('roS').textContent=deg.toFixed(2)+'° · '+(sl*100).toFixed(1)+'%';
+  document.getElementById('roT').textContent=terrainWord(h,sl);
+  const rn=document.querySelector('#ro .rn');
+  rn.innerHTML = S.probeName ? (S.probeName+' <em>· 已勘定</em>') : '<em>读数场 R '+fmtLen(160*mw)+'</em>';
+
+  document.getElementById('kGrade').textContent=grade();
+  document.getElementById('kVw').textContent=fmtLen(S.viewW);
+  const N=(S.viewW/S.cssW)/(0.0254/96);
+  document.getElementById('kRatio').textContent='1:'+round2(N);
+  document.getElementById('kCI').textContent=(S.ci>=1?S.ci.toFixed(S.ci>=10?0:1):S.ci.toFixed(2))+' m';
+  document.getElementById('kRes').textContent=(S.cs*(S.viewW/S.cssW)).toFixed(S.viewW<2000?2:0)+' m/格';
+  updateAxis();
+  const ro=document.getElementById('ro');
+  const flipX = px> S.cssW-260, flipY = py> S.cssH-190;
+  const rx = flipX ? px-196-24 : px+24;
+  const ry = flipY ? py-152-16 : py-30;
+  ro.style.transform='translate3d('+rx+'px,'+ry+'px,0)';
+}
+function round2(n){
+  const p=Math.pow(10,Math.floor(Math.log10(n))-1);
+  const r=Math.round(n/p)*p;
+  const s=String(r);
+  return s.replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+}
+function terrainWord(h,sl){
+  let a;
+  if(sl<0.005) a='平地'; else if(sl<0.022) a='缓坡'; else if(sl<0.065) a='斜坡';
+  else if(sl<0.16) a='陡坡'; else a='崖壁';
+  let b;
+  if(h<6) b='滩地'; else if(h<180) b='低丘'; else if(h<700) b='山地';
+  else if(h<1500) b='高山'; else b='雪线';
+  return a+' · '+b;
+}
+
+/* =========================================================================
+   9. 交互
+   ========================================================================= */
+const app=document.getElementById('app');
+function setProbe(x,y){
+  S.probe.x=x; S.probe.y=y;
+}
+function screenToWorld(x,y){
+  const mw=S.viewW/S.cssW;
+  return {x:S.cam.x+(x-S.cssW/2)*mw, y:S.cam.y-(y-S.cssH/2)*mw};
+}
+function clampVW(v){ return Math.max(VW_MIN, Math.min(VW_MAX, v)); }
+function zoomAt(nv, ax, ay){
+  const mw0=S.viewW/S.cssW;
+  const W={x:S.cam.x+(ax-S.cssW/2)*mw0, y:S.cam.y-(ay-S.cssH/2)*mw0};
+  S.viewW=nv;
+  const mw1=S.viewW/S.cssW;
+  S.cam.x = W.x-(ax-S.cssW/2)*mw1;
+  S.cam.y = W.y+(ay-S.cssH/2)*mw1;
+}
+
+app.addEventListener('wheel', e=>{
+  if(S.seq.on) endSeq();
+  e.preventDefault();
+  const k = e.deltaMode===1?18:(e.deltaMode===2?420:1);
+  const f = Math.exp(e.deltaY*k*0.00135);
+  S.anchor.x = S.pointer.inside?S.pointer.x:S.cssW/2;
+  S.anchor.y = S.pointer.inside?S.pointer.y:S.cssH/2;
+  S.tViewW = clampVW(S.tViewW*f);
+  S.zRate = 12;
+  S.lastMove = performance.now();
+}, {passive:false});
+
+let pinchD=0, pinchMid=null;
+const ptrs=new Map();
+app.addEventListener('pointerdown', e=>{
+  if(e.target.closest('#ax')) return;
+  if(S.seq.on) endSeq();
+  try{ app.setPointerCapture(e.pointerId); }catch(err){}
+  ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===1){ S.drag=true; S.dragId=e.pointerId; S.vel.x=0; S.vel.y=0; }
+  if(ptrs.size===2){
+    const a=[...ptrs.values()];
+    pinchD=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+    pinchMid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2};
+  }
+});
+let lastP=null;
+app.addEventListener('pointermove', e=>{
+  S.pointer.x=e.clientX; S.pointer.y=e.clientY; S.pointer.inside=true;
+  if(S.seq.on) endSeq();
+  if(ptrs.has(e.pointerId)) ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===2){
+    const a=[...ptrs.values()];
+    const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+    const mid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2};
+    if(pinchD>0 && d>0){
+      const nv=clampVW(S.viewW*pinchD/d);
+      zoomAt(nv, mid.x, mid.y); S.tViewW=nv;
+      S.cam.x -= (mid.x-pinchMid.x)*(S.viewW/S.cssW);
+      S.cam.y += (mid.y-pinchMid.y)*(S.viewW/S.cssW);
+    }
+    pinchD=d; pinchMid=mid;
+    S.probeOn=true; setProbe(e.clientX,e.clientY);
+    return;
+  }
+  if(S.drag && e.pointerId===S.dragId){
+    const mw=S.viewW/S.cssW;
+    const nowT=performance.now();
+    if(lastP){
+      const dx=e.clientX-lastP.x, dy=e.clientY-lastP.y;
+      S.cam.x-=dx*mw; S.cam.y+=dy*mw;          // 1:1 跟手
+      // 速度用指针真实间隔算，不能写死 16ms（否则鼠标 100Hz 时惯性被严重低估）
+      const dtv=Math.max(0.004,Math.min(0.05,(nowT-lastP.t)/1000));
+      S.vel.x=S.vel.x*0.30+(dx/dtv)*0.70;
+      S.vel.y=S.vel.y*0.30+(dy/dtv)*0.70;
+      const sp=Math.hypot(S.vel.x,S.vel.y);
+      if(sp>2600){ const k=2600/sp; S.vel.x*=k; S.vel.y*=k; }
+      S.lastMove=nowT;
+    }
+    lastP={x:e.clientX,y:e.clientY,t:nowT};
+  } else if(e.pointerType==='mouse'){
+    S.probeOn=true;
+  }
+  setProbe(e.clientX,e.clientY);
+});
+function upP(e){
+  ptrs.delete(e.pointerId);
+  if(ptrs.size<2) pinchD=0;
+  if(e.pointerId===S.dragId){ S.drag=false; S.dragId=-1; lastP=null; S.lastMove=performance.now(); }
+}
+app.addEventListener('pointerup', upP);
+app.addEventListener('pointercancel', upP);
+app.addEventListener('pointerleave', e=>{ if(!S.drag) S.pointer.inside=false; });
+
+app.addEventListener('dblclick', e=>{
+  if(S.seq.on) endSeq();
+  const g=grade();
+  const f = (g==='国土'||g==='城市')?0.055:0.11;
+  S.anchor.x=e.clientX; S.anchor.y=e.clientY;
+  S.tViewW=clampVW(S.viewW*f);
+  S.zRate=3.6;
+});
+window.addEventListener('keydown', e=>{
+  if(e.key==='d'||e.key==='D'){ document.getElementById('dev').classList.toggle('on'); return; }
+  if(S.seq.on) endSeq();
+  const mw=S.viewW/S.cssW;
+  const step=Math.max(60, Math.min(S.cssW,S.cssH)*0.35);
+  if(e.key==='ArrowLeft'){ S.cam.x-=step*mw; S.vel.x=0; S.vel.y=0; }
+  else if(e.key==='ArrowRight'){ S.cam.x+=step*mw; S.vel.x=0; S.vel.y=0; }
+  else if(e.key==='ArrowUp'){ S.cam.y+=step*mw; S.vel.x=0; S.vel.y=0; }
+  else if(e.key==='ArrowDown'){ S.cam.y-=step*mw; S.vel.x=0; S.vel.y=0; }
+  else if(e.key==='='||e.key==='+'){ S.anchor.x=S.cssW/2; S.anchor.y=S.cssH/2; S.tViewW=clampVW(S.viewW*0.7); S.zRate=6; }
+  else if(e.key==='-'||e.key==='_'){ S.anchor.x=S.cssW/2; S.anchor.y=S.cssH/2; S.tViewW=clampVW(S.viewW/0.7); S.zRate=6; }
+  else return;
+  e.preventDefault();
+});
+
+/* 尺度轴拖拽 */
+axEl.addEventListener('pointerdown', e=>{
+  e.stopPropagation(); e.preventDefault();
+  if(S.seq.on) endSeq();
+  axEl.setPointerCapture(e.pointerId);
+  const mv=ev=>{
+    const r=axWrap.getBoundingClientRect();
+    let t=1-(ev.clientY-r.top)/r.height;
+    t=Math.max(0,Math.min(1,t));
+    const nv=Math.pow(10, Math.log10(VW_MIN)+t*(Math.log10(VW_MAX)-Math.log10(VW_MIN)));
+    const c=screenToWorld(S.cssW/2,S.cssH/2);
+    S.viewW=nv; S.tViewW=nv;
+    const mw=S.viewW/S.cssW;
+    S.cam.x=c.x; S.cam.y=c.y;
+  };
+  const up=ev=>{ axEl.removeEventListener('pointermove',mv); axEl.removeEventListener('pointerup',up); };
+  axEl.addEventListener('pointermove',mv);
+  axEl.addEventListener('pointerup',up);
+  mv(e);
+});
+
+/* =========================================================================
+   10. 主循环
+   ========================================================================= */
+let lastT=0, fps=60, terrAcc=0, terrN=0;
+function endSeq(){
+  if(!S.seq.on) return;
+  S.seq.on=false; S.seq.phase='done'; S.revealT=1;
+  document.body.classList.add('rolling');
+  document.getElementById('hint').textContent='滚轮推拉尺度 · 拖拽平移 · 光标读数 · 双击推进';
+}
+function update(dt, now){
+  /* --- 起始序列 --- */
+  if(S.seq.on){
+    const t=S.seq.t+=dt;
+    if(S.seq.phase==='etch'){
+      S.revealT = ease(t/2.5);
+      if(t>=2.5){ S.seq.phase='hold'; S.revealT=1; }
+    } else if(S.seq.phase==='hold'){
+      if(t>=3.3) S.seq.phase='dive';
+    } else if(S.seq.phase==='dive'){
+      const u=Math.min(1,(t-3.3)/6.4);
+      const e=u<0.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;
+      const L0=Math.log10(VW_MAX), L1=Math.log10(190);
+      const nv=Math.pow(10, L0+(L1-L0)*e);
+      S.viewW=nv; S.tViewW=nv;
+      S.cam.x=LAND_C.x+(TARGET.x-LAND_C.x)*e;
+      S.cam.y=LAND_C.y+(TARGET.y-LAND_C.y)*e;
+      if(u>=1){ endSeq(); }
+    } else endSeq();
+  }
+
+  /* --- 连续缩放：对数插值 + 光标锚定（无“切换”动作） --- */
+  if(Math.abs(Math.log10(S.tViewW/S.viewW))>0.0004){
+    const kz=1-Math.exp(-dt*(S.zRate||10));
+    const lv=Math.log10(S.viewW)+(Math.log10(S.tViewW)-Math.log10(S.viewW))*kz;
+    const nv=Math.pow(10,lv);
+    const ax=S.anchor.x, ay=S.anchor.y;
+    const mw0=S.viewW/S.cssW, mw1=nv/S.cssW;
+    const Wx=S.cam.x+(ax-S.cssW/2)*mw0, Wy=S.cam.y-(ay-S.cssH/2)*mw0;
+    S.viewW=nv;
+    S.cam.x=Wx-(ax-S.cssW/2)*mw1;
+    S.cam.y=Wy+(ay-S.cssH/2)*mw1;
+  } else S.viewW=S.tViewW;
+
+  /* --- 惯性 --- */
+  if(!S.drag && (Math.abs(S.vel.x)>3 || Math.abs(S.vel.y)>3)){
+    const mw=S.viewW/S.cssW;
+    S.cam.x -= S.vel.x*dt*mw;
+    S.cam.y += S.vel.y*dt*mw;
+    const f=Math.exp(-dt*3.0);
+    S.vel.x*=f; S.vel.y*=f;
+    S.lastMove=now;
+  } else if(!S.drag){ S.vel.x=0; S.vel.y=0; }
+
+  /* --- 边界：拖拽给橡皮筋阻力，松手回弹 --- */
+  const lim=WORLD;
+  if(!S.drag){
+    const tX=Math.max(-lim,Math.min(lim,S.cam.x));
+    const tY=Math.max(-lim,Math.min(lim,S.cam.y));
+    if(tX!==S.cam.x) S.cam.x += (tX-S.cam.x)*Math.min(1,dt*7.5);
+    if(tY!==S.cam.y) S.cam.y += (tY-S.cam.y)*Math.min(1,dt*7.5);
+  } else {
+    const over=v=>{ const s=v<0?-1:1; const a=Math.abs(v); return a<=lim?v:s*(lim+(a-lim)*0.28); };
+    S.cam.x=over(S.cam.x); S.cam.y=over(S.cam.y);
+  }
+  S.moving = S.drag || Math.abs(S.vel.x)>3 || Math.abs(S.vel.y)>3 ||
+             Math.abs(Math.log10(S.tViewW/S.viewW))>0.0004 || S.seq.on;
+  S.anchored = S.pointer.inside || S.drag;
+
+  /* --- 质量：动时降，静时升；按实测帧耗回压 --- */
+  const qSpd = S.seq.on ? 0.70 : (S.moving?0.18:1);
+  const qCost = S.lastRenderMs>9.0 ? -0.09 : (S.lastRenderMs<4.0 ? 0.06 : 0);
+  S.qAdj=Math.max(0.10, Math.min(1, S.qAdj+qCost));
+  const qT=Math.min(qSpd,S.qAdj);
+  S.q += (qT-S.q)*Math.min(1,dt*3.4);
+
+  /* --- 光标不在场：探针停在视域中心 --- */
+  if(!S.probeOn) setProbe(S.cssW/2, S.cssH/2);
+  if(S.seq.on) setProbe(S.cssW/2, S.cssH/2);
+}
+function ease(x){ x=Math.max(0,Math.min(1,x)); return 1-Math.pow(1-x,3); }
+
+let needRender=true;
+function frame(now){
+  const dt=Math.min(0.05,(now-lastT)/1000||0.016); lastT=now;
+  const prev={x:S.cam.x,y:S.cam.y,v:S.viewW,q:S.q,r:S.revealT};
+  update(dt, now);
+  // 重绘判据必须是屏幕像素，不是世界米：
+  // 深推到 34m 视域时 1 像素只等于 0.02m，用米做阈值会把整段拖拽全吞掉
+  const mwNow=S.viewW/S.cssW;
+  const movedPx=(Math.abs(S.cam.x-prev.x)+Math.abs(S.cam.y-prev.y))/Math.max(1e-9,mwNow);
+  const zoomRel=Math.abs(Math.log(S.viewW/prev.v));
+  const changed = movedPx>0.10 || zoomRel>8e-6 ||
+                  Math.abs(S.q-prev.q)>0.008 || Math.abs(S.revealT-prev.r)>1e-4;
+  if(changed || needRender || S.drag){
+    renderTerrain();
+    terrAcc+=S.lastRenderMs; terrN++;
+    needRender=false;
+  }
+  renderSpot();
+  updateHud();
+  requestAnimationFrame(frame);
+}
+
+/* =========================================================================
+   11. 起始
+   ========================================================================= */
+const devEl=document.getElementById('dev');
+setInterval(()=>{
+  devEl.textContent='fps '+(fps|0)+' · 地形 '+(terrN?(terrAcc/terrN):0).toFixed(1)+'ms · q '+S.q.toFixed(2)+
+    ' · 格 '+(S.cs|0)+'px · 等高距 '+S.ci.toPrecision(3)+
+    '\n视域 '+fmtLen(S.viewW)+' · 探针 '+(S.probeName||'—');
+}, 420);
+
+function grain(){
+  const c=document.createElement('canvas'); c.width=c.height=168;
+  const g=c.getContext('2d'); const d=g.createImageData(168,168);
+  const r=mulberry(31337);
+  for(let i=0;i<d.data.length;i+=4){
+    const v=140+r()*115|0;
+    d.data[i]=v; d.data[i+1]=v+2; d.data[i+2]=v+6; d.data[i+3]=r()<0.55?255:0;
+  }
+  g.putImageData(d,0,0);
+  document.getElementById('grain').style.backgroundImage='url('+c.toDataURL()+')';
+}
+
+function boot(){
+  grain();
+  applySize();
+  calibrateSea();
+  const W=genWorld();
+  S.links=W.links;
+  initHud();
+  S.cam.x=LAND_C.x; S.cam.y=LAND_C.y;
+  S.probe.x=S.cssW/2; S.probe.y=S.cssH/2;
+  S.anchor.x=S.cssW/2; S.anchor.y=S.cssH/2;
+  S.viewW=VW_MAX; S.tViewW=VW_MAX;
+  if(REDUCED){
+    // 合成好的静止帧：直接落在街区级
+    S.viewW=S.tViewW=190; S.revealT=1; S.seq.on=false; S.probeOn=false;
+    S.cam.x=TARGET.x; S.cam.y=TARGET.y;
+    setProbe(S.cssW/2, S.cssH/2);
+    document.body.classList.add('rolling');
+    document.getElementById('hint').textContent='滚轮推拉尺度 · 拖拽平移 · 光标读数';
+  }
+  renderTerrain();
+  renderSpot();
+  updateHud();
+  document.body.classList.add('enter');
+  const veil=document.getElementById('veil');
+  veil.classList.add('gone');
+  setTimeout(()=>veil.remove(), 1400);
+  // 调试：URL hash 定位
+  const hq=(location.hash||'').replace(/^#/,'');
+  if(hq){
+    const o={};
+    hq.split('&').forEach(kv=>{ const p=kv.split('='); o[p[0]] = p[1]===undefined?true:p[1]; });
+    try{ window.__survey.go(o); }catch(err){ console.error(err); }
+  }
+  const now=performance.now(); lastT=now;
+  requestAnimationFrame(function f(t){ frame(t); });
+  // fps 计
+  let last=performance.now(), acc=0, n=0;
+  (function tick(){
+    const t=performance.now(); acc+=t-last; last=t; n++;
+    if(acc>500){ fps=n/acc*1000; acc=0; n=0; }
+    requestAnimationFrame(tick);
+  })();
+}
+window.addEventListener('resize', ()=>{ applySize(); needRender=true; });
+/* 调试钩子：URL hash 可直接定位到某一帧（#z=190&x=..&y=..&p=800,450&reveal=0.7&skip） */
+window.__survey={
+  S:S,
+  go:function(o){
+    if(o.skip){ S.seq.on=false; S.revealT=1; document.body.classList.add('rolling'); }
+    if(o.reveal!==undefined) S.revealT=+o.reveal;
+    if(o.z){ S.viewW=S.tViewW=+o.z; }
+    if(o.x!==undefined) S.cam.x=+o.x;
+    if(o.y!==undefined) S.cam.y=+o.y;
+    if(o.p){ const a=o.p.split(','); S.probeOn=true; S.probe.x=+a[0]; S.probe.y=+a[1]; }
+    needRender=true;
+  },
+  info:function(){
+    return {q:+S.q.toFixed(3), cs:+S.cs.toFixed(2), ci:S.ci, span:+S.span.toFixed(2),
+      ms:+S.lastRenderMs.toFixed(2), avgMs:+(terrN?terrAcc/terrN:0).toFixed(2), frames:terrN, vw:Math.round(S.viewW),
+      nx:S.NX, ny:S.NY, nCity:CITIES.length, nLab:LABELS.length, probeName:S.probeName,
+      renders:terrN, cities:CITIES.map(c=>[Math.round(c.x),Math.round(c.y)])};
+  },
+  hud:function(){
+    const g=id=>{ const e=document.getElementById(id); return e?String(e.textContent):''; };
+    return {roE:g('roE'), roS:g('roS'), roT:g('roT'), kCI:g('kCI'), kGrade:g('kGrade'), kRes:g('kRes'), kRatio:g('kRatio'), oZ:g('oZ'), oX:g('oX'), probeName:S.probeName,
+      odZ:Array.prototype.map.call(document.querySelectorAll('#oZ .sl'), e=>{const c=e.firstChild; return c?getComputedStyle(c).transform:'none';}).join(' '),
+      odX:Array.prototype.map.call(document.querySelectorAll('#oX .sl'), e=>{const c=e.firstChild; return c?getComputedStyle(c).transform:'none';}).join(' ')};
+  }
+};
+
+boot();
+
+})();
+</script>
+</body>
+</html>
