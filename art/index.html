@@ -168,7 +168,9 @@ function tone(type,f0,f1,dur,peak,delay){if(!actx||muted)return;
   o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+.02);}
 function sndSelect(){tone('square',520,760,.06,.045);}
 function sndLike(){tone('square',880,1320,.09,.08);tone('square',1320,1760,.07,.05,.06);}
-function sndEnter(){tone('square',300,900,.16,.07);tone('square',900,1500,.22,.05,.1);}
+/* 进画的声音：三个音往上浮，尾巴长，不用游戏厅那种短促跳音 */
+function sndEnter(){tone('triangle',392,392,.55,.05);tone('triangle',523.25,523.25,.6,.045,.13);
+tone('triangle',659.25,659.25,.8,.04,.26);tone('sine',1318.5,1318.5,.5,.02,.34);}
 function sndBack(){tone('square',600,240,.14,.05);}
 
 /* ---------- 动态壁纸：星尘 + 中央吊灯 ---------- */
@@ -204,21 +206,31 @@ var bg=document.createElement('canvas');bg.width=W;bg.height=H;
     var x1=240+c*(RXR+52),y1=RY+s*(RYR+56);
     if(y1>FLY-24)pdotLine(x0,y0,x1,y1,'rgba(110,170,240,.10)',2.5);}
   ctx.restore();
-  /* -- 后排廊柱：只在背半圈，不挡前排作品 -- */
-  for(var m=0;m<7;m++){
-    var th=(190+m*(160/6))*Math.PI/180;
-    var s2=0.62+0.38*Math.sin(th);
-    var cxp=240+Math.cos(th)*(RXR+18),cyp=RY+Math.sin(th)*(RYR+20);
-    var ph=Math.round(24+38*s2),pw=s2>0.75?3:2;
-    var floorY=RY+(RYR+40)*Math.max(0.2,Math.sin(th));
-    pbar(cxp-pw/2,floorY-ph,pw,ph,'#141c33');
-    pbar(cxp-pw/2,floorY-ph,pw,1,'rgba(180,215,255,.35)');
-    pbar(cxp-pw/2,floorY-ph,pw,2,'#1d2a4a');
-    pbar(cxp-pw/2,RY,1,Math.max(2,floorY-RY-ph),'rgba(255,255,255,.05)');}
   /* -- 台口地面上的两道横线，给“站在圆心”一个底 -- */
   pdotLine(120,FLY,360,FLY,'rgba(140,190,255,.16)',2);
   ctx=saved;
 })();
+
+/* 后排廊柱：以前画在静态底板上，于是永远压在画框上面（这就是穿模）。
+   现在它们和画框进同一张深度表，按远近排着画。 */
+var PILLARS=(function(){
+  var out=[];
+  for(var m=0;m<7;m++){
+    var th=(190+m*(160/6))*Math.PI/180;
+    var s=0.62+0.38*Math.sin(th);
+    out.push({th:th,s:s,d:Math.sin(th),
+      x:240+Math.cos(th)*(RXR+18),
+      ph:Math.round(24+38*s),pw:s>0.75?3:2,
+      floorY:RY+(RYR+40)*Math.max(0.2,Math.sin(th))});
+  }
+  return out;})();
+function drawPillar(idx){
+  var p=PILLARS[idx],x=p.x-p.pw/2,y=p.floorY-p.ph;
+  pbar(x,y,p.pw,p.ph,'#141c33');
+  pbar(x,y,p.pw,1,'rgba(180,215,255,.35)');
+  pbar(x,y,p.pw,2,'#1d2a4a');
+  pbar(x,RY,1,Math.max(2,p.floorY-RY-p.ph),'rgba(255,255,255,.05)');
+}
 
 /* ---------- 牌位（画框里那张画）：全部程序化，无外部资源 ---------- */
 function motifIndex(name){for(var i=0;i<WORKS.length;i++)if(WORKS[i].motif===name)return i;return 0;}
@@ -314,8 +326,12 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
 }
 
 /* ---------- 环与选中态 ---------- */
-var cur=0,rot=-cur*STEP,rotT=-cur*STEP,spin=0;
-var warp={active:false,k:0,i:0,dur:0.78};
+var cur=0,rot=-cur*STEP,rotT=-cur*STEP,spin=0,rotV=0;
+/* 转场：画框张开成窗 → 墨从四边洇进来 → 题名卡浮起。
+   刻意不做放大+白闪那一套（那是星系的跃迁语言，不是画廊的）。 */
+var trans={active:false,k:0,i:0,dur:1.35,done:false};
+function easeInOut(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+function smoothStep(t){t=clamp(t,0,1);return t*t*(3-2*t);}
 function angOf(i){return Math.PI/2+i*STEP+rot;}
 function depthOf(i){return Math.sin(angOf(i));}
 function scaleOf(d){return 0.60+0.40*Math.max(0,d);}
@@ -398,15 +414,20 @@ function drawFrame(i,t){
   var p=ringPos(i),w=WORKS[i],sel=(i===cur);
   var bw=Math.round(58*p.s),bh=Math.round(44*p.s);
   var x=p.x-bw/2, y=p.y-bh/2;
-  if(warp.active&&i===warp.i){                  /* 走进画框：整框向画面中心放大 */
-    var k=warp.k, e=1-Math.pow(1-k,2.2), z=1+7.5*e;
-    bw=Math.round(58*p.s*z);bh=Math.round(44*p.s*z);
-    x=lerp(p.x-bw/2,240-bw/2,e);y=lerp(p.y-bh/2,135-bh/2,e);
-  }
   var dim=0.34+0.66*Math.max(0,p.d);
-  if(warp.active&&i!==warp.i)dim*=Math.max(0.15,1-warp.k*1.4);
+  /* 转场：选中的框张开成一面窗；其余的先退场，不与它相穿 */
+  if(trans.active){
+    if(i!==trans.i){dim*=Math.max(0,1-trans.k*4.2);
+      if(dim<=0.02)return;}
+    else{
+      var e=easeInOut(clamp((trans.k-0.04)/0.34,0,1));
+      var fw=W*2.2,fh=H*2.2;                  /* 窗比画布大，金边自然移出画面 */
+      bw=lerp(bw,fw,e);bh=lerp(bh,fh,e);
+      x=lerp(p.x-bw/2,240-fw/2,e);y=lerp(p.y-bh/2,135-fh/2,e);
+    }
+  }
   /* 地面倒影：一条被压扁的彩色痕 */
-  if(p.d>0.15&&!warp.active){
+  if(p.d>0.15&&!trans.active){
     ctx.fillStyle=hexA(w.c,0.06+0.10*p.d);
     ctx.fillRect(Math.round(p.x-bw*0.42),FLY+2,Math.round(bw*0.84),2);
     ctx.fillStyle=hexA(w.c,0.04+0.06*p.d);
@@ -425,7 +446,7 @@ function drawFrame(i,t){
     ctx.font=FB10;ctx.textAlign='center';ctx.fillStyle='rgba(220,235,255,.55)';
     ctx.fillText(w.no+' '+w.t, x+bw/2, y+bh+8);ctx.textAlign='left';
   }
-  if(w.fresh&&p.s>0.55){                        /* 新上架 */
+  if(w.fresh&&p.s>0.55&&!trans.active){         /* 新上架 */
     var blink=REDUCED||Math.sin(t*3.2)>-0.2;
     if(blink){pbar(x+bw-15,y-6,14,7,'#ff5c8a');
       ctx.font=FB10;ctx.textAlign='left';ctx.fillStyle='#1a0710';
@@ -436,7 +457,8 @@ function drawFrame(i,t){
 function drawPlate(t){
   var w=WORKS[cur];
   var px0=44,py0=206,pw=W-88,ph=46;
-  if(warp.active){ctx.globalAlpha=Math.max(0,1-warp.k*3);}
+  if(trans.active){ctx.globalAlpha=Math.max(0,1-trans.k*5);}
+  if(trans.active&&trans.k>0.2){ctx.globalAlpha=1;return;}
   pbar(px0+2,py0+2,pw,ph,'rgba(0,0,0,.45)');
   pbar(px0,py0,pw,ph,'#0b1120');
   pbar(px0,py0,pw,1,'rgba(255,213,79,.45)');pbar(px0,py0+ph-1,pw,1,'rgba(255,213,79,.22)');
@@ -479,7 +501,7 @@ function drawPlate(t){
   ctx.font=FB;ctx.textAlign='center';ctx.fillStyle=hov?'#fff8e8':'#ffd54f';
   ctx.fillText('走进 \u21b5',bx+bw2/2,by+12);ctx.textAlign='left';
   hot.enter={x:bx,y:by,w:bw2,h:bh2};
-  if(warp.active)ctx.globalAlpha=1;
+  if(trans.active)ctx.globalAlpha=1;
 }
 function drawHUD(t){
   ctx.font=FB10;ctx.textAlign='left';ctx.fillStyle='rgba(120,190,230,.45)';
@@ -496,15 +518,62 @@ function drawHUD(t){
     var dx=240-(N-1)*5+i*10;
     pbar(dx,H-19,3,2,i===cur?'#ff5c8a':'rgba(150,215,255,.28)');}
 }
-function drawWarpFlash(){
-  if(!warp.active)return;
-  if(warp.k>0.72){
-    var a=clamp((warp.k-0.72)/0.28,0,1);
-    ctx.fillStyle='rgba(255,240,248,'+(a*0.55).toFixed(3)+')';
-    ctx.fillRect(0,0,W,H);
-    if(a>0.5){ctx.fillStyle='rgba(255,92,138,'+((a-0.5)*0.7).toFixed(3)+')';ctx.fillRect(0,0,W,H);}
-  }
+/* ---------- 转场：画框张开成窗 → 墨从四边洇进来 → 题名卡浮起 ---------- */
+function drawOpenInk(t){
+  var k=trans.k,p=clamp((k-0.30)/0.52,0,1);
+  if(p<=0)return;
+  var w=WORKS[trans.i],e=smoothStep(p);
+  var flood=shade(w.c,-0.74);                 /* 整间屋子沉进作品那支色里 */
+  var holeH=lerp(1.06,0,e),holeW=lerp(1.15,0,e),jit=(1-e)*1.1;
+  var cy=135,cx=240;
+  for(var y=0;y<H;y++){
+    var dy=Math.abs(y-cy),hy=holeH*H/2;
+    var wob=(Math.sin(y*.31+k*7)+Math.sin(y*.11+k*3))*jit;
+    if(dy>hy+wob){pbar(0,y,W,1,flood);continue;}
+    var t2=hy>0?dy/hy:1;
+    var hw=Math.sqrt(Math.max(0,1-t2*t2))*holeW*W/2;
+    if(hw<=0.5){pbar(0,y,W,1,flood);continue;}
+    var l=Math.round(cx-hw),r=Math.round(cx+hw);
+    pbar(0,y,l,1,flood);
+    pbar(r,y,W-r,1,flood);
+    pbar(Math.max(0,l-3),y,3,1,w.c);          /* 洇湿的边，亮一线 */
+    pbar(r,y,Math.min(3,W-r),1,w.c);}
+  for(var i=0;i<14;i++){                      /* 被带起来的墨屑 */
+    var a=i/14*TAU+k*2.4;
+    var rr=lerp(16,140,e)+Math.sin(k*9+i)*8;
+    var qx=cx+Math.cos(a)*rr,qy=cy+Math.sin(a)*rr*.72;
+    px(qx,qy,w.g);if(i%3===0)px(qx+1,qy,'rgba(255,255,255,.55)');}
 }
+function drawTitleCard(t){
+  var k=trans.k;
+  if(k<0.40)return;
+  var w=WORKS[trans.i];
+  var fin=clamp((k-0.40)/0.34,0,1),out=clamp((k-0.86)/0.14,0,1);
+  var a=Math.min(1,fin*2.2)*(1-out),e=smoothStep(fin);
+  var dy=(1-e)*10,sp=3+14*e;
+  ctx.globalAlpha=a;ctx.textAlign='center';
+  ctx.font=FB10;ctx.fillStyle=w.g;
+  ctx.fillText(w.no,240,96+dy);
+  var fs=Math.round(18+9*(1+0.75*e));
+  ctx.font=fs+'px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+  var s=w.t,i,total=0,ws=[];
+  for(i=0;i<s.length;i++){ws.push(ctx.measureText(s.charAt(i)).width);total+=ws[i]+sp;}
+  total-=sp;
+  var x=240-total/2;
+  for(i=0;i<s.length;i++){
+    var yy=126+dy+Math.sin(e*3+i*0.7)*1.6*(1-out);
+    ctx.fillStyle='rgba(0,0,0,.42)';ctx.fillText(s.charAt(i),x+ws[i]/2+1,yy+1);
+    ctx.fillStyle=w.g;ctx.fillText(s.charAt(i),x+ws[i]/2,yy);
+    x+=ws[i]+sp;}
+  ctx.font=FB10;ctx.fillStyle='rgba(255,255,255,'+(0.6*(1-out)).toFixed(2)+')';
+  ctx.fillText(w.en+(w.sub?' · '+w.sub:''),240,146+dy);
+  ctx.globalAlpha=1;ctx.textAlign='left';
+}
+function drawWarpFlash(){
+  /* 已废：旧的「放大 + 白闪」跃迁换成了开画转场（drawOpenInk / drawTitleCard），
+     这里只留空壳，避免别处还有调用点没改。 */
+}
+var drawOrder=[];               /* 本帧的绘制深度顺序，自检拿它验穿模 */
 function render(t){
   ctx.clearRect(0,0,W,H);
   ctx.fillStyle='#05040f';ctx.fillRect(0,0,W,H);
@@ -512,14 +581,20 @@ function render(t){
   drawDust(t);
   drawGlow(t);
   drawBackWall(t);
-  /* 画框按深度排序：远的先画 */
+  /* 廊柱与画框同一张深度表：远的先画，谁也不压在谁身上 */
   hot.frame=[];
-  var order=[];for(var i=0;i<N;i++)order.push(i);
-  order.sort(function(a,b){return depthOf(a)-depthOf(b);});
-  for(var k=0;k<order.length;k++)drawFrame(order[k],t);
+  var items=[],i;
+  for(i=0;i<PILLARS.length;i++)items.push({d:PILLARS[i].d,i:i,kind:'p'});
+  for(i=0;i<N;i++)items.push({d:depthOf(i),i:i,kind:'f'});
+  items.sort(function(a,b){return a.d-b.d;});
+  drawOrder=[];
+  for(i=0;i<items.length;i++){
+    var it=items[i];drawOrder.push(it.d);
+    if(it.kind==='p')drawPillar(it.i);else drawFrame(it.i,t);}
+  if(trans.active)drawOpenInk(t);
   drawPlate(t);
   drawHUD(t);
-  drawWarpFlash();
+  if(trans.active)drawTitleCard(t);
 }
 
 /* ---------- 循环 ---------- */
@@ -527,14 +602,17 @@ var last=0;
 function loop(ts){
   var t=ts/1000;
   var dt=Math.min(0.05,last?t-last:1/60);last=t;
-  if(warp.active){
-    warp.k+=dt/warp.dur;
-    rot+=dt*STEP*2.2;
-    if(warp.k>=1&&!warp.done){warp.done=true;
-      location.href=WORKS[warp.i].href;return;}
+  if(trans.active){
+    trans.k+=dt/trans.dur;
+    rot+=dt*STEP*0.16;                        /* 环保慢慢漂，不是甩出去 */
+    rotV*=Math.max(0,1-dt*6);
+    if(trans.k>=1&&!trans.done){trans.done=true;
+      location.href=WORKS[trans.i].href;return;}
   } else {
-    rot=lerp(rot,rotT,Math.min(1,dt*7));
-    if(Math.abs(rot-rotT)<0.0004)rot=rotT;
+    /* 带质量的弹簧：轻微过冲再回正，拖动与吸附都变丝滑 */
+    var acc=(rotT-rot)*34-rotV*9;
+    rotV+=acc*dt;rot+=rotV*dt;
+    if(Math.abs(rotT-rot)<0.0015&&Math.abs(rotV)<0.02){rot=rotT;rotV=0;}
   }
   render(t);
   requestAnimationFrame(loop);
@@ -553,9 +631,10 @@ function select(i,quiet){
   if(!quiet)sndSelect();
 }
 function enter(){
-  if(warp.active)return;
-  warp.active=true;warp.k=0;warp.i=cur;warp.done=false;
-  warp.dur=REDUCED?0.16:0.78;
+  if(trans.active)return;
+  trans.active=true;trans.k=0;trans.i=cur;trans.done=false;
+  trans.dur=REDUCED?0.30:1.35;
+  rotV=0;
   document.body.classList.add('warping');
   sndEnter();
 }
@@ -564,6 +643,7 @@ cv.addEventListener('pointermove',function(e){
   var p=toGame(e);mouseX=p[0];mouseY=p[1];
   if(drag){var dx=p[0]-drag.x;
     rot=drag.rot-dx*0.010;rotT=rot;
+    rotV=clamp(-dx*0.010*60,-5,5);              /* 松手后带着这股劲继续走 */
     var near=Math.round(-rot/STEP),wrapped=((near%N)+N)%N;
     if(wrapped!==cur)select(wrapped,true);
     drag.moved=drag.moved||Math.abs(p[0]-drag.x0)>6;}
@@ -577,9 +657,12 @@ cv.addEventListener('pointerdown',function(e){
 cv.addEventListener('pointerup',function(e){
   var p=toGame(e);mouseX=p[0];mouseY=p[1];
   var wasDrag=drag&&drag.moved;drag=null;
-  if(warp.active)return;
-  rotT=-cur*STEP;                                  /* 松手吸附到正对 */
-  if(wasDrag)return;
+  if(trans.active)return;
+  if(wasDrag){                                    /* 惯性：甩得够快就再进一件 */
+    if(Math.abs(rotV)>1.6)select(cur+(rotV>0?-1:1),true);
+    else rotT=-cur*STEP;
+    rotV=clamp(rotV,-3,3);
+    return;}
   var i,fr=hot.frame;
   for(i=0;i<fr.length;i++){var f=fr[i];
     if(p[0]>=f.x-4&&p[0]<=f.x+f.w+4&&p[1]>=f.y-4&&p[1]<=f.y+f.h+4){
@@ -624,8 +707,10 @@ else{setTimeout(function(){hintShown=true;},5600);}
 window.__arc={
   n:function(){return N;},
   works:function(){return WORKS;},
-  state:function(){return{cur:cur,rot:rot,rotT:rotT,warp:warp.active,
+  state:function(){return{cur:cur,rot:rot,rotT:rotT,warp:trans.active,k:trans.k,
     frames:hot.frame.length,enter:!!hot.enter,like:!!hot.like};},
+  order:function(){return drawOrder.slice();},
+  pillars:function(){return PILLARS.map(function(p){return p.d;});},
   step:function(i){select(i);},
   enter:function(){enter();},
   tick:function(t){render(t||0);},
