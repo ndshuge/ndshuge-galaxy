@@ -285,10 +285,15 @@ var bctx=bcv.getContext('2d');
 var buf=null;
 function fit(){
   var s=Math.min(innerWidth*0.96/W,(innerHeight-76)/H);
-  if(s>=1)s=Math.floor(s);
   s=Math.max(0.42,s);
+  /* 整数倍最锐；只有整数倍浪费掉四成以上空间时，才退到实际比例把画面撑满 */
+  var k=Math.floor(s);
+  if(k>=1&&k/s>=0.6)s=k;
   cv.style.width=Math.round(W*s)+'px';cv.style.height=Math.round(H*s)+'px';
 }
+/* 窗口尺寸一变就重量一次：否则页面按打开那一瞬的窗口大小定死，之后拉大也不长 */
+var fitT=0;
+addEventListener('resize',function(){clearTimeout(fitT);fitT=setTimeout(fit,150);});
 function start(){
   resetWorld(seed);
   stone=buildStone(bctx);
