@@ -70,7 +70,7 @@ var WORKS=[
   { no:'01', t:'环廊',     en:'ROTUNDA',      sub:'十二帧',   medium:'线上摄影装置', year:'2026',
     line:'十二帧悬在一个看不见的环上，你站在圆心。',
     href:'../rotunda/', c:'#ff5c8a', g:'#ff9ec4', like:'art-rotunda', motif:'twelve' },
-  { no:'02', t:'经纬 · 线场', en:'FIELD LINES',  sub:'五种规则', medium:'交互图版', year:'2026', fresh:true,
+  { no:'02', t:'经纬 · 线场', en:'FIELD LINES',  sub:'八种规则', medium:'交互图版', year:'2026', fresh:true,
     line:'横的线、竖的线、绕起来的线，各走各的规则。',
     href:'./linefield/', c:'#00e5ff', g:'#9ff0ff', like:'art-linefield', motif:'lines' },
   { no:'03', t:'珂斯兰铜版勘测', en:'KOSLAN',     sub:'蚀刻图',  medium:'铜版勘测图', year:'2026',
@@ -367,7 +367,7 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
     }
     px(cx,cy,'rgba(234,252,255,.55)');px(cx-1,cy,'rgba(234,252,255,.3)');px(cx+1,cy,'rgba(234,252,255,.3)');
   } else if(name==='lines'){
-    /* 线场：五种规则各占一条带，互不加戏 */
+    /* 线场：几条规则各占一条带，互不加戏 */
     pbar(x,y,w,h,'#06080f');
     var bands=5,bh=h/bands;
     for(i=0;i<bands;i++){
