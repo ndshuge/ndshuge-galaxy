@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d0607">
+<title>体素晶体 · VOXEL — 鼠哥艺术回廊 №08</title>
+<meta name="description" content="五百多块立方体悬在暗场中心，一道生长波从核心往外走。点一下，整块炸开，再拼回来。">
+<link rel="stylesheet" href="https://fontsapi.zeoseven.com/570/main/result.css" />
+<style>
+:root{
+  --ink:#0d0607; --red:#ff4d3d; --red-lt:#ffb3a8;
+  --dim:rgba(255,179,168,.55); --line:rgba(255,77,61,.30);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;background:var(--ink)}
+body{font-family:"Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace;
+  color:#ffd9d2;user-select:none;-webkit-user-select:none;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 44%,#1a0b0d,#070304 74%)}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#vx{image-rendering:crisp-edges;image-rendering:pixelated;touch-action:none;
+  box-shadow:0 0 0 1px rgba(255,77,61,.22),0 18px 60px rgba(0,0,0,.78)}
+#crt{position:fixed;inset:0;z-index:6;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px)}
+#brand{position:fixed;top:12px;left:16px;z-index:5;font-size:12px;letter-spacing:1px;color:var(--dim)}
+#brand b{color:var(--red);font-weight:normal}
+#brand s{color:rgba(255,179,168,.45);text-decoration:none}
+#sysbar{position:fixed;top:12px;right:16px;z-index:5;display:flex;gap:8px;align-items:center}
+.gh{font-size:12px;letter-spacing:1px;color:var(--red-lt);text-decoration:none;
+  border:1px solid var(--line);padding:5px 10px;background:rgba(16,6,7,.72)}
+.gh:active{background:rgba(255,77,61,.16)}
+#snd{font-size:12px;letter-spacing:1px;color:var(--red-lt);border:1px solid var(--line);
+  padding:5px 10px;background:rgba(16,6,7,.72);cursor:pointer;font-family:inherit}
+#panel{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;
+  padding:8px 12px;border:1px solid var(--line);background:rgba(12,5,6,.82);max-width:min(720px,94vw)}
+#panel label{font-size:12px;letter-spacing:1px;color:var(--dim);display:flex;gap:6px;align-items:center}
+#panel button{font-size:12px;letter-spacing:1px;color:var(--red-lt);border:1px solid var(--line);
+  background:rgba(16,6,7,.7);padding:5px 9px;cursor:pointer;font-family:inherit}
+#panel button:active{background:rgba(255,77,61,.16)}
+#zoom{width:118px;accent-color:#ff4d3d;background:transparent}
+#stat{font-size:12px;letter-spacing:1px;color:#ffcdc4;white-space:nowrap}
+#hint{position:fixed;top:44px;left:0;right:0;z-index:5;font-size:12px;letter-spacing:1px;
+  color:rgba(255,179,168,.42);text-align:center;pointer-events:none}
+#boot{position:fixed;inset:0;z-index:50;background:#0a0405;pointer-events:none;
+  animation:bootin 1.3s ease-in .25s forwards}
+@keyframes bootin{to{opacity:0}}
+@media (max-width:820px){
+  #hint{font-size:11px;top:40px}
+  #panel{gap:8px;padding:7px 9px}
+  #zoom{width:86px}
+  #stat{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){#boot{animation-duration:.3s}}
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="vx" width="480" height="270"></canvas></div>
+<div id="crt"></div>
+<div id="brand"><s>№08</s> 体素晶体 <b>VOXEL</b></div>
+<div id="sysbar"><a class="gh" href="../index.html">← 回廊</a><button id="snd">♪ 声 ON</button></div>
+<div id="hint">拖拽转视角 · 滚轮 / 双指缩放 · 点一下崩解 · 空格崩解 · R 重置</div>
+<div id="panel">
+  <label>尺度<input id="zoom" type="range" min="55" max="145" value="100"></label>
+  <button id="auto">自转 ON</button>
+  <button id="burst">崩解</button>
+  <button id="reset">重置</button>
+  <span id="stat">…</span>
+</div>
+<div id="boot"></div>
+<script>
+/* 体素晶体 · VOXEL ----------------------------------------------------------
+   569 块立方体，悬在暗场中心缓慢自转。480×270 原生像素，手写软件 3D，
+   不用任何 3D 库。
+
+   1. 形状：立方八面体 = 立方 ∩ 八面体
+        |x|,|y|,|z| ≤ 4  且  |x|+|y|+|z| ≤ 8   →  569 个格点
+      坐标表由这两行条件现算，没有一个硬编码的坐标数组。
+   2. 立体感：不靠光照，靠三档明度。面的色调只由它在视空间的法线决定：
+      朝上（ny>0.42）最亮、朝下最暗、左右按 nx 的符号各一档。
+      这样任何视角下三档都同时在场，是像素 3D 的老做法。
+   3. 深度：画家算法，按相机深度从远到近逐块画；远处整体压向雾色（LUT 预先混好）。
+   4. 生长波：半径分 10 环，一道波锋从核心往外走；每环是一个真弹簧（欠阻尼，
+      过冲约 19%），被波锋扫过就沿径向弹起再落回；波锋扫到的环额外提亮一档。
+   5. 崩解重组：点一下，569 块各带走神速度与自转飞散，1.5 秒后按 back-ease 收拢拼回。
+   prefers-reduced-motion：自转与生长波全部停下，只剩用户自己触发的动作。
+--------------------------------------------------------------------------- */
+(function(){
+'use strict';
+var W=480,H=270,CX=240,CY=135,TAU=Math.PI*2;
+var REDUCED=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches);
+
+/* ---------- 随机（可复现，不碰 Math.random） ---------- */
+var rnd=null;
+function mulberry32(a){
+  return function(){
+    a|=0;a=a+0x6D2B79F5|0;
+    var t=Math.imul(a^a>>>15,1|a);
+    t=t+Math.imul(t^t>>>7,61|t)^t;
+    return((t^t>>>14)>>>0)/4294967296;
+  };
+}
+rnd=mulberry32(20260921);
+
+/* ---------- 1. 形状：立方八面体 ---------- */
+var HC=4, CUT=8;                     /* 半宽 4；八面体截距 2×4 */
+var VOX=[];
+(function buildShape(){
+  for(var x=-HC;x<=HC;x++)for(var y=-HC;y<=HC;y++)for(var z=-HC;z<=HC;z++)
+    if(Math.abs(x)+Math.abs(y)+Math.abs(z)<=CUT) VOX.push([x,y,z]);
+})();
+var NV=VOX.length;
+
+/* 常住位置 / 半径 / 环号 / 径向单位向量 */
+var hx=new Float32Array(NV),hy=new Float32Array(NV),hz=new Float32Array(NV);
+var hux=new Float32Array(NV),huy=new Float32Array(NV),huz=new Float32Array(NV);
+var hring=new Uint8Array(NV);
+var NR=10, RMAX=1e-6, i, p, L;
+for(i=0;i<NV;i++){p=VOX[i];L=Math.sqrt(p[0]*p[0]+p[1]*p[1]+p[2]*p[2]);if(L>RMAX)RMAX=L;}
+for(i=0;i<NV;i++){
+  p=VOX[i];L=Math.sqrt(p[0]*p[0]+p[1]*p[1]+p[2]*p[2])||1e-6;
+  hx[i]=p[0];hy[i]=p[1];hz[i]=p[2];
+  hux[i]=p[0]/L;huy[i]=p[1]/L;huz[i]=p[2]/L;
+  hring[i]=Math.round(L/RMAX*(NR-1));if(hring[i]>NR-1)hring[i]=NR-1;
+}
+var HALF=0.5;                        /* 半个立方体边长 */
+
+/* ---------- 2. 三档明度 + 空气雾 ---------- */
+var PAL=[[255,179,168],[255,77,61],[151,42,36]];   /* 顶面 / 侧面 / 背光面 */
+var FAR=[17,4,6];                                   /* 远处压向的雾色 */
+var FOG0=26, FOG1=37, FOGMIX=0.68, NF=17;
+var LE=(function(){var b=new Uint8Array(4);new Uint32Array(b.buffer)[0]=0x01020304;return b[0]===4;})();
+function pk(r,g,b){
+  r=r<0?0:(r>255?255:r|0);g=g<0?0:(g>255?255:g|0);b=b<0?0:(b>255?255:b|0);
+  return LE?((255<<24)|(b<<16)|(g<<8)|r):((r<<24)|(g<<16)|(b<<8)|255);
+}
+var LUT=new Uint32Array(3*NF);
+(function buildLUT(){
+  for(var t=0;t<3;t++)for(var k=0;k<NF;k++){
+    var f=k/(NF-1)*FOGMIX,c=PAL[t];
+    LUT[t*NF+k]=pk(c[0]+(FAR[0]-c[0])*f,c[1]+(FAR[1]-c[1])*f,c[2]+(FAR[2]-c[2])*f);
+  }
+})();
+
+/* ---------- 相机 ---------- */
+var FOCAL=330, CAMZ=26;
+var yaw=0.62, pitch=0.30, zoom=1, targetZoom=1;
+var yawV=0, pitchV=0, autoSpin=0.155, spinOn=!REDUCED;
+var dragging=false, paused=false, sndOn=true;
+
+/* ---------- 3. 生长波：一圈真弹簧 ---------- */
+var ringS=new Float32Array(NR), ringV=new Float32Array(NR);
+var waveT=0, WAVE_PERIOD=3.2, WAVE_AMP=0.55, WAVE_SIG2=0.8, SPRING_K=260, SPRING_C=5;
+function waveFront(){
+  if(REDUCED)return -99;
+  var ph=(waveT%WAVE_PERIOD)/WAVE_PERIOD;
+  return ph*(NR+4)-2;                       /* 波锋从 -2 环走到 NR+2 环，两头留静默期 */
+}
+function stepWave(dt){
+  waveT+=dt;
+  var front=waveFront();
+  var sub=Math.max(1,Math.ceil(dt/0.016)),h=dt/sub;
+  for(var s=0;s<sub;s++){
+    for(var k=0;k<NR;k++){
+      var dq=k-front;
+      var tgt=WAVE_AMP*Math.exp(-dq*dq/WAVE_SIG2);        /* 波锋附近的目标位移 */
+      var a=(tgt-ringS[k])*SPRING_K-ringV[k]*SPRING_C;  /* 欠阻尼 → 带过冲 */
+      ringV[k]+=a*h;ringS[k]+=ringV[k]*h;
+    }
+  }
+}
+
+/* ---------- 4. 崩解重组 ---------- */
+var state='intact', bt=0, burstCount=0;
+var BURST_DUR=1.5, REFORM_DUR=1.15;
+var px=new Float32Array(NV),py=new Float32Array(NV),pz=new Float32Array(NV);
+var pvx=new Float32Array(NV),pvy=new Float32Array(NV),pvz=new Float32Array(NV);
+var rax=new Float32Array(NV),ray=new Float32Array(NV),raz=new Float32Array(NV);
+var rvx=new Float32Array(NV),rvy=new Float32Array(NV),rvz=new Float32Array(NV);
+var gx=new Float32Array(NV),gy=new Float32Array(NV),gz=new Float32Array(NV);
+var gax=new Float32Array(NV),gay=new Float32Array(NV),gaz=new Float32Array(NV);
+function easeOutBack(t){var c1=1.24,c3=c1+1,u=t-1;return 1+c3*u*u*u+c1*u*u;}
+function burstNow(){
+  if(state==='intact'){
+    for(i=0;i<NV;i++){px[i]=hx[i];py[i]=hy[i];pz[i]=hz[i];rax[i]=0;ray[i]=0;raz[i]=0;}
+  } else if(state==='reform'){
+    var t2=bt/REFORM_DUR;if(t2>1)t2=1;
+    var e0=easeOutBack(t2);
+    for(i=0;i<NV;i++){
+      px[i]=gx[i]+(hx[i]-gx[i])*e0;py[i]=gy[i]+(hy[i]-gy[i])*e0;pz[i]=gz[i]+(hz[i]-gz[i])*e0;
+      rax[i]=gax[i]*(1-e0);ray[i]=gay[i]*(1-e0);raz[i]=gaz[i]*(1-e0);
+    }
+  }
+  for(i=0;i<NV;i++){
+    var sp=8+11*rnd();                                    /* 出射速度 */
+    pvx[i]=hux[i]*sp+(rnd()-0.5)*7.5;
+    pvy[i]=huy[i]*sp+(rnd()-0.5)*7.5+1.4;
+    pvz[i]=huz[i]*sp+(rnd()-0.5)*7.5;
+    rvx[i]=(rnd()-0.5)*9;rvy[i]=(rnd()-0.5)*9;rvz[i]=(rnd()-0.5)*9;
+  }
+  state='burst';bt=0;burstCount++;
+  makeSparks();
+  sndBurst();
+}
+function stepBurst(dt){
+  var sub=Math.max(1,Math.ceil(dt/0.016)),h=dt/sub,drag=Math.exp(-1.85*h),rlag=Math.exp(-1.15*h);
+  for(var s=0;s<sub;s++){
+    for(i=0;i<NV;i++){
+      px[i]+=pvx[i]*h;py[i]+=pvy[i]*h;pz[i]+=pvz[i]*h;
+      pvx[i]*=drag;pvy[i]*=drag;pvz[i]*=drag;
+      rax[i]+=rvx[i]*h;ray[i]+=rvy[i]*h;raz[i]+=rvz[i]*h;
+      rvx[i]*=rlag;rvy[i]*=rlag;rvz[i]*=rlag;
+    }
+  }
+  bt+=dt;
+  if(bt>=BURST_DUR){                                       /* 冻结此刻，交给重组 */
+    for(i=0;i<NV;i++){gx[i]=px[i];gy[i]=py[i];gz[i]=pz[i];
+      gax[i]=rax[i];gay[i]=ray[i];gaz[i]=raz[i];}
+    state='reform';bt=0;
+    sndReform();
+  }
+}
+function stepReform(dt){
+  bt+=dt;
+  var t2=bt/REFORM_DUR;if(t2>1)t2=1;
+  var e=easeOutBack(t2);
+  for(i=0;i<NV;i++){
+    px[i]=gx[i]+(hx[i]-gx[i])*e;
+    py[i]=gy[i]+(hy[i]-gy[i])*e;
+    pz[i]=gz[i]+(hz[i]-gz[i])*e;
+    rax[i]=gax[i]*(1-e);ray[i]=gay[i]*(1-e);raz[i]=gaz[i]*(1-e);
+  }
+  if(t2>=1){state='intact';bt=0;}
+}
+
+/* ---------- 主步进 ---------- */
+function stepSim(dt){
+  if(!REDUCED&&state!=='burst')stepWave(dt);
+  if(state==='burst')stepBurst(dt);
+  else if(state==='reform')stepReform(dt);
+  if(REDUCED){zoom=targetZoom;return;}
+  if(state==='intact'&&spinOn&&!dragging)yaw+=autoSpin*dt;
+  if(!dragging){
+    yaw+=yawV*dt;pitch+=pitchV*dt;
+    var dp=Math.exp(-dt*3.4);yawV*=dp;pitchV*=dp;
+    if(Math.abs(yawV)<2e-4)yawV=0;
+    if(Math.abs(pitchV)<2e-4)pitchV=0;
+  }
+  if(pitch>1.30)pitch=1.30;if(pitch<-1.30)pitch=-1.30;
+  if(yaw>TAU)yaw-=TAU;if(yaw<-TAU)yaw+=TAU;
+  zoom+=(targetZoom-zoom)*Math.min(1,dt*9);
+}
+
+/* ---------- 画面 ---------- */
+var cv=document.getElementById('vx'),ctx=cv.getContext('2d',{alpha:false});
+var img=ctx.createImageData(W,H);
+var b8=img.data,b32=new Uint32Array(b8.buffer);
+var bgpix=new Uint32Array(W*H);
+(function paintBG(){
+  for(var y=0;y<H;y++)for(var x=0;x<W;x++){
+    var dx=x-CX,dy=y-118;
+    var glow=Math.exp(-(((dx*dx)/(W*W*0.34))+((dy*dy)/(H*H*0.42)))*2.7);
+    var r=8+36*glow,g=3+11*glow,b=4+12*glow;
+    var u=(x-CX)/198,v=(y-241)/19,el=Math.sqrt(u*u+v*v);   /* 展台弧线 */
+    if(el>0.90&&el<1.10){var k=1-Math.abs(el-1)/0.10;r+=64*k;g+=17*k;b+=14*k;}
+    var vg=1-0.44*Math.min(1,((dx*dx)/(W*W*0.30))+((y-H)*(y-H)/(H*H*0.80)));
+    bgpix[y*W+x]=pk(r*vg,g*vg,b*vg);
+  }
+})();
+
+var order=new Array(NV), dep=new Float32Array(NV), orderDep=new Array(NV), orderN=0;
+for(i=0;i<NV;i++){order[i]=i;orderDep[i]=0;}
+var vvx=new Float32Array(NV),vvy=new Float32Array(NV),vvz=new Float32Array(NV);
+var fdir=new Float32Array(NV*9), boostF=new Uint8Array(NV);
+var sx8=new Float32Array(4),sy8=new Float32Array(4);
+var qvx=new Float32Array(4),qvy=new Float32Array(4);
+
+/* 四边形扫描线填充：0 抗锯齿；像素中心落在 [xa,xb) 内才点亮 */
+function fillQuad(ax,ay,bx,by,cx2,cy2,dx2,dy2,col){
+  var minY=Math.min(ay,by,cy2,dy2),maxY=Math.max(ay,by,cy2,dy2);
+  var y0=Math.ceil(minY-0.5),y1=Math.ceil(maxY-0.5)-1;
+  if(y1<0||y0>H-1)return;
+  if(y0<0)y0=0;if(y1>H-1)y1=H-1;
+  if(Math.max(ax,bx,cx2,dx2)<0||Math.min(ax,bx,cx2,dx2)>W-1)return;
+  var vx0=qvx,vy0=qvy;
+  vx0[0]=ax;vx0[1]=bx;vx0[2]=cx2;vx0[3]=dx2;
+  vy0[0]=ay;vy0[1]=by;vy0[2]=cy2;vy0[3]=dy2;
+  for(var y=y0;y<=y1;y++){
+    var yc=y+0.5,xa=1e9,xb=-1e9;
+    for(var e=0;e<4;e++){
+      var e2=(e+1)&3,a0=vy0[e],b0=vy0[e2];
+      if((a0<=yc&&b0>yc)||(b0<=yc&&a0>yc)){
+        var xx=vx0[e]+(yc-a0)/(b0-a0)*(vx0[e2]-vx0[e]);
+        if(xx<xa)xa=xx;if(xx>xb)xb=xx;
+      }
+    }
+    if(xb<xa)continue;
+    var i0=Math.ceil(xa-0.5),i1=Math.ceil(xb-0.5)-1;
+    if(i0<0)i0=0;if(i1>W-1)i1=W-1;
+    if(i1<i0)continue;
+    var row=y*W;
+    for(var x=i0;x<=i1;x++)b32[row+x]=col;
+  }
+}
+var CVQ=[[1,1],[1,-1],[-1,-1],[-1,1]];
+/* 三档明度的判定：三面里最朝上的最亮，另两面按屏幕上的左右各分一档。
+   用位次而不是点乘，是因为固定光源下总有一半视角只能出两档
+   （面朝镜头时两个侧面掠射，亮度必然相等）；位次法保证只要三面都还有
+   面积，三档就同时在场——这才是枖素 3D 要的那口味道。 */
+var tSg=new Int8Array(3),tTone=new Uint8Array(3);
+var tNx=new Float32Array(3),tNy=new Float32Array(3);
+function rankTones(ax,ay,az,bx,by,bz,cx,cy,cz){
+  var s0=az<0?1:-1,s1=bz<0?1:-1,s2=cz<0?1:-1;
+  tSg[0]=s0;tSg[1]=s1;tSg[2]=s2;
+  tNx[0]=ax*s0;tNy[0]=ay*s0;
+  tNx[1]=bx*s1;tNy[1]=by*s1;
+  tNx[2]=cx*s2;tNy[2]=cy*s2;
+  var top=0;
+  if(tNy[1]>tNy[top])top=1;
+  if(tNy[2]>tNy[top])top=2;
+  var a0=-1,a1=-1;
+  for(var k=0;k<3;k++){if(k===top)continue;if(a0<0)a0=k;else a1=k;}
+  tTone[top]=0;
+  if(tNx[a0]<=tNx[a1]){tTone[a0]=1;tTone[a1]=2;}else{tTone[a0]=2;tTone[a1]=1;}
+}
+/* 画一块立方体：中心在视图空间 (vxc,vyc,zc)；三根世界轴已转到视图空间的单位向量 */
+function drawCube(vxc,vyc,zc,xx0,xy0,xz0, yx0,yy0,yz0, zx0,zy0,zz0,fogIdx,boost){
+  var s=FOCAL*zoom;
+  for(var a=0;a<3;a++){
+    var sg=tSg[a];
+    var ti=tTone[a]-(boost?1:0);if(ti<0)ti=0;
+    var col=LUT[ti*NF+fogIdx];
+    var ok=true;
+    for(var k=0;k<4;k++){
+      var f1=CVQ[k][0],f2=CVQ[k][1],su,sv,sw;
+      if(a===0){su=sg;sv=f1;sw=f2;}
+      else if(a===1){sv=sg;su=f1;sw=f2;}
+      else{sw=sg;su=f1;sv=f2;}
+      var ox=su*xx0+sv*yx0+sw*zx0, oy=su*xy0+sv*yy0+sw*zy0, oz=su*xz0+sv*yz0+sw*zz0;
+      var qz=zc+oz*HALF;
+      if(qz<0.5){ok=false;break;}                        /* 贴到镜头上了，整块丢掉 */
+      var sc=s/qz;
+      sx8[k]=CX+(vxc+ox*HALF)*sc;
+      sy8[k]=CY-(vyc+oy*HALF)*sc;
+    }
+    if(!ok)return;
+    fillQuad(sx8[0],sy8[0],sx8[1],sy8[1],sx8[2],sy8[2],sx8[3],sy8[3],col);
+  }
+}
+function fogIdxOf(zc){
+  var k=(zc-FOG0)/(FOG1-FOG0);
+  if(k<0)k=0;else if(k>1)k=1;
+  return Math.round(k*(NF-1));
+}
+function wantBoost(idx,front){
+  if(REDUCED)return 0;
+  var d=hring[idx]-front;
+  return (d*d<1.05)?1:0;
+}
+function render(t){
+  b32.set(bgpix);
+  var cyw=Math.cos(yaw),syw=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+  /* 世界轴 → 视图方向（视图 = Rx(pitch)·Ry(yaw)） */
+  var eXx=cyw,eXy=-syw*sp,eXz=-syw*cp;
+  var eYx=0,eYy=cp,eYz=-sp;
+  var eZx=syw,eZy=cyw*sp,eZz=cyw*cp;
+  var front=waveFront();
+  var frag=(state!=='intact');
+  /* 第一趟：算每块的视图空间位置与朝向 */
+  for(i=0;i<NV;i++){
+    var wx,wy,wz,ax0,ay0,az0,bx0,by0,bz0,cx0,cy0,cz0;
+    if(frag){
+      wx=px[i];wy=py[i];wz=pz[i];
+      var c1=Math.cos(rax[i]),s1=Math.sin(rax[i]);
+      var c2=Math.cos(ray[i]),s2=Math.sin(ray[i]);
+      var c3=Math.cos(raz[i]),s3=Math.sin(raz[i]);
+      var m00=c2*c3,m01=s1*s2*c3-c1*s3,m02=c1*s2*c3+s1*s3;
+      var m10=c2*s3,m11=s1*s2*s3+c1*c3,m12=c1*s2*s3-s1*c3;
+      var m20=-s2,m21=s1*c2,m22=c1*c2;
+      var q1=-m00*syw+m20*cyw;
+      ax0=m00*cyw+m20*syw; ay0=m01*cp+q1*sp; az0=-m01*sp+q1*cp;
+      q1=-m10*syw+m21*cyw;
+      bx0=m10*cyw+m21*syw; by0=m11*cp+q1*sp; bz0=-m11*sp+q1*cp;
+      q1=-m20*syw+m22*cyw;
+      cx0=m20*cyw+m22*syw; cy0=m21*cp+q1*sp; cz0=-m21*sp+q1*cp;
+    } else {
+      var disp=ringS[hring[i]];
+      wx=hx[i]+hux[i]*disp;wy=hy[i]+huy[i]*disp;wz=hz[i]+huz[i]*disp;
+      ax0=eXx;ay0=eXy;az0=eXz;bx0=eYx;by0=eYy;bz0=eYz;cx0=eZx;cy0=eZy;cz0=eZz;
+    }
+    var q2=-wx*syw+wz*cyw;
+    vvx[i]=wx*cyw+wz*syw;
+    vvy[i]=wy*cp+q2*sp;
+    vvz[i]=-wy*sp+q2*cp;
+    var o9=i*9;
+    fdir[o9]=ax0;fdir[o9+1]=ay0;fdir[o9+2]=az0;
+    fdir[o9+3]=bx0;fdir[o9+4]=by0;fdir[o9+5]=bz0;
+    fdir[o9+6]=cx0;fdir[o9+7]=cy0;fdir[o9+8]=cz0;
+    dep[i]=vvz[i];
+    boostF[i]=wantBoost(i,front);
+  }
+  /* 第二趟：画家算法，远的先画 */
+  for(i=0;i<NV;i++)order[i]=i;
+  order.sort(function(a,b){return dep[b]-dep[a];});
+  if(!frag)rankTones(eXx,eXy,eXz,eYx,eYy,eYz,eZx,eZy,eZz);   /* 静止时三面朝向全场一样，算一次就够 */
+  for(i=0;i<NV;i++){
+    var j=order[i],o9b=j*9;
+    orderDep[i]=dep[j];
+    if(frag)rankTones(fdir[o9b],fdir[o9b+1],fdir[o9b+2],
+                      fdir[o9b+3],fdir[o9b+4],fdir[o9b+5],
+                      fdir[o9b+6],fdir[o9b+7],fdir[o9b+8]);
+    drawCube(vvx[j],vvy[j],vvz[j]+CAMZ,
+      fdir[o9b],fdir[o9b+1],fdir[o9b+2],
+      fdir[o9b+3],fdir[o9b+4],fdir[o9b+5],
+      fdir[o9b+6],fdir[o9b+7],fdir[o9b+8],
+      fogIdxOf(vvz[j]+CAMZ),boostF[j]);
+  }
+  orderN=NV;
+  ctx.putImageData(img,0,0);
+  if(state==='burst')drawSparks(t);
+  drawGlass(t);
+}
+
+/* ---------- 崩解的火星 ---------- */
+var sparks=[];
+function makeSparks(){
+  sparks.length=0;
+  for(var k=0;k<26;k++){
+    var a=(rnd()-0.5)*TAU,rr=0.5+rnd();
+    sparks.push({a:a,s:5+rnd()*11,life:0.75+rnd()*0.6,t:rnd()*0.12});
+  }
+}
+function drawSparks(t){
+  ctx.save();
+  for(var k=0;k<sparks.length;k++){
+    var s=sparks[k],age=bt-s.t;
+    if(age<0||age>s.life)continue;
+    var r=4+age*s.s*7.5,a2=1-age/s.life;
+    var x=CX+Math.cos(s.a)*r,y=CY+Math.sin(s.a)*r*0.72;
+    if(x<0||x>W-1||y<0||y>H-1)continue;
+    ctx.fillStyle='rgba(255,'+(150+90*a2|0)+','+(130+90*a2|0)+','+(a2*0.75).toFixed(2)+')';
+    ctx.fillRect(x|0,y|0,1,1);
+    if(k%3===0){ctx.fillStyle='rgba(255,77,61,'+(a2*0.5).toFixed(2)+')';ctx.fillRect((x|0)+1,(y|0)+1,1,1);}
+  }
+  ctx.restore();
+}
+
+/* ---------- 场记 ---------- */
+var STAR='完好';
+function drawGlass(t){
+  ctx.save();
+  ctx.fillStyle='rgba(12,5,6,.66)';ctx.fillRect(0,H-17,W,17);
+  ctx.font='8px "Fusion Pixel 12px Mono latin","Fusion Pixel 12px Mono",monospace';
+  ctx.textAlign='left';ctx.fillStyle='rgba(255,179,168,.85)';
+  ctx.fillText('体素 '+NV,8,H-6);
+  /* 生长波的位置尺 */
+  var gx=64,gw=76,gy=H-10;
+  ctx.fillStyle='rgba(255,77,61,.20)';ctx.fillRect(gx,gy,gw,3);
+  var fr=waveFront();
+  ctx.fillStyle='#ff4d3d';
+  for(var k=0;k<NR;k++){
+    var dq=k-fr,lit=Math.exp(-dq*dq/1.6);
+    if(lit>0.25)ctx.fillRect(gx+Math.round(k/(NR-1)*(gw-1)),gy,1,3);
+  }
+  ctx.fillStyle='rgba(255,179,168,.4)';
+  ctx.fillText('生长波 '+(REDUCED?'停':'0'+(NR+2)),gx+gw+6,H-6);
+  ctx.textAlign='right';ctx.fillStyle='#ffcdc4';
+  var st=state==='intact'?STAR:(state==='burst'?'崩解':'重组');
+  ctx.fillText(st+' · 视角 '+Math.round(yaw*180/Math.PI%360)+'° · 仰角 '+
+    Math.round(pitch*180/Math.PI)+'° · '+zoom.toFixed(2)+'×',W-8,H-6);
+  ctx.textAlign='left';
+  ctx.restore();
+}
+
+/* ---------- 声音（WebAudio 现场合成） ---------- */
+var AC=null;
+function ac(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();return AC;}
+function tone(type,f0,f1,dur,peak,delay){
+  if(!sndOn)return;
+  try{
+    var a=ac(),t=a.currentTime+(delay||0),o=a.createOscillator(),g=a.createGain();
+    o.type=type;o.frequency.setValueAtTime(f0,t);
+    if(f1&&f1!==f0)o.frequency.exponentialRampToValueAtTime(Math.max(30,f1),t+dur);
+    g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(peak,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0004,t+dur);
+    o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+dur+0.03);
+  }catch(e){}
+}
+function sndBurst(){
+  if(!sndOn)return;
+  tone('square',440,80,0.26,0.05);
+  tone('triangle',190,55,0.46,0.05);
+  try{                                        /* 一小撮噪声，像晶体碎开 */
+    var a=ac(),n=Math.floor(a.sampleRate*0.30);
+    var buf=a.createBuffer(1,n,a.sampleRate),d=buf.getChannelData(0);
+    for(var k=0;k<n;k++)d[k]=(Math.random()*2-1)*Math.pow(1-k/n,2.4);
+    var src=a.createBufferSource();src.buffer=buf;
+    var f=a.createBiquadFilter();f.type='bandpass';f.frequency.value=1400;f.Q.value=0.8;
+    var g=a.createGain();g.gain.value=0.055;
+    src.connect(f);f.connect(g);g.connect(a.destination);src.start();
+  }catch(e){}
+}
+function sndReform(){tone('triangle',196,392,0.30,0.035);tone('triangle',294,588,0.30,0.03,0.09);
+  tone('sine',588,1176,0.24,0.02,0.18);}
+function sndTick(){tone('square',620,860,0.05,0.03);}
+
+/* ---------- 输入 ---------- */
+var ptrs={},ptrN=0,lastPtr=null,pinch0=0,pinchZ=1,nowT=0,statAcc=0;
+function toGame(e){var r=cv.getBoundingClientRect();
+  return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height];}
+function pinchDist(){
+  var a=null,b=null;
+  for(var k in ptrs){if(a===null)a=ptrs[k];else b=ptrs[k];}
+  if(!a||!b)return 0;
+  var dx=a.x-b.x,dy=a.y-b.y;return Math.sqrt(dx*dx+dy*dy);
+}
+cv.addEventListener('pointerdown',function(e){
+  e.preventDefault();
+  try{audio();}catch(err){}
+  if(cv.setPointerCapture){try{cv.setPointerCapture(e.pointerId);}catch(err){}}
+  ptrs[e.pointerId]={x:e.clientX,y:e.clientY};
+  ptrN++;
+  if(ptrN===1){
+    lastPtr={id:e.pointerId,x:e.clientX,y:e.clientY,x0:e.clientX,y0:e.clientY,
+      t:nowT,moved:0,vt:nowT};
+    yawV=0;pitchV=0;dragging=true;
+  } else { dragging=false; pinch0=pinchDist(); pinchZ=targetZoom; }
+});
+cv.addEventListener('pointermove',function(e){
+  if(!ptrs[e.pointerId])return;
+  var prev=ptrs[e.pointerId];
+  ptrs[e.pointerId]={x:e.clientX,y:e.clientY};
+  if(ptrN>=2){                                       /* 双指缩放 */
+    var d=pinchDist();
+    if(pinch0>8&&d>8){targetZoom=Math.max(0.55,Math.min(1.45,pinchZ*d/pinch0));syncZoom();}
+    return;
+  }
+  var dx=e.clientX-prev.x,dy=e.clientY-prev.y;
+  if(!dragging)return;
+  yaw+=dx*0.0085;pitch+=dy*0.0062;
+  if(pitch>1.30)pitch=1.30;if(pitch<-1.30)pitch=-1.30;
+  lastPtr.moved+=Math.abs(dx)+Math.abs(dy);
+  var dt=Math.max(1/240,nowT-lastPtr.vt);lastPtr.vt=nowT;
+  var vy=dx*0.0085/dt,vp=dy*0.0062/dt;
+  yawV=yawV*0.6+vy*0.4;pitchV=pitchV*0.6+vp*0.4;
+  if(yawV>6)yawV=6;if(yawV<-6)yawV=-6;
+  if(pitchV>5)pitchV=5;if(pitchV<-5)pitchV=-5;
+});
+function release(e){
+  if(!ptrs[e.pointerId])return;
+  delete ptrs[e.pointerId];ptrN--;
+  if(ptrN<2)pinch0=0;
+  if(ptrN===0){
+    var d=lastPtr;lastPtr=null;dragging=false;
+    if(d&&d.moved<7&&(nowT-d.t)<0.5){yawV=0;pitchV=0;burstNow();}
+    else if(Math.abs(yawV)<0.12&&Math.abs(pitchV)<0.12){yawV=0;pitchV=0;}
+  }
+}
+cv.addEventListener('pointerup',release);
+cv.addEventListener('pointercancel',release);
+cv.addEventListener('wheel',function(e){
+  e.preventDefault();
+  try{audio();}catch(err){}
+  zoomBy(Math.exp(-e.deltaY*0.0011));
+},{passive:false});
+function zoomBy(k){
+  targetZoom*=k;
+  if(targetZoom<0.55)targetZoom=0.55;
+  if(targetZoom>1.45)targetZoom=1.45;
+  syncZoom();
+  return targetZoom;
+}
+
+var elZoom=document.getElementById('zoom'),elAuto=document.getElementById('auto'),
+    elBurst=document.getElementById('burst'),elReset=document.getElementById('reset'),
+    elStat=document.getElementById('stat'),elSnd=document.getElementById('snd');
+function syncZoom(){elZoom.value=Math.round(targetZoom*100);}
+elZoom.addEventListener('input',function(){targetZoom=Number(elZoom.value)/100;});
+elAuto.addEventListener('click',function(){
+  spinOn=!spinOn;elAuto.textContent='自转 '+(spinOn?'ON':'OFF');elAuto.blur();sndTick();
+});
+elBurst.addEventListener('click',function(){burstNow();elBurst.blur();});
+elReset.addEventListener('click',function(){resetAll();sndTick();elReset.blur();});
+elSnd.addEventListener('click',function(){
+  sndOn=!sndOn;elSnd.textContent='♪ 声 '+(sndOn?'ON':'OFF');elSnd.blur();
+});
+window.addEventListener('keydown',function(e){
+  var k=(e.key||'').toLowerCase();
+  if(k===' '){e.preventDefault();burstNow();}
+  else if(k==='r'){resetAll();sndTick();}
+  else if(k==='a'){spinOn=!spinOn;elAuto.textContent='自转 '+(spinOn?'ON':'OFF');}
+  else if(k==='arrowleft'){yaw-=0.09;}
+  else if(k==='arrowright'){yaw+=0.09;}
+  else if(k==='arrowup'){pitch+=0.05;if(pitch>1.30)pitch=1.30;}
+  else if(k==='arrowdown'){pitch-=0.05;if(pitch<-1.30)pitch=-1.30;}
+});
+function audio(){ac();}
+
+/* ---------- 布局 ---------- */
+function fit(){
+  var s=Math.min(innerWidth*0.96/W,(innerHeight-78)/H);
+  if(s>=1)s=Math.floor(s);
+  s=Math.max(0.42,s);
+  cv.style.width=Math.round(W*s)+'px';cv.style.height=Math.round(H*s)+'px';
+}
+addEventListener('resize',fit);
+
+/* ---------- 复位 ---------- */
+function resetAll(){
+  state='intact';bt=0;burstCount=0;
+  for(i=0;i<NR;i++){ringS[i]=0;ringV[i]=0;}
+  waveT=0;yaw=0.62;pitch=0.30;yawV=0;pitchV=0;zoom=1;targetZoom=1;
+  dragging=false;ptrs={};ptrN=0;lastPtr=null;
+  rnd=mulberry32(20260921);
+  syncZoom();
+  statAcc=1;
+}
+
+/* ---------- 主循环 ---------- */
+var last=0;
+function updateStat(){
+  var st=state==='intact'?STAR:(state==='burst'?'崩解':'重组');
+  elStat.textContent='体素 '+NV+' · '+st+' · '+zoom.toFixed(2)+'×';
+}
+function loop(ts){
+  var t=ts/1000;
+  var dt=Math.min(0.05,last?t-last:1/60);last=t;
+  nowT=t;
+  if(!paused)stepSim(dt);
+  render(t);
+  statAcc+=dt;
+  if(statAcc>0.4){statAcc=0;updateStat();}
+  requestAnimationFrame(loop);
+}
+
+/* ---------- 启动 ---------- */
+rnd=mulberry32(20260921);
+fit();
+render(0);
+updateStat();
+requestAnimationFrame(loop);
+
+/* ---------- 自检钩子（node 里也能驱动） ---------- */
+window.__vx={
+  W:W,H:H,
+  count:NV,
+  voxels:function(){
+    var o=[];for(var k=0;k<NV;k++)o.push([VOX[k][0],VOX[k][1],VOX[k][2]]);return o;
+  },
+  bbox:function(){return {min:[-HC,-HC,-HC],max:[HC,HC,HC],cut:CUT};},
+  project:function(x,y,z){
+    var cyw=Math.cos(yaw),syw=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    var q=-x*syw+z*cyw;
+    var vx2=x*cyw+z*syw, vy2=y*cp+q*sp, vz2=-y*sp+q*cp+CAMZ;
+    if(vz2<0.5)return null;
+    var s=FOCAL*zoom/vz2;
+    return {x:CX+vx2*s,y:CY-vy2*s,z:vz2,s:s};
+  },
+  state:function(){
+    return {state:state,bt:bt,yaw:yaw,pitch:pitch,zoom:zoom,zoomT:targetZoom,
+      spin:spinOn,paused:paused,reduced:REDUCED,n:NV,waveT:waveT,front:waveFront(),
+      bursts:burstCount,ring:Array.prototype.slice.call(ringS),frag:state!=='intact'};
+  },
+  step:function(n,dt){dt=dt||1/60;for(var k=0;k<n;k++)stepSim(dt);},
+  snap:function(o){
+    o=o||{};
+    if(o.yaw!=null)yaw=o.yaw;if(o.pitch!=null)pitch=o.pitch;
+    if(o.zoom!=null){zoom=o.zoom;targetZoom=o.zoom;}
+    if(o.spin!=null)spinOn=!!o.spin;
+    yawV=0;pitchV=0;
+    return {yaw:yaw,pitch:pitch,zoom:zoom};
+  },
+  drag:function(dx,dy){yaw+=dx*0.0085;pitch+=dy*0.0062;},
+  zoomBy:function(k){return zoomBy(k);},
+  pos:function(){
+    var o=[],k,d;
+    for(k=0;k<NV;k++){
+      if(state==='intact'){d=ringS[hring[k]];o.push([hx[k]+hux[k]*d,hy[k]+huy[k]*d,hz[k]+huz[k]*d]);}
+      else o.push([px[k],py[k],pz[k]]);
+    }
+    return o;
+  },
+  burst:function(){burstNow();return state;},
+  draw:function(t){render(t||0);},
+  reset:function(){resetAll();},
+  tones:function(){return PAL.map(function(c){return c.slice();});},
+  fog:function(){return {F0:FOG0,F1:FOG1,mix:FOGMIX};},
+  lut:function(){return Array.prototype.slice.call(LUT);},
+  pixels:function(){return b8;},
+  order:function(){return orderDep.slice(0,orderN);},
+  ping:function(){return 'voxel';}
+};
+})();
+</script>
+</body>
+</html>
