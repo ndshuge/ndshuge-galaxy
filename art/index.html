@@ -96,14 +96,19 @@ var WORKS=[
     href:'./voxel-webgl/', c:'#f0b429', g:'#ffd98a', like:'art-voxel-webgl', motif:'crystal' },
   { no:'10', t:'行星仪', en:'ORRERY', sub:'齿轮太阳系', medium:'机械装置', year:'2026', fresh:true,
     line:'太阳轮钉死，行星轮沿节圆滚，齿数比决定谁走得快。',
-    href:'./orrery/', c:'#c9984a', g:'#ffd9a0', like:'art-orrery', motif:'gears' }
+    href:'./orrery/', c:'#c9984a', g:'#ffd9a0', like:'art-orrery', motif:'gears' },
+  { no:'11', t:'意识花园', en:'NEURAL GARDEN', sub:'诞生', medium:'沉浸装置', year:'2026', fresh:true,
+    line:'一颗悬浮的神经核心正在诞生，十二朵花围着它长，水面记得你走过的每一处。',
+    href:'./neural-garden/', c:'#7c5cff', g:'#c9b6ff', like:'art-neuralgarden', motif:'neural' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
 var CN=['零','一','二','三','四','五','六','七','八','九','十'];   /* 件数写中文，加作品时不用改文案 */
 
 /* ============ 引擎 ============ */
 var W=480,H=270,TAU=Math.PI*2;
-var RX=240,RY=126,RXR=136,RYR=46;        /* 环心与环半径：画框挂在这条环上 */
+var RX=240,RY=126,RXR=150,RYR=58;        /* 环心与环半径：画框挂在这条环上。
+   十一件时环侧面相邻两框在 x 上必然靠拢（cos 在极值处导数为零），
+   真正把它们分开的是 y 方向，所以竖半径要够。原来 136/46 在第十件起就会挤。 */
 var FLY=198;                              /* 地平线：脚下的地面从这里铺开 */
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var IS_TOUCH=matchMedia('(pointer:coarse)').matches;
@@ -540,6 +545,33 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
     px(gcx,gcy,'#fff6e4');
     pbar(x,y,w,1,'rgba(201,152,74,.16)');
     pbar(x,y+h-1,w,1,'rgba(201,152,74,.08)');
+  } else if(name==='neural'){
+    /* 意识花园：黑镜水面上悬着一颗神经核心，十二朵花围着它开；
+       牌位太小，只留圆球、环上一圈花、底下一条水面。 */
+    pbar(x,y,w,h,'#050610');
+    var rr=Math.min(w,h)*0.30;
+    for(j=0;j<w;j++){                              /* 水面：一条起伏的线 */
+      var wy=y+h-3+Math.sin(j*0.55+t*0.9)*1.1;
+      px(x+j,wy,'rgba(124,92,255,.42)');
+    }
+    pEllipse(cx,cy-1,rr,rr,'rgba(180,150,255,.55)',1.2);   /* 玻璃外壳 */
+    pEllipse(cx,cy-1,rr*0.58,rr*0.58,'rgba(160,200,255,.26)',1);
+    for(i=0;i<12;i++){                             /* 十二朵花：环上一圈，一朵亮 */
+      var a=i/12*TAU-Math.PI/2;
+      var fx=cx+Math.cos(a)*rr*1.85, fy=cy-1+Math.sin(a)*rr*1.12;
+      if(fx>x+0.5&&fx<x+w-0.5&&fy>y+0.5&&fy<y+h-0.5){
+        var on=i===Math.floor(t*1.3)%12;
+        px(fx,fy,on?wg:'rgba(124,92,255,.55)');
+        if(on){px(fx,fy-1,wg);px(fx+1,fy,wg);}
+      }
+    }
+    for(i=0;i<5;i++){                              /* 神经末梢：从核心伸出去几条 */
+      var a2=i/5*TAU+t*0.25;
+      pdotLine(cx,cy-1,cx+Math.cos(a2)*rr*0.85,cy-1+Math.sin(a2)*rr*0.62,'rgba(232,244,255,.30)',1.5);
+    }
+    px(cx,cy-1,wg);px(cx+1,cy-1,wc);px(cx-1,cy-1,wc);
+    pbar(x,y,w,1,'rgba(124,92,255,.16)');
+    pbar(x,y+h-1,w,1,'rgba(124,92,255,.08)');
   } else {
     /* 深渊：从水面到 2640 米，声呐一路向下ping */
     for(i=0;i<14;i++){
