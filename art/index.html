@@ -102,18 +102,19 @@ var WORKS=[
     href:'./neural-garden/', c:'#7c5cff', g:'#c9b6ff', like:'art-neuralgarden', motif:'neural' },
   { no:'12', t:'机械花萼', en:'CALYX', sub:'黄金角 · 24 瓣', medium:'机械装置', year:'2026', fresh:true,
     line:'二十四片瓣，按黄金角长成一颗会呼吸的金属芽。',
-    href:'./calyx/', c:'#3fd6b0', g:'#9dffdf', like:'art-calyx', motif:'calyx' }
+    href:'./calyx/', c:'#3fd6b0', g:'#9dffdf', like:'art-calyx', motif:'calyx' },
+  { no:'13', t:'引力合唱团', en:'GRAVITY CHOIR', sub:'陶瓷脉冲', medium:'三维动态装置', year:'2026', fresh:true,
+    line:'一百六十八片陶瓷薄翼共享同一颗脉搏；靠近、触碰，它就改变呼吸。',
+    href:'./gravity-choir/', c:'#c63f2b', g:'#ffb34f', like:'art-gravitychoir', motif:'choir' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
-var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二'];   /* 件数写中文；超过十二件要往下续，不然背面会写出 undefined */
+var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二','十三'];   /* 件数写中文；超过十三件要往下续，不然背面会写出 undefined */
 
 /* ============ 引擎 ============ */
 var W=480,H=270,TAU=Math.PI*2;
-var RX=240,RY=118,RXR=150,RYR=66;        /* 环心与环半径：画框挂在这条环上。
-   十二件时相邻两框在 x 上差只有 0.134·RXR，侧边那両框的 x 一定重叠，
-   真正把它们分开的只有 y，所以竖半径要够：150° 与 180° 两框的 y 距就是 RYR/2，
-   要大于両者高的一半（17.5+13）。环心同步下移 8，前框的落点（RY+RYR）保持 184 不变。
-   十一件时的 126/58 只剩 0.4px 余量，十二件就穿了。 */
+var RX=240,RY=110,RXR=150,RYR=74;        /* 环心与环半径：画框挂在这条环上。
+   十三件时侧后方相邻画框主要靠 y 错开；竖半径增到 74，环心同步上移，
+   让前框落点（RY+RYR）仍保持 184，同时留出足够的纵向分层。 */
 var FLY=198;                              /* 地平线：脚下的地面从这里铺开 */
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var IS_TOUCH=matchMedia('(pointer:coarse)').matches;
@@ -603,6 +604,27 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
     pbar(cx-1,cy-1,2,2,wg);px(cx,cy,'#fff8e8');
     pbar(x,y,w,1,hexA(wc,.18));
     pbar(x,y+h-1,w,1,hexA(wc,.09));
+  } else if(name==='choir'){
+    /* 引力合唱团：以 32 根像素薄翼代表 168 片陶瓷叶片，三道轨道随脉冲呼吸。 */
+    pbar(x,y,w,h,'#07110f');
+    var qM=Math.min(w,h), qR=qM*0.31;
+    var qPulse=0.5+0.5*Math.sin(t*1.7);
+    for(i=0;i<32;i++){
+      var qA=i/32*TAU+t*0.08;
+      var qIn=qR*(0.50+0.06*Math.sin(i*2.4+t*1.3));
+      var qOut=qR*(1.18+0.12*qPulse);
+      pdotLine(cx+Math.cos(qA)*qIn,cy+Math.sin(qA)*qIn,
+               cx+Math.cos(qA)*qOut,cy+Math.sin(qA)*qOut,
+               i%4===0?hexA(wg,.88):'rgba(236,226,207,.56)',1);
+    }
+    for(i=0;i<3;i++){
+      var qRing=qR*(0.45+i*0.31+qPulse*0.035);
+      pEllipse(cx,cy,qRing,qRing,hexA(i===1?wg:wc,.28+i*.09),1);
+    }
+    pDisc(cx,cy,qM*(0.07+0.018*qPulse),hexA(wg,.78));
+    px(cx,cy,'#fff6df');
+    pbar(x,y,w,1,hexA(wc,.18));
+    pbar(x,y+h-1,w,1,hexA(wc,.08));
   } else {
     /* 深渊：从水面到 2640 米，声呐一路向下ping */
     for(i=0;i<14;i++){

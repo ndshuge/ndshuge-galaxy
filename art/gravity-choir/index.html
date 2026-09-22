@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#071b18" />
+    <title>引力合唱团 · Gravity Choir</title>
+    <script type="module" crossorigin src="./assets/index-De2Z8-56.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DSpj20JW.css">
+  </head>
+  <body>
+    <main id="app">
+      <canvas id="world" aria-label="可旋转、缩放和触发脉冲的三维艺术装置"></canvas>
+      <div class="veil" aria-hidden="true"></div>
+      <header class="masthead">
+        <a class="mark" href="../" aria-label="返回艺术回廊">
+          <span class="mark-glyph" aria-hidden="true"></span>
+          <span>GC / 13</span>
+        </a>
+        <p class="location">VIRTUAL INSTALLATION<br />BLENDER × THREE.JS</p>
+        <button id="about" class="text-button" type="button" aria-expanded="false">作品说明</button>
+      </header>
+
+      <section class="title-block" aria-labelledby="title">
+        <p class="kicker">KINETIC SCULPTURE</p>
+        <h1 id="title"><span>引力</span><span>合唱团</span></h1>
+        <p class="intro">一百六十八片陶瓷薄翼，共享同一颗脉搏。</p>
+      </section>
+
+      <div class="telemetry" aria-live="polite">
+        <span id="mode-label">平静态</span>
+        <span><i id="pulse-dot"></i> FIELD <b id="field-value">0.18</b></span>
+      </div>
+
+      <section class="control-deck" aria-label="装置控制">
+        <div class="modes" role="group" aria-label="形态">
+          <button class="mode active" type="button" data-mode="calm" aria-pressed="true">
+            <span>平静</span><small>CALM</small>
+          </button>
+          <button class="mode" type="button" data-mode="resonance" aria-pressed="false">
+            <span>共振</span><small>RESONANCE</small>
+          </button>
+          <button class="mode" type="button" data-mode="fracture" aria-pressed="false">
+            <span>崩解</span><small>FRACTURE</small>
+          </button>
+        </div>
+        <div class="actions">
+          <button id="pulse" class="pulse-button" type="button"><span>释放脉冲</span><small>CLICK OBJECT / ENTER</small></button>
+          <button id="control" class="icon-button" type="button" aria-pressed="false" aria-label="暂停动态">
+            <span class="pause-icon" aria-hidden="true"></span>
+          </button>
+          <button id="reset" class="icon-button" type="button" aria-label="重置视角">
+            <span class="reset-icon" aria-hidden="true">↺</span>
+          </button>
+        </div>
+      </section>
+
+      <aside id="about-panel" class="about-panel" aria-hidden="true">
+        <button id="about-close" type="button" aria-label="关闭作品说明">×</button>
+        <p class="panel-index">ABOUT THE WORK</p>
+        <h2>它不是一朵花，<br />却记得如何呼吸。</h2>
+        <p>装置的每片薄翼拥有独立的空间状态，同时受同一条环形脉冲支配。你的靠近、触碰和视角都会扰动它，却不会摧毁整体秩序。</p>
+        <dl>
+          <div><dt>FORM</dt><dd>Blender 程序化陶瓷薄翼</dd></div>
+          <div><dt>BEHAVIOR</dt><dd>实时波场与指针回避</dd></div>
+          <div><dt>STATES</dt><dd>平静 · 共振 · 崩解</dd></div>
+        </dl>
+      </aside>
+
+      <div id="loading" class="loading" role="status">
+        <span class="loading-ring"></span>
+        <p>正在唤醒装置 <b id="load-percent">0%</b></p>
+      </div>
+      <p id="error" class="error" role="alert" hidden></p>
+      <div id="views" hidden></div>
+    </main>
+  </body>
+</html>
