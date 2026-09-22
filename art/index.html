@@ -93,7 +93,10 @@ var WORKS=[
     href:'./voxel/', c:'#ff4d3d', g:'#ffb3a8', like:'art-voxel', motif:'voxel' },
   { no:'09', t:'体素晶体 · 辉光', en:'CRYSTAL', sub:'立方八面体晶格', medium:'三维装置', year:'2026', fresh:true,
     line:'589 个方块长成一座立方八面体晶格，一道波从核里推向棱角。',
-    href:'./voxel-webgl/', c:'#f0b429', g:'#ffd98a', like:'art-voxel-webgl', motif:'crystal' }
+    href:'./voxel-webgl/', c:'#f0b429', g:'#ffd98a', like:'art-voxel-webgl', motif:'crystal' },
+  { no:'10', t:'行星仪', en:'ORRERY', sub:'齿轮太阳系', medium:'机械装置', year:'2026', fresh:true,
+    line:'太阳轮钉死，行星轮沿节圆滚，齿数比决定谁走得快。',
+    href:'./orrery/', c:'#c9984a', g:'#ffd9a0', like:'art-orrery', motif:'gears' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
 var CN=['零','一','二','三','四','五','六','七','八','九','十'];   /* 件数写中文，加作品时不用改文案 */
@@ -506,6 +509,37 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
     }
     pbar(x,y,w,1,'rgba(240,180,41,.20)');
     pbar(x,y+h-1,w,1,'rgba(240,180,41,.10)');
+  } else if(name==='gears'){
+    /* 行星仪：中心一轮黄铜齿轮咬着一枚太阳，外围三层轨道各挂一颗；
+       谁的周期短谁转得快。齿要画成径向短线，点一个小像素在大厅尺寸下会消失。 */
+    pbar(x,y,w,h,'#070910');
+    var gcx=cx, gcy=cy, gb=Math.min(w,h);
+    for(i=0;i<40;i++){                            /* 底盘刻度：每四格一根 */
+      var ta=i/40*TAU, tr0=gb*0.86;
+      if(i%4===0) px(gcx+Math.cos(ta)*tr0, gcy+Math.sin(ta)*tr0*0.52,'rgba(201,152,74,.30)');
+    }
+    var RG=[[0.46,1.95,'#b0a294'],[0.60,1.20,'#5f9be0'],[0.74,0.60,'#c9634a']];
+    for(i=0;i<RG.length;i++){
+      var RR=gb*RG[i][0];
+      pEllipse(gcx,gcy,RR,RR*0.52,'rgba(201,152,74,.26)',1);
+      var aa=t*RG[i][1]+i*2.1;
+      var bx1=gcx+Math.cos(aa)*RR, by1=gcy+Math.sin(aa)*RR*0.52;
+      px(bx1,by1,RG[i][2]);
+      px(bx1,by1-1,'rgba(255,255,255,.52)');
+    }
+    var gr=gb*0.155;                              /* 中心齿轮：十齿，径向三像素成一线 */
+    pEllipse(gcx,gcy,gr,gr*0.52,'rgba(201,152,74,.9)',1.6);
+    for(i=0;i<12;i++){
+      var ab=i/12*TAU+t*0.45;
+      for(j=1;j<=4;j++){
+        var rr=gr*(0.90+j*0.19);
+        px(gcx+Math.cos(ab)*rr, gcy+Math.sin(ab)*rr*0.52, wc);
+      }
+    }
+    pDisc(gcx,gcy,gb*0.055,'rgba(255,206,140,.95)');
+    px(gcx,gcy,'#fff6e4');
+    pbar(x,y,w,1,'rgba(201,152,74,.16)');
+    pbar(x,y+h-1,w,1,'rgba(201,152,74,.08)');
   } else {
     /* 深渊：从水面到 2640 米，声呐一路向下ping */
     for(i=0;i<14;i++){
