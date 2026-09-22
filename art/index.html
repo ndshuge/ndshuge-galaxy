@@ -99,16 +99,21 @@ var WORKS=[
     href:'./orrery/', c:'#c9984a', g:'#ffd9a0', like:'art-orrery', motif:'gears' },
   { no:'11', t:'意识花园', en:'NEURAL GARDEN', sub:'诞生', medium:'沉浸装置', year:'2026', fresh:true,
     line:'一颗悬浮的神经核心正在诞生，十二朵花围着它长，水面记得你走过的每一处。',
-    href:'./neural-garden/', c:'#7c5cff', g:'#c9b6ff', like:'art-neuralgarden', motif:'neural' }
+    href:'./neural-garden/', c:'#7c5cff', g:'#c9b6ff', like:'art-neuralgarden', motif:'neural' },
+  { no:'12', t:'机械花萼', en:'CALYX', sub:'黄金角 · 24 瓣', medium:'机械装置', year:'2026', fresh:true,
+    line:'二十四片瓣，按黄金角长成一颗会呼吸的金属芽。',
+    href:'./calyx/', c:'#3fd6b0', g:'#9dffdf', like:'art-calyx', motif:'calyx' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
-var CN=['零','一','二','三','四','五','六','七','八','九','十'];   /* 件数写中文，加作品时不用改文案 */
+var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二'];   /* 件数写中文；超过十二件要往下续，不然背面会写出 undefined */
 
 /* ============ 引擎 ============ */
 var W=480,H=270,TAU=Math.PI*2;
-var RX=240,RY=126,RXR=150,RYR=58;        /* 环心与环半径：画框挂在这条环上。
-   十一件时环侧面相邻两框在 x 上必然靠拢（cos 在极值处导数为零），
-   真正把它们分开的是 y 方向，所以竖半径要够。原来 136/46 在第十件起就会挤。 */
+var RX=240,RY=118,RXR=150,RYR=66;        /* 环心与环半径：画框挂在这条环上。
+   十二件时相邻两框在 x 上差只有 0.134·RXR，侧边那両框的 x 一定重叠，
+   真正把它们分开的只有 y，所以竖半径要够：150° 与 180° 两框的 y 距就是 RYR/2，
+   要大于両者高的一半（17.5+13）。环心同步下移 8，前框的落点（RY+RYR）保持 184 不变。
+   十一件时的 126/58 只剩 0.4px 余量，十二件就穿了。 */
 var FLY=198;                              /* 地平线：脚下的地面从这里铺开 */
 var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var IS_TOUCH=matchMedia('(pointer:coarse)').matches;
@@ -572,6 +577,32 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
     px(cx,cy-1,wg);px(cx+1,cy-1,wc);px(cx-1,cy-1,wc);
     pbar(x,y,w,1,'rgba(124,92,255,.16)');
     pbar(x,y+h-1,w,1,'rgba(124,92,255,.08)');
+  } else if(name==='calyx'){
+    /* 机械花萼：俯视的一朵金属花 —— 瓣按黄金角排（137.5°）绕着光核张开，
+       外面那圈细线是铰链环，随 t 呼吸开合。分两圈：外 16 内 8，内圈缩一号、压暗。 */
+    pbar(x,y,w,h,'#07080e');
+    var clM=Math.min(w,h);
+    var clR=clM*0.26;                                   /* 瓣根所在的半径 */
+    var clOpen=0.5+0.5*Math.sin(t*1.05);                /* 开合度 0..1 */
+    var clRot=t*0.10, clTIP=clM*(0.13+0.09*clOpen);     /* 瓣长跟开合走 */
+    pEllipse(cx,cy,clR*1.34,clR*1.34,hexA(wc,.22),1.4); /* 铰链环 */
+    for(i=0;i<24;i++){
+      var clA=i*2.399963229728653+clRot;                /* 黄金角错位 */
+      var clS=i<16?1:0.62;                              /* 内圈缩一号 */
+      var clShrink=1-0.18*clOpen;                       /* 张开时瓣根也往外挪一点 */
+      var clNx=cx+Math.cos(clA)*clR*clS*clShrink;
+      var clNy=cy+Math.sin(clA)*clR*clS*clShrink;
+      var clTx=clNx+Math.cos(clA)*clTIP;                /* 瓣尖朝外 */
+      var clTy=clNy+Math.sin(clA)*clTIP;
+      pdotLine(clNx,clNy,clTx,clTy,i%2?hexA(wc,.55):'rgba(232,206,150,.78)',1);
+      px(clTx,clTy,'rgba(255,244,222,.9)');             /* 瓣尖一线高光 */
+    }
+    ctx.fillStyle=hexA(wg,0.10+0.07*clOpen);            /* 光核：一层薄晕 + 一颗实心 */
+    ctx.beginPath();
+    ctx.ellipse(cx,cy,Math.max(3,w*0.14),Math.max(3,h*0.16),0,0,TAU);ctx.fill();
+    pbar(cx-1,cy-1,2,2,wg);px(cx,cy,'#fff8e8');
+    pbar(x,y,w,1,hexA(wc,.18));
+    pbar(x,y+h-1,w,1,hexA(wc,.09));
   } else {
     /* 深渊：从水面到 2640 米，声呐一路向下ping */
     for(i=0;i<14;i++){
