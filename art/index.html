@@ -105,10 +105,13 @@ var WORKS=[
     href:'./calyx/', c:'#3fd6b0', g:'#9dffdf', like:'art-calyx', motif:'calyx' },
   { no:'13', t:'引力合唱团', en:'GRAVITY CHOIR', sub:'陶瓷脉冲', medium:'三维动态装置', year:'2026', fresh:true,
     line:'一百六十八片陶瓷薄翼共享同一颗脉搏；靠近、触碰，它就改变呼吸。',
-    href:'./gravity-choir/', c:'#c63f2b', g:'#ffb34f', like:'art-gravitychoir', motif:'choir' }
+    href:'./gravity-choir/', c:'#c63f2b', g:'#ffb34f', like:'art-gravitychoir', motif:'choir' },
+  { no:'14', t:'色噪场', en:'CHROMA / NOISE', sub:'触摸噪声', medium:'交互生成艺术', year:'2026', fresh:true,
+    line:'移动、点击、滚动都会改变颜色和粒子的压力；界面本身就是作品。',
+    href:'./chroma-noise/', c:'#c8ff28', g:'#ff3d81', like:'art-chroma-noise', motif:'chroma' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
-var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二','十三'];   /* 件数写中文；超过十三件要往下续，不然背面会写出 undefined */
+var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二','十三','十四'];   /* 件数写中文；超过十三件要往下续，不然背面会写出 undefined */
 
 /* ============ 引擎 ============ */
 var W=480,H=270,TAU=Math.PI*2;
@@ -625,6 +628,33 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
     px(cx,cy,'#fff6df');
     pbar(x,y,w,1,hexA(wc,.18));
     pbar(x,y+h-1,w,1,hexA(wc,.08));
+  } else if(name==='chroma'){
+    /* 色噪场：三团色场 + 被指针扰动后的粒子弧，牌位本身也持续呼吸。 */
+    pbar(x,y,w,h,'#08060d');
+    var cPulse=0.5+0.5*Math.sin(t*1.9);
+    var cR=Math.min(w,h);
+    var blobs=[
+      [x+w*.28,y+h*.32,cR*(.24+.03*cPulse),'#c8ff28'],
+      [x+w*.67,y+h*.38,cR*(.28+.04*Math.sin(t*1.3+1.7)),'#735cff'],
+      [x+w*.52,y+h*.72,cR*(.25+.04*Math.sin(t*1.1+3.1)),'#ff3d81']
+    ];
+    for(i=0;i<blobs.length;i++){
+      var bb=blobs[i];
+      ctx.globalAlpha=.16+i*.035;
+      ctx.fillStyle=bb[3];
+      ctx.beginPath();ctx.arc(bb[0],bb[1],bb[2],0,TAU);ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    for(i=0;i<28;i++){
+      var ca=i/28*TAU+t*.18, cr=cR*(.14+(i%7)*.035);
+      var cx2=cx+Math.cos(ca)*cr, cy2=cy+Math.sin(ca)*cr*.62;
+      var cc=i%3===0?'#c8ff28':(i%3===1?'#735cff':'#ff3d81');
+      px(cx2,cy2,cc);
+      if(i%6===0)px(cx2+1,cy2,'rgba(255,255,255,.8)');
+    }
+    pdotLine(x+4,cy,x+w-5,cy,'rgba(255,255,255,.22)',2.8);
+    pbar(x,y,w,1,'rgba(200,255,40,.24)');
+    pbar(x,y+h-1,w,1,'rgba(255,61,129,.18)');
   } else {
     /* 深渊：从水面到 2640 米，声呐一路向下ping */
     for(i=0;i<14;i++){
