@@ -108,10 +108,13 @@ var WORKS=[
     href:'./gravity-choir/', c:'#c63f2b', g:'#ffb34f', like:'art-gravitychoir', motif:'choir' },
   { no:'14', t:'色噪场', en:'CHROMA / NOISE', sub:'触摸噪声', medium:'交互生成艺术', year:'2026', fresh:true,
     line:'移动、点击、滚动都会改变颜色和粒子的压力；界面本身就是作品。',
-    href:'./chroma-noise/', c:'#c8ff28', g:'#ff3d81', like:'art-chroma-noise', motif:'chroma' }
+    href:'./chroma-noise/', c:'#c8ff28', g:'#ff3d81', like:'art-chroma-noise', motif:'chroma' },
+  { no:'15', t:'色噪场 · 原版', en:'CHROMA / NOISE ORIGINAL', sub:'初代粒子场', medium:'交互生成艺术', year:'2026', fresh:true,
+    line:'最初的版本原样保留：黑场、巨型字、彩色粒子与点击爆发。',
+    href:'./chroma-noise/original.html', c:'#735cff', g:'#c8ff28', like:'art-chroma-noise-original', motif:'chroma' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
-var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二','十三','十四'];   /* 件数写中文；超过十三件要往下续，不然背面会写出 undefined */
+var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二','十三','十四','十五'];   /* 件数写中文；超过十三件要往下续，不然背面会写出 undefined */
 
 /* ============ 引擎 ============ */
 var W=480,H=270,TAU=Math.PI*2;
