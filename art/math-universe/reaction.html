@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Math Universe — Reaction Diffusion</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020308;color:#eef2ff}
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;background:radial-gradient(circle at 50% 50%,#080b18,#010208 70%)}
+.hud{position:fixed;left:18px;top:18px;width:min(380px,calc(100vw - 36px));padding:16px;border:1px solid rgba(255,255,255,.11);border-radius:18px;background:linear-gradient(180deg,rgba(10,14,28,.78),rgba(4,7,16,.58));backdrop-filter:blur(16px);box-shadow:0 20px 70px rgba(0,0,0,.35);user-select:none}
+.title{font-size:13px;letter-spacing:.20em;text-transform:uppercase;color:#cbd5e1;font-weight:700}.hero{font-size:26px;font-weight:760;margin:4px 0 2px;letter-spacing:-.03em}.sub{font-size:12px;color:#9ca3af;line-height:1.45;margin-bottom:12px}
+.row{display:grid;grid-template-columns:64px 1fr 54px;align-items:center;gap:9px;margin:8px 0;font-size:12px}.row label{color:#a8b0c2}.value{text-align:right;font-variant-numeric:tabular-nums;color:#e5e7eb}
+input[type=range]{width:100%;accent-color:#c4b5fd}.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.btn{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:#e5e7eb;padding:8px 10px;border-radius:10px;font-size:12px;cursor:pointer}.btn:hover{background:rgba(255,255,255,.1)}.btn.active{background:rgba(196,181,253,.18);border-color:rgba(196,181,253,.5)}
+.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.preset{padding:7px 6px;text-align:center}.note{margin-top:11px;font-size:11px;line-height:1.45;color:#7f8aa3}
+.equation{position:fixed;right:20px;bottom:20px;max-width:min(620px,calc(100vw - 40px));padding:10px 13px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(4,7,16,.48);backdrop-filter:blur(10px);font-size:11px;color:#aab4cc;line-height:1.6;user-select:none}.equation b{color:#e2e8f0}
+.badge{position:fixed;right:20px;top:20px;padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(2,4,12,.4);backdrop-filter:blur(10px);font-size:11px;color:#aeb8cf}
+@media(max-width:700px){.hud{top:12px;left:12px;width:calc(100vw - 24px);padding:13px}.hero{font-size:21px}.equation,.badge{display:none}}
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="hud">
+<div class="title">Math Universe / 01</div>
+<div class="hero">Reaction–Diffusion</div>
+<div class="sub">两种“化学物质”只遵守扩散与反应方程，却会自己长出细胞、珊瑚、迷宫与斑纹。拖动屏幕可向系统注入扰动。</div>
+<div class="row"><label>Feed F</label><input id="feed" type="range" min="0.010" max="0.090" step="0.0001" value="0.0367"><span class="value" id="feedv"></span></div>
+<div class="row"><label>Kill K</label><input id="kill" type="range" min="0.035" max="0.075" step="0.0001" value="0.0649"><span class="value" id="killv"></span></div>
+<div class="row"><label>Speed</label><input id="speed" type="range" min="1" max="24" step="1" value="10"><span class="value" id="speedv"></span></div>
+<div class="row"><label>Glow</label><input id="glow" type="range" min="0" max="2" step="0.01" value="1.15"><span class="value" id="glowv"></span></div>
+<div class="buttons"><button class="btn" id="pause">Pause</button><button class="btn" id="reset">Reset</button><button class="btn" id="seed">Seed chaos</button><button class="btn active" id="warp">Living field</button><a class="btn" style="text-decoration:none" href="./chaos.html">02 Chaos</a><a class="btn" style="text-decoration:none" href="./gravity.html">03 Gravity</a></div>
+<div class="presets"><button class="btn preset" data-f="0.0367" data-k="0.0649">Coral</button><button class="btn preset" data-f="0.0260" data-k="0.0510">Mitosis</button><button class="btn preset" data-f="0.0545" data-k="0.0620">Maze</button></div>
+<div class="note">提示：连续拖动会“播种”。极小的参数变化就能让整个世界从稳定斑点切换成生长、复制或迷宫状态。</div>
+</div>
+<div class="badge">GPU · Gray–Scott system · real time</div>
+<div class="equation"><b>Gray–Scott 模型</b>　∂u/∂t = Dᵤ∇²u − uv² + F(1−u)　　∂v/∂t = Dᵥ∇²v + uv² − (F+K)v</div>
+<script>
+(() => {
+const canvas=document.getElementById('gl');
+const gl=canvas.getContext('webgl2',{antialias:false,alpha:false,powerPreference:'high-performance'});
+if(!gl){document.body.innerHTML='<div style="padding:40px;font:16px system-ui;color:white">需要支持 WebGL2 的浏览器。</div>';return;}
+const vs=`#version 300 es
+precision highp float;
+const vec2 P[3]=vec2[](vec2(-1.,-1.),vec2(3.,-1.),vec2(-1.,3.));
+out vec2 uv;
+void main(){vec2 p=P[gl_VertexID];uv=.5*(p+1.);gl_Position=vec4(p,0.,1.);}`;
+const simFS=`#version 300 es
+precision highp float;
+in vec2 uv;out vec4 frag;
+uniform sampler2D stateTex;uniform vec2 px;uniform float feed,kill,dt;uniform vec2 brush;uniform float brushDown,brushRadius;
+vec2 S(vec2 o){return texture(stateTex,uv+o*px).rg;}
+void main(){
+vec2 c=S(vec2(0));vec2 lap=-1.0*c;
+lap+=.2*(S(vec2(1,0))+S(vec2(-1,0))+S(vec2(0,1))+S(vec2(0,-1)));
+lap+=.05*(S(vec2(1,1))+S(vec2(1,-1))+S(vec2(-1,1))+S(vec2(-1,-1)));
+float u=c.r,v=c.g,uvv=u*v*v;
+float du=.16*lap.r-uvv+feed*(1.-u);float dv=.08*lap.g+uvv-(feed+kill)*v;
+vec2 n=clamp(c+dt*vec2(du,dv),0.,1.);
+if(brushDown>0.5){vec2 d=uv-brush;d.x*=float(textureSize(stateTex,0).x)/float(textureSize(stateTex,0).y);float b=smoothstep(brushRadius,brushRadius*.15,length(d));n=mix(n,vec2(.10,.96),b*.92);}
+frag=vec4(n,0.,1.);}`;
+const renderFS=`#version 300 es
+precision highp float;
+in vec2 uv;out vec4 frag;
+uniform sampler2D stateTex;uniform vec2 px;uniform float time,glow,living;
+vec3 pal(float t){vec3 a=vec3(.03,.04,.10),b=vec3(.35,.47,.72),c=vec3(1.0),d=vec3(.02,.14,.34);return a+b*cos(6.28318*(c*t+d));}
+float field(vec2 q){vec2 s=texture(stateTex,q).rg;return clamp((s.g*1.35-s.r*.18),0.,1.);}
+void main(){
+vec2 q=uv;if(living>0.5){float v=field(q);q+=.0018*vec2(sin(time*.43+uv.y*11.+v*7.),cos(time*.37+uv.x*9.-v*6.));}
+float c=field(q);float cx=field(q+vec2(px.x,0.))-field(q-vec2(px.x,0.));float cy=field(q+vec2(0.,px.y))-field(q-vec2(0.,px.y));float edge=clamp(length(vec2(cx,cy))*9.,0.,1.);float ring=smoothstep(.10,.95,c);
+vec3 col=pal(c*.92+time*.015);vec3 deep=vec3(.002,.004,.015);col=mix(deep,col,ring);col+=edge*vec3(.65,.78,1.0)*(0.25+glow*1.25);col+=pow(max(c,0.),4.)*vec3(.85,.38,1.1)*glow*.45;
+float vign=1.-smoothstep(.22,.82,length(uv-.5));col*=.66+.55*vign;col=1.-exp(-col*(1.45+glow*.55));col=pow(col,vec3(.82));frag=vec4(col,1.);}`;
+function shader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s;}
+function program(fs){const p=gl.createProgram();gl.attachShader(p,shader(gl.VERTEX_SHADER,vs));gl.attachShader(p,shader(gl.FRAGMENT_SHADER,fs));gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(p));return p;}
+let simP,renderP,vao;try{simP=program(simFS);renderP=program(renderFS);vao=gl.createVertexArray();gl.bindVertexArray(vao);}catch(e){document.querySelector('.badge').textContent='WEBGL ERROR: '+e.message;throw e;}
+let W=0,H=0,tex=[],fbo=[],front=0,paused=false,living=true,pointerDown=false,bx=.5,by=.5;
+let feed=.0367,kill=.0649,steps=10,glow=1.15;
+function makeTex(w,h,data){const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,w,h,0,gl.RGBA,gl.UNSIGNED_BYTE,data);return t;}
+function initState(w,h){const a=new Uint8Array(w*h*4);for(let i=0;i<w*h;i++){a[i*4]=255;a[i*4+3]=255;}const splats=Math.max(22,Math.floor(w*h/25000));for(let n=0;n<splats;n++){const cx=(.12+Math.random()*.76)*w,cy=(.12+Math.random()*.76)*h,r=4+Math.random()*13;for(let y=Math.max(0,cy-r|0);y<Math.min(h,cy+r|0);y++)for(let x=Math.max(0,cx-r|0);x<Math.min(w,cx+r|0);x++){const dx=x-cx,dy=y-cy;if(dx*dx+dy*dy<r*r*(.35+Math.random()*.75)){const i=(y*w+x)*4;a[i]=25+Math.random()*35;a[i+1]=210+Math.random()*45;}}}return a;}
+function setup(){const dpr=Math.min(devicePixelRatio||1,1.5);canvas.width=Math.floor(innerWidth*dpr);canvas.height=Math.floor(innerHeight*dpr);const scale=Math.max(.38,Math.min(.72,900/Math.max(canvas.width,canvas.height)));W=Math.max(256,Math.floor(canvas.width*scale));H=Math.max(256,Math.floor(canvas.height*scale));tex.forEach(x=>gl.deleteTexture(x));fbo.forEach(x=>gl.deleteFramebuffer(x));tex=[];fbo=[];const data=initState(W,H);tex=[makeTex(W,H,data),makeTex(W,H,data)];for(let i=0;i<2;i++){const f=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,f);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tex[i],0);fbo.push(f);}gl.bindFramebuffer(gl.FRAMEBUFFER,null);front=0;}
+function U(p,n,v){const l=gl.getUniformLocation(p,n);if(l!==null){if(typeof v==='number')gl.uniform1f(l,v);else gl.uniform2f(l,v[0],v[1]);}}
+function sim(){gl.useProgram(simP);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex[front]);gl.uniform1i(gl.getUniformLocation(simP,'stateTex'),0);U(simP,'px',[1/W,1/H]);U(simP,'feed',feed);U(simP,'kill',kill);U(simP,'dt',1);U(simP,'brush',[bx,by]);U(simP,'brushDown',pointerDown?1:0);U(simP,'brushRadius',.026);const back=1-front;gl.bindFramebuffer(gl.FRAMEBUFFER,fbo[back]);gl.viewport(0,0,W,H);gl.drawArrays(gl.TRIANGLES,0,3);front=back;}
+function render(t){gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,canvas.width,canvas.height);gl.useProgram(renderP);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tex[front]);gl.uniform1i(gl.getUniformLocation(renderP,'stateTex'),0);U(renderP,'px',[1/W,1/H]);U(renderP,'time',t*.001);U(renderP,'glow',glow);U(renderP,'living',living?1:0);gl.drawArrays(gl.TRIANGLES,0,3);}
+function frame(t){if(!paused){for(let i=0;i<steps;i++)sim();}render(t);requestAnimationFrame(frame);}
+function pos(e){const r=canvas.getBoundingClientRect();const p=e.touches?e.touches[0]:e;bx=(p.clientX-r.left)/r.width;by=1-(p.clientY-r.top)/r.height;}
+canvas.addEventListener('pointerdown',e=>{pointerDown=true;pos(e);canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(pointerDown)pos(e)});window.addEventListener('pointerup',()=>pointerDown=false);
+const $=id=>document.getElementById(id),feedEl=$('feed'),killEl=$('kill'),speedEl=$('speed'),glowEl=$('glow');
+function sync(){feed=+feedEl.value;kill=+killEl.value;steps=+speedEl.value;glow=+glowEl.value;$('feedv').textContent=feed.toFixed(4);$('killv').textContent=kill.toFixed(4);$('speedv').textContent=steps+'×';$('glowv').textContent=glow.toFixed(2);}
+[feedEl,killEl,speedEl,glowEl].forEach(e=>e.addEventListener('input',sync));sync();
+$('pause').onclick=()=>{paused=!paused;$('pause').textContent=paused?'Resume':'Pause';$('pause').classList.toggle('active',paused)};
+$('reset').onclick=setup;$('seed').onclick=()=>{pointerDown=true;let n=0;const timer=setInterval(()=>{bx=.12+Math.random()*.76;by=.12+Math.random()*.76;if(++n>22){clearInterval(timer);pointerDown=false}},25)};
+$('warp').onclick=()=>{living=!living;$('warp').classList.toggle('active',living)};
+document.querySelectorAll('.preset').forEach(b=>b.onclick=()=>{feedEl.value=b.dataset.f;killEl.value=b.dataset.k;sync();setup();});
+addEventListener('resize',()=>{clearTimeout(window._rz);window._rz=setTimeout(setup,180)});
+setup();requestAnimationFrame(frame);
+})();
+</script>
+<a href="./index.html" style="position:fixed;left:18px;bottom:18px;z-index:80;text-decoration:none;color:#cbd5e1;border:1px solid rgba(255,255,255,.10);background:rgba(3,5,14,.58);backdrop-filter:blur(10px);padding:7px 10px;border-radius:999px;font:11px Inter,system-ui,sans-serif">← MATH UNIVERSE</a>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Math Universe — Field</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#010207;color:#eef2ff}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.hud{position:fixed;left:18px;top:18px;width:min(410px,calc(100vw - 36px));padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(180deg,rgba(8,12,26,.82),rgba(3,5,14,.62));backdrop-filter:blur(16px);box-shadow:0 20px 70px rgba(0,0,0,.38);user-select:none}
+.kicker{font-size:12px;letter-spacing:.2em;font-weight:800;color:#cbd5e1}.hero{font-size:27px;font-weight:780;letter-spacing:-.03em;margin:4px 0}.sub{font-size:12px;line-height:1.5;color:#9ca3af;margin-bottom:12px}
+.row{display:grid;grid-template-columns:74px 1fr 58px;align-items:center;gap:9px;margin:8px 0;font-size:12px}.row label{color:#aab3c5}.value{text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#5eead4}
+.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.btn,.nav{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:#eef2ff;padding:8px 10px;border-radius:10px;font-size:12px;cursor:pointer;text-decoration:none}.btn:hover,.nav:hover{background:rgba(255,255,255,.1)}.btn.active{background:rgba(45,212,191,.17);border-color:rgba(45,212,191,.5)}
+.metric{margin-top:12px;padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:11px;color:#aeb8cf;line-height:1.55}.metric b{color:#fff}
+.eq{position:fixed;right:18px;bottom:18px;padding:10px 13px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(3,5,14,.52);backdrop-filter:blur(12px);font-size:11px;color:#aab4cc}.eq b{color:white}
+.tip{position:fixed;right:18px;top:18px;font-size:11px;color:#aeb8cf;padding:7px 10px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(3,5,14,.42);backdrop-filter:blur(10px)}
+@media(max-width:700px){.hud{left:12px;top:12px;width:calc(100vw - 24px);padding:13px}.hero{font-size:22px}.eq,.tip{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="hud">
+<div class="kicker">MATH UNIVERSE / 06</div>
+<div class="hero">FIELD · Flow Geometry</div>
+<div class="sub">把“每个位置都有一个方向和速度”的向量场直接变成粒子流。你看到的螺旋、分裂、吸引、排斥，都是局部微分规则的整体结果。</div>
+<div class="row"><label>Particles</label><input id="count" type="range" min="2000" max="16000" step="500" value="9000"><span class="value" id="countv">9000</span></div>
+<div class="row"><label>Speed</label><input id="speed" type="range" min=".2" max="3" step=".1" value="1"><span class="value" id="speedv">1.0×</span></div>
+<div class="row"><label>Trail</label><input id="trail" type="range" min=".015" max=".18" step=".005" value=".055"><span class="value" id="trailv">.055</span></div>
+<div class="row"><label>Glow</label><input id="glow" type="range" min=".5" max="2.5" step=".05" value="1.25"><span class="value" id="glowv">1.25</span></div>
+<div class="buttons">
+<button class="btn active" id="vortex">Vortex pair</button>
+<button class="btn" id="dipole">Dipole</button>
+<button class="btn" id="saddle">Saddle</button>
+<button class="btn" id="gyre">Double gyre</button>
+<button class="btn" id="reset">Reset</button>
+<a class="nav" href="./fractal.html">05 Fractal</a><a class="nav" href="./synchrony.html">07 Synchrony</a>
+</div>
+<div class="metric"><b>Field rule</b><br><span id="rule">两个旋涡叠加，粒子沿局部速度向量前进。</span></div>
+</div>
+<div class="tip">move pointer = perturb field · particles integrate the ODE</div>
+<div class="eq"><b>Flow</b>　d𝐱/dt = 𝐯(𝐱,t)</div>
+<script>
+(function(){
+var c=document.getElementById('c'),ctx=c.getContext('2d',{alpha:false});
+var W=innerWidth,H=innerHeight,dpr=1,count=9000,speed=1,trail=.055,glow=1.25,mode='vortex',time=0;
+var P=[],mx=0,my=0,mouse=false,last=performance.now();
+function resize(){dpr=Math.min(devicePixelRatio||1,1.5);c.width=Math.floor(innerWidth*dpr);c.height=Math.floor(innerHeight*dpr);c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);W=innerWidth;H=innerHeight;clear()}
+function clear(){ctx.globalCompositeOperation='source-over';ctx.fillStyle='#010207';ctx.fillRect(0,0,W,H)}
+function spawn(p){p.x=Math.random()*W;p.y=Math.random()*H;p.age=Math.random()*300;p.h=Math.random()}
+function build(){P=[];for(var i=0;i<count;i++){var p={};spawn(p);P.push(p)}clear()}
+function vortexField(x,y,cx,cy,s){
+ var dx=x-cx,dy=y-cy,r2=dx*dx+dy*dy+500;
+ return[-dy/r2*s,dx/r2*s]
+}
+function field(x,y,t){
+ var nx=(x-W/2)/Math.max(1,H),ny=(y-H/2)/Math.max(1,H),vx=0,vy=0;
+ if(mode==='vortex'){
+  var a=vortexField(x,y,W*.37,H*.5,19000),b=vortexField(x,y,W*.63,H*.5,-19000);vx=a[0]+b[0];vy=a[1]+b[1];
+  vx+=ny*.22;vy-=nx*.10;
+ }else if(mode==='dipole'){
+  var q1=[W*.42,H*.5,1],q2=[W*.58,H*.5,-1],qs=[q1,q2];
+  for(var i=0;i<2;i++){var q=qs[i],dx=x-q[0],dy=y-q[1],r2=dx*dx+dy*dy+900,inv=1/Math.pow(r2,1.5);vx+=q[2]*dx*18000*inv;vy+=q[2]*dy*18000*inv}
+ }else if(mode==='saddle'){
+  vx=nx*2.2;vy=-ny*2.2;
+  vx+=.32*Math.sin(ny*8+t*.45);vy+=.20*Math.sin(nx*7-t*.35);
+ }else{
+  var X=x/W,Y=y/H,A=.55,eps=.25,om=.55;
+  var a=eps*Math.sin(om*t),b=1-2*eps*Math.sin(om*t),f=a*X*X+b*X,df=2*a*X+b;
+  vx=-Math.PI*A*Math.sin(Math.PI*f)*Math.cos(Math.PI*Y);
+  vy=Math.PI*A*Math.cos(Math.PI*f)*Math.sin(Math.PI*Y)*df;
+  vx*=W/H;vx*=1.45;vy*=1.45;
+ }
+ if(mouse){
+  var dx=x-mx,dy=y-my,r2=dx*dx+dy*dy+1800,inv=1/Math.pow(r2,1.25);
+  vx+=-dy*1300*inv;vy+=dx*1300*inv;
+ }
+ return[vx,vy]
+}
+function step(dt){
+ time+=dt;
+ for(var i=0;i<P.length;i++){
+  var p=P[i],v1=field(p.x,p.y,time),mx1=p.x+v1[0]*dt*.5,my1=p.y+v1[1]*dt*.5,v2=field(mx1,my1,time+dt*.5);
+  p.x+=v2[0]*dt*speed*42;p.y+=v2[1]*dt*speed*42;p.age++;
+  if(p.x<0||p.x>W||p.y<0||p.y>H||p.age>900||!isFinite(p.x+p.y))spawn(p)
+ }
+}
+function draw(now){
+ var dt=Math.min(.035,(now-last)/1000);last=now;step(dt);
+ ctx.globalCompositeOperation='source-over';ctx.fillStyle='rgba(1,2,7,'+trail+')';ctx.fillRect(0,0,W,H);
+ ctx.globalCompositeOperation='lighter';
+ for(var band=0;band<3;band++){
+  if(band===0)ctx.fillStyle='rgba(45,212,191,'+(.12*glow)+')';
+  if(band===1)ctx.fillStyle='rgba(96,165,250,'+(.13*glow)+')';
+  if(band===2)ctx.fillStyle='rgba(217,70,239,'+(.10*glow)+')';
+  for(var i=band;i<P.length;i+=3){var p=P[i];ctx.fillRect(p.x,p.y,1.15,1.15)}
+ }
+ ctx.globalCompositeOperation='source-over';requestAnimationFrame(draw)
+}
+function setMode(m,id,text){mode=m;document.querySelectorAll('.buttons .btn').forEach(function(b){b.classList.remove('active')});document.getElementById(id).classList.add('active');document.getElementById('rule').textContent=text;build()}
+document.getElementById('count').onchange=function(){count=+this.value;document.getElementById('countv').textContent=count;build()};
+document.getElementById('speed').oninput=function(){speed=+this.value;document.getElementById('speedv').textContent=speed.toFixed(1)+'×'};
+document.getElementById('trail').oninput=function(){trail=+this.value;document.getElementById('trailv').textContent=trail.toFixed(3)};
+document.getElementById('glow').oninput=function(){glow=+this.value;document.getElementById('glowv').textContent=glow.toFixed(2)};
+document.getElementById('vortex').onclick=function(){setMode('vortex','vortex','两个旋涡叠加，粒子沿局部速度向量前进。')};
+document.getElementById('dipole').onclick=function(){setMode('dipole','dipole','一正一负两点源形成偶极场，流线从源发出并汇入汇。')};
+document.getElementById('saddle').onclick=function(){setMode('saddle','saddle','x 方向发散、y 方向收缩：经典鞍点的稳定与不稳定流形。')};
+document.getElementById('gyre').onclick=function(){setMode('gyre','gyre','随时间摆动的双涡流，展示非定常流中的混合与输运。')};
+document.getElementById('reset').onclick=build;
+c.addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY;mouse=true});c.addEventListener('pointerleave',function(){mouse=false});c.addEventListener('pointerenter',function(){mouse=true});
+window.addEventListener('resize',resize);resize();build();requestAnimationFrame(draw);
+})();
+</script>
+<a href="./index.html" style="position:fixed;left:18px;bottom:18px;z-index:80;text-decoration:none;color:#cbd5e1;border:1px solid rgba(255,255,255,.10);background:rgba(3,5,14,.58);backdrop-filter:blur(10px);padding:7px 10px;border-radius:999px;font:11px Inter,system-ui,sans-serif">← MATH UNIVERSE</a>
+</body>
+</html>

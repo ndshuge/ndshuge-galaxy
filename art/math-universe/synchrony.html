@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Math Universe — Synchrony</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#010207;color:#eef2ff}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.hud{position:fixed;left:18px;top:18px;width:min(415px,calc(100vw - 36px));padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(180deg,rgba(8,12,26,.82),rgba(3,5,14,.62));backdrop-filter:blur(16px);box-shadow:0 20px 70px rgba(0,0,0,.38);user-select:none}
+.kicker{font-size:12px;letter-spacing:.2em;font-weight:800;color:#cbd5e1}.hero{font-size:27px;font-weight:780;letter-spacing:-.03em;margin:4px 0}.sub{font-size:12px;line-height:1.5;color:#9ca3af;margin-bottom:12px}
+.row{display:grid;grid-template-columns:78px 1fr 58px;align-items:center;gap:9px;margin:8px 0;font-size:12px}.row label{color:#aab3c5}.value{text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#f472b6}
+.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.btn,.nav{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:#eef2ff;padding:8px 10px;border-radius:10px;font-size:12px;cursor:pointer;text-decoration:none}.btn:hover,.nav:hover{background:rgba(255,255,255,.1)}.btn.active{background:rgba(244,114,182,.17);border-color:rgba(244,114,182,.5)}
+.metric{margin-top:12px;padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:11px;color:#aeb8cf;line-height:1.55}.metric b{color:#fff}.bar{height:6px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;margin-top:7px}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#60a5fa,#c084fc,#f472b6,#fde68a);transition:width .08s linear}
+.eq{position:fixed;right:18px;bottom:18px;padding:10px 13px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(3,5,14,.52);backdrop-filter:blur(12px);font-size:11px;color:#aab4cc}.eq b{color:white}
+.tip{position:fixed;right:18px;top:18px;font-size:11px;color:#aeb8cf;padding:7px 10px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(3,5,14,.42);backdrop-filter:blur(10px)}
+@media(max-width:700px){.hud{left:12px;top:12px;width:calc(100vw - 24px);padding:13px}.hero{font-size:22px}.eq,.tip{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="hud">
+<div class="kicker">MATH UNIVERSE / 07</div>
+<div class="hero">SYNCHRONY · Phase Transition</div>
+<div class="sub">每个振子都有自己的天然频率，但又被所有其他振子的平均节奏轻微拉扯。耦合越强，它们会从“各唱各的”突然变成集体锁相。</div>
+<div class="row"><label>Coupling K</label><input id="K" type="range" min="0" max="5" step=".05" value=".8"><span class="value" id="Kv">0.80</span></div>
+<div class="row"><label>Spread σ</label><input id="spread" type="range" min=".05" max="1.8" step=".05" value=".85"><span class="value" id="spreadv">0.85</span></div>
+<div class="row"><label>Oscillators</label><input id="count" type="range" min="500" max="6000" step="250" value="3000"><span class="value" id="countv">3000</span></div>
+<div class="row"><label>Speed</label><input id="speed" type="range" min=".2" max="3" step=".1" value="1"><span class="value" id="speedv">1.0×</span></div>
+<div class="buttons">
+<button class="btn active" id="free">Free phase</button>
+<button class="btn" id="critical">Near critical</button>
+<button class="btn" id="lock">Lock phase</button>
+<button class="btn" id="reset">Reset</button>
+<a class="nav" href="./field.html">06 Field</a>
+</div>
+<div class="metric"><b>Order parameter r</b>：<b id="rv">0.00</b><div class="bar"><span id="rbar"></span></div><br>r≈0：群体无序　　r≈1：群体锁相</div>
+</div>
+<div class="tip">increase K and watch the collective rhythm emerge</div>
+<div class="eq"><b>Kuramoto</b>　dθᵢ/dt = ωᵢ + Kr sin(ψ−θᵢ)</div>
+<script>
+(function(){
+var c=document.getElementById('c'),ctx=c.getContext('2d',{alpha:false}),W=innerWidth,H=innerHeight,dpr=1;
+var N=3000,K=.8,spread=.85,speed=1,th=[],om=[],rad=[],band=[],last=performance.now(),r=0,psi=0;
+function resize(){dpr=Math.min(devicePixelRatio||1,1.5);c.width=Math.floor(innerWidth*dpr);c.height=Math.floor(innerHeight*dpr);c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);W=innerWidth;H=innerHeight}
+function randn(){var u=1-Math.random(),v=1-Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+function build(){th=[];om=[];rad=[];band=[];for(var i=0;i<N;i++){th[i]=Math.random()*Math.PI*2;om[i]=randn()*spread;rad[i]=.15+.82*Math.sqrt(Math.random());band[i]=Math.random()}ctx.fillStyle='#010207';ctx.fillRect(0,0,W,H)}
+function order(){
+ var sx=0,sy=0;for(var i=0;i<N;i++){sx+=Math.cos(th[i]);sy+=Math.sin(th[i])}sx/=N;sy/=N;r=Math.hypot(sx,sy);psi=Math.atan2(sy,sx)
+}
+function step(dt){order();for(var i=0;i<N;i++){th[i]+=(om[i]+K*r*Math.sin(psi-th[i]))*dt*speed}}
+function draw(now){
+ var dt=Math.min(.04,(now-last)/1000);last=now;step(dt);
+ ctx.globalCompositeOperation='source-over';ctx.fillStyle='rgba(1,2,7,.14)';ctx.fillRect(0,0,W,H);
+ ctx.globalCompositeOperation='lighter';
+ var cx=W*.57,cy=H*.53,R=Math.min(W,H)*.37;
+ for(var k=0;k<3;k++){
+  ctx.fillStyle=k===0?'rgba(96,165,250,.22)':k===1?'rgba(192,132,252,.20)':'rgba(244,114,182,.18)';
+  for(var i=k;i<N;i+=3){var rr=R*(.15+.84*rad[i]),a=th[i],x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;ctx.fillRect(x,y,1.2+1.2*r,1.2+1.2*r)}
+ }
+ ctx.globalCompositeOperation='source-over';
+ ctx.strokeStyle='rgba(255,255,255,'+(.12+.55*r)+')';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,R*.12,psi-.25,psi+.25);ctx.stroke();
+ var mx=cx+Math.cos(psi)*R*.18*r,my=cy+Math.sin(psi)*R*.18*r;ctx.fillStyle='rgba(255,255,255,'+(.2+.75*r)+')';ctx.beginPath();ctx.arc(mx,my,3+8*r,0,Math.PI*2);ctx.fill();
+ document.getElementById('rv').textContent=r.toFixed(3);document.getElementById('rbar').style.width=(r*100).toFixed(1)+'%';
+ requestAnimationFrame(draw)
+}
+function setPreset(k,id){K=k;document.getElementById('K').value=k;document.getElementById('Kv').textContent=k.toFixed(2);document.querySelectorAll('.buttons .btn').forEach(function(b){b.classList.remove('active')});document.getElementById(id).classList.add('active')}
+document.getElementById('K').oninput=function(){K=+this.value;document.getElementById('Kv').textContent=K.toFixed(2)};
+document.getElementById('spread').oninput=function(){spread=+this.value;document.getElementById('spreadv').textContent=spread.toFixed(2);build()};
+document.getElementById('count').onchange=function(){N=+this.value;document.getElementById('countv').textContent=N;build()};
+document.getElementById('speed').oninput=function(){speed=+this.value;document.getElementById('speedv').textContent=speed.toFixed(1)+'×'};
+document.getElementById('free').onclick=function(){setPreset(.35,'free')};document.getElementById('critical').onclick=function(){setPreset(1.65,'critical')};document.getElementById('lock').onclick=function(){setPreset(4.2,'lock')};document.getElementById('reset').onclick=build;
+window.addEventListener('resize',resize);resize();build();requestAnimationFrame(draw);
+})();
+</script>
+<a href="./index.html" style="position:fixed;left:18px;bottom:18px;z-index:80;text-decoration:none;color:#cbd5e1;border:1px solid rgba(255,255,255,.10);background:rgba(3,5,14,.58);backdrop-filter:blur(10px);padding:7px 10px;border-radius:999px;font:11px Inter,system-ui,sans-serif">← MATH UNIVERSE</a>
+</body>
+</html>

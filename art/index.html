@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#050514">
 <title>鼠哥艺术回廊 · NDSHUGE ART ARCADE</title>
-<meta name="description" content="环形回廊，六件作品挂在环上，你站在圆心。左右换作品，点进去就走进那件作品里。">
+<meta name="description" content="环形回廊，十六件作品挂在环上，你站在圆心。左右换作品，点进去就走进那件作品里。">
 <link rel="stylesheet" href="https://fontsapi.zeoseven.com/570/main/result.css" />
 <style>
 :root{--bg:#050514;--pink:#ff5c8a;--pink2:#ff9ec4;--gold:#ffd54f;--cyan:#00e5ff;--ink:#eafcff;--dim:rgba(150,215,255,.55)}
@@ -111,10 +111,13 @@ var WORKS=[
     href:'./chroma-noise/', c:'#c8ff28', g:'#ff3d81', like:'art-chroma-noise', motif:'chroma' },
   { no:'15', t:'色噪场 · 原版', en:'CHROMA / NOISE ORIGINAL', sub:'初代粒子场', medium:'交互生成艺术', year:'2026', fresh:true,
     line:'最初的版本原样保留：黑场、巨型字、彩色粒子与点击爆发。',
-    href:'./chroma-noise/original.html', c:'#735cff', g:'#c8ff28', like:'art-chroma-noise-original', motif:'chroma' }
+    href:'./chroma-noise/original.html', c:'#735cff', g:'#c8ff28', like:'art-chroma-noise-original', motif:'chroma' },
+  { no:'16', t:'数学宇宙', en:'MATH UNIVERSE', sub:'七重实时系统', medium:'交互数学装置', year:'2026', fresh:true,
+    line:'七个实时运行的数学世界：反应扩散、混沌、引力、波、分形、向量场与同步相变。',
+    href:'./math-universe/', c:'#7c5cff', g:'#67e8f9', like:'art-math-universe', motif:'math' },
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
-var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二','十三','十四','十五'];   /* 件数写中文；超过十三件要往下续，不然背面会写出 undefined */
+var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二','十三','十四','十五','十六'];   /* 件数写中文；超过十三件要往下续，不然背面会写出 undefined */
 
 /* ============ 引擎 ============ */
 var W=480,H=270,TAU=Math.PI*2;
@@ -386,6 +389,31 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
         ctx.fillStyle='rgba(255,92,138,.10)';ctx.fillRect(x,y,w,h);}
     }
     px(cx,cy,'rgba(234,252,255,.55)');px(cx-1,cy,'rgba(234,252,255,.3)');px(cx+1,cy,'rgba(234,252,255,.3)');
+  } else if(name==='math'){
+    /* 数学宇宙：七个世界压成一张牌——轨道、波、分形边界与同步相位 */
+    pbar(x,y,w,h,'#050711');
+    pEllipse(cx,cy,w*.31,h*.34,'rgba(103,232,249,.30)',1.25);
+    pEllipse(cx,cy,w*.20,h*.22,'rgba(124,92,255,.38)',1.15);
+    for(i=0;i<7;i++){
+      var ma=i/7*TAU+t*(0.16+0.018*i);
+      var rr=(i%2?w*.28:w*.18);
+      var mx2=cx+Math.cos(ma)*rr, my2=cy+Math.sin(ma)*h*.28;
+      pDisc(mx2,my2,i===0?1.8:1.2,i%2?wg:wc);
+      if(i<3)pdotLine(cx,cy,mx2,my2,'rgba(170,210,255,.18)',2.1);
+    }
+    for(j=0;j<w-4;j++){
+      var wy2=cy+Math.sin(j*.34-t*2.0)*h*.10;
+      px(x+2+j,wy2,j%3?'rgba(103,232,249,.62)':'rgba(244,114,182,.72)');
+    }
+    var zzx=cx-w*.34,zzy=y+h*.18,px0=zzx,py0=zzy;
+    for(i=0;i<15;i++){
+      var nx2=zzx+(i/14)*w*.68;
+      var ny2=zzy+Math.sin(i*.92+t*.35)*h*.055+i*h*.018;
+      if(i>0)pdotLine(px0,py0,nx2,ny2,'rgba(124,92,255,.34)',1.4);
+      px(nx2,ny2,'rgba(196,181,253,.75)');
+      px0=nx2;py0=ny2;
+    }
+    pDisc(cx,cy,2.1,'#ffffff');px(cx+3,cy,wg);px(cx-3,cy,wc);
   } else if(name==='lines'){
     /* 线场：几条规则各占一条带，互不加戏 */
     pbar(x,y,w,h,'#06080f');

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Math Universe</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#02040a;color:#eef2ff}
+body{min-height:100vh;overflow:auto;background:
+radial-gradient(circle at 15% 20%,rgba(99,102,241,.16),transparent 34%),
+radial-gradient(circle at 84% 18%,rgba(34,211,238,.12),transparent 32%),
+radial-gradient(circle at 65% 82%,rgba(217,70,239,.12),transparent 34%),
+#02040a}
+.wrap{width:min(1180px,calc(100% - 36px));margin:0 auto;padding:54px 0 70px}
+.kicker{font-size:12px;letter-spacing:.24em;font-weight:800;color:#a5b4fc}.title{font-size:clamp(38px,7vw,86px);line-height:.94;letter-spacing:-.055em;margin:9px 0 16px;font-weight:820}
+.lead{max-width:720px;color:#a8b2c7;line-height:1.7;font-size:15px;margin-bottom:34px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.card{position:relative;overflow:hidden;min-height:220px;padding:20px;border:1px solid rgba(255,255,255,.09);border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));text-decoration:none;color:inherit;transition:.25s transform,.25s border-color,.25s background}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.22);background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025))}
+.big{grid-column:span 7}.small{grid-column:span 5}.half{grid-column:span 6}
+.num{font-size:11px;letter-spacing:.2em;font-weight:800;color:#94a3b8}.name{font-size:28px;font-weight:760;letter-spacing:-.035em;margin:10px 0 8px}.desc{max-width:480px;color:#98a4bb;font-size:13px;line-height:1.55}
+.formula{position:absolute;right:18px;bottom:15px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;color:#718096}
+.orb{position:absolute;width:180px;height:180px;border-radius:50%;filter:blur(2px);opacity:.32;right:-45px;top:-55px;background:radial-gradient(circle at 35% 35%,#fff,rgba(99,102,241,.75) 12%,rgba(34,211,238,.22) 44%,transparent 70%)}
+.c2 .orb{background:radial-gradient(circle at 40% 40%,#fff,rgba(196,181,253,.75) 10%,rgba(59,130,246,.2) 44%,transparent 70%)}
+.c3 .orb{background:radial-gradient(circle at 40% 40%,#fff,rgba(103,232,249,.8) 11%,rgba(244,114,182,.22) 45%,transparent 70%)}
+.c4 .orb{background:repeating-radial-gradient(circle,rgba(103,232,249,.55) 0 3px,rgba(244,114,182,.18) 7px 11px,transparent 16px 24px)}
+.c5 .orb{background:conic-gradient(from 40deg,#2563eb,#d946ef,#22d3ee,#f59e0b,#2563eb);filter:blur(16px)}
+.footer{margin-top:22px;color:#697386;font-size:12px}
+@media(max-width:800px){.wrap{padding-top:34px}.big,.small,.half{grid-column:span 12}.card{min-height:190px}}
+</style>
+</head>
+<body>
+<a href="../" style="position:fixed;right:18px;top:18px;z-index:50;text-decoration:none;color:#cbd5e1;border:1px solid rgba(255,255,255,.12);background:rgba(3,5,14,.58);backdrop-filter:blur(10px);padding:8px 11px;border-radius:999px;font-size:11px">← ART ARCADE</a>
+<div class="wrap">
+<div class="kicker">INTERACTIVE MATHEMATICS LAB</div>
+<div class="title">MATH<br>UNIVERSE</div>
+<div class="lead">不是“播放数学动画”，而是让方程在你的电脑上实时运行。每个世界都可以拖动、改变参数、破坏初始条件，再看结构如何自己出现。</div>
+<div class="grid">
+<a class="card big c1" href="./reaction.html"><div class="orb"></div><div class="num">WORLD 01</div><div class="name">Reaction–Diffusion</div><div class="desc">两种物质的扩散与反应，自己长出细胞、珊瑚、迷宫与斑纹。</div><div class="formula">∂u/∂t = D∇²u − uv² + F(1−u)</div></a>
+<a class="card small c2" href="./chaos.html"><div class="orb"></div><div class="num">WORLD 02</div><div class="name">Chaos</div><div class="desc">几千颗粒子被 Lorenz 方程卷成蝴蝶风暴，并亲眼看到初始误差被指数放大。</div><div class="formula">dx/dt = σ(y−x)</div></a>
+<a class="card half c3" href="./gravity.html"><div class="orb"></div><div class="num">WORLD 03</div><div class="name">Gravity</div><div class="desc">三体、双星捕获、引力弹弓。恒星与数千尘埃由牛顿引力实时推进。</div><div class="formula">F = Gm₁m₂/r²</div></a>
+<a class="card half c4" href="./waves.html"><div class="orb"></div><div class="num">WORLD 04</div><div class="name">Waves</div><div class="desc">二维波动方程、双源干涉、双缝衍射与驻波。点击介质即可制造新扰动。</div><div class="formula">∂²u/∂t² = c²∇²u</div></a>
+<a class="card big c5" href="./fractal.html"><div class="orb"></div><div class="num">WORLD 05</div><div class="name">Fractal</div><div class="desc">Mandelbrot 与 Julia 集无限下潜。一个复数迭代规则，生成永远看不完的边界。</div><div class="formula">zₙ₊₁ = zₙ² + c</div></a>
+<a class="card small" href="./field.html"><div class="num">WORLD 06</div><div class="name">Field</div><div class="desc">把向量场直接变成粒子流：涡旋、偶极、鞍点与双涡混合，看到局部方向如何塑造整体结构。</div><div class="formula">d𝐱/dt = 𝐯(𝐱,t)</div></a>
+<a class="card half" href="./synchrony.html"><div class="num">WORLD 07</div><div class="name">Synchrony</div><div class="desc">几千个振子从各自乱转到集体锁相，直接看见耦合强度跨过临界点后的同步相变。</div><div class="formula">dθᵢ/dt = ωᵢ + Kr sin(ψ−θᵢ)</div></a></div>
+<div class="footer">7 REAL-TIME MATHEMATICAL WORLDS · INTERACTIVE GENERATIVE ART</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Math Universe — Chaos</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020308;color:#eef2ff}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.hud{position:fixed;left:18px;top:18px;width:min(395px,calc(100vw - 36px));padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(180deg,rgba(8,12,26,.78),rgba(3,5,14,.58));backdrop-filter:blur(16px);box-shadow:0 20px 70px rgba(0,0,0,.35);user-select:none}
+.kicker{font-size:12px;letter-spacing:.2em;font-weight:800;color:#cbd5e1}.hero{font-size:27px;font-weight:780;letter-spacing:-.03em;margin:4px 0}.sub{font-size:12px;line-height:1.5;color:#9ca3af;margin-bottom:12px}
+.row{display:grid;grid-template-columns:70px 1fr 54px;align-items:center;gap:9px;margin:8px 0;font-size:12px}.row label{color:#aab3c5}.value{text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#c4b5fd}
+.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.btn,.nav{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:#eef2ff;padding:8px 10px;border-radius:10px;font-size:12px;cursor:pointer;text-decoration:none}.btn:hover,.nav:hover{background:rgba(255,255,255,.1)}.btn.active{background:rgba(196,181,253,.18);border-color:rgba(196,181,253,.5)}
+.metric{margin-top:12px;padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:11px;color:#aeb8cf;line-height:1.55}.metric b{color:#fff}.bar{height:5px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#a78bfa,#60a5fa,#22d3ee);transition:width .1s}
+.eq{position:fixed;right:18px;bottom:18px;padding:10px 13px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(3,5,14,.52);backdrop-filter:blur(12px);font-size:11px;color:#aab4cc}.eq b{color:white}
+.tip{position:fixed;right:18px;top:18px;font-size:11px;color:#aeb8cf;padding:7px 10px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(3,5,14,.42);backdrop-filter:blur(10px)}
+@media(max-width:700px){.hud{left:12px;top:12px;width:calc(100vw - 24px);padding:13px}.hero{font-size:22px}.eq,.tip{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="hud">
+<div class="kicker">MATH UNIVERSE / 02</div>
+<div class="hero">CHAOS · Lorenz Storm</div>
+<div class="sub">每一个光点都遵守同一组三个微分方程。这里没有随机动画：蝴蝶形风暴是方程自己生成的。拖动画面旋转视角，滚轮缩放。</div>
+<div class="row"><label>ρ / Rho</label><input id="rho" type="range" min="18" max="42" step=".1" value="28"><span class="value" id="rhov">28.0</span></div>
+<div class="row"><label>Speed</label><input id="speed" type="range" min=".2" max="4" step=".1" value="1.5"><span class="value" id="speedv">1.5×</span></div>
+<div class="row"><label>Particles</label><input id="count" type="range" min="800" max="7000" step="200" value="4200"><span class="value" id="countv">4200</span></div>
+<div class="row"><label>Glow</label><input id="glow" type="range" min=".2" max="2" step=".05" value="1.1"><span class="value" id="glowv">1.10</span></div>
+<div class="buttons">
+<button class="btn active" id="auto">Auto orbit</button>
+<button class="btn" id="butterfly">Butterfly test</button>
+<button class="btn" id="reset">Reset storm</button>
+<a class="nav" href="./reaction.html">01 Reaction</a><a class="nav" href="./gravity.html">03 Gravity</a>
+</div>
+<div class="metric"><b>Butterfly effect</b><br>两颗测试粒子初始 x 只差 0.000001。当前距离：<b id="dist">—</b><div class="bar"><span id="distbar"></span></div></div>
+</div>
+<div class="tip">drag = rotate · wheel = zoom · real ODE simulation</div>
+<div class="eq"><b>Lorenz system</b>　dx/dt = σ(y−x)　 dy/dt = x(ρ−z)−y　 dz/dt = xy−βz</div>
+<script>
+(function(){
+var canvas=document.getElementById('c'),ctx=canvas.getContext('2d',{alpha:false});
+var rhoEl=document.getElementById('rho'),speedEl=document.getElementById('speed'),countEl=document.getElementById('count'),glowEl=document.getElementById('glow');
+var rho=28,speed=1.5,glow=1.1,N=4200,sigma=10,beta=8/3,dt=.0042;
+var X,Y,Z,seedHue,autoOrbit=true,yaw=.35,pitch=-.18,zoom=1,drag=false,lx=0,ly=0,last=performance.now(),special=false;
+var ax=1,ay=1,az=1,bx=1.000001,by=1,bz=1;
+function resize(){var d=Math.min(devicePixelRatio||1,1.5);canvas.width=Math.floor(innerWidth*d);canvas.height=Math.floor(innerHeight*d);ctx.setTransform(d,0,0,d,0,0);ctx.fillStyle='#020308';ctx.fillRect(0,0,innerWidth,innerHeight)}
+function stepOne(x,y,z,h){var dx=sigma*(y-x),dy=x*(rho-z)-y,dz=x*y-beta*z;return [x+dx*h,y+dy*h,z+dz*h]}
+function build(n){
+ N=n;X=new Float32Array(N);Y=new Float32Array(N);Z=new Float32Array(N);seedHue=new Uint8Array(N);
+ for(var i=0;i<N;i++){X[i]=(Math.random()-.5)*18;Y[i]=(Math.random()-.5)*18;Z[i]=10+Math.random()*26;seedHue[i]=Math.random()*8|0}
+ for(var k=0;k<170;k++)simulate(.0045);
+ ctx.fillStyle='#020308';ctx.fillRect(0,0,innerWidth,innerHeight)
+}
+function simulate(h){
+ for(var i=0;i<N;i++){
+  var x=X[i],y=Y[i],z=Z[i];
+  var dx=sigma*(y-x),dy=x*(rho-z)-y,dz=x*y-beta*z;
+  X[i]=x+dx*h;Y[i]=y+dy*h;Z[i]=z+dz*h;
+ }
+ if(special){
+  var a=stepOne(ax,ay,az,h),b=stepOne(bx,by,bz,h);
+  ax=a[0];ay=a[1];az=a[2];bx=b[0];by=b[1];bz=b[2];
+ }
+}
+function proj(x,y,z){
+ z-=25;
+ var cy=Math.cos(yaw),sy=Math.sin(yaw),cx=Math.cos(pitch),sx=Math.sin(pitch);
+ var x1=cy*x+sy*z,z1=-sy*x+cy*z;
+ var y1=cx*y-sx*z1,z2=sx*y+cx*z1;
+ var persp=1/(1+Math.max(-.65,z2/95));
+ var s=Math.min(innerWidth,innerHeight)*.0118*zoom*persp;
+ return [innerWidth*.5+x1*s,innerHeight*.52-y1*s,z2];
+}
+function draw(t){
+ var elapsed=Math.min(.04,(t-last)/1000);last=t;
+ if(autoOrbit)yaw+=elapsed*.13;
+ var steps=Math.max(1,Math.round(speed*2.2));
+ for(var s=0;s<steps;s++)simulate(dt);
+ ctx.globalCompositeOperation='source-over';ctx.fillStyle='rgba(2,3,8,.085)';ctx.fillRect(0,0,innerWidth,innerHeight);
+ ctx.globalCompositeOperation='lighter';
+ var bins=[[],[],[],[],[],[],[],[]];
+ for(var i=0;i<N;i++){var p=proj(X[i],Y[i],Z[i]);if(p[0]<-5||p[0]>innerWidth+5||p[1]<-5||p[1]>innerHeight+5)continue;var b=((Z[i]*.12+t*.00012)+seedHue[i])%8|0;bins[b].push(p)}
+ var colors=['rgba(120,90,255,.28)','rgba(99,102,241,.34)','rgba(59,130,246,.35)','rgba(34,211,238,.34)','rgba(45,212,191,.30)','rgba(244,114,182,.26)','rgba(217,70,239,.25)','rgba(167,139,250,.34)'];
+ for(var k=0;k<8;k++){ctx.fillStyle=colors[k];var a=bins[k];for(var j=0;j<a.length;j++){var p=a[j],r=1.05+glow*.75;ctx.fillRect(p[0]-r/2,p[1]-r/2,r,r)}}
+ if(special){
+  var pa=proj(ax,ay,az),pb=proj(bx,by,bz);
+  ctx.fillStyle='rgba(255,255,255,.95)';ctx.beginPath();ctx.arc(pa[0],pa[1],4.2,0,Math.PI*2);ctx.arc(pb[0],pb[1],4.2,0,Math.PI*2);ctx.fill();
+  var d=Math.hypot(ax-bx,ay-by,az-bz);document.getElementById('dist').textContent=d.toExponential(3);document.getElementById('distbar').style.width=Math.min(100,Math.max(1,(Math.log10(d+1e-9)+9)/10*100))+'%';
+ }
+ ctx.globalCompositeOperation='source-over';
+ requestAnimationFrame(draw);
+}
+rhoEl.oninput=function(){rho=+this.value;document.getElementById('rhov').textContent=rho.toFixed(1)};
+speedEl.oninput=function(){speed=+this.value;document.getElementById('speedv').textContent=speed.toFixed(1)+'×'};
+glowEl.oninput=function(){glow=+this.value;document.getElementById('glowv').textContent=glow.toFixed(2)};
+countEl.onchange=function(){document.getElementById('countv').textContent=this.value;build(+this.value)};
+document.getElementById('auto').onclick=function(){autoOrbit=!autoOrbit;this.classList.toggle('active',autoOrbit)};
+document.getElementById('reset').onclick=function(){build(+countEl.value)};
+document.getElementById('butterfly').onclick=function(){special=true;ax=1;ay=1;az=1;bx=1.000001;by=1;bz=1;document.getElementById('dist').textContent='1.000e-6';ctx.fillStyle='#020308';ctx.fillRect(0,0,innerWidth,innerHeight)};
+canvas.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;ly=e.clientY;canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointermove',function(e){if(!drag)return;yaw+=(e.clientX-lx)*.006;pitch=Math.max(-1.25,Math.min(1.25,pitch+(e.clientY-ly)*.006));lx=e.clientX;ly=e.clientY});
+window.addEventListener('pointerup',function(){drag=false});
+canvas.addEventListener('wheel',function(e){e.preventDefault();zoom=Math.max(.45,Math.min(2.4,zoom*Math.exp(-e.deltaY*.001)))},{passive:false});
+window.addEventListener('resize',resize);
+resize();build(N);requestAnimationFrame(draw);
+})();
+</script>
+<a href="./index.html" style="position:fixed;left:18px;bottom:18px;z-index:80;text-decoration:none;color:#cbd5e1;border:1px solid rgba(255,255,255,.10);background:rgba(3,5,14,.58);backdrop-filter:blur(10px);padding:7px 10px;border-radius:999px;font:11px Inter,system-ui,sans-serif">← MATH UNIVERSE</a>
+</body>
+</html>
