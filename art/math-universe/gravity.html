@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Math Universe — Gravity</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#010207;color:#eef2ff}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.hud{position:fixed;left:18px;top:18px;width:min(410px,calc(100vw - 36px));padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(180deg,rgba(8,12,26,.8),rgba(3,5,14,.6));backdrop-filter:blur(16px);box-shadow:0 20px 70px rgba(0,0,0,.38);user-select:none}
+.kicker{font-size:12px;letter-spacing:.2em;font-weight:800;color:#cbd5e1}.hero{font-size:27px;font-weight:780;letter-spacing:-.03em;margin:4px 0}.sub{font-size:12px;line-height:1.5;color:#9ca3af;margin-bottom:12px}
+.row{display:grid;grid-template-columns:72px 1fr 58px;align-items:center;gap:9px;margin:8px 0;font-size:12px}.row label{color:#aab3c5}.value{text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#93c5fd}
+.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.btn,.nav{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:#eef2ff;padding:8px 10px;border-radius:10px;font-size:12px;cursor:pointer;text-decoration:none}.btn:hover,.nav:hover{background:rgba(255,255,255,.1)}.btn.active{background:rgba(96,165,250,.18);border-color:rgba(96,165,250,.5)}
+.metric{margin-top:12px;padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:11px;color:#aeb8cf;line-height:1.55}.metric b{color:#fff}
+.eq{position:fixed;right:18px;bottom:18px;padding:10px 13px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(3,5,14,.52);backdrop-filter:blur(12px);font-size:11px;color:#aab4cc}.eq b{color:white}
+.tip{position:fixed;right:18px;top:18px;font-size:11px;color:#aeb8cf;padding:7px 10px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(3,5,14,.42);backdrop-filter:blur(10px)}
+@media(max-width:700px){.hud{left:12px;top:12px;width:calc(100vw - 24px);padding:13px}.hero{font-size:22px}.eq,.tip{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="hud">
+<div class="kicker">MATH UNIVERSE / 03</div>
+<div class="hero">GRAVITY · N-Body Rift</div>
+<div class="sub">三个恒星真实互相吸引；数千个尘埃粒子只受恒星引力影响。你看到的潮汐尾、捕获与甩飞，全部来自牛顿引力与数值积分。</div>
+<div class="row"><label>Gravity G</label><input id="g" type="range" min="0.2" max="2.2" step=".05" value="1"><span class="value" id="gv">1.00×</span></div>
+<div class="row"><label>Time</label><input id="speed" type="range" min=".5" max="15" step=".5" value="3"><span class="value" id="speedv">3.0×</span></div>
+<div class="row"><label>Dust</label><input id="dust" type="range" min="1200" max="7000" step="200" value="4200"><span class="value" id="dustv">4200</span></div>
+<div class="row"><label>Glow</label><input id="glow" type="range" min=".4" max="2.4" step=".05" value="1.3"><span class="value" id="glowv">1.30</span></div>
+<div class="buttons">
+<button class="btn active" id="three">Three-body</button>
+<button class="btn" id="binary">Binary capture</button>
+<button class="btn" id="sling">Slingshot</button>
+<button class="btn" id="reset">Reset</button>
+<a class="nav" href="./chaos.html">02 Chaos</a><a class="nav" href="./waves.html">04 Waves</a><a class="nav" href="./">00 Home</a>
+</div>
+<div class="metric"><b>Energy monitor</b><br>系统动能 K：<b id="ke">—</b>　势能 U：<b id="pe">—</b><br>总能量 E：<b id="te">—</b></div>
+</div>
+<div class="tip">drag = pan · wheel = zoom · double-click = inject dust</div>
+<div class="eq"><b>Newton</b>　F = Gm₁m₂/r²　　aᵢ = Σ Gmⱼ(rⱼ−rᵢ)/|rⱼ−rᵢ|³</div>
+<script>
+(function(){
+var c=document.getElementById('c'),ctx=c.getContext('2d',{alpha:false});
+var W=innerWidth,H=innerHeight,dpr=1;
+var bodies=[],dust=[],trail=[],mode='three',Gscale=1,timescale=3,glow=1.3,dustCount=4200;
+var panX=0,panY=0,zoom=1,drag=false,lx=0,ly=0,last=performance.now(),frameN=0;
+var BASEG=900,soft=35,dt=.02;
+var colors=['#8bd3ff','#c4b5fd','#ff9ad5'];
+function resize(){dpr=Math.min(devicePixelRatio||1,1.5);c.width=Math.floor(innerWidth*dpr);c.height=Math.floor(innerHeight*dpr);c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);W=innerWidth;H=innerHeight;ctx.fillStyle='#010207';ctx.fillRect(0,0,W,H)}
+function body(x,y,vx,vy,m,c){return{x:x,y:y,vx:vx,vy:vy,m:m,c:c}}
+function resetBodies(kind){
+ mode=kind;
+ if(kind==='three'){
+  bodies=[body(-170,-30,1.35,-.20,1.35,0),body(150,30,-1.05,.32,1.05,1),body(5,210,-.25,-1.45,.82,2)];
+ }else if(kind==='binary'){
+  bodies=[body(-130,0,0,-1.60,1.45,0),body(130,0,0,1.60,1.45,1),body(0,-360,2.20,0,.55,2)];
+ }else{
+  bodies=[body(-95,0,0,-1.88,1.5,0),body(95,0,0,1.88,1.5,1),body(-480,190,3.35,-.20,.22,2)];
+ }
+ buildDust(dustCount); trail=[]; ctx.fillStyle='#010207';ctx.fillRect(0,0,W,H)
+}
+function buildDust(n){
+ dust=[];
+ for(var i=0;i<n;i++){
+  var a=Math.random()*Math.PI*2,r=70+Math.pow(Math.random(),.52)*420;
+  var x=Math.cos(a)*r,y=Math.sin(a)*r;
+  var rr=Math.sqrt(x*x+y*y)+1;
+  var v=Math.sqrt(BASEG*2.0/rr)*.72;
+  var vx=-y/rr*v+(Math.random()-.5)*22,vy=x/rr*v+(Math.random()-.5)*22;
+  dust.push({x:x,y:y,vx:vx,vy:vy,life:1,h:(i%3)});
+ }
+}
+function gravAccel(x,y,exclude){
+ var ax=0,ay=0;
+ for(var j=0;j<bodies.length;j++){
+  if(j===exclude)continue;
+  var b=bodies[j],dx=b.x-x,dy=b.y-y,r2=dx*dx+dy*dy+soft*soft,inv=1/Math.pow(r2,1.5);
+  var s=BASEG*Gscale*b.m*inv;ax+=dx*s;ay+=dy*s;
+ }
+ return[ax,ay]
+}
+function step(h){
+ var acc=[];
+ for(var i=0;i<bodies.length;i++)acc.push(gravAccel(bodies[i].x,bodies[i].y,i));
+ for(var i=0;i<bodies.length;i++){var b=bodies[i];b.vx+=acc[i][0]*h;b.vy+=acc[i][1]*h;b.x+=b.vx*h;b.y+=b.vy*h}
+ for(var i=0;i<dust.length;i++){
+  var p=dust[i],a=gravAccel(p.x,p.y,-1);p.vx+=a[0]*h;p.vy+=a[1]*h;p.x+=p.vx*h;p.y+=p.vy*h;
+  var rr=p.x*p.x+p.y*p.y;
+  if(rr>1600000||!isFinite(rr)){respawn(p)}
+ }
+}
+function respawn(p){
+ var a=Math.random()*Math.PI*2,r=260+Math.random()*220;p.x=Math.cos(a)*r;p.y=Math.sin(a)*r;
+ var rr=Math.sqrt(p.x*p.x+p.y*p.y)+1,v=Math.sqrt(BASEG*2.0/rr)*.72;p.vx=-p.y/rr*v;p.vy=p.x/rr*v;p.h=Math.random()*3|0
+}
+function sx(x){return W*.5+panX+x*zoom}function sy(y){return H*.52+panY+y*zoom}
+function draw(t){
+ var el=Math.min(.05,(t-last)/1000);last=t;var steps=Math.max(1,Math.ceil(timescale*3));
+ for(var s=0;s<steps;s++)step(dt);
+ ctx.globalCompositeOperation='source-over';ctx.fillStyle='rgba(1,2,7,.075)';ctx.fillRect(0,0,W,H);
+ ctx.globalCompositeOperation='lighter';
+ var dcols=['rgba(80,180,255,.16)','rgba(170,130,255,.13)','rgba(255,100,190,.10)'];
+ for(var k=0;k<3;k++){ctx.fillStyle=dcols[k];for(var i=k;i<dust.length;i+=3){var p=dust[i],x=sx(p.x),y=sy(p.y);if(x<0||x>W||y<0||y>H)continue;var v=Math.hypot(p.vx,p.vy);var r=.7+Math.min(1.8,v/220)*glow;ctx.fillRect(x,y,r,r)}}
+ for(var i=0;i<bodies.length;i++){
+  var b=bodies[i],x=sx(b.x),y=sy(b.y),rad=(12+9*b.m)*Math.sqrt(zoom);
+  var g=ctx.createRadialGradient(x,y,0,x,y,rad*3.8);g.addColorStop(0,'rgba(255,255,255,.98)');g.addColorStop(.12,hexToRgba(colors[b.c],.95));g.addColorStop(.38,hexToRgba(colors[b.c],.28));g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,rad*3.8,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,Math.max(2,rad*.18),0,Math.PI*2);ctx.fill()
+ }
+ ctx.globalCompositeOperation='source-over';
+ if((frameN++%20)===0)updateEnergy();
+ requestAnimationFrame(draw)
+}
+function hexToRgba(h,a){var n=parseInt(h.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'}
+function updateEnergy(){
+ var K=0,U=0;
+ for(var i=0;i<bodies.length;i++){var b=bodies[i];K+=.5*b.m*(b.vx*b.vx+b.vy*b.vy)}
+ for(var i=0;i<bodies.length;i++)for(var j=i+1;j<bodies.length;j++){var a=bodies[i],b=bodies[j],r=Math.hypot(a.x-b.x,a.y-b.y)+1;U-=BASEG*Gscale*a.m*b.m/r}
+ document.getElementById('ke').textContent=K.toFixed(0);document.getElementById('pe').textContent=U.toFixed(0);document.getElementById('te').textContent=(K+U).toFixed(0)
+}
+document.getElementById('g').oninput=function(){Gscale=+this.value;document.getElementById('gv').textContent=Gscale.toFixed(2)+'×'};
+document.getElementById('speed').oninput=function(){timescale=+this.value;document.getElementById('speedv').textContent=timescale.toFixed(1)+'×'};
+document.getElementById('glow').oninput=function(){glow=+this.value;document.getElementById('glowv').textContent=glow.toFixed(2)};
+document.getElementById('dust').onchange=function(){dustCount=+this.value;document.getElementById('dustv').textContent=dustCount;buildDust(dustCount)};
+function setMode(m,id){document.querySelectorAll('.buttons .btn').forEach(function(x){x.classList.remove('active')});document.getElementById(id).classList.add('active');resetBodies(m)}
+document.getElementById('three').onclick=function(){setMode('three','three')};document.getElementById('binary').onclick=function(){setMode('binary','binary')};document.getElementById('sling').onclick=function(){setMode('sling','sling')};document.getElementById('reset').onclick=function(){resetBodies(mode)};
+c.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;ly=e.clientY;c.setPointerCapture(e.pointerId)});
+c.addEventListener('pointermove',function(e){if(!drag)return;panX+=e.clientX-lx;panY+=e.clientY-ly;lx=e.clientX;ly=e.clientY});
+window.addEventListener('pointerup',function(){drag=false});
+c.addEventListener('wheel',function(e){e.preventDefault();zoom=Math.max(.35,Math.min(2.7,zoom*Math.exp(-e.deltaY*.001)))},{passive:false});
+c.addEventListener('dblclick',function(e){var wx=(e.clientX-W*.5-panX)/zoom,wy=(e.clientY-H*.52-panY)/zoom;for(var i=0;i<220;i++){var a=Math.random()*Math.PI*2,r=Math.random()*35;var p={x:wx+Math.cos(a)*r,y:wy+Math.sin(a)*r,vx:(Math.random()-.5)*40,vy:(Math.random()-.5)*40,h:i%3};dust.push(p)}});
+window.addEventListener('resize',resize);resize();resetBodies('three');requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>

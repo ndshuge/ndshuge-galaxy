@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#050514">
 <title>鼠哥艺术回廊 · NDSHUGE ART ARCADE</title>
-<meta name="description" content="环形回廊，六件作品挂在环上，你站在圆心。左右换作品，点进去就走进那件作品里。">
+<meta name="description" content="环形回廊，十六件作品挂在环上，你站在圆心。左右换作品，点进去就走进那件作品里。">
 <link rel="stylesheet" href="https://fontsapi.zeoseven.com/570/main/result.css" />
 <style>
 :root{--bg:#050514;--pink:#ff5c8a;--pink2:#ff9ec4;--gold:#ffd54f;--cyan:#00e5ff;--ink:#eafcff;--dim:rgba(150,215,255,.55)}
@@ -111,10 +111,13 @@ var WORKS=[
     href:'./chroma-noise/', c:'#c8ff28', g:'#ff3d81', like:'art-chroma-noise', motif:'chroma' },
   { no:'15', t:'色噪场 · 原版', en:'CHROMA / NOISE ORIGINAL', sub:'初代粒子场', medium:'交互生成艺术', year:'2026', fresh:true,
     line:'最初的版本原样保留：黑场、巨型字、彩色粒子与点击爆发。',
-    href:'./chroma-noise/original.html', c:'#735cff', g:'#c8ff28', like:'art-chroma-noise-original', motif:'chroma' }
+    href:'./chroma-noise/original.html', c:'#735cff', g:'#c8ff28', like:'art-chroma-noise-original', motif:'chroma' },
+  { no:'16', t:'数学宇宙', en:'MATH UNIVERSE', sub:'七个世界', medium:'交互数学装置', year:'2026', fresh:true,
+    line:'七个数学系统在浏览器里实时运行；拖动参数，看方程自己长成世界。',
+    href:'./math-universe/', c:'#60a5fa', g:'#c084fc', like:'art-math-universe', motif:'math' }
 ];
 var N=WORKS.length, STEP=Math.PI*2/N;
-var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二','十三','十四','十五'];   /* 件数写中文；超过十三件要往下续，不然背面会写出 undefined */
+var CN=['零','一','二','三','四','五','六','七','八','九','十','十一','十二','十三','十四','十五','十六'];   /* 件数写中文；新增作品时同步往下续，不然背面会写出 undefined */
 
 /* ============ 引擎 ============ */
 var W=480,H=270,TAU=Math.PI*2;
@@ -658,6 +661,32 @@ function drawMotif(name,x,y,w,h,t,wc,wg){
     pdotLine(x+4,cy,x+w-5,cy,'rgba(255,255,255,.22)',2.8);
     pbar(x,y,w,1,'rgba(200,255,40,.24)');
     pbar(x,y+h-1,w,1,'rgba(255,61,129,.18)');
+  } else if(name==='math'){
+    /* 数学宇宙：分形枝、吸引子蝶翼、轨道与波纹压进同一张像素牌位。 */
+    pbar(x,y,w,h,'#030711');
+    var mR=Math.min(w,h),mPulse=0.5+0.5*Math.sin(t*1.35);
+    for(i=0;i<3;i++){
+      var mr=mR*(0.18+i*0.13+mPulse*0.012);
+      pEllipse(cx,cy,mr,mr*0.58,i===0?hexA(wg,.42):hexA(wc,.22-i*.04),1.2);
+    }
+    for(i=0;i<56;i++){
+      var ma=i/55*TAU*2;
+      var mx1=cx+Math.sin(ma*2)*Math.cos(ma)*w*.28;
+      var my1=cy+Math.sin(ma)*h*.23;
+      px(mx1,my1,i%7===0?'#ffffff':(i%2?wg:wc));
+    }
+    for(i=0;i<12;i++){
+      var oa=i/12*TAU+t*.22,or=mR*(.20+(i%3)*.055);
+      var ox=cx+Math.cos(oa)*or,oy=cy+Math.sin(oa)*or*.58;
+      px(ox,oy,i%3===0?'#67e8f9':(i%3===1?'#c084fc':'#60a5fa'));
+    }
+    for(j=0;j<w-8;j++){
+      var wy=cy+h*.31+Math.sin(j*.45-t*2.1)*1.25;
+      if(j%2===0)px(x+4+j,wy,'rgba(103,232,249,.65)');
+    }
+    px(cx,cy,'#ffffff');px(cx+1,cy,wg);
+    pbar(x,y,w,1,hexA(wc,.22));
+    pbar(x,y+h-1,w,1,hexA(wg,.15));
   } else {
     /* 深渊：从水面到 2640 米，声呐一路向下ping */
     for(i=0;i<14;i++){

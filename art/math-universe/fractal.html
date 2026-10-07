@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Math Universe — Fractal</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#010207;color:#eef2ff}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.hud{position:fixed;left:18px;top:18px;width:min(410px,calc(100vw - 36px));padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(180deg,rgba(8,12,26,.82),rgba(3,5,14,.62));backdrop-filter:blur(16px);box-shadow:0 20px 70px rgba(0,0,0,.38);user-select:none}
+.kicker{font-size:12px;letter-spacing:.2em;font-weight:800;color:#cbd5e1}.hero{font-size:27px;font-weight:780;letter-spacing:-.03em;margin:4px 0}.sub{font-size:12px;line-height:1.5;color:#9ca3af;margin-bottom:12px}
+.row{display:grid;grid-template-columns:74px 1fr 58px;align-items:center;gap:9px;margin:8px 0;font-size:12px}.row label{color:#aab3c5}.value{text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#f0abfc}
+.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.btn,.nav{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:#eef2ff;padding:8px 10px;border-radius:10px;font-size:12px;cursor:pointer;text-decoration:none}.btn:hover,.nav:hover{background:rgba(255,255,255,.1)}.btn.active{background:rgba(217,70,239,.17);border-color:rgba(217,70,239,.5)}
+.metric{margin-top:12px;padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:11px;color:#aeb8cf;line-height:1.55}.metric b{color:#fff}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.eq{position:fixed;right:18px;bottom:18px;padding:10px 13px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(3,5,14,.52);backdrop-filter:blur(12px);font-size:11px;color:#aab4cc}.eq b{color:white}
+.tip{position:fixed;right:18px;top:18px;font-size:11px;color:#aeb8cf;padding:7px 10px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(3,5,14,.42);backdrop-filter:blur(10px)}
+@media(max-width:700px){.hud{left:12px;top:12px;width:calc(100vw - 24px);padding:13px}.hero{font-size:22px}.eq,.tip{display:none}}
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="hud">
+<div class="kicker">MATH UNIVERSE / 05</div>
+<div class="hero">FRACTAL · Infinite Descent</div>
+<div class="sub">只重复一个规则：z ← z² + c。逃逸与不逃逸的边界，却会长出近乎无限的细节。滚轮以鼠标指针为中心放大，拖动平移。</div>
+<div class="row"><label>Iterations</label><input id="iter" type="range" min="80" max="700" step="10" value="360"><span class="value" id="iterv">360</span></div>
+<div class="row"><label>Exposure</label><input id="exp" type="range" min=".5" max="2.5" step=".05" value="1.25"><span class="value" id="expv">1.25</span></div>
+<div class="row"><label>Palette</label><input id="pal" type="range" min="0" max="6.28" step=".01" value=".55"><span class="value" id="palv">.55</span></div>
+<div class="row"><label>Dive speed</label><input id="diveSpeed" type="range" min=".2" max="2.5" step=".1" value=".8"><span class="value" id="divev">.8×</span></div>
+<div class="buttons">
+<button class="btn active" id="mandel">Mandelbrot</button>
+<button class="btn" id="julia">Julia</button>
+<button class="btn" id="seahorse">Seahorse valley</button>
+<button class="btn" id="dive">Auto dive</button>
+<button class="btn" id="reset">Reset</button>
+<a class="nav" href="./waves.html">04 Waves</a><a class="nav" href="./field.html">06 Field</a><a class="nav" href="./">00 Home</a>
+</div>
+<div class="metric"><b>Current window</b><br>Zoom：<b id="zoomv" class="mono">1.00×</b><br>Center：<b id="centerv" class="mono">(-0.500000, 0.000000)</b></div>
+</div>
+<div class="tip">wheel = zoom at cursor · drag = pan · GPU iteration</div>
+<div class="eq"><b>Mandelbrot / Julia</b>　zₙ₊₁ = zₙ² + c</div>
+<script>
+(function(){
+var canvas=document.getElementById('gl');
+var gl=canvas.getContext('webgl2',{antialias:false,alpha:false,powerPreference:'high-performance'});
+if(!gl){document.body.innerHTML='<div style="padding:40px;color:white">需要 WebGL2。</div>';return}
+var vs='#version 300 es\nprecision highp float;\nconst vec2 P[3]=vec2[](vec2(-1.,-1.),vec2(3.,-1.),vec2(-1.,3.));\nvoid main(){gl_Position=vec4(P[gl_VertexID],0.,1.);}\n';
+var fs='#version 300 es\nprecision highp float;\nout vec4 frag;\nuniform vec2 u_res;uniform vec2 u_center;uniform float u_zoom;uniform int u_iter;uniform float u_exp;uniform float u_pal;uniform int u_mode;uniform vec2 u_julia;\nvec3 palette(float t){vec3 a=vec3(.16,.12,.22);vec3 b=vec3(.58,.48,.62);vec3 c=vec3(1.0);vec3 d=vec3(.08,.20,.38)+vec3(u_pal*.06,u_pal*.025,-u_pal*.02);return a+b*cos(6.283185*(c*t+d));}\nvoid main(){vec2 uv=(gl_FragCoord.xy-.5*u_res)/u_res.y;vec2 p=u_center+uv/u_zoom;vec2 z;vec2 c;if(u_mode==0){z=vec2(0.);c=p;}else{z=p;c=u_julia;}float fi=0.;bool escaped=false;for(int i=0;i<700;i++){if(i>=u_iter)break;float x=z.x*z.x-z.y*z.y+c.x;float y=2.*z.x*z.y+c.y;z=vec2(x,y);if(dot(z,z)>256.){fi=float(i)+1.-log2(log2(length(z)));escaped=true;break;}}if(!escaped){frag=vec4(.002,.003,.009,1.);return;}float t=.028*fi+.06*log2(u_zoom+1.);vec3 col=palette(t);float edge=.55+.45*cos(fi*.42);col*=mix(.55,1.35,edge);col=1.-exp(-col*u_exp);col=pow(max(col,0.),vec3(.84));frag=vec4(col,1.);}\n';
+function sh(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s}
+var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);if(!gl.getProgramParameter(pr,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(pr));
+var vao=gl.createVertexArray();gl.bindVertexArray(vao);gl.useProgram(pr);
+var center=[-.6,0],zoom=.45,iter=360,exposure=1.25,pal=.55,mode=0,julia=[-.745,.113],auto=false,diveSpeed=.8,drag=false,lx=0,ly=0,last=performance.now();
+function U1(n,v){gl.uniform1f(gl.getUniformLocation(pr,n),v)}function UI(n,v){gl.uniform1i(gl.getUniformLocation(pr,n),v)}function U2(n,a,b){gl.uniform2f(gl.getUniformLocation(pr,n),a,b)}
+function resize(){var d=Math.min(devicePixelRatio||1,1.5);canvas.width=Math.floor(innerWidth*d);canvas.height=Math.floor(innerHeight*d);canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';gl.viewport(0,0,canvas.width,canvas.height)}
+function render(now){
+ var dt=Math.min(.05,(now-last)/1000);last=now;
+ if(auto){
+  var tx=-.743643887,ty=.131825904,targetZoom=420000;
+  var k=1-Math.exp(-dt*.9*diveSpeed);center[0]+=(tx-center[0])*k;center[1]+=(ty-center[1])*k;zoom*=Math.exp(dt*1.15*diveSpeed);if(zoom>targetZoom){zoom=targetZoom;auto=false;document.getElementById('dive').classList.remove('active')}
+ }
+ gl.useProgram(pr);U2('u_res',canvas.width,canvas.height);U2('u_center',center[0],center[1]);U1('u_zoom',zoom);UI('u_iter',iter);U1('u_exp',exposure);U1('u_pal',pal);UI('u_mode',mode);U2('u_julia',julia[0],julia[1]);gl.drawArrays(gl.TRIANGLES,0,3);
+ document.getElementById('zoomv').textContent=zoom<1000?zoom.toFixed(2)+'×':zoom.toExponential(3)+'×';document.getElementById('centerv').textContent='('+center[0].toFixed(6)+', '+center[1].toFixed(6)+')';
+ requestAnimationFrame(render)
+}
+function setMode(m,id){mode=m;document.querySelectorAll('.buttons .btn').forEach(function(b){b.classList.remove('active')});document.getElementById(id).classList.add('active');auto=false;if(m===0){center=[-.6,0];zoom=.45}else{center=[0,0];zoom=1.15}}
+document.getElementById('iter').oninput=function(){iter=+this.value;document.getElementById('iterv').textContent=iter};
+document.getElementById('exp').oninput=function(){exposure=+this.value;document.getElementById('expv').textContent=exposure.toFixed(2)};
+document.getElementById('pal').oninput=function(){pal=+this.value;document.getElementById('palv').textContent=pal.toFixed(2)};
+document.getElementById('diveSpeed').oninput=function(){diveSpeed=+this.value;document.getElementById('divev').textContent=diveSpeed.toFixed(1)+'×'};
+document.getElementById('mandel').onclick=function(){setMode(0,'mandel')};document.getElementById('julia').onclick=function(){setMode(1,'julia')};
+document.getElementById('seahorse').onclick=function(){mode=0;center=[-.743643887,.131825904];zoom=650;auto=false};
+document.getElementById('dive').onclick=function(){mode=0;auto=!auto;this.classList.toggle('active',auto)};
+document.getElementById('reset').onclick=function(){mode=0;center=[-.6,0];zoom=.45;auto=false;document.getElementById('dive').classList.remove('active')};
+canvas.addEventListener('wheel',function(e){e.preventDefault();auto=false;var r=canvas.getBoundingClientRect(),mx=(e.clientX-r.left)/r.width-.5,my=.5-(e.clientY-r.top)/r.height;var aspect=r.width/r.height;var before=[center[0]+mx*aspect/zoom,center[1]+my/zoom];var f=Math.exp(-e.deltaY*.0012);zoom=Math.max(.35,Math.min(500000,zoom*f));var after=[center[0]+mx*aspect/zoom,center[1]+my/zoom];center[0]+=before[0]-after[0];center[1]+=before[1]-after[1]},{passive:false});
+canvas.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;ly=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',function(e){if(!drag)return;var r=canvas.getBoundingClientRect();center[0]-=(e.clientX-lx)/r.height/zoom;center[1]+=(e.clientY-ly)/r.height/zoom;lx=e.clientX;ly=e.clientY;auto=false});window.addEventListener('pointerup',function(){drag=false});
+window.addEventListener('resize',resize);resize();requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>

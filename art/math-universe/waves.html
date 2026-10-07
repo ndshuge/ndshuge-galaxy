@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Math Universe — Waves</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#010207;color:#eef2ff}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;image-rendering:auto}
+.hud{position:fixed;left:18px;top:18px;width:min(410px,calc(100vw - 36px));padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:linear-gradient(180deg,rgba(8,12,26,.82),rgba(3,5,14,.62));backdrop-filter:blur(16px);box-shadow:0 20px 70px rgba(0,0,0,.38);user-select:none}
+.kicker{font-size:12px;letter-spacing:.2em;font-weight:800;color:#cbd5e1}.hero{font-size:27px;font-weight:780;letter-spacing:-.03em;margin:4px 0}.sub{font-size:12px;line-height:1.5;color:#9ca3af;margin-bottom:12px}
+.row{display:grid;grid-template-columns:74px 1fr 58px;align-items:center;gap:9px;margin:8px 0;font-size:12px}.row label{color:#aab3c5}.value{text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#67e8f9}
+.buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.btn,.nav{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);color:#eef2ff;padding:8px 10px;border-radius:10px;font-size:12px;cursor:pointer;text-decoration:none}.btn:hover,.nav:hover{background:rgba(255,255,255,.1)}.btn.active{background:rgba(34,211,238,.16);border-color:rgba(34,211,238,.5)}
+.metric{margin-top:12px;padding:10px 11px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:11px;color:#aeb8cf;line-height:1.55}.metric b{color:#fff}
+.eq{position:fixed;right:18px;bottom:18px;padding:10px 13px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(3,5,14,.52);backdrop-filter:blur(12px);font-size:11px;color:#aab4cc}.eq b{color:white}
+.tip{position:fixed;right:18px;top:18px;font-size:11px;color:#aeb8cf;padding:7px 10px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(3,5,14,.42);backdrop-filter:blur(10px)}
+@media(max-width:700px){.hud{left:12px;top:12px;width:calc(100vw - 24px);padding:13px}.hero{font-size:22px}.eq,.tip{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="hud">
+<div class="kicker">MATH UNIVERSE / 04</div>
+<div class="hero">WAVES · Interference Field</div>
+<div class="sub">实时求解二维波动方程。点击水面制造扰动；双源会产生干涉条纹，双缝会让一束波在障碍后重新展开成衍射图样。</div>
+<div class="row"><label>Frequency</label><input id="freq" type="range" min=".4" max="3.5" step=".05" value="1.45"><span class="value" id="freqv">1.45×</span></div>
+<div class="row"><label>Damping</label><input id="damp" type="range" min=".990" max=".9999" step=".0001" value=".9975"><span class="value" id="dampv">.9975</span></div>
+<div class="row"><label>Speed c</label><input id="speed" type="range" min=".15" max=".46" step=".01" value=".31"><span class="value" id="speedv">.31</span></div>
+<div class="row"><label>Glow</label><input id="glow" type="range" min=".5" max="2.4" step=".05" value="1.35"><span class="value" id="glowv">1.35</span></div>
+<div class="buttons">
+<button class="btn active" id="interference">Two-source</button>
+<button class="btn" id="slits">Double-slit</button>
+<button class="btn" id="standing">Standing wave</button>
+<button class="btn" id="clear">Clear</button>
+<a class="nav" href="./gravity.html">03 Gravity</a><a class="nav" href="./fractal.html">05 Fractal</a><a class="nav" href="./">00 Home</a>
+</div>
+<div class="metric"><b>Superposition</b><br>蓝色 = 正位移，紫红 = 负位移；明亮细线是波峰/波谷相遇后的干涉结构。</div>
+</div>
+<div class="tip">click / drag = disturb medium · real finite-difference solver</div>
+<div class="eq"><b>2D wave equation</b>　∂²u/∂t² = c²(∂²u/∂x² + ∂²u/∂y²)</div>
+<script>
+(function(){
+var c=document.getElementById('c'),ctx=c.getContext('2d',{alpha:false}),off=document.createElement('canvas'),octx=off.getContext('2d');
+var NX=260,NY=165,N=NX*NY;off.width=NX;off.height=NY;var img=octx.createImageData(NX,NY);
+var u=new Float32Array(N),prev=new Float32Array(N),next=new Float32Array(N),barrier=new Uint8Array(N);
+var mode='interference',freq=1.45,damp=.9975,cs=.31,glow=1.35,t=0,down=false,lastX=0,lastY=0;
+function I(x,y){return y*NX+x}
+function clearAll(){u.fill(0);prev.fill(0);next.fill(0);barrier.fill(0);if(mode==='slits')makeSlits()}
+function makeSlits(){
+ barrier.fill(0);var bx=Math.floor(NX*.54),mid=NY>>1;
+ for(var y=7;y<NY-7;y++){var open=(Math.abs(y-(mid-25))<7)||(Math.abs(y-(mid+25))<7);if(!open){for(var dx=-1;dx<=1;dx++)barrier[I(bx+dx,y)]=1}}
+}
+function setMode(m,id){mode=m;document.querySelectorAll('.buttons .btn').forEach(function(b){b.classList.remove('active')});document.getElementById(id).classList.add('active');clearAll()}
+function source(x,y,amp,r){
+ for(var yy=Math.max(1,y-r);yy<Math.min(NY-1,y+r);yy++)for(var xx=Math.max(1,x-r);xx<Math.min(NX-1,x+r);xx++){var dx=xx-x,dy=yy-y,d=Math.sqrt(dx*dx+dy*dy);if(d<r){var w=.5+.5*Math.cos(Math.PI*d/r);u[I(xx,yy)]+=amp*w}}
+}
+function step(){
+ var c2=cs*cs;
+ for(var y=1;y<NY-1;y++)for(var x=1;x<NX-1;x++){
+  var id=I(x,y);if(barrier[id]){next[id]=0;continue}
+  var lap=u[id-1]+u[id+1]+u[id-NX]+u[id+NX]-4*u[id];
+  next[id]=(2*u[id]-prev[id]+c2*lap)*damp;
+ }
+ for(var x=0;x<NX;x++){next[I(x,0)]=0;next[I(x,NY-1)]=0}
+ for(var y=0;y<NY;y++){next[I(0,y)]=0;next[I(NX-1,y)]=0}
+ var tmp=prev;prev=u;u=next;next=tmp;t+=.105*freq;
+ if(mode==='interference'){source(Math.floor(NX*.40),Math.floor(NY*.42),Math.sin(t)*.55,3);source(Math.floor(NX*.40),Math.floor(NY*.58),Math.sin(t)*.55,3)}
+ else if(mode==='slits'){source(Math.floor(NX*.18),NY>>1,Math.sin(t)*.78,4)}
+ else if(mode==='standing'){var mid=NY>>1;source(Math.floor(NX*.28),mid,Math.sin(t)*.55,3);source(Math.floor(NX*.72),mid,Math.sin(t+Math.PI)*.55,3)}
+}
+function color(){
+ var d=img.data;
+ for(var i=0;i<N;i++){
+  var q=Math.max(-1.2,Math.min(1.2,u[i]*2.4)),a=Math.min(1,Math.abs(q))*glow;
+  var p=i*4;
+  if(barrier[i]){d[p]=225;d[p+1]=235;d[p+2]=255;d[p+3]=255;continue}
+  if(q>=0){d[p]=8+Math.min(247,30*a);d[p+1]=10+Math.min(245,130*a);d[p+2]=20+Math.min(235,255*a)}
+  else{d[p]=10+Math.min(245,245*a);d[p+1]=7+Math.min(220,50*a);d[p+2]=24+Math.min(230,210*a)}
+  var lum=Math.min(110,Math.abs(q)*90*glow);d[p]=Math.min(255,d[p]+lum);d[p+1]=Math.min(255,d[p+1]+lum);d[p+2]=Math.min(255,d[p+2]+lum);d[p+3]=255
+ }
+ octx.putImageData(img,0,0)
+}
+function draw(){
+ for(var k=0;k<3;k++)step();color();ctx.imageSmoothingEnabled=true;ctx.drawImage(off,0,0,c.width/(devicePixelRatio||1),c.height/(devicePixelRatio||1));requestAnimationFrame(draw)
+}
+function resize(){var d=Math.min(devicePixelRatio||1,1.5);c.width=Math.floor(innerWidth*d);c.height=Math.floor(innerHeight*d);c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';ctx.setTransform(d,0,0,d,0,0)}
+function disturb(e){
+ var r=c.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*NX),y=Math.floor((e.clientY-r.top)/r.height*NY);source(x,y,1.2,7);lastX=x;lastY=y
+}
+c.addEventListener('pointerdown',function(e){down=true;disturb(e);c.setPointerCapture(e.pointerId)});c.addEventListener('pointermove',function(e){if(down)disturb(e)});window.addEventListener('pointerup',function(){down=false});
+document.getElementById('freq').oninput=function(){freq=+this.value;document.getElementById('freqv').textContent=freq.toFixed(2)+'×'};
+document.getElementById('damp').oninput=function(){damp=+this.value;document.getElementById('dampv').textContent=damp.toFixed(4)};
+document.getElementById('speed').oninput=function(){cs=+this.value;document.getElementById('speedv').textContent=cs.toFixed(2)};
+document.getElementById('glow').oninput=function(){glow=+this.value;document.getElementById('glowv').textContent=glow.toFixed(2)};
+document.getElementById('interference').onclick=function(){setMode('interference','interference')};document.getElementById('slits').onclick=function(){setMode('slits','slits')};document.getElementById('standing').onclick=function(){setMode('standing','standing')};document.getElementById('clear').onclick=clearAll;
+window.addEventListener('resize',resize);resize();clearAll();for(var warm=0;warm<150;warm++)step();requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
