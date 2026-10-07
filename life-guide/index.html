@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111b">
+<title>人生罗盘 · 鼠哥星系</title>
+<style>
+:root{
+  --bg:#07111b;--bg2:#0b1723;--panel:#0e1c29;--panel2:#122433;
+  --paper:#f4f0e5;--ink:#14201c;--text:#eaf7f2;--muted:#8da8a2;
+  --line:rgba(163,220,202,.16);--green:#7cf7c4;--lime:#d5ed9e;--cyan:#76d7ff;
+  --gold:#efc76d;--rose:#ff9d9d;--shadow:0 20px 60px rgba(0,0,0,.28)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+ radial-gradient(circle at 15% 5%,rgba(44,158,132,.14),transparent 32rem),
+ radial-gradient(circle at 86% 18%,rgba(53,133,190,.12),transparent 28rem),
+ linear-gradient(180deg,var(--bg),#061019 70%,#040b11);
+ color:var(--text);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.2;
+ background-image:radial-gradient(#fff 0.6px,transparent .8px);background-size:29px 29px}
+a{color:inherit}
+button,select,input{font:inherit}
+.shell{max-width:1240px;margin:auto;padding:0 18px}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(7,17,27,.84);backdrop-filter:blur(18px);
+ border-bottom:1px solid var(--line)}
+.toprow{min-height:64px;display:flex;align-items:center;gap:14px}
+.back{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--muted);white-space:nowrap}
+.back:hover{color:var(--green)}
+.brand{font-weight:850;letter-spacing:.04em;white-space:nowrap}
+.brand i{font-style:normal;color:var(--green)}
+.search{flex:1;display:flex;align-items:center;min-width:120px;border:1px solid var(--line);
+ border-radius:14px;background:rgba(255,255,255,.055);overflow:hidden}
+.search input{width:100%;padding:11px 13px;border:0;outline:0;background:transparent;color:var(--text);font-size:16px}
+.search input::placeholder{color:#708882}
+.hero{padding:40px 0 16px;position:relative}
+.kicker{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.hero h1{font-size:clamp(32px,6vw,64px);line-height:1.02;letter-spacing:-.045em;margin:8px 0 14px;max-width:900px}
+.hero p{max-width:850px;color:#afc3bd;font-size:16px;margin:0}
+.hero strong{color:var(--lime)}
+.sourcebar{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);border-radius:999px;padding:5px 9px;font-size:12px;color:#a9c5bd;background:rgba(255,255,255,.035)}
+.dashboard{display:grid;grid-template-columns:1.25fr .75fr;gap:14px;margin:18px 0}
+.panel{background:linear-gradient(180deg,rgba(18,36,51,.92),rgba(11,25,36,.92));border:1px solid var(--line);
+ border-radius:20px;box-shadow:var(--shadow)}
+.timeline{padding:16px}
+.timeline-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:13px}
+.timeline-head h2{font-size:16px;margin:0}.subtle{font-size:12px;color:var(--muted)}
+.timeline-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.stage{appearance:none;text-align:left;padding:13px;border-radius:15px;border:1px solid var(--line);
+ background:rgba(255,255,255,.03);color:var(--text);cursor:pointer;transition:.18s}
+.stage:hover{transform:translateY(-1px);border-color:rgba(124,247,196,.42)}
+.stage.active{background:linear-gradient(145deg,rgba(124,247,196,.16),rgba(118,215,255,.08));border-color:rgba(124,247,196,.7)}
+.stage b{display:block;font-size:15px}.stage small{display:block;color:var(--muted);margin-top:2px}
+.stage .bar{height:4px;background:rgba(255,255,255,.08);margin-top:10px;border-radius:4px;overflow:hidden}
+.stage .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--lime));border-radius:4px}
+.snapshot{padding:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;padding:12px}
+.stat b{font-size:24px;line-height:1.1;display:block}.stat span{color:var(--muted);font-size:11px}
+.controls{padding:13px 14px;margin:14px 0;display:grid;gap:10px}
+.row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;margin-right:2px}
+.ctrl,select{border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.04);
+ color:var(--text);cursor:pointer}
+.ctrl.active{background:var(--green);border-color:var(--green);color:#072019;font-weight:800}
+select{border-radius:10px;max-width:260px}
+select option{background:#10202e;color:white}
+.toolbtn{margin-left:auto;border:1px solid var(--line);border-radius:10px;padding:7px 10px;background:transparent;color:var(--text);cursor:pointer}
+.toolbtn:hover{border-color:var(--green);color:var(--green)}
+.notice{border:1px solid rgba(239,199,109,.24);background:rgba(239,199,109,.075);color:#dfd1aa;
+ border-radius:14px;padding:10px 12px;font-size:12px;margin:10px 0}
+.headrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 10px}
+.headrow h2{margin:0;font-size:17px}.headrow span{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding-bottom:50px}
+.card{background:var(--paper);color:var(--ink);border-radius:18px;padding:15px;border:1px solid #e2ddcf;
+ box-shadow:0 18px 44px rgba(0,0,0,.16);position:relative;overflow:hidden}
+.card.done{opacity:.72}
+.card.done:after{content:"已做到";position:absolute;right:-28px;top:13px;transform:rotate(35deg);
+ background:#1d6b54;color:white;font-size:10px;font-weight:800;padding:4px 32px}
+.meta{display:flex;gap:6px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;border-radius:999px;border:1px solid #d7d1c3;background:#fffdf7;
+ padding:3px 7px;font-size:10px;color:#635e53}
+.t-now{background:#113f34;color:#fff;border-color:#113f34}.t-year{background:#2d7256;color:#fff;border-color:#2d7256}
+.t-grad{background:#8e6a2f;color:#fff;border-color:#8e6a2f}.t-later{background:#726d64;color:#fff;border-color:#726d64}
+.ev-A{background:#e8f6ef;color:#146247;border-color:#b5ddcb}.ev-B{background:#fff4d9;color:#7d5c16;border-color:#e2cc96}
+.ev-C{background:#f5e9e6;color:#7e4e43;border-color:#dfc3bc}.warn{background:#fff0ed;color:#9b4539;border-color:#ecc0b8}
+.card h3{font-size:18px;line-height:1.38;margin:10px 0 7px;letter-spacing:-.015em}
+.plain{color:#514e45}
+details{margin-top:11px;border-top:1px dashed #d5cfc1;padding-top:9px}
+summary{cursor:pointer;font-weight:800;color:#205c49}
+.evidence{font-size:13px;color:#504c43;margin-top:6px}
+.actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.actions button{border:1px solid #d2ccbe;border-radius:10px;background:#fffdf7;color:#3a3934;padding:6px 9px;cursor:pointer}
+.actions button.on{background:#163f34;color:white;border-color:#163f34}
+.actions .donebtn.on{background:#2e7258}
+.actions .planbtn.on{background:#8c6a34}
+.sourceid{margin-left:auto;color:#888176;font-size:10px}
+.empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:18px;padding:50px;text-align:center;color:var(--muted)}
+.footer{border-top:1px solid var(--line);padding:24px 0 50px;color:var(--muted);font-size:12px}
+.footer a{color:var(--green)}
+.toast{position:fixed;right:18px;bottom:18px;z-index:80;background:#eaf7f2;color:#14342b;padding:10px 13px;
+ border-radius:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}
+.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:860px){
+ .dashboard{grid-template-columns:1fr}.timeline-grid{grid-template-columns:repeat(2,1fr)}
+ .grid{grid-template-columns:1fr}.toprow{flex-wrap:wrap;padding:10px 0}.search{order:3;flex-basis:100%}
+ .hero{padding-top:26px}.toolbtn{margin-left:0}
+}
+@media(max-width:460px){.timeline-grid{grid-template-columns:1fr 1fr}.stage{padding:11px}.hero h1{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="shell toprow">
+    <a class="back" href="../">← 鼠哥星系</a>
+    <div class="brand">人生<i>罗盘</i></div>
+    <div class="search"><input id="q" autocomplete="off" placeholder="搜：睡眠、实习、租房、诈骗、感冒药……"></div>
+  </div>
+</div>
+
+<div class="shell">
+  <section class="hero">
+    <div class="kicker">SHUGE LIFE COMPASS · EVIDENCE-FIRST</div>
+    <h1>654 条建议，按<strong>现在要不要管</strong>重新排序。</h1>
+    <p>不把整本指南当成任务清单。先看本周能改变的，再看大一期间要补齐的，毕业前把工作、租房、钱和法律常识接上；其余内容留到真正需要时检索。</p>
+    <div class="sourcebar">
+      <span class="pill" id="loadState">正在载入资料快照…</span>
+      <span class="pill">证据 A / B / C：沿用原项目</span>
+      <span class="pill">个人进度：只存在当前浏览器</span>
+    </div>
+  </section>
+
+  <section class="dashboard">
+    <div class="panel timeline">
+      <div class="timeline-head">
+        <div><h2>阅读时间轴</h2><div class="subtle">这是阅读优先级，不是医学或法律风险等级。</div></div>
+        <button class="ctrl active" id="allStages">全部</button>
+      </div>
+      <div class="timeline-grid" id="timeline"></div>
+    </div>
+    <div class="panel snapshot">
+      <div class="stat"><b id="statTotal">—</b><span>知识条目</span></div>
+      <div class="stat"><b id="statShown">—</b><span>当前结果</span></div>
+      <div class="stat"><b id="statPlan">0</b><span>加入计划</span></div>
+      <div class="stat"><b id="statDone">0</b><span>已做到</span></div>
+    </div>
+  </section>
+
+  <section class="panel controls">
+    <div class="row">
+      <span class="label">证据</span>
+      <button class="ctrl active" data-evidence="ALL">全部</button>
+      <button class="ctrl" data-evidence="A">A</button>
+      <button class="ctrl" data-evidence="B">B</button>
+      <button class="ctrl" data-evidence="C">C</button>
+      <span class="label" style="margin-left:5px">收益</span>
+      <button class="ctrl active" data-benefit="ALL">全部</button>
+      <button class="ctrl" data-benefit="大">大</button>
+      <button class="ctrl" data-benefit="中">中</button>
+      <button class="ctrl" data-benefit="小">小</button>
+    </div>
+    <div class="row">
+      <span class="label">章节</span>
+      <select id="chapter"><option value="ALL">全部章节</option></select>
+      <span class="label">状态</span>
+      <select id="state">
+        <option value="ALL">全部状态</option>
+        <option value="PLAN">只看计划</option>
+        <option value="DONE">只看已做到</option>
+        <option value="STAR">只看收藏</option>
+        <option value="UNTOUCHED">只看未处理</option>
+      </select>
+      <span class="label">排序</span>
+      <select id="sort">
+        <option value="priority">个人优先级</option>
+        <option value="evidence">证据等级</option>
+        <option value="benefit">收益大小</option>
+        <option value="source">原书顺序</option>
+      </select>
+      <button class="toolbtn" id="exportBtn">导出进度</button>
+      <button class="toolbtn" id="importBtn">导入进度</button>
+      <input id="importFile" type="file" accept="application/json" hidden>
+    </div>
+  </section>
+
+  <div class="notice">
+    <b>怎么用：</b>“本周”只抽出大学阶段最值得先读的一小组；“大一”扩大到大学生核心章节与高分条目；“毕业前”补工作、租房、财务、应急与法律过渡知识。紧急情况请直接搜索关键词，不要等时间轴。
+  </div>
+
+  <div class="headrow"><h2 id="resultTitle">全部条目</h2><span id="resultMeta">等待数据</span></div>
+  <main class="grid" id="grid"></main>
+
+  <div class="footer">
+    数据来自开源项目 <a href="https://github.com/Choysang/howtolivebetter" target="_blank" rel="noopener">Choysang/howtolivebetter</a>；
+    知识内容遵循其 CC BY-NC 4.0 许可。此页面只是检索、排序与个人进度层，不替代医生、律师或其他专业判断。
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+const FILES={items:'data/items.json',stages:'data/stages.json',chapters:'data/chapters.json'};
+const COLLEGE_CORE=new Set([31,32,23,14,4,3,9,7]);
+const COLLEGE_RELATED=new Set([1,2,10,12,26]);
+const EARLY_CORE=new Set([19,15,5,7,9,13,14,22]);
+const EARLY_RELATED=new Set([10,6,23,12,21]);
+const STORE_KEY='shuge_life_compass_v1';
+const TIER_LABEL={NOW:'本周',YEAR:'大一',GRAD:'毕业前',LATER:'以后 / 按需'};
+const TIER_DESC={
+ NOW:'先读少量高价值条目',
+ YEAR:'大学阶段核心底牌',
+ GRAD:'工作与独立生活衔接',
+ LATER:'婚育、中老年等阶段性知识'
+};
+const EVIDENCE_RANK={A:0,B:1,C:2};
+const BENEFIT_RANK={'大':0,'中':1,'小':2};
+let items=[], stages=[], chapters=[], college=null, early=null;
+let weekSet=new Set(), collegeEssence=new Map(), earlyEssence=new Map();
+let activeTier='ALL', activeEvidence='ALL', activeBenefit='ALL';
+let progress=loadProgress();
+
+function loadProgress(){
+  try{
+    const x=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');
+    return {star:new Set(x.star||[]),plan:new Set(x.plan||[]),done:new Set(x.done||[])};
+  }catch(e){return {star:new Set(),plan:new Set(),done:new Set()}}
+}
+function saveProgress(){
+  localStorage.setItem(STORE_KEY,JSON.stringify({
+    star:[...progress.star],plan:[...progress.plan],done:[...progress.done],savedAt:new Date().toISOString()
+  }));
+}
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function toastMsg(s){toast.textContent=s;toast.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove('show'),1600)}
+function chapterTitle(n){const c=chapters[n-1];return c?.title||c?.name||('第 '+n+' 章')}
+function scoreFor(uid,map){return map.get(uid)?.score??-1}
+
+function classify(x){
+  if(weekSet.has(x.uid))return 'NOW';
+  if(collegeEssence.has(x.uid)||COLLEGE_CORE.has(+x.chapter))return 'YEAR';
+  if(earlyEssence.has(x.uid)||EARLY_CORE.has(+x.chapter)||COLLEGE_RELATED.has(+x.chapter)||EARLY_RELATED.has(+x.chapter))return 'GRAD';
+  return 'LATER';
+}
+function priorityScore(x){
+  const t=classify(x);
+  let s={NOW:400,YEAR:300,GRAD:200,LATER:100}[t];
+  s+=Math.max(scoreFor(x.uid,collegeEssence),scoreFor(x.uid,earlyEssence),0);
+  s+=x.evidence==='A'?14:x.evidence==='B'?7:0;
+  s+=x.tags?.benefit==='大'?10:x.tags?.benefit==='中'?5:0;
+  s+=x.tags?.time==='少'?3:0;
+  s+=x.tags?.money==='0'?3:0;
+  if(x.disputed)s-=3;if(x.unverified)s-=10;
+  return s;
+}
+function prepare(){
+  college=stages.find(s=>s.id==='college')||{picks:[],essence:[]};
+  early=stages.find(s=>s.id==='early')||{picks:[],essence:[]};
+  collegeEssence=new Map((college.essence||[]).map(e=>[e.uid,e]));
+  earlyEssence=new Map((early.essence||[]).map(e=>[e.uid,e]));
+  const ranked=[...(college.essence||[])].sort((a,b)=>b.score-a.score);
+  const top=[...(college.picks||[])];
+  for(const e of ranked){if(!top.includes(e.uid))top.push(e.uid);if(top.length>=12)break}
+  weekSet=new Set(top);
+  for(const x of items)x._tier=classify(x);
+}
+async function boot(){
+  try{
+    const [ri,rs,rc]=await Promise.all(Object.values(FILES).map(u=>fetch(u,{cache:'no-store'})));
+    if(!ri.ok||!rs.ok||!rc.ok)throw new Error('知识库文件读取失败');
+    [items,stages,chapters]=await Promise.all([ri.json(),rs.json(),rc.json()]);
+    prepare();
+    buildChapterSelect();
+    buildTimeline();
+    loadState.textContent='资料快照已载入 · '+items.length+' 条';
+    statTotal.textContent=items.length;
+    updateStats();render();
+  }catch(err){
+    loadState.textContent='载入失败：'+err.message;
+    grid.innerHTML='<div class="empty">知识库没有载入。请从鼠哥星系网页访问此页面，或检查 data 文件是否完整。</div>';
+  }
+}
+function buildChapterSelect(){
+  chapter.innerHTML='<option value="ALL">全部章节</option>'+chapters.map((c,i)=>
+    '<option value="'+(i+1)+'">'+String(i+1).padStart(2,'0')+' · '+esc(c.title||c.name||'')+'</option>'
+  ).join('');
+}
+function tierItems(t){return items.filter(x=>classify(x)===t)}
+function buildTimeline(){
+  const order=['NOW','YEAR','GRAD','LATER'];
+  timeline.innerHTML=order.map(t=>{
+    const xs=tierItems(t), done=xs.filter(x=>progress.done.has(x.uid)).length;
+    const pct=xs.length?Math.round(done/xs.length*100):0;
+    return '<button class="stage '+(activeTier===t?'active':'')+'" data-tier="'+t+'">'+
+      '<b>'+TIER_LABEL[t]+' <span style="color:var(--muted);font-weight:600">· '+xs.length+'</span></b>'+
+      '<small>'+TIER_DESC[t]+'</small><div class="bar"><i style="width:'+pct+'%"></i></div></button>';
+  }).join('');
+  timeline.querySelectorAll('[data-tier]').forEach(b=>b.onclick=()=>{
+    activeTier=b.dataset.tier;allStages.classList.remove('active');buildTimeline();render();
+  });
+}
+function updateStats(){
+  statPlan.textContent=progress.plan.size;statDone.textContent=progress.done.size;
+  buildTimeline();
+}
+function setToggle(group,attr,value){
+  document.querySelectorAll('['+attr+']').forEach(b=>b.classList.toggle('active',b.getAttribute(attr)===value));
+}
+function getFiltered(){
+  const query=q.value.trim().toLowerCase(), ch=chapter.value, st=state.value;
+  let arr=items.filter(x=>{
+    if(activeTier!=='ALL'&&classify(x)!==activeTier)return false;
+    if(activeEvidence!=='ALL'&&x.evidence!==activeEvidence)return false;
+    if(activeBenefit!=='ALL'&&x.tags?.benefit!==activeBenefit)return false;
+    if(ch!=='ALL'&&String(x.chapter)!==ch)return false;
+    if(st==='PLAN'&&!progress.plan.has(x.uid))return false;
+    if(st==='DONE'&&!progress.done.has(x.uid))return false;
+    if(st==='STAR'&&!progress.star.has(x.uid))return false;
+    if(st==='UNTOUCHED'&&(progress.plan.has(x.uid)||progress.done.has(x.uid)||progress.star.has(x.uid)))return false;
+    if(query){
+      const hay=(x.title+' '+x.plain+' '+x.benefit+' '+chapterTitle(+x.chapter)+' '+(x.tags?.caliber||'')).toLowerCase();
+      if(!hay.includes(query))return false;
+    }
+    return true;
+  });
+  const mode=sort.value;
+  if(mode==='priority')arr.sort((a,b)=>priorityScore(b)-priorityScore(a)||a.chapter-b.chapter||a.index-b.index);
+  if(mode==='evidence')arr.sort((a,b)=>(EVIDENCE_RANK[a.evidence]??9)-(EVIDENCE_RANK[b.evidence]??9)||priorityScore(b)-priorityScore(a));
+  if(mode==='benefit')arr.sort((a,b)=>(BENEFIT_RANK[a.tags?.benefit]??9)-(BENEFIT_RANK[b.tags?.benefit]??9)||priorityScore(b)-priorityScore(a));
+  if(mode==='source')arr.sort((a,b)=>a.chapter-b.chapter||a.index-b.index);
+  return arr;
+}
+function render(){
+  const arr=getFiltered();
+  statShown.textContent=arr.length;
+  resultTitle.textContent=activeTier==='ALL'?'全部条目':TIER_LABEL[activeTier];
+  resultMeta.textContent='显示 '+arr.length+' / '+items.length+' 条';
+  if(!arr.length){grid.innerHTML='<div class="empty">没有匹配结果。减少筛选条件或换个关键词。</div>';return}
+  grid.innerHTML=arr.map(cardHTML).join('');
+}
+function cardHTML(x){
+  const t=classify(x), done=progress.done.has(x.uid), plan=progress.plan.has(x.uid), star=progress.star.has(x.uid);
+  const flag=(x.disputed?'<span class="badge warn">有争议</span>':'')+(x.unverified?'<span class="badge warn">待核实</span>':'');
+  const tag=x.tags||{};
+  return '<article class="card '+(done?'done':'')+'">'+
+    '<div class="meta">'+
+      '<span class="badge t-'+({NOW:'now',YEAR:'year',GRAD:'grad',LATER:'later'}[t])+'">'+TIER_LABEL[t]+'</span>'+
+      '<span class="badge ev-'+esc(x.evidence)+'">证据 '+esc(x.evidence)+'</span>'+
+      '<span class="badge">收益 '+esc(tag.benefit||'—')+'</span>'+
+      '<span class="badge">钱 '+esc(tag.money||'—')+' · 时间 '+esc(tag.time||'—')+' · 毅力 '+esc(tag.willpower||'—')+'</span>'+
+      flag+
+    '</div>'+
+    '<h3>'+esc(x.title)+'</h3>'+
+    '<div class="plain">'+esc(x.plain)+'</div>'+
+    '<details><summary>查看依据与效果量</summary><div class="evidence">'+esc(x.benefit)+'</div></details>'+
+    '<div class="actions">'+
+      '<button class="'+(star?'on':'')+'" onclick="toggleSet(\'star\',\''+x.uid+'\')">'+(star?'★ 已收藏':'☆ 收藏')+'</button>'+
+      '<button class="planbtn '+(plan?'on':'')+'" onclick="toggleSet(\'plan\',\''+x.uid+'\')">'+(plan?'已加入计划':'+ 加入计划')+'</button>'+
+      '<button class="donebtn '+(done?'on':'')+'" onclick="toggleDone(\''+x.uid+'\')">'+(done?'✓ 已做到':'标为已做到')+'</button>'+
+      '<span class="sourceid">第 '+x.chapter+' 章 · '+esc(chapterTitle(+x.chapter))+' · #'+x.index+'</span>'+
+    '</div></article>';
+}
+window.toggleSet=function(kind,id){
+  const s=progress[kind];s.has(id)?s.delete(id):s.add(id);saveProgress();updateStats();render();
+}
+window.toggleDone=function(id){
+  if(progress.done.has(id))progress.done.delete(id);
+  else{progress.done.add(id);progress.plan.delete(id)}
+  saveProgress();updateStats();render();
+}
+function exportProgress(){
+  const data={version:1,exportedAt:new Date().toISOString(),star:[...progress.star],plan:[...progress.plan],done:[...progress.done]};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='人生罗盘-进度备份.json';a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);toastMsg('进度已导出');
+}
+function importProgressFile(file){
+  const r=new FileReader();r.onload=()=>{
+    try{
+      const d=JSON.parse(r.result);
+      progress={star:new Set(d.star||[]),plan:new Set(d.plan||[]),done:new Set(d.done||[])};
+      saveProgress();updateStats();render();toastMsg('进度已导入');
+    }catch(e){toastMsg('导入失败：文件格式不对')}
+  };r.readAsText(file);
+}
+document.querySelectorAll('[data-evidence]').forEach(b=>b.onclick=()=>{
+  activeEvidence=b.dataset.evidence;setToggle('evidence','data-evidence',activeEvidence);render();
+});
+document.querySelectorAll('[data-benefit]').forEach(b=>b.onclick=()=>{
+  activeBenefit=b.dataset.benefit;setToggle('benefit','data-benefit',activeBenefit);render();
+});
+allStages.onclick=()=>{activeTier='ALL';allStages.classList.add('active');buildTimeline();render()};
+q.addEventListener('input',render);chapter.onchange=render;state.onchange=render;sort.onchange=render;
+exportBtn.onclick=exportProgress;importBtn.onclick=()=>importFile.click();
+importFile.onchange=()=>{if(importFile.files[0])importProgressFile(importFile.files[0]);importFile.value=''};
+boot();
+</script>
+</body>
+</html>
