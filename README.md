@@ -2,6 +2,8 @@
 
 > 一个可以漫游的个人项目入口：把游戏、学习工具、艺术实验与小作品连接成一片星系。
 
+![SHUGE GALAXY 真实浏览器截图](docs/screenshots/galaxy.png)
+
 **[进入星系 →](https://ndshuge.github.io/ndshuge-galaxy/)** · [互动艺术展厅](https://ndshuge.github.io/ndshuge-galaxy/art/) · [GitHub 项目列表](https://github.com/ndshuge?tab=repositories)
 
 ---
