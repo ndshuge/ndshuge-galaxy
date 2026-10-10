@@ -46,3 +46,23 @@ _repo.txt
 *.pem
 *.key
 *token*.txt
+
+# Reviewable environment templates
+!.env.example
+!.env.sample
+!.env.template
+
+# Local caches and test outputs
+.cache/
+coverage/
+.nyc_output/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.swp
+*.swo
+*.sqlite
+*.sqlite3
+*.db
+*.p12
+*.pfx
