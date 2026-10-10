@@ -60,3 +60,7 @@ python -m http.server 8000
 ---
 
 [个人主页](https://github.com/ndshuge) · [游戏厅](https://ndshuge.github.io/ndshuge-game/) · [学习学院](https://ndshuge.github.io/ndshuge-academy/)
+
+## 安全与素材审查
+
+[素材与许可核验清单](docs/ASSET_PROVENANCE.md)
