@@ -16,6 +16,17 @@ SHUGE GALAXY 是使用 HTML Canvas、CSS 与 JavaScript 实现的像素风交互
 
 **推荐直接打开在线页面体验**，仅查看源代码无法呈现完整的动效、声音与交互。
 
+## 推荐的探索顺序
+
+| 第一站 | 你会看到什么 |
+| --- | --- |
+| **[星系首页](https://ndshuge.github.io/ndshuge-galaxy/)** | 像素太空、作品节点与可漫游的项目导航 |
+| **[互动艺术](https://ndshuge.github.io/ndshuge-galaxy/art/)** | 多种生成艺术、图像实验和视觉交互 |
+| **[Math Universe](https://ndshuge.github.io/ndshuge-galaxy/art/math-universe/)** | 混沌、分形和科学现象可视化 |
+| **[西安主题](https://ndshuge.github.io/ndshuge-galaxy/xian/)** | 与城市相关的独立探索内容 |
+
+> **作品导航与作品本身分开维护。** 部分项目仍在实验或持续更新，实际功能与素材使用条件请查对应项目说明。
+
 ## 操作方式
 
 | 操作 | 效果 |
