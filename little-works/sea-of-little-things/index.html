@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071419">
+  <meta name="description" content="一小片没有任务的海。投下光，拨动潮汐，或者只看一会儿。一个可离线运行的生成艺术作品。">
+  <title>无用之海 · 玻璃宇宙</title>
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="sea-core.js"></script>
+  <script defer src="sea-sound.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#sea">去看海</a>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="world-shell">
+    <header class="masthead interface">
+      <a class="wordmark" href="#main" aria-label="玻璃宇宙首页">
+        <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="14"/><ellipse cx="18" cy="18" rx="7" ry="14" transform="rotate(35 18 18)"/><circle class="mark-dot" cx="24" cy="7" r="2.5"/></svg>
+        <span>玻璃宇宙<small>A SMALL, UNNECESSARY WORLD</small></span>
+      </a>
+      <nav class="top-actions" aria-label="作品选项">
+        <button id="sound" class="text-button" type="button" aria-label="开启声音" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path id="sound-waves" d="m17 9 5 6m0-6-5 6"/></svg><span id="sound-label">声音关闭</span></button>
+        <button id="quiet" class="text-button quiet-trigger" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/></svg><span>只看海</span></button>
+        <button id="about" class="icon-button" type="button" aria-label="关于这片海"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 9a2 2 0 0 1 4 0c0 2-2 2-2 4m0 3h.01"/></svg></button>
+      </nav>
+    </header>
+
+    <main id="main" class="observatory">
+      <section class="intro interface" aria-labelledby="title">
+        <p class="edition"><span></span>第 001 号 · 无用实验</p>
+        <h1 id="title">无用<span>之海</span></h1>
+        <p class="english-title">Sea of little things.</p>
+        <div class="intro-rule" aria-hidden="true"></div>
+        <p class="intro-note">今天不解决任何问题。<br>让一些微小的东西，<br>好好地存在一会儿。</p>
+        <div class="live-summary" aria-label="这片海的状态">
+          <div><span class="live-dot" aria-hidden="true"></span><span id="world-state">海正在呼吸</span></div>
+          <p><strong id="population">64</strong> 个微小的居民<span class="summary-slash">/</span><time id="elapsed">00:00</time></p>
+        </div>
+      </section>
+
+      <section class="sea-area" aria-label="可以互动的玻璃海洋">
+        <div class="specimen-label interface"><span id="mode-caption">缓慢的潮汐</span><span class="mono" id="seed-label">SEED 4721</span></div>
+        <div class="vessel" id="vessel">
+          <canvas id="sea" tabindex="0" aria-label="玻璃海洋。轻点空处投光，轻点生物认识它。也可用下方投光按钮操作。" aria-describedby="instructions">一只装着想象生物与微光的玻璃容器。你可以用投光按钮改变它。</canvas>
+          <div id="creature-label" class="creature-label" hidden><span id="creature-name"></span><small id="creature-kind"></small><button id="unselect" type="button" aria-label="取消观察生物">×</button></div>
+          <div class="compass north interface" aria-hidden="true">N</div><div class="compass east interface" aria-hidden="true">E</div>
+        </div>
+        <p class="sea-instruction interface" id="instructions"><span aria-hidden="true">↳</span> 轻点投下一束光 · 拖动拨动海水 · 轻点生物认识它</p>
+      </section>
+
+      <aside class="margin-note interface" aria-label="海边手记"><span class="vertical-rule" aria-hidden="true"></span><p>没有目的地的漂流，<br>也会经过一些星星。</p><small>一只瓶子 / 一整片夜晚</small></aside>
+    </main>
+
+    <footer class="shore interface">
+      <div class="poem"><span class="poem-mark" aria-hidden="true">“</span><p id="poem">海很小，足够放下一次走神。</p><span class="poem-index" id="poem-index">01 / 16</span></div>
+      <div class="controls">
+        <div class="mode-control" role="group" aria-label="改变海的流动方式">
+          <button type="button" data-mode="tide" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8c3-4 6 4 9 0s6 4 9 0M3 15c3-4 6 4 9 0s6 4 9 0"/></svg>潮汐</button>
+          <button type="button" data-mode="orbit" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-35 12 12)"/><circle cx="12" cy="12" r="2"/></svg>星群</button>
+          <button type="button" data-mode="dream" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 17A8 8 0 0 1 8 6 8 8 0 1 0 18 17Z"/></svg>入梦</button>
+        </div>
+        <span class="control-divider" aria-hidden="true"></span>
+        <button id="light" class="light-button" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v5m0 10v5M2 12h5m10 0h5M5 5l3 3m8 8 3 3M5 19l3-3M16 8l3-3"/><circle cx="12" cy="12" r="3"/></svg>投下一束光</button>
+        <button id="pause" class="icon-button" type="button" aria-label="暂停时间" aria-pressed="false"><svg id="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg></button>
+        <button id="keepsake" class="icon-button" type="button" aria-label="带走这一刻"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+      </div>
+      <div class="colophon"><span>由规则生长，容许偶然。</span><span><kbd>空格</kbd> 暂停 <span class="key-separator">·</span> <kbd>G</kbd> 投光 <span class="key-separator">·</span> <kbd>H</kbd> 静看</span><button type="button" id="new-sea">另一片海 <span aria-hidden="true">↗</span></button></div>
+    </footer>
+  </div>
+  <button id="return" class="return-button" type="button" hidden>返回岸边 <span aria-hidden="true">↙</span></button>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <button class="dialog-close icon-button" data-close type="button" aria-label="关闭关于">×</button>
+    <p class="dialog-kicker">一封放在海边的说明</p><h2 id="about-title">这里没有任务。</h2>
+    <p>这是一只用代码吹出来的玻璃瓶。里面的浮游生物沿着几条简单的规则游动；相遇、分开，偶尔追随你留下的光。</p>
+    <p>它们是想象中的生物。这片海是一件生成艺术作品。</p>
+    <dl class="help-list"><div><dt>潮汐 / 星群 / 入梦</dt><dd>改变流动的性格。</dd></div><div><dt>轻点 / 拖动</dt><dd>留下微光，或拨动海水。点到生物时，会看见它的名字。</dd></div><div><dt>带走这一刻</dt><dd>收下一张明信片，或装瓶保存，再次打开时继续。</dd></div><div><dt>声音</dt><dd>点击才会响起。由浏览器轻轻合成，没有录音。</dd></div></dl>
+    <p class="dialog-fine">无需账号或网络。作品不发送你的操作或文件。关闭页面时海会停下；“装进瓶子”可以保存此刻。已开启系统减弱动态效果时，时间默认暂停。</p>
+  </dialog>
+  <dialog id="keepsake-dialog" aria-labelledby="keepsake-title">
+    <button class="dialog-close icon-button" data-close type="button" aria-label="关闭收藏">×</button>
+    <p class="dialog-kicker">有些片刻，可以留得久一点</p><h2 id="keepsake-title">带走这片小小的海。</h2>
+    <p>一张明信片留下模样。一只瓶子带走时间，下次还可以继续。</p>
+    <div class="keepsake-actions"><button id="save-image" type="button"><span>收下明信片</span><small>保存当前画面 · PNG</small><b aria-hidden="true">↓</b></button><button id="save-world" type="button"><span>装进瓶子</span><small>保存可继续的海 · JSON</small><b aria-hidden="true">↓</b></button><button id="load-world" type="button"><span>打开一只旧瓶子</span><small>读取你之前保存的 JSON 文件</small><b aria-hidden="true">↑</b></button></div>
+    <input id="world-file" type="file" accept=".json,application/json" hidden>
+    <p class="dialog-fine" id="bottle-status" role="status">瓶子只在你的设备上打开。</p>
+  </dialog>
+  <noscript><p class="noscript">这片海需要 JavaScript 才能流动。请启用后重新打开。</p></noscript>
+</body>
+</html>
