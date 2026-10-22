@@ -79,4 +79,28 @@ function updateSectionActive(){if(state.currentView!=="brief")return;const secti
 addEventListener("scroll",()=>{updateProgress();updateSectionActive()},{passive:true});
 document.addEventListener("keydown",e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();openSearch()}else if(e.key==="/"&&!/input|textarea/i.test(document.activeElement.tagName)){e.preventDefault();openSearch()}else if(e.key==="Escape"){closeSearch();closeArchive()}});
 window.addEventListener("popstate",async e=>{const params=new URLSearchParams(location.search),view=e.state?.view||params.get("view");if(view==="projects"||view==="people")await renderCollection(view,false);else await loadBrief(e.state?.date||params.get("date")||state.manifest[0]?.date)});
-document.addEventListener("DOMContentLoaded",()=>{initTheme();if(localStorage.getItem("brief-density")==="compact")document.body.classList.add("compact");$("#themeToggle").onclick=toggleTheme;$("#densityToggle").onclick=toggleDensity;document.querySelectorAll(".search-open").forEach(b=>b.onclick=openSearch);$("#searchClose").onclick=closeSearch;$("#searchInput").oninput=e=>doSearch(e.target.value);$("#searchOverlay").onclick=e=>{if(e.target===$("#searchOverlay"))closeSearch()};$("#archiveClose").onclick=closeArchive;$("#archiveBackdrop").onclick=closeArchive;document.querySelectorAll("[data-collection]").forEach(b=>b.onclick=()=>renderCollection(b.dataset.collection,true));document.querySelectorAll("[data-mobile-action]").forEach(b=>b.onclick=async()=>{if(b.dataset.mobileAction==="search")openSearch();else if(b.dataset.mobileAction==="archive")openArchive();else{if(state.currentView!=="brief")await loadBrief(state.manifest[0]?.date,true);else window.scrollTo({top:0,behavior:"smooth"})}});loadManifest().catch(()=>{$("#briefRoot").innerHTML='<div class="loading-state"><p>简报数据暂时无法加载。</p></div>'})});
+async function boot(){
+  initTheme();
+  if(localStorage.getItem("brief-density")==="compact")document.body.classList.add("compact");
+  $("#themeToggle").onclick=toggleTheme;
+  $("#densityToggle").onclick=toggleDensity;
+  document.querySelectorAll(".search-open").forEach(b=>b.onclick=openSearch);
+  $("#searchClose").onclick=closeSearch;
+  $("#searchInput").oninput=e=>doSearch(e.target.value);
+  $("#searchOverlay").onclick=e=>{if(e.target===$("#searchOverlay"))closeSearch()};
+  $("#archiveClose").onclick=closeArchive;
+  $("#archiveBackdrop").onclick=closeArchive;
+  document.querySelectorAll("[data-collection]").forEach(b=>b.onclick=()=>renderCollection(b.dataset.collection,true));
+  document.querySelectorAll("[data-mobile-action]").forEach(b=>b.onclick=async()=>{
+    if(b.dataset.mobileAction==="search")openSearch();
+    else if(b.dataset.mobileAction==="archive")openArchive();
+    else if(state.currentView!=="brief")await loadBrief(state.manifest[0]?.date,true);
+    else window.scrollTo({top:0,behavior:"smooth"});
+  });
+  await loadManifest();
+}
+boot().catch(err=>{
+  console.error("SHUGE DAILY boot failed",err);
+  const root=$("#briefRoot");
+  if(root)root.innerHTML='<div class="loading-state"><p>简报数据暂时无法加载，请刷新后重试。</p></div>';
+});
