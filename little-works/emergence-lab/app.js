@@ -10,21 +10,48 @@ sand:{name:'搬沙虫',kicker:'05 / COLLECTIVE SORTING',intro:'小虫只知道�
 fireflies:{name:'互相带节奏的萤火虫',kicker:'06 / PHASE SYNCHRONY',intro:'看到附近的闪光，就把自己的下一次闪光提前一点。',gesture:'↖ 点击让附近一起闪光',head:'没有统一时钟，\n闪光也能合拍。',body:'每只虫有略微不同的自身周期。闪光时，它会将附近同伴的相位向前推移。当耦合够强、范围足够广时，局部同步或全局同步都有可能出现。',tags:['脉冲耦合','相位同步','传播光浪'],try:'先把影响范围缩小，再缓慢提高耦合强度，观察光浪能否连接成整体。',params:[['couple','同步影响',0,.35,.12,.01,'附近闪光引起的相位提前量'],['range','影响范围',25,170,78,1,'多远的闪光能够被看见'],['variance','节奏差异',0,.5,.16,.01,'不同个体周期之间的差距'],['density','萤火虫数量',80,330,200,10,'重置后生效']]},
 evolution:{name:'最小进化池',kicker:'07 / EVOLUTION IN MOTION',intro:'吃、跑、繁殖。速度与感知能力在后代中发生微小变化。',gesture:'↖ 点击添加食物',head:'没有进化目标，\n只有留下的后代。',body:'个体寻找附近的食物并获得能量；移动与高速度会付出能量代价。能量积累可以繁殖，后代的速度与感知距离随机突变。参数变化可能导致不同的种群轨迹，不保证朝单一方向改善。',tags:['能量预算','遗传变异','自然选择'],try:'把食物供应调低，观察平均速度变化，并留意种群是否灭绝。',params:[['food','食物供应',.05,2.2,1,.05,'食物再生速率'],['cost','移动代价',.1,2,.75,.05,'跑得快会消耗更多能量'],['mutation','变异幅度',0,.6,.15,.01,'后代性状偏离亲代的强度'],['awareness','感知系数',.5,2,1,.1,'寻找食物的可见范围']]}
 };
-let mode='particles',params={},seed=2408,playing=true,compared=false,speed=1,worldA=null,worldB=null,metricTrail=[],stepNo=0,last=0,acc=0,frames=0;
+let mode='particles',params={},paramsB={},compareKey='attract',seed=2408,playing=true,compared=false,speed=1,worldA=null,worldB=null,metricTrail=[],stepNo=0,last=0,acc=0,frames=0;
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const randGen=(s)=>{let n=s>>>0;return ()=>((n=(Math.imul(n,1664525)+1013904223)>>>0)/4294967296)};
 const rad=(degrees)=>degrees*Math.PI/180;
 function newWorld(which){const rng=randGen(seed),world={rng,which,mode,age:0,metric:0,points:[],cells:null,w:0,h:0,food:[],smell:null,buffer:null};const rnd=(a,b)=>a+rng()*(b-a);
  if(mode==='particles'){for(let i=0;i<480;i++)world.points.push({x:rnd(8,W-8),y:rnd(8,H-8),vx:rnd(-1,1),vy:rnd(-1,1),type:i%4});}
- if(mode==='neighbors'){world.w=56;world.h=31;world.cells=new Int8Array(world.w*world.h);for(let i=0;i<world.cells.length;i++)world.cells[i]=rng()<params.vacancy?0:(rng()<.5?1:2);}
+ if(mode==='neighbors'){world.w=56;world.h=31;world.cells=new Int8Array(world.w*world.h);for(let i=0;i<world.cells.length;i++)world.cells[i]=rng()<value(world,'vacancy')?0:(rng()<.5?1:2);}
  if(mode==='slime'){world.w=160;world.h=90;world.smell=new Float32Array(world.w*world.h);world.buffer=new Float32Array(world.w*world.h);for(let i=0;i<850;i++)world.points.push({x:rnd(50,750),y:rnd(40,410),angle:rnd(0,TAU)});world.food=[{x:235,y:225},{x:560,y:150},{x:580,y:340}];}
  if(mode==='ecology'){world.w=110;world.h=62;world.cells=new Int8Array(world.w*world.h);for(let i=0;i<world.cells.length;i++)world.cells[i]=rng()<.09?0:1+Math.floor(rng()*3);}
- if(mode==='sand'){world.w=104;world.h=58;world.cells=new Uint8Array(world.w*world.h);for(let i=0;i<world.cells.length;i++)world.cells[i]=rng()<.18?1:0;for(let i=0;i<params.bugs;i++)world.points.push({x:Math.floor(rnd(0,world.w)),y:Math.floor(rnd(0,world.h)),load:0});}
- if(mode==='fireflies'){for(let i=0;i<params.density;i++)world.points.push({x:rnd(20,W-20),y:rnd(20,H-20),phase:rng(),period:1+rnd(-params.variance,params.variance),glow:0});}
+ if(mode==='sand'){world.w=104;world.h=58;world.cells=new Uint8Array(world.w*world.h);for(let i=0;i<world.cells.length;i++)world.cells[i]=rng()<.18?1:0;for(let i=0;i<value(world,'bugs');i++)world.points.push({x:Math.floor(rnd(0,world.w)),y:Math.floor(rnd(0,world.h)),load:0});}
+ if(mode==='fireflies'){for(let i=0;i<value(world,'density');i++)world.points.push({x:rnd(20,W-20),y:rnd(20,H-20),phase:rng(),period:1+rnd(-value(world,'variance'),value(world,'variance')),glow:0});}
  if(mode==='evolution'){for(let i=0;i<85;i++)world.points.push({x:rnd(0,W),y:rnd(0,H),vx:0,vy:0,energy:rnd(55,105),v:rnd(.6,1.7),sense:rnd(20,65),age:0});for(let i=0;i<180;i++)world.food.push({x:rnd(0,W),y:rnd(0,H)});}
  return world;}
-function value(w,k){let v=params[k];if(w.which==='B'){let p=MODES[mode].params[0];if(k===p[0])v=clamp(p[1]==='满意下限'?v+2:v*.48,p[2],p[3]);}return v;}
-function init(){worldA=newWorld('A');worldB=newWorld('B');metricTrail=[];stepNo=0;acc=0;$('seedDisplay').textContent='SEED '+seed;$('footB').textContent='只改变「'+MODES[mode].params[0][1]+'」';metrics();}
+function value(w,k){return w.which==='B'&&compared&&Number.isFinite(paramsB[k])?paramsB[k]:params[k];}
+function defaultB(){
+ paramsB={...params};
+ const c=MODES[mode].params.find(p=>p[0]===compareKey)||MODES[mode].params[0];
+ compareKey=c[0];const diff=(c[3]-c[2])*.24;
+ let v=clamp(params[compareKey]+diff,c[2],c[3]);
+ if(Math.abs(v-params[compareKey])<1e-7)v=clamp(params[compareKey]-diff,c[2],c[3]);
+ paramsB[compareKey]=Number(v.toFixed(5));
+}
+function renderB(){
+ document.getElementById('abEdit')?.remove();
+ if(!compared)return;
+ const c=MODES[mode].params.find(p=>p[0]===compareKey)||MODES[mode].params[0];
+ const box=document.createElement('section');box.id='abEdit';box.className='ab-edit';
+ const h=document.createElement('div');h.className='ab-head';h.textContent='WORLD B / 只修改一条规则';
+ const sel=document.createElement('select');sel.setAttribute('aria-label','选择世界 B 要修改的规则');
+ for(const p of MODES[mode].params){const o=document.createElement('option');o.value=p[0];o.textContent=p[1];sel.append(o)}
+ sel.value=compareKey;
+ sel.onchange=()=>{compareKey=sel.value;defaultB();init();renderB();toast('已使用相同随机种子重开，只改变一条 B 规则。')};
+ const label=document.createElement('label');label.textContent='B 世界数值';
+ const out=document.createElement('output');out.textContent=String(Number(paramsB[compareKey].toFixed(3)));label.append(out);
+ const slider=document.createElement('input');slider.type='range';slider.min=c[2];slider.max=c[3];slider.step=c[5];slider.value=paramsB[compareKey];slider.setAttribute('aria-label','世界 B：'+c[1]);
+ slider.oninput=()=>{paramsB[compareKey]=Number(slider.value);out.textContent=slider.value;diffNote()};
+ const hint=document.createElement('small');hint.textContent='其他规则与世界 A 保持相同。点击「重置」从共同种子重新比较。';
+ box.append(h,sel,label,slider,hint);$('controls').after(box);
+ diffNote();
+}
+function diffNote(){const p=MODES[mode].params.find(q=>q[0]===compareKey)||MODES[mode].params[0],a=Number(params[p[0]]),b=value({which:'B'},p[0]);$('footB').textContent='只改变「'+p[1]+'」：'+a.toFixed(p[5]<1?2:0)+' → '+b.toFixed(p[5]<1?2:0)}
+function init(){worldA=newWorld('A');worldB=newWorld('B');metricTrail=[];stepNo=0;acc=0;$('seedDisplay').textContent='SEED '+seed;diffNote();metrics();}
 function particlesStep(w){let arr=w.points,r=value(w,'reach'),reach2=r*r,cell=r,grid=new Map();
  for(let i=0;i<arr.length;i++){const p=arr[i],key=Math.floor(p.x/cell)+':'+Math.floor(p.y/cell);if(!grid.has(key))grid.set(key,[]);grid.get(key).push(i)}
  for(let i=0;i<arr.length;i++){const p=arr[i];let fx=0,fy=0,ix=Math.floor(p.x/cell),iy=Math.floor(p.y/cell);
@@ -58,24 +85,44 @@ function draw(w,canvas){const ctx=canvas.getContext('2d',{alpha:false});ctx.fill
  ctx.strokeStyle='#8fb4c00a';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
  if(mode==='particles'){ctx.globalCompositeOperation='lighter';for(const p of w.points){ctx.fillStyle=PALETTE[p.type]+'22';ctx.beginPath();ctx.arc(p.x,p.y,7,0,TAU);ctx.fill();ctx.fillStyle=PALETTE[p.type];ctx.beginPath();ctx.arc(p.x,p.y,2.5,0,TAU);ctx.fill()}}
  if(mode==='neighbors'||mode==='ecology'||mode==='sand'){const gw=w.w,gh=w.h,cw=W/gw,ch=H/gh,a=w.cells;for(let y=0;y<gh;y++)for(let x=0;x<gw;x++){const v=a[y*gw+x];if(!v)continue;ctx.fillStyle=mode==='neighbors'?(v===1?'#64d8ce':'#f3a886'):mode==='ecology'?['','#fd7796','#65d9ac','#8ca0fa'][v]:'#e7c38c';ctx.fillRect(x*cw+.5,y*ch+.5,Math.max(1,cw-1),Math.max(1,ch-1))}if(mode==='sand')for(const bug of w.points){ctx.fillStyle=bug.load?'#ecf5b3':'#65d8cb';ctx.fillRect(bug.x*cw,bug.y*ch,3,3)}}
- if(mode==='slime'){const im=ctx.createImageData(w.w,w.h),s=w.smell;for(let i=0;i<s.length;i++){const n=clamp(s[i]/5,0,1),k=i*4;im.data[k]=Math.floor(40+n*105);im.data[k+1]=Math.floor(90+n*155);im.data[k+2]=Math.floor(120+n*100);im.data[k+3]=255}const temp=document.createElement('canvas');temp.width=w.w;temp.height=w.h;temp.getContext('2d').putImageData(im,0,0);ctx.globalAlpha=.82;ctx.imageSmoothingEnabled=true;ctx.drawImage(temp,0,0,W,H);ctx.globalAlpha=1;for(const f of w.food){const glow=ctx.createRadialGradient(f.x,f.y,0,f.x,f.y,23);glow.addColorStop(0,'#ffdbadbb');glow.addColorStop(1,'#ffdbad00');ctx.fillStyle=glow;ctx.fillRect(f.x-23,f.y-23,46,46);ctx.fillStyle='#fff1b0';ctx.beginPath();ctx.arc(f.x,f.y,4.5,0,TAU);ctx.fill()}}
+ if(mode==='slime'){
+   if(!w.trailCanvas){w.trailCanvas=document.createElement('canvas');w.trailCanvas.width=w.w;w.trailCanvas.height=w.h;
+      w.trailCtx=w.trailCanvas.getContext('2d');w.trailImage=w.trailCtx.createImageData(w.w,w.h)}
+   const im=w.trailImage,s=w.smell;
+   for(let i=0;i<s.length;i++){const n=clamp(s[i]/4.4,0,1),k=i*4;im.data[k]=Math.floor(32+n*82);
+      im.data[k+1]=Math.floor(95+n*151);im.data[k+2]=Math.floor(113+n*100);im.data[k+3]=Math.floor(Math.pow(n,.7)*240)}
+   w.trailCtx.putImageData(im,0,0);ctx.imageSmoothingEnabled=true;ctx.drawImage(w.trailCanvas,0,0,W,H);
+   ctx.globalCompositeOperation='lighter';
+   for(const f of w.food){const g=ctx.createRadialGradient(f.x,f.y,0,f.x,f.y,28);
+     g.addColorStop(0,'#ffdbadbc');g.addColorStop(1,'#ffdbad00');ctx.fillStyle=g;
+     ctx.fillRect(f.x-28,f.y-28,56,56);ctx.fillStyle='#fff1b0';ctx.beginPath();ctx.arc(f.x,f.y,4.5,0,TAU);ctx.fill()}
+   ctx.fillStyle='#a7ffe7';for(const a of w.points)ctx.fillRect(a.x,a.y,1.8,1.8);
+ }
  if(mode==='fireflies'){ctx.globalCompositeOperation='lighter';for(const p of w.points){let glow=Math.max(.06,p.glow);const gg=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,15+22*glow);gg.addColorStop(0,'rgba(255,245,179,'+glow+')');gg.addColorStop(1,'rgba(255,210,120,0)');ctx.fillStyle=gg;ctx.beginPath();ctx.arc(p.x,p.y,15+22*glow,0,TAU);ctx.fill();ctx.fillStyle='rgba(255,232,165,'+(.25+.75*glow)+')';ctx.beginPath();ctx.arc(p.x,p.y,2.1+glow*2.3,0,TAU);ctx.fill()}}
  if(mode==='evolution'){for(const f of w.food){ctx.fillStyle='#9dd797';ctx.fillRect(f.x-1.4,f.y-1.4,3,3)}for(const p of w.points){ctx.fillStyle=p.v>1.55?'#ffc47e':p.v<.85?'#7adecf':'#8aaeff';const rr=2.8+Math.min(4,p.energy/60);ctx.beginPath();ctx.arc(p.x,p.y,rr,0,TAU);ctx.fill();ctx.strokeStyle='#ffffff25';ctx.beginPath();ctx.arc(p.x,p.y,rr+3,0,TAU);ctx.stroke()}}
  ctx.restore();}
 function metrics(){if(!worldA)return;let w=worldA,entries=[];if(mode==='particles')entries=[['粒子总数',w.points.length],['平均运动',w.metric.toFixed(2)],['模拟步数',w.age]];if(mode==='neighbors')entries=[['满意比例',(w.metric*100).toFixed(1)+'%'],['居民数量',Array.from(w.cells).filter(Boolean).length],['模拟步数',w.age]];if(mode==='slime')entries=[['发光覆盖',(w.metric*100).toFixed(1)+'%'],['菌丝代理',w.points.length],['食物点',w.food.length]];if(mode==='ecology'){const p=w.pop||[0,0,0,0];entries=[['红色种群',p[1]],['绿色种群',p[2]],['蓝色种群',p[3]]]}if(mode==='sand')entries=[['堆积接触率',(w.metric*100).toFixed(1)+'%'],['搬运代理',w.points.length],['模拟步数',w.age]];if(mode==='fireflies')entries=[['相位同步度',(w.metric*100).toFixed(1)+'%'],['发光个体',w.points.filter(x=>x.glow>.5).length],['模拟步数',w.age]];if(mode==='evolution')entries=[['存活个体',w.points.length],['平均速度',w.metric.toFixed(2)],['剩余食物',w.food.length]];$('metrics').innerHTML=entries.map(v=>'<div class="metric"><span>'+v[0]+'</span><strong>'+v[1]+'</strong></div>').join('');$('count').textContent=(w.points.length||Array.from(w.cells||[]).filter(Boolean).length)+' 个体';
  const v=Number(w.metric)||0;metricTrail.push(v);if(metricTrail.length>100)metricTrail.shift();const c=$('spark'),x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.strokeStyle='#ffffff14';x.beginPath();x.moveTo(0,67);x.lineTo(c.width,67);x.stroke();let min=Math.min(...metricTrail,0),max=Math.max(...metricTrail,1);x.strokeStyle='#a2edd7';x.lineWidth=2;x.beginPath();metricTrail.forEach((n,i)=>{const xx=i*4.2,yy=80-65*(n-min)/(max-min||1);i?x.lineTo(xx,yy):x.moveTo(xx,yy)});x.stroke();}
 function setupUI(){const m=MODES[mode];$('heading').textContent=m.name;$('kicker').textContent=m.kicker;$('intro').textContent=m.intro;$('gesture').textContent=m.gesture;$('ruleHead').textContent=m.head;$('ruleBody').textContent=m.body;$('tryIt').textContent=m.try;$('tags').replaceChildren(...m.tags.map(t=>{let s=document.createElement('span');s.textContent=t;return s}));document.querySelectorAll('[data-mode]').forEach(b=>{b.classList.toggle('selected',b.dataset.mode===mode);b.setAttribute('aria-pressed',b.dataset.mode===mode?'true':'false')});
- $('controls').replaceChildren(...m.params.map(([key,title,min,max,base,step,hint])=>{const wrap=document.createElement('div');wrap.className='control';const label=document.createElement('label');const titleSpan=document.createElement('span');titleSpan.textContent=title;const out=document.createElement('output');out.textContent=Number(params[key]).toFixed(step<1?2:0);label.append(titleSpan,out);const input=document.createElement('input');input.type='range';input.min=min;input.max=max;input.step=step;input.value=params[key];input.setAttribute('aria-label',title);input.addEventListener('input',()=>{params[key]=Number(input.value);out.textContent=Number(input.value).toFixed(step<1?2:0)});const h=document.createElement('small');h.textContent=hint;wrap.append(label,input,h);return wrap}));}
-function selectMode(m){mode=m;params=Object.fromEntries(MODES[m].params.map(a=>[a[0],a[4]]));setupUI();init();draw(worldA,$('a'));draw(worldB,$('b'));}
+ $('controls').replaceChildren(...m.params.map(([key,title,min,max,base,step,hint])=>{const wrap=document.createElement('div');wrap.className='control';const label=document.createElement('label');const titleSpan=document.createElement('span');titleSpan.textContent=title;const out=document.createElement('output');out.textContent=Number(params[key]).toFixed(step<1?2:0);label.append(titleSpan,out);const input=document.createElement('input');input.type='range';input.min=min;input.max=max;input.step=step;input.value=params[key];input.setAttribute('aria-label',title);input.addEventListener('input',()=>{params[key]=Number(input.value);out.textContent=Number(input.value).toFixed(step<1?2:0);if(!compared||compareKey!==key)paramsB[key]=params[key];if(compared)renderB()});const h=document.createElement('small');h.textContent=hint;wrap.append(label,input,h);return wrap}));renderB();}
+function selectMode(m){mode=m;params=Object.fromEntries(MODES[m].params.map(a=>[a[0],a[4]]));compareKey=MODES[m].params[0][0];defaultB();setupUI();init();draw(worldA,$('a'));draw(worldB,$('b'));}
 function toast(s){$('toast').textContent=s;clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').textContent='',3500);}
 function download(name,data){let url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));let a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function recipe(){return {version:1,mode,seed,params:{...params},description:'涌现实验室 · 自定义规则配方'};}
-function restore(r){if(!MODES[r.mode]||!Number.isFinite(r.seed)||!r.params||typeof r.params!=='object')return false;mode=r.mode;seed=r.seed>>>0;params=Object.fromEntries(MODES[mode].params.map(p=>[p[0],clamp(Number.isFinite(Number(r.params[p[0]]))?Number(r.params[p[0]]):p[4],p[2],p[3])]));setupUI();init();return true;}
+function recipe(){return {version:2,mode,seed,params:{...params},paramsB:{...paramsB},compareKey,compared,description:'涌现实验室 · 自定义规则配方'};}
+function restore(r){
+ if(!MODES[r.mode]||!Number.isFinite(r.seed)||!r.params||typeof r.params!=='object')return false;
+ mode=r.mode;seed=r.seed>>>0;
+ params=Object.fromEntries(MODES[mode].params.map(p=>{const n=Number(r.params[p[0]]);return [p[0],Number.isFinite(n)?clamp(n,p[2],p[3]):p[4]]}));
+ compareKey=MODES[mode].params.some(p=>p[0]===r.compareKey)?r.compareKey:MODES[mode].params[0][0];
+ compared=!!r.compared;defaultB();
+ if(r.paramsB&&typeof r.paramsB==='object')for(const p of MODES[mode].params){const n=r.paramsB[p[0]];if(Number.isFinite(n))paramsB[p[0]]=clamp(n,p[2],p[3])}
+ $('compare').checked=compared;$('panels').classList.toggle('comparing',compared);setupUI();init();renderFavorites();return true;
+}
 document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>selectMode(b.dataset.mode)));
 $('play').onclick=()=>{playing=!playing;$('play').textContent=playing?'Ⅱ 暂停':'▶ 继续';$('live').textContent=playing?'● 运行中':'Ⅱ 已暂停'};
 $('step').onclick=()=>{playing=false;$('play').textContent='▶ 继续';$('live').textContent='Ⅱ 已暂停';tick(worldA);if(compared)tick(worldB);metrics();draw(worldA,$('a'));draw(worldB,$('b'))};
 $('reset').onclick=()=>{init();toast('已恢复同一种子下的初始世界')};$('reroll').onclick=()=>{seed=(Math.random()*4294967296)>>>0;init();toast('已生成新的随机世界')};$('speed').oninput=e=>{speed=Number(e.target.value);$('speedOut').textContent=speed.toFixed(2).replace(/0$/,'')+'×'};
-$('compare').onchange=e=>{compared=e.target.checked;$('panels').classList.toggle('comparing',compared);worldB=newWorld('B');if(compared){worldA=newWorld('A');metricTrail=[];toast('已重新同步起点。右侧只修改第一个参数。')}draw(worldA,$('a'));draw(worldB,$('b'))};
+$('compare').onchange=e=>{compared=e.target.checked;$('panels').classList.toggle('comparing',compared);worldB=newWorld('B');if(compared){defaultB();init();toast('已同步随机起点，请单独设置 B 世界的规则。')}else init();renderB();draw(worldA,$('a'));if(compared)draw(worldB,$('b'))};
 $('save').onclick=()=>{try{const k='shuge-emergence-recipes',all=JSON.parse(localStorage.getItem(k)||'[]');all.unshift({...recipe(),savedAt:new Date().toISOString()});localStorage.setItem(k,JSON.stringify(all.slice(0,30)));renderFavorites();toast('配方已收藏到当前浏览器（最多30份）')}catch(e){toast('收藏不可用；请使用导出 JSON')}};
 $('export').onclick=()=>{download('emergence-'+mode+'-'+seed+'.json',recipe());toast('已导出当前规则与种子')};
 $('share').onclick=async()=>{const link=location.origin+location.pathname+'#recipe='+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(recipe())))));try{await navigator.clipboard.writeText(link);toast('分享链接已复制')}catch(e){prompt('复制以下分享链接',link)}};
@@ -88,7 +135,7 @@ sand:{cluster:2.8,wander:3,bugs:165,activity:1400},
 fireflies:{couple:.30,range:142,variance:.05,density:220},
 evolution:{food:.40,cost:1.4,mutation:.28,awareness:1.5}
 };
-$('tryButton').onclick=()=>{Object.assign(params,PRESETS[mode]);setupUI();init();if(!playing)$('step').click();toast('已启用实验挑战配方；按“重置”可再次从同一种子开始')};
+$('tryButton').onclick=()=>{Object.assign(params,PRESETS[mode]);defaultB();setupUI();init();if(!playing)$('step').click();toast('已启用实验挑战配方；按“重置”可再次从同一种子开始')};
 function renderFavorites(){const root=$('favorites');root.replaceChildren();try{const entries=JSON.parse(localStorage.getItem('shuge-emergence-recipes')||'[]').slice(0,4);if(entries.length){const head=document.createElement('div');head.textContent='最近收藏 · 点击恢复';head.style.cssText='font-size:10px;color:#7ca9a7;margin-top:2px';root.appendChild(head)}entries.forEach((r,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+(MODES[r.mode]?.name||r.mode)+' · SEED '+r.seed;b.onclick=()=>{if(restore(r))toast('已恢复收藏配方')};root.appendChild(b)})}catch(e){}}
 renderFavorites();
 for(const c of [$('a'),$('b')]){let dragging=false;c.addEventListener('pointerdown',e=>{dragging=true;c.setPointerCapture(e.pointerId);interact(e,c)});c.addEventListener('pointermove',e=>{if(dragging&&mode!=='fireflies')interact(e,c)});c.addEventListener('pointerup',()=>dragging=false);c.addEventListener('pointercancel',()=>dragging=false)}
