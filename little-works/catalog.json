@@ -12,5 +12,19 @@
       "合成声音",
       "可离线"
     ]
+  },
+  {
+    "slug": "emergence-lab",
+    "title": "涌现实验室",
+    "date": "2026.10.22",
+    "type": "INTERACTIVE SCIENCE",
+    "description": "七个会自己演化的小世界。只改一条局部规则，亲眼看整体秩序如何诞生。",
+    "url": "./emergence-lab/",
+    "cover": "./emergence-lab/cover.png",
+    "tags": [
+      "七种模拟",
+      "实时交互",
+      "A/B 对照"
+    ]
   }
 ]
