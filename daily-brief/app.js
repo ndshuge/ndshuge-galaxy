@@ -12,7 +12,7 @@ function renderStory(x){return `<article class="story" id="item-${esc(x.id||x.n)
 <div class="detail-cell"><small>为什么重要</small><p>${esc(x.importance)}</p></div>
 <div class="detail-cell"><small>值得你关注</small><p>${esc(x.impact)}</p></div>
 </div></details></div>${sourceLinks(x.sources)}</article>`}
-function section(id,title,subtitle,kind,content,count,open=true){return `<section class="brief-section" id="${id}"><div class="section-shell ${open?"":"collapsed"}"><button class="section-toggle" type="button"><span class="section-icon">${sectionIcon(kind)}</span><span class="section-title"><strong>${esc(title)}</strong><span>${esc(subtitle)}</span></span><span class="section-count">${count}</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="section-content">${content}</div></div></section>`}
+function section(id,title,subtitle,kind,content,count,open=true){return `<section class="brief-section" id="${id}"><div class="section-shell ${open?"":"collapsed"}"><button class="section-toggle" type="button"><span class="section-icon">${esc(String(count))}</span><span class="section-title"><strong>${esc(title)}</strong><span>${esc(subtitle)}</span></span><span class="section-count">${count}</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="section-content">${content}</div></div></section>`}
 function renderProject(p,i){return `<article class="project-card" id="project-${i+1}" data-search-text="${esc(Object.values(p).filter(v=>typeof v==="string").join(" "))}"><div class="project-type">${esc(p.type)} · 难度 ${esc(p.difficulty)}</div><h3>${esc(p.name)}</h3><div class="one-line">${esc(p.definition)}</div><div class="project-facts">
 <div class="project-fact"><b>为什么适合：</b>${esc(p.why)}</div><div class="project-fact"><b>借鉴：</b>${esc(p.reuse)}</div><div class="project-fact"><b>MVP：</b>${esc(p.mvp)}</div><div class="project-fact"><b>学习收益：</b>${esc(p.learning)}</div><div class="project-fact"><b>最大风险：</b>${esc(p.risk)}</div><div class="project-fact"><b>Project Scout：</b>${esc(p.next)}</div></div><div class="project-question">思考：${esc(p.question)}</div>${p.source?.url?`<div class="source-row" style="margin-left:0"><a class="source-link" href="${esc(p.source.url)}" target="_blank" rel="noopener">↗ ${esc(p.source.label||"参考项目")}</a></div>`:""}</article>`}
 
@@ -41,25 +41,48 @@ async function renderCollection(kind,push=true){
   if(push)history.pushState({view:kind},"",`?view=${encodeURIComponent(kind)}`);
 }
 function renderBrief(b){
-  state.brief=b; state.currentDate=b.date; state.currentView="brief"; document.title=`${b.date} · 鼠哥晨间简报`;
+  state.brief=b; state.currentDate=b.date; state.currentView="brief"; document.title=b.date+" · 鼠哥晨间简报";
   document.querySelectorAll(".collection-link,.collection-pill").forEach(el=>el.classList.remove("active"));
-  const core=b.core.map(renderStory).join(""), ext=b.extensions.map(renderStory).join("");
-  const questions='<div class="question-list">'+b.questions.map((q,i)=>`<div class="question"><b>${esc(q.label||("问题 "+(i+1)))}</b><p>${esc(q.text)}</p></div>`).join("")+'</div>';
-  const projects='<div class="project-grid">'+b.projects.map(renderProject).join("")+'</div>'+(b.projectCompare?.length?'<div class="question-list">'+b.projectCompare.map((q,i)=>`<div class="question"><b>比较题 ${i+1}</b><p>${esc(q)}</p></div>`).join("")+'</div>':"");
-  const person='<div class="person-hero"><div class="person-kicker">TECH PERSON OF THE DAY</div><h3>'+esc(b.person.name)+'</h3><p>'+esc(b.person.subtitle)+'</p></div><div class="person-body">'+b.person.sections.map(s=>`<div class="person-block"><h4>${esc(s.title)}</h4><p>${esc(s.body)}</p></div>`).join("")+'</div><div class="question-list">'+b.person.questions.map((q,i)=>`<div class="question"><b>人物问题 ${i+1}</b><p>${esc(q)}</p></div>`).join("")+'</div>';
-  const signals='<div class="signals">'+b.finalSignals.map((x,i)=>`<div class="final-signal"><span>${String(i+1).padStart(2,"0")}</span><p>${esc(x)}</p></div>`).join("")+'</div><div class="focus-topics">'+b.deepDive.map((x,i)=>`<div class="focus-topic"><small>DEEP DIVE 0${i+1}</small><strong>${esc(x)}</strong></div>`).join("")+'</div>';
-  $("#briefRoot").innerHTML=`<header class="hero"><div class="eyebrow">${esc(b.weekday)} · ${esc(b.date)}</div><h1>${esc(b.title)}</h1><p class="hero-deck">${esc(b.deck)}</p><div class="hero-meta"><span class="meta-chip">10 核心</span><span class="meta-chip">8 跨领域</span><span class="meta-chip">5 项目候选</span><span class="meta-chip">1 科技人物</span><span class="meta-chip">${esc(b.window||"")}</span></div></header>
-  <div class="signal-strip">${(b.topSignals||[]).slice(0,3).map((s,i)=>`<div class="signal"><div class="k">SIGNAL 0${i+1}</div><strong>${esc(s)}</strong></div>`).join("")}</div>
-  ${section("core","核心 10 条","AI、芯片、机器人、科研与职业判断","core",'<div class="story-list">'+core+'</div>',b.core.length,true)}
-  ${section("extensions","跨领域扩展 8 条","政治 ×2 · 艺术 · 生物 · 教育 · 历史 · 金融 · 生态","extensions",'<div class="story-list">'+ext+'</div>',b.extensions.length,false)}
-  ${section("questions","18 条之后的思考题","跨领域结构 · 与你相关 · 反事实权衡","questions",questions,b.questions.length,false)}
-  ${section("projects","Project Scout","5 个差异化候选，不自动开工","projects",projects,b.projects.length,false)}
-  ${section("person","今日科技人物","不神化，保留失败、约束与时代背景","person",person,1,false)}
-  ${section("signals","今天最值得记住","跨领域信号与最多 2 个深挖主题","signals",signals,b.finalSignals.length,false)}`;
+  const core=b.core||[], ext=b.extensions||[], qs=b.questions||[], ps=b.projects||[], sig=b.finalSignals||[], deep=b.deepDive||[], person=(b.person&&b.person.name)?b.person:null;
+  const coreHtml=core.map(renderStory).join(""), extHtml=ext.map(renderStory).join("");
+  const questions='<div class="question-list">'+qs.map((q,i)=>'<div class="question"><b>'+esc(q.label||("问题 "+(i+1)))+'</b><p>'+esc(q.text)+'</p></div>').join("")+'</div>';
+  const projects='<div class="project-grid">'+ps.map(renderProject).join("")+'</div>'+((b.projectCompare||[]).length?'<div class="question-list">'+b.projectCompare.map((q,i)=>'<div class="question"><b>比较题 '+(i+1)+'</b><p>'+esc(q)+'</p></div>').join("")+'</div>':"");
+  let personHtml="";
+  if(person){
+    personHtml='<div class="person-hero"><div class="person-kicker">TECH PERSON OF THE DAY</div><h3>'+esc(person.name)+'</h3><p>'+esc(person.subtitle||"")+'</p></div><div class="person-body">'+(person.sections||[]).map(x=>'<div class="person-block"><h4>'+esc(x.title)+'</h4><p>'+esc(x.body)+'</p></div>').join("")+'</div>';
+    if((person.questions||[]).length)personHtml+='<div class="question-list">'+person.questions.map((q,i)=>'<div class="question"><b>人物问题 '+(i+1)+'</b><p>'+esc(q)+'</p></div>').join("")+'</div>';
+  }
+  const signals='<div class="signals">'+sig.map((x,i)=>'<div class="final-signal"><span>'+String(i+1).padStart(2,"0")+'</span><p>'+esc(x)+'</p></div>').join("")+'</div>'+((deep||[]).length?'<div class="focus-topics">'+deep.map((x,i)=>'<div class="focus-topic"><small>DEEP DIVE 0'+(i+1)+'</small><strong>'+esc(x)+'</strong></div>').join("")+'</div>':"");
+  const chips=[];
+  if(core.length)chips.push(core.length+" 核心");
+  if(ext.length)chips.push(ext.length+" 跨领域");
+  if(ps.length)chips.push(ps.length+" 项目候选");
+  if(person)chips.push("1 科技人物");
+  if(b.recoveryNote)chips.push("历史恢复版");
+  if(b.window)chips.push(b.window);
+  let sections="";
+  if(core.length)sections+=section("core","核心 "+core.length+" 条","当日重点主题","core",'<div class="story-list">'+coreHtml+'</div>',core.length,true);
+  if(ext.length)sections+=section("extensions","跨领域扩展 "+ext.length+" 条","政治、艺术、生物、教育、历史、金融、生态等","extensions",'<div class="story-list">'+extHtml+'</div>',ext.length,false);
+  if(qs.length)sections+=section("questions","统一思考题","跨领域结构 · 与你相关 · 反事实权衡","questions",questions,qs.length,false);
+  if(ps.length)sections+=section("projects","Project Scout","历史候选与当日可确认方向","projects",projects,ps.length,false);
+  if(person)sections+=section("person","今日科技人物","保留当时人物模块与可确认内容","person",personHtml,1,false);
+  if(sig.length||deep.length)sections+=section("signals","今天最值得记住","跨领域信号与深挖主题","signals",signals,sig.length,false);
+  const top=(b.topSignals||[]).slice(0,3).map((x,i)=>'<div class="signal"><div class="k">SIGNAL 0'+(i+1)+'</div><strong>'+esc(x)+'</strong></div>').join("");
+  $("#briefRoot").innerHTML='<header class="hero"><div class="eyebrow">'+esc(b.weekday||"")+' · '+esc(b.date)+'</div><h1>'+esc(b.title)+'</h1><p class="hero-deck">'+esc(b.deck||"")+'</p><div class="hero-meta">'+chips.map(x=>'<span class="meta-chip">'+esc(x)+'</span>').join("")+'</div></header><div class="signal-strip">'+top+'</div>'+sections;
   bindSectionToggles(); renderSectionNav(b); renderDateNav(); window.scrollTo({top:0,behavior:"instant"}); updateProgress(); updateSectionActive();
 }
 function bindSectionToggles(){$$(".section-toggle").forEach(btn=>btn.addEventListener("click",()=>btn.closest(".section-shell").classList.toggle("collapsed")))}
-function renderSectionNav(b){const items=[["core","核心 10 条",10],["extensions","跨领域",8],["questions","思考题",b.questions.length],["projects","项目候选",b.projects.length],["person","科技人物",1],["signals","今日信号",b.finalSignals.length]];$("#sectionNav").innerHTML=items.map(i=>`<button class="section-link" data-target="${i[0]}"><span>${i[1]}</span><span>${i[2]}</span></button>`).join("");$$(".section-link").forEach(b=>b.onclick=()=>{const el=$("#"+b.dataset.target);el?.scrollIntoView({behavior:"smooth",block:"start"})})}
+function renderSectionNav(b){
+  const items=[];
+  if((b.core||[]).length)items.push(["core","核心 "+(b.core||[]).length+" 条",(b.core||[]).length]);
+  if((b.extensions||[]).length)items.push(["extensions","跨领域",(b.extensions||[]).length]);
+  if((b.questions||[]).length)items.push(["questions","思考题",(b.questions||[]).length]);
+  if((b.projects||[]).length)items.push(["projects","项目候选",(b.projects||[]).length]);
+  if(b.person&&b.person.name)items.push(["person","科技人物",1]);
+  if((b.finalSignals||[]).length||(b.deepDive||[]).length)items.push(["signals","今日信号",(b.finalSignals||[]).length]);
+  $("#sectionNav").innerHTML=items.map(i=>'<button class="section-link" data-target="'+i[0]+'"><span>'+i[1]+'</span><span>'+i[2]+'</span></button>').join("");
+  $$(".section-link").forEach(btn=>btn.onclick=()=>$("#"+btn.dataset.target)?.scrollIntoView({behavior:"smooth",block:"start"}));
+}
 function renderDateNav(){const html=state.manifest.map(x=>`<button class="date-link ${x.date===state.currentDate?"active":""}" data-date="${x.date}"><span>${x.label||x.date}</span><small>${x.date===state.manifest[0]?.date?"最新":""}</small></button>`).join("");$("#dateList").innerHTML=html;$("#mobileDateList").innerHTML=html;$$(".date-link").forEach(b=>b.onclick=()=>loadBrief(b.dataset.date,true))}
 function bootStage(s){if(new URLSearchParams(location.search).has("debug"))document.body.dataset.bootStage=s}
 async function fetchJson(url,label){
@@ -111,7 +134,16 @@ function toggleDensity(){document.body.classList.toggle("compact");localStorage.
 function showToast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");clearTimeout(showToast.t);showToast.t=setTimeout(()=>el.classList.remove("show"),1500)}
 function openSearch(){const o=$("#searchOverlay");o.classList.add("open");o.setAttribute("aria-hidden","false");setTimeout(()=>$("#searchInput").focus(),20);buildSearchIndex()}
 function closeSearch(){$("#searchOverlay").classList.remove("open");$("#searchOverlay").setAttribute("aria-hidden","true")}
-async function buildSearchIndex(){if(state.searchIndex)return state.searchIndex;const briefs=await getAllBriefs();const out=[];briefs.filter(Boolean).forEach(b=>{[...b.core,...b.extensions].forEach(x=>out.push({date:b.date,section:x.n<=10?"核心资讯":"跨领域",title:x.title,text:[x.summary,x.background,x.importance,x.impact,(x.tags||[]).join(" ")].join(" "),target:`item-${x.id||x.n}`}));b.projects.forEach((p,i)=>out.push({date:b.date,section:"Project Scout",title:p.name,text:Object.values(p).filter(v=>typeof v==="string").join(" "),target:`project-${i+1}`}));out.push({date:b.date,section:"科技人物",title:b.person.name,text:b.person.sections.map(s=>s.body).join(" "),target:"person"})});state.searchIndex=out;return out}
+async function buildSearchIndex(){
+  if(state.searchIndex)return state.searchIndex;
+  const briefs=await getAllBriefs(),out=[];
+  briefs.filter(Boolean).forEach(b=>{
+    [...(b.core||[]),...(b.extensions||[])].forEach(x=>out.push({date:b.date,section:(b.core||[]).includes(x)?"核心资讯":"跨领域",title:x.title,text:[x.summary,x.background,x.importance,x.impact,(x.tags||[]).join(" ")].join(" "),target:"item-"+(x.id||x.n)}));
+    (b.projects||[]).forEach((x,i)=>out.push({date:b.date,section:"Project Scout",title:x.name,text:Object.values(x).filter(v=>typeof v==="string").join(" "),target:"project-"+(i+1)}));
+    if(b.person&&b.person.name)out.push({date:b.date,section:"科技人物",title:b.person.name,text:(b.person.sections||[]).map(x=>x.body).join(" "),target:"person"});
+  });
+  state.searchIndex=out;return out;
+}
 async function doSearch(q){const idx=await buildSearchIndex();const term=q.trim().toLowerCase();if(!term){$("#searchMeta").textContent="输入关键词，搜索全部归档";$("#searchResults").innerHTML="";return}const words=term.split(/\s+/);const hits=idx.map(x=>({x,score:words.reduce((n,w)=>n+((x.title+" "+x.text).toLowerCase().includes(w)?1:0),0)})).filter(y=>y.score>0).sort((a,b)=>b.score-a.score).slice(0,40);$("#searchMeta").textContent=`找到 ${hits.length} 条结果`;$("#searchResults").innerHTML=hits.map(({x})=>`<button class="search-result" data-date="${x.date}" data-target="${x.target}"><small>${x.date} · ${x.section}</small><strong>${esc(x.title)}</strong><p>${esc(x.text.slice(0,150))}</p></button>`).join("");$$(".search-result").forEach(b=>b.onclick=async()=>{await loadBrief(b.dataset.date,true);closeSearch();setTimeout(()=>$("#"+b.dataset.target)?.scrollIntoView({behavior:"smooth",block:"center"}),80)})}
 function openArchive(){$("#archiveSheet").classList.add("open");$("#archiveSheet").setAttribute("aria-hidden","false");$("#archiveBackdrop").hidden=false;$("#archiveBackdrop").classList.add("show")}
 function closeArchive(){$("#archiveSheet").classList.remove("open");$("#archiveSheet").setAttribute("aria-hidden","true");$("#archiveBackdrop").classList.remove("show");setTimeout(()=>$("#archiveBackdrop").hidden=true,250)}
