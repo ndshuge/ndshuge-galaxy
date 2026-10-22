@@ -64,15 +64,25 @@ function renderDateNav(){const html=state.manifest.map(x=>`<button class="date-l
 function bootStage(s){if(new URLSearchParams(location.search).has("debug"))document.body.dataset.bootStage=s}
 async function fetchJson(url,label){
   bootStage(label+"-request");
-  const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),8000);
-  try{
-    const u=new URL(url,location.href);u.searchParams.set("_v","20261022f");
-    const r=await fetch(u.href,{cache:"no-store",signal:controller.signal});
-    bootStage(label+"-response-"+r.status);
-    if(!r.ok)throw new Error(label+" HTTP "+r.status);
-    const data=await r.json();bootStage(label+"-json");return data;
-  }finally{clearTimeout(timer)}
+  const u=new URL(url,location.href);u.searchParams.set("_v","20261022g");
+  return await new Promise((resolve,reject)=>{
+    const req=new XMLHttpRequest();
+    req.open("GET",u.href,true);
+    req.timeout=8000;
+    req.responseType="json";
+    req.onload=()=>{
+      bootStage(label+"-response-"+req.status);
+      if(req.status<200||req.status>=300){reject(new Error(label+" HTTP "+req.status));return}
+      try{
+        const data=req.response ?? JSON.parse(req.responseText);
+        bootStage(label+"-json");
+        resolve(data);
+      }catch(err){reject(err)}
+    };
+    req.onerror=()=>reject(new Error(label+" network error"));
+    req.ontimeout=()=>reject(new Error(label+" timeout"));
+    req.send();
+  });
 }
 async function loadBrief(date,push=false){
   const meta=state.manifest.find(x=>x.date===date)||state.manifest[0];if(!meta)return;
