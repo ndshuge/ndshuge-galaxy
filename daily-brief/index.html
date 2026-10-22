@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f6f3" media="(prefers-color-scheme:light)">
+  <meta name="theme-color" content="#0d0f12" media="(prefers-color-scheme:dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="鼠哥晨间简报：每日18条跨领域资讯、5个Project Scout项目候选与1位科技人物。">
+  <title>鼠哥晨间简报 · Daily Brief</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="ambient ambient-a" aria-hidden="true"></div><div class="ambient ambient-b" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="返回鼠哥星系"><span class="brand-mark">S</span><span class="brand-copy"><strong>晨间简报</strong><small>SHUGE DAILY</small></span></a>
+    <div class="top-actions">
+      <button class="icon-btn search-open" type="button" aria-label="搜索简报"><svg viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg><span class="shortcut">⌘K</span></button>
+      <button class="icon-btn" id="densityToggle" type="button" aria-label="切换阅读密度"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></button>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="切换明暗主题"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button>
+    </div>
+  </header>
+  <main class="app-shell">
+    <aside class="sidebar"><div class="side-card"><div class="side-label">归档</div><nav id="dateList" class="date-list"></nav></div><div class="side-card"><div class="side-label">今日结构</div><nav id="sectionNav" class="section-nav"></nav></div></aside>
+    <section class="content"><div id="briefRoot"><div class="loading-state"><span class="loading-dot"></span><p>正在整理今日世界模型…</p></div></div></section>
+  </main>
+  <nav class="mobile-tabs" aria-label="移动端导航">
+    <button type="button" data-mobile-action="today" class="active"><svg viewBox="0 0 24 24"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13H4V6a1 1 0 0 1 1-1Z"/></svg><span>今日</span></button>
+    <button type="button" data-mobile-action="archive"><svg viewBox="0 0 24 24"><path d="M4 4h16v4H4zM6 8v12h12V8m-8 4h4"/></svg><span>归档</span></button>
+    <button type="button" data-mobile-action="search"><svg viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg><span>搜索</span></button>
+  </nav>
+  <div class="sheet-backdrop" id="archiveBackdrop" hidden></div>
+  <aside class="archive-sheet" id="archiveSheet" aria-hidden="true"><div class="sheet-handle"></div><div class="sheet-head"><strong>全部简报</strong><button type="button" id="archiveClose">完成</button></div><nav id="mobileDateList" class="date-list"></nav></aside>
+  <div class="search-overlay" id="searchOverlay" aria-hidden="true"><div class="search-panel" role="dialog" aria-modal="true"><div class="search-box"><svg viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg><input id="searchInput" type="search" placeholder="搜索事件、人物、项目、关键词…"><button id="searchClose" type="button">Esc</button></div><div class="search-meta" id="searchMeta">输入关键词，搜索全部归档</div><div class="search-results" id="searchResults"></div></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+</body></html>
