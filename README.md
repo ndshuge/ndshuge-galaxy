@@ -24,6 +24,7 @@ SHUGE GALAXY 是使用 HTML Canvas、CSS 与 JavaScript 实现的像素风交互
 | **[互动艺术](https://ndshuge.github.io/ndshuge-galaxy/art/)** | 多种生成艺术、图像实验和视觉交互 |
 | **[Math Universe](https://ndshuge.github.io/ndshuge-galaxy/art/math-universe/)** | 混沌、分形和科学现象可视化 |
 | **[西安主题](https://ndshuge.github.io/ndshuge-galaxy/xian/)** | 与城市相关的独立探索内容 |
+| **[晨间简报](https://ndshuge.github.io/ndshuge-galaxy/daily-brief/)** | 每日 18 条跨领域资讯、Project Scout、科技人物与长期归档 |
 
 > **作品导航与作品本身分开维护。** 部分项目仍在实验或持续更新，实际功能与素材使用条件请查对应项目说明。
 
@@ -46,6 +47,7 @@ SHUGE GALAXY 是使用 HTML Canvas、CSS 与 JavaScript 实现的像素风交互
 | 数学宇宙 | 混沌、分形、场与波等可视化 | [进入](https://ndshuge.github.io/ndshuge-galaxy/art/math-universe/) |
 | 生活指南 | 独立的交互页面 | [进入](https://ndshuge.github.io/ndshuge-galaxy/life-guide/) |
 | 西安 | 城市相关交互内容 | [进入](https://ndshuge.github.io/ndshuge-galaxy/xian/) |
+| 晨间简报 | 每日深度资讯、项目候选、科技人物、搜索与日期归档 | [进入](https://ndshuge.github.io/ndshuge-galaxy/daily-brief/) |
 
 ## 本地运行
 
