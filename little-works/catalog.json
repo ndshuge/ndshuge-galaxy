@@ -1,58 +1,72 @@
 [
-  {
-    "slug": "xiaoya-lifelab",
-    "title": "小芽 LifeLab",
-    "date": "2026.10.22",
-    "type": "CAMPUS LIFE TOOL",
-    "description": "陪你整理课表、任务与成长路线的小芽。公开版无需 API，即可体验规则规划与成长复盘。",
-    "url": "https://ndshuge.github.io/xiaoya-lifelab/",
-    "cover": "https://ndshuge.github.io/xiaoya-lifelab/assets/brand/xiaoya_hero_v1.webp",
-    "tags": [
-      "大学生活",
-      "成长规划",
-      "本地规则"
-    ]
-  },
-  {
-    "slug": "sea-of-little-things",
-    "title": "无用之海",
-    "date": "2026.10.22",
-    "type": "GENERATIVE ART",
-    "description": "丢下一点光，轻轻拨动潮汐。没有任务，只有一片会回应你的海。",
-    "url": "./sea-of-little-things/",
-    "cover": "./sea-of-little-things/cover.png",
-    "tags": [
-      "交互艺术",
-      "合成声音",
-      "可离线"
-    ]
-  },
-  {
-    "slug": "emergence-lab",
-    "title": "涌现实验室",
-    "date": "2026.10.22",
-    "type": "INTERACTIVE SCIENCE",
-    "description": "十四个会自己演化的小世界。从粒子、鸟群到化学花纹与幽灵堵车，只改一条规则，发现意想不到的整体行为。",
-    "url": "./emergence-lab/",
-    "cover": "./emergence-lab/cover.png",
-    "tags": [
-      "14 种模拟",
-      "参数解释",
-      "A/B 对照"
-    ]
-  },
-  {
-    "slug": "liminal",
-    "title": "引力边界 · LIMINAL",
-    "date": "2026.10.22",
-    "type": "WEBGL EXPERIENCE",
-    "description": "穿越事件视界、星云与光速边界。转动视角，靠近宇宙的另一面。",
-    "url": "./liminal/",
-    "cover": "./liminal/cover.svg",
-    "tags": [
-      "WebGL 宇宙",
-      "三重场景",
-      "交互声音"
-    ]
-  }
+    {
+        "slug":  "xiaoya-lifelab",
+        "title":  "小芽 LifeLab",
+        "date":  "2026.10.22",
+        "type":  "CAMPUS LIFE TOOL",
+        "description":  "陪你整理课表、任务与成长路线的小芽。公开版无需 API，即可体验规则规划与成长复盘。",
+        "url":  "https://ndshuge.github.io/xiaoya-lifelab/",
+        "cover":  "https://ndshuge.github.io/xiaoya-lifelab/assets/brand/xiaoya_hero_v1.webp",
+        "tags":  [
+                     "大学生活",
+                     "成长规划",
+                     "本地规则"
+                 ]
+    },
+    {
+        "slug":  "sea-of-little-things",
+        "title":  "无用之海",
+        "date":  "2026.10.22",
+        "type":  "GENERATIVE ART",
+        "description":  "丢下一点光，轻轻拨动潮汐。没有任务，只有一片会回应你的海。",
+        "url":  "./sea-of-little-things/",
+        "cover":  "./sea-of-little-things/cover.png",
+        "tags":  [
+                     "交互艺术",
+                     "合成声音",
+                     "可离线"
+                 ]
+    },
+    {
+        "slug":  "emergence-lab",
+        "title":  "涌现实验室",
+        "date":  "2026.10.22",
+        "type":  "INTERACTIVE SCIENCE",
+        "description":  "十四个会自己演化的小世界。从粒子、鸟群到化学花纹与幽灵堵车，只改一条规则，发现意想不到的整体行为。",
+        "url":  "./emergence-lab/",
+        "cover":  "./emergence-lab/cover.png",
+        "tags":  [
+                     "14 种模拟",
+                     "参数解释",
+                     "A/B 对照"
+                 ]
+    },
+    {
+        "slug":  "liminal",
+        "title":  "引力边界 · LIMINAL",
+        "date":  "2026.10.22",
+        "type":  "WEBGL EXPERIENCE",
+        "description":  "穿越事件视界、星云与光速边界。转动视角，靠近宇宙的另一面。",
+        "url":  "./liminal/",
+        "cover":  "./liminal/cover.svg",
+        "tags":  [
+                     "WebGL 宇宙",
+                     "三重场景",
+                     "交互声音"
+                 ]
+    },
+    {
+        "slug":  "zhixu-ai-academy",
+        "title":  "知序 AI 学院",
+        "date":  "2026.10.22",
+        "type":  "INTERACTIVE LEARNING",
+        "description":  "亲手预测、运行真实 Logistic 科学实验、批准第二轮并留下学习证据。Pages 科学版不包含在线 AI 模型。",
+        "url":  "./zhixu-ai-academy/",
+        "cover":  "",
+        "tags":  [
+                     "科学探究",
+                     "学习证据",
+                     "可交互"
+                 ]
+    }
 ]
