@@ -18,7 +18,7 @@ function renderProject(p,i){return `<article class="project-card" id="project-${
 
 async function getAllBriefs(){
   if(state.allBriefs)return state.allBriefs;
-  state.allBriefs=(await Promise.all(state.manifest.map(m=>fetch(m.path,{cache:"no-store"}).then(r=>r.json()).catch(()=>null)))).filter(Boolean);
+  state.allBriefs=(await Promise.all(state.manifest.map(m=>fetchJson(m.path,"collection").catch(()=>null)))).filter(Boolean);
   return state.allBriefs;
 }
 async function renderCollection(kind,push=true){
@@ -61,8 +61,39 @@ function renderBrief(b){
 function bindSectionToggles(){$$(".section-toggle").forEach(btn=>btn.addEventListener("click",()=>btn.closest(".section-shell").classList.toggle("collapsed")))}
 function renderSectionNav(b){const items=[["core","核心 10 条",10],["extensions","跨领域",8],["questions","思考题",b.questions.length],["projects","项目候选",b.projects.length],["person","科技人物",1],["signals","今日信号",b.finalSignals.length]];$("#sectionNav").innerHTML=items.map(i=>`<button class="section-link" data-target="${i[0]}"><span>${i[1]}</span><span>${i[2]}</span></button>`).join("");$$(".section-link").forEach(b=>b.onclick=()=>{const el=$("#"+b.dataset.target);el?.scrollIntoView({behavior:"smooth",block:"start"})})}
 function renderDateNav(){const html=state.manifest.map(x=>`<button class="date-link ${x.date===state.currentDate?"active":""}" data-date="${x.date}"><span>${x.label||x.date}</span><small>${x.date===state.manifest[0]?.date?"最新":""}</small></button>`).join("");$("#dateList").innerHTML=html;$("#mobileDateList").innerHTML=html;$$(".date-link").forEach(b=>b.onclick=()=>loadBrief(b.dataset.date,true))}
-async function loadBrief(date,push=false){const meta=state.manifest.find(x=>x.date===date)||state.manifest[0];if(!meta)return;try{const b=await fetch(meta.path,{cache:"no-store"}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()});renderBrief(b);if(push){history.pushState({date},"",`?date=${encodeURIComponent(b.date)}`);closeArchive()}}catch(e){$("#briefRoot").innerHTML=`<div class="loading-state"><p>这一天的简报暂时读取失败。</p></div>`}}
-async function loadManifest(){state.manifest=await fetch("./data/manifest.json",{cache:"no-store"}).then(r=>r.json());const params=new URLSearchParams(location.search);const view=params.get("view"),q=params.get("date");if(view==="projects"||view==="people")await renderCollection(view,false);else await loadBrief(q||state.manifest[0]?.date)}
+function bootStage(s){if(new URLSearchParams(location.search).has("debug"))document.body.dataset.bootStage=s}
+async function fetchJson(url,label){
+  bootStage(label+"-request");
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),8000);
+  try{
+    const u=new URL(url,location.href);u.searchParams.set("_v","20261022f");
+    const r=await fetch(u.href,{cache:"no-store",signal:controller.signal});
+    bootStage(label+"-response-"+r.status);
+    if(!r.ok)throw new Error(label+" HTTP "+r.status);
+    const data=await r.json();bootStage(label+"-json");return data;
+  }finally{clearTimeout(timer)}
+}
+async function loadBrief(date,push=false){
+  const meta=state.manifest.find(x=>x.date===date)||state.manifest[0];if(!meta)return;
+  try{
+    const b=await fetchJson(meta.path,"brief");
+    bootStage("brief-render");
+    renderBrief(b);
+    bootStage("brief-done");
+    if(push){history.pushState({date},"",`?date=${encodeURIComponent(b.date)}`);closeArchive()}
+  }catch(e){
+    console.error(e);
+    $("#briefRoot").innerHTML=`<div class="loading-state"><p>这一天的简报暂时读取失败。</p></div>`;
+    bootStage("brief-error");
+  }
+}
+async function loadManifest(){
+  state.manifest=await fetchJson("./data/manifest.json","manifest");
+  bootStage("manifest-done");
+  const params=new URLSearchParams(location.search),view=params.get("view"),q=params.get("date");
+  if(view==="projects"||view==="people")await renderCollection(view,false);else await loadBrief(q||state.manifest[0]?.date)
+}
 function setTheme(v){document.documentElement.dataset.theme=v;localStorage.setItem("brief-theme",v)}
 function initTheme(){const saved=localStorage.getItem("brief-theme");if(saved)return setTheme(saved);setTheme(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light")}
 function toggleTheme(){setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark")}
