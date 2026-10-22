@@ -2,7 +2,7 @@
 
 鼠哥星系的第七个星系，用于收录独立、轻量、可游玩的完整小作品。不是艺术回廊的展品目录。
 
-公开入口：`/little-works/`。目前首个作品：`/little-works/sea-of-little-things/`《无用之海》。
+公开入口：`/little-works/`。现有两件作品：`/little-works/sea-of-little-things/`《无用之海》，`/little-works/emergence-lab/`《涌现实验室》（七个局部规则涌现模拟）。
 
 ## 以后新增作品
 
