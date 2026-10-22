@@ -18,12 +18,12 @@
     "title": "涌现实验室",
     "date": "2026.10.22",
     "type": "INTERACTIVE SCIENCE",
-    "description": "七个会自己演化的小世界。只改一条局部规则，亲眼看整体秩序如何诞生。",
+    "description": "十四个会自己演化的小世界。从粒子、鸟群到化学花纹与幽灵堵车，只改一条规则，发现意想不到的整体行为。",
     "url": "./emergence-lab/",
     "cover": "./emergence-lab/cover.png",
     "tags": [
-      "七种模拟",
-      "实时交互",
+      "14 种模拟",
+      "参数解释",
       "A/B 对照"
     ]
   },
