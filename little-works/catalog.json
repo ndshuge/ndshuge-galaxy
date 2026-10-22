@@ -1,5 +1,19 @@
 [
   {
+    "slug": "xiaoya-lifelab",
+    "title": "小芽 LifeLab",
+    "date": "2026.10.22",
+    "type": "CAMPUS LIFE TOOL",
+    "description": "陪你整理课表、任务与成长路线的小芽。公开版无需 API，即可体验规则规划与成长复盘。",
+    "url": "https://ndshuge.github.io/xiaoya-lifelab/",
+    "cover": "https://ndshuge.github.io/xiaoya-lifelab/assets/brand/xiaoya_hero_v1.webp",
+    "tags": [
+      "大学生活",
+      "成长规划",
+      "本地规则"
+    ]
+  },
+  {
     "slug": "sea-of-little-things",
     "title": "无用之海",
     "date": "2026.10.22",
