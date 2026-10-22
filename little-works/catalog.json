@@ -1,0 +1,16 @@
+[
+  {
+    "slug": "sea-of-little-things",
+    "title": "无用之海",
+    "date": "2026.10.22",
+    "type": "GENERATIVE ART",
+    "description": "丢下一点光，轻轻拨动潮汐。没有任务，只有一片会回应你的海。",
+    "url": "./sea-of-little-things/",
+    "cover": "./sea-of-little-things/cover.png",
+    "tags": [
+      "交互艺术",
+      "合成声音",
+      "可离线"
+    ]
+  }
+]
