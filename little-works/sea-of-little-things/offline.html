@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071419">
+  <meta name="description" content="一小片没有任务的海。投下光，拨动潮汐，或者只看一会儿。一个可离线运行的生成艺术作品。">
+  <title>无用之海 · 玻璃宇宙</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2218%22%20fill%3D%22%230b2027%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2222%22%20fill%3D%22none%22%20stroke%3D%22%23b5d6d1%22%20stroke-width%3D%221.5%22%2F%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2232%22%20rx%3D%2211%22%20ry%3D%2222%22%20transform%3D%22rotate(35%2032%2032)%22%20fill%3D%22none%22%20stroke%3D%22%2383b6b4%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2243%22%20cy%3D%2214%22%20r%3D%224%22%20fill%3D%22%23eac694%22%2F%3E%3C%2Fsvg%3E%0A">
+  <style>/* finesse · specimen-poetry · ink-and-bioluminescence · orbital-stage · serif-and-instrument · particle-flow */
+:root {
+  --bg:#071419; /* Deep water — page ground. */
+  --surface:#10242a; /* Glass shade — controls and dialogs. */
+  --surface-hover:#1b353b;
+  --ink:#e4ece7; /* Salt paper — primary type. */
+  --muted:#a2b7b7; /* Sea mist — secondary type with readable contrast. */
+  --dim:#738e90;
+  --accent:#e5c18d; /* Lantern — actions and warmth. */
+  --aqua:#83c7c5; /* Living water — procedural scene only. */
+  --line:rgba(169,208,205,.17);
+  --line-strong:rgba(169,208,205,.32);
+  --accent-wash:rgba(229,193,141,.1);
+  --glass:rgba(10,29,35,.84);
+  --shadow:rgba(1,15,21,.55);
+  --clear:rgba(7,20,25,0);
+  --serif:"Iowan Old Style","Palatino Linotype","Noto Serif CJK SC","Source Han Serif SC","Songti SC","SimSun",serif;
+  --sans:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"Cascadia Code","SFMono-Regular",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;font-weight:400;-webkit-font-smoothing:antialiased}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:wait;opacity:.6}
+button{border:0;background:none}
+button:active{transform:translateY(1px)}
+button,a{-webkit-touch-callout:none}
+button:focus-visible,a:focus-visible,canvas:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+button:focus:not(:focus-visible){outline:none}
+button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+a{color:inherit;text-decoration:none}
+[hidden]{display:none!important}
+.skip-link{position:fixed;left:16px;top:-80px;z-index:10;background:var(--accent);color:var(--bg);padding:12px 18px}.skip-link:focus{top:12px}
+.world-shell{max-width:1900px;margin:auto;min-height:100dvh;display:flex;flex-direction:column;padding:0 48px}
+.grain{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.81' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23d8e8e3' filter='url(%23n)' d='M0 0h160v160H0z'/%3E%3C/svg%3E")}
+.masthead{height:106px;display:flex;align-items:center;justify-content:space-between;gap:20px;z-index:2;position:relative}
+.wordmark{display:flex;gap:13px;align-items:center;min-width:0}.wordmark>svg{width:35px;height:35px;fill:none;stroke:var(--muted);stroke-width:1}.wordmark .mark-dot{fill:var(--accent);stroke:var(--bg)}
+.wordmark>span{font-size:16px;letter-spacing:.16em;line-height:1.5}.wordmark small{display:block;font-size:8px;letter-spacing:.2em;color:var(--muted);font-family:var(--mono);margin-top:3px}
+.top-actions{display:flex;align-items:center;gap:21px}
+.text-button{display:flex;align-items:center;gap:8px;min-height:44px;white-space:nowrap;color:var(--muted);font-size:12px;padding:0 2px}
+.text-button:hover,.icon-button:hover{color:var(--accent)}
+.icon-button{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--muted);border-radius:50%;flex-shrink:0}
+.observatory{flex:1;display:grid;grid-template-columns:245px minmax(0,1fr) 112px;gap:10px;align-items:center;min-height:510px;position:relative}
+.intro{z-index:1;padding:6px 0 40px}
+.edition{font-size:10px;letter-spacing:.18em;display:flex;align-items:center;gap:9px;color:var(--muted);margin:0 0 31px;white-space:nowrap}.edition>span{width:5px;height:5px;border:1px solid var(--accent);border-radius:50%}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(60px,5.8vw,91px);letter-spacing:-.06em;line-height:1.1;margin:0;min-width:0;overflow-wrap:anywhere}h1>span{display:block;margin-left:.3em}
+.english-title{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--accent);margin:19px 0 0;letter-spacing:.015em}
+.intro-rule{width:27px;height:1px;background:var(--line-strong);margin:31px 0 24px}
+.intro-note{font-size:12px;color:var(--muted);line-height:2.1;letter-spacing:.08em;margin:0}
+.live-summary{margin-top:55px;color:var(--muted);font-size:10px;letter-spacing:.04em}.live-summary>div{display:flex;align-items:center;gap:7px}.live-dot{width:4px;height:4px;background:var(--aqua);border-radius:50%}.live-summary p{margin:11px 0 0;color:var(--dim);font-size:10px}.live-summary strong{font-weight:400;font-family:var(--mono);font-size:13px;color:var(--ink);margin-right:4px}.live-summary time{font-family:var(--mono);color:var(--muted)}.summary-slash{margin:0 12px;color:var(--line-strong)}
+.sea-area{position:relative;align-self:center;min-width:0;width:100%;max-width:860px;margin:auto}
+.vessel{position:relative;aspect-ratio:1;width:100%}
+#sea{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;border-radius:50%}
+.specimen-label{position:absolute;top:0;left:12%;right:12%;display:flex;justify-content:space-between;gap:8px;font-size:9px;letter-spacing:.13em;color:var(--muted);z-index:1;pointer-events:none}.mono{font-family:var(--mono);letter-spacing:.12em;color:var(--dim);font-size:9px}
+.compass{position:absolute;color:var(--dim);font:9px var(--mono);pointer-events:none}.north{top:3.4%;left:calc(50% - 3px)}.east{right:3%;top:calc(50% - 5px)}
+.sea-instruction{text-align:center;color:var(--muted);font-size:10px;letter-spacing:.1em;margin:-2px 0 15px;white-space:nowrap}.sea-instruction>span{color:var(--accent);margin-right:8px}
+.creature-label{position:absolute;left:60%;top:50%;background:var(--glass);border:1px solid var(--line-strong);padding:11px 36px 12px 13px;min-width:128px;z-index:2;pointer-events:auto;box-shadow:0 12px 40px var(--shadow);border-radius:2px;backdrop-filter:blur(12px);white-space:nowrap}.creature-label>span{font:16px var(--serif);letter-spacing:.07em}.creature-label small{display:block;font-size:9px;color:var(--muted);margin-top:5px}.creature-label button{position:absolute;right:0;top:0;width:32px;height:44px;color:var(--muted)}
+.margin-note{align-self:center;padding:0 0 35px 10px;color:var(--muted)}.vertical-rule{height:43px;width:1px;background:var(--line-strong);display:block;margin-bottom:20px}.margin-note p{writing-mode:vertical-rl;font-family:var(--serif);font-size:13px;line-height:2.4;letter-spacing:.2em;margin:0}.margin-note small{writing-mode:vertical-rl;display:block;font-size:9px;color:var(--dim);letter-spacing:.15em;margin:22px 0 0 31px}
+.shore{position:relative;z-index:2;flex-shrink:0;padding:0 0 22px}
+.poem{display:flex;align-items:center;justify-content:center;gap:12px;margin:7px 0 28px}.poem-mark{color:var(--accent);font:28px var(--serif);height:20px;opacity:.7}.poem p{margin:0;font:14px var(--serif);letter-spacing:.12em;color:var(--muted);min-height:22px;line-height:22px}.poem-index{font:8px var(--mono);color:var(--dim);margin-left:6px;white-space:nowrap}
+.controls{display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--line);border-radius:48px;background:var(--glass);width:max-content;max-width:100%;margin:0 auto;padding:7px 12px 7px 8px;box-shadow:0 8px 35px var(--shadow)}
+.mode-control{display:flex;gap:3px}.mode-control button{height:44px;display:flex;align-items:center;gap:7px;padding:0 17px;border-radius:28px;font-size:12px;color:var(--muted);white-space:nowrap}.mode-control button svg{width:18px;height:18px}.mode-control button:hover{color:var(--ink);background:var(--surface)}.mode-control button[aria-pressed=true]{color:var(--accent);background:var(--accent-wash)}
+.control-divider{height:22px;width:1px;background:var(--line);margin:0 8px;flex-shrink:0}.light-button{display:flex;align-items:center;justify-content:center;gap:9px;height:44px;color:var(--accent);font-size:12px;padding:0 15px;white-space:nowrap;border-radius:28px}.light-button:hover{background:var(--accent-wash)}
+.colophon{display:flex;align-items:center;justify-content:space-between;gap:15px;padding-top:30px;color:var(--dim);font-size:9px;letter-spacing:.08em}.colophon>span:nth-child(2){color:var(--muted);font-size:9px}.colophon kbd{font:8px var(--mono);border:1px solid var(--line);border-radius:3px;padding:2px 4px;color:var(--muted)}.key-separator{margin:0 8px;color:var(--dim)}.colophon>button{color:var(--muted);font-size:10px;min-height:44px;padding:0}.colophon>button:hover{color:var(--accent)}.colophon>button>span{margin-left:14px}
+.interface{transition:opacity .6s ease}
+body[data-quiet=true] .interface{opacity:0;pointer-events:none;visibility:hidden}body[data-quiet=true] .sea-area{z-index:3}body[data-quiet=true] .sea-instruction{visibility:hidden}.return-button{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);z-index:5;background:var(--glass);border:1px solid var(--line);border-radius:28px;color:var(--muted);padding:0 20px;height:44px;font-size:11px;backdrop-filter:blur(12px)}.return-button:active{transform:translateX(-50%) translateY(1px)}.return-button span{margin-left:14px}
+.toast{position:fixed;bottom:130px;left:50%;transform:translate(-50%,8px);padding:11px 19px;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-size:12px;z-index:9;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:calc(100vw - 32px);text-align:center}.toast[data-show=true]{opacity:1;transform:translate(-50%,0)}
+dialog{color:var(--ink);background:var(--surface);border:1px solid var(--line-strong);border-radius:5px;box-shadow:0 30px 100px var(--shadow);padding:42px;width:min(490px,calc(100% - 32px));max-height:calc(100dvh - 40px);overflow:auto}dialog::backdrop{background:rgba(2,12,18,.78);backdrop-filter:blur(9px)}.dialog-close{position:absolute;right:8px;top:8px;font-size:25px;font-weight:200}.dialog-kicker{font-size:10px!important;letter-spacing:.15em;color:var(--accent)!important;margin:0 0 22px!important}dialog h2{font:29px/1.4 var(--serif);font-weight:400;margin:0 0 20px;letter-spacing:-.03em}dialog>p{font-size:12px;line-height:1.9;color:var(--muted);margin:12px 0}.help-list{margin:25px 0}.help-list>div{padding:12px 0;border-top:1px solid var(--line)}.help-list dt{font-size:11px;color:var(--ink);margin-bottom:5px}.help-list dd{font-size:11px;color:var(--muted);margin:0;line-height:1.8}.dialog-fine{font-size:10px!important;color:var(--muted)!important;border-top:1px solid var(--line);padding-top:18px}.keepsake-actions{display:flex;flex-direction:column;gap:9px;margin:25px 0}.keepsake-actions button{text-align:left;border:1px solid var(--line);border-radius:3px;position:relative;padding:16px 42px 16px 17px}.keepsake-actions button:hover{border-color:var(--accent);background:var(--accent-wash)}.keepsake-actions button>span{font-size:13px;display:block}.keepsake-actions button small{font-size:10px;display:block;color:var(--muted);margin-top:6px}.keepsake-actions button b{position:absolute;right:19px;top:20px;color:var(--accent);font-weight:400;font-size:20px}
+.noscript{position:fixed;inset:auto 20px 20px;background:var(--surface);border:1px solid var(--accent);padding:20px;z-index:10}
+@media(min-width:761px){.masthead{height:88px;flex-shrink:0}.observatory{min-height:0}.sea-area{max-width:min(100%,calc(100dvh - 288px))}.poem{margin:0 0 19px}.shore{padding-bottom:12px}.colophon{padding-top:15px}.intro{padding:0 0 10px}}
+@media(min-width:761px) and (max-height:820px){.intro{padding:0}.edition{margin-bottom:22px}h1{font-size:64px;line-height:1.08}.english-title{font-size:15px;margin-top:13px}.intro-rule{margin:19px 0 16px}.intro-note{font-size:11px;line-height:1.9}.live-summary{margin-top:28px}}
+@media(min-width:1500px){.world-shell{padding:0 65px}.observatory{grid-template-columns:280px minmax(0,1fr) 170px}.sea-area{max-width:min(850px,calc(100dvh - 300px))}.masthead{height:100px}.shore{padding-bottom:20px}}
+@media(max-width:1100px){.world-shell{padding:0 30px}.observatory{grid-template-columns:210px minmax(0,1fr);gap:0;min-height:480px}.margin-note{display:none}.intro{padding-bottom:20px}.sea-area{width:calc(100% + 20px);margin-left:-10px}.edition{font-size:9px}h1{font-size:72px}.intro-note{font-size:11px}.specimen-label{top:-8px}.sea-instruction{font-size:9px;letter-spacing:.02em}}
+@media(max-width:760px){.world-shell{padding:0 22px}.masthead{height:90px}.wordmark>span{font-size:14px}.wordmark small{font-size:6px}.wordmark>svg{width:30px;height:30px}.top-actions{gap:7px}.quiet-trigger{display:none}.text-button{font-size:10px;gap:5px}.text-button svg{width:18px}.observatory{grid-template-columns:1fr;min-height:0;display:flex;flex-direction:column;align-items:stretch;flex:initial}.intro{padding:20px 7px 0;position:relative}.edition{margin-bottom:18px;font-size:8px;letter-spacing:.1em}h1{font-size:57px;letter-spacing:-.07em;line-height:1.15}h1>span{display:inline;margin-left:0}.english-title{font-size:14px;margin-top:8px}.intro-rule,.intro-note{display:none}.live-summary{position:absolute;right:3px;bottom:5px;margin-top:0;font-size:9px}.live-summary p{font-size:8px}.live-summary strong{font-size:11px}.summary-slash{margin:0 7px}.sea-area{width:calc(100% + 32px);margin:23px -16px 0;max-width:none}.vessel{max-width:620px;margin:auto}.specimen-label{left:11%;right:11%;font-size:8px;top:1px}.mono{font-size:8px}.sea-instruction{font-size:9px;margin:-2px 0 15px;white-space:normal;line-height:1.7;letter-spacing:.02em;padding:0 15px}.shore{margin-top:auto;padding:0 0 max(16px,env(safe-area-inset-bottom))}.poem{margin:15px 0 24px;gap:8px}.poem p{font-size:12px;letter-spacing:.04em}.poem-index{font-size:7px;margin-left:2px}.poem-mark{font-size:24px}.controls{gap:1px;padding:5px;border-radius:28px}.mode-control{gap:1px}.mode-control button{padding:0 12px;font-size:11px;gap:5px}.mode-control button svg{width:16px}.control-divider{margin:0 5px}.light-button{font-size:11px;padding:0 12px;gap:5px}.light-button svg{width:17px}.controls>.icon-button{width:39px;min-width:39px}.colophon{padding:20px 3px 0;font-size:8px;gap:10px}.colophon>span:nth-child(2){display:none}.colophon>button{font-size:9px}.colophon>button>span{margin-left:8px}.toast{bottom:100px;font-size:11px;white-space:normal}.compass{font-size:7px}dialog{padding:35px 27px}dialog h2{font-size:27px}}
+@media(max-width:470px){.controls{display:grid;grid-template-columns:minmax(0,1fr) 44px 44px;width:100%;max-width:340px;border-radius:20px;gap:0;padding:6px 9px}.mode-control{grid-column:1/-1;justify-content:center;border-bottom:1px solid var(--line);padding-bottom:5px;margin-bottom:4px}.mode-control button{flex:1;justify-content:center;font-size:11px}.control-divider{display:none}.light-button{justify-content:flex-start;padding-left:15px}.controls>.icon-button{width:44px;min-width:44px}.poem{margin:10px 0 17px}.top-actions .text-button>span{display:none}.text-button{width:44px;justify-content:center}.top-actions{gap:0}.masthead{height:77px}.intro{padding-top:12px}.sea-area{margin-top:25px}.colophon{padding-top:10px}.live-summary{bottom:3px}.live-summary>div{font-size:8px}.live-summary p{font-size:7px}.live-summary strong{font-size:10px}.live-summary time{font-size:8px}.creature-label{min-width:112px;font-size:12px}.creature-label>span{font-size:14px}.poem-index{display:none}}
+@media(max-width:350px){.world-shell{padding:0 16px}h1{font-size:49px}.english-title{font-size:12px}.wordmark small{font-size:5.5px}.wordmark{gap:8px}.live-summary{right:0}.intro{padding-left:3px}.sea-area{margin-top:26px}.specimen-label{font-size:7px}.mono{font-size:7px}.poem p{font-size:11px}.edition{font-size:7px}.sea-instruction{font-size:8px}.colophon{letter-spacing:0}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+body[data-quiet=true] .sea-area{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(90vw,86dvh);max-width:1000px;margin:0}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#sea">去看海</a>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="world-shell">
+    <header class="masthead interface">
+      <a class="wordmark" href="#main" aria-label="玻璃宇宙首页">
+        <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="14"/><ellipse cx="18" cy="18" rx="7" ry="14" transform="rotate(35 18 18)"/><circle class="mark-dot" cx="24" cy="7" r="2.5"/></svg>
+        <span>玻璃宇宙<small>A SMALL, UNNECESSARY WORLD</small></span>
+      </a>
+      <nav class="top-actions" aria-label="作品选项">
+        <button id="sound" class="text-button" type="button" aria-label="开启声音" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6l-5 4H4Z"/><path id="sound-waves" d="m17 9 5 6m0-6-5 6"/></svg><span id="sound-label">声音关闭</span></button>
+        <button id="quiet" class="text-button quiet-trigger" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/></svg><span>只看海</span></button>
+        <button id="about" class="icon-button" type="button" aria-label="关于这片海"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 9a2 2 0 0 1 4 0c0 2-2 2-2 4m0 3h.01"/></svg></button>
+      </nav>
+    </header>
+
+    <main id="main" class="observatory">
+      <section class="intro interface" aria-labelledby="title">
+        <p class="edition"><span></span>第 001 号 · 无用实验</p>
+        <h1 id="title">无用<span>之海</span></h1>
+        <p class="english-title">Sea of little things.</p>
+        <div class="intro-rule" aria-hidden="true"></div>
+        <p class="intro-note">今天不解决任何问题。<br>让一些微小的东西，<br>好好地存在一会儿。</p>
+        <div class="live-summary" aria-label="这片海的状态">
+          <div><span class="live-dot" aria-hidden="true"></span><span id="world-state">海正在呼吸</span></div>
+          <p><strong id="population">64</strong> 个微小的居民<span class="summary-slash">/</span><time id="elapsed">00:00</time></p>
+        </div>
+      </section>
+
+      <section class="sea-area" aria-label="可以互动的玻璃海洋">
+        <div class="specimen-label interface"><span id="mode-caption">缓慢的潮汐</span><span class="mono" id="seed-label">SEED 4721</span></div>
+        <div class="vessel" id="vessel">
+          <canvas id="sea" tabindex="0" aria-label="玻璃海洋。轻点空处投光，轻点生物认识它。也可用下方投光按钮操作。" aria-describedby="instructions">一只装着想象生物与微光的玻璃容器。你可以用投光按钮改变它。</canvas>
+          <div id="creature-label" class="creature-label" hidden><span id="creature-name"></span><small id="creature-kind"></small><button id="unselect" type="button" aria-label="取消观察生物">×</button></div>
+          <div class="compass north interface" aria-hidden="true">N</div><div class="compass east interface" aria-hidden="true">E</div>
+        </div>
+        <p class="sea-instruction interface" id="instructions"><span aria-hidden="true">↳</span> 轻点投下一束光 · 拖动拨动海水 · 轻点生物认识它</p>
+      </section>
+
+      <aside class="margin-note interface" aria-label="海边手记"><span class="vertical-rule" aria-hidden="true"></span><p>没有目的地的漂流，<br>也会经过一些星星。</p><small>一只瓶子 / 一整片夜晚</small></aside>
+    </main>
+
+    <footer class="shore interface">
+      <div class="poem"><span class="poem-mark" aria-hidden="true">“</span><p id="poem">海很小，足够放下一次走神。</p><span class="poem-index" id="poem-index">01 / 16</span></div>
+      <div class="controls">
+        <div class="mode-control" role="group" aria-label="改变海的流动方式">
+          <button type="button" data-mode="tide" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8c3-4 6 4 9 0s6 4 9 0M3 15c3-4 6 4 9 0s6 4 9 0"/></svg>潮汐</button>
+          <button type="button" data-mode="orbit" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-35 12 12)"/><circle cx="12" cy="12" r="2"/></svg>星群</button>
+          <button type="button" data-mode="dream" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 17A8 8 0 0 1 8 6 8 8 0 1 0 18 17Z"/></svg>入梦</button>
+        </div>
+        <span class="control-divider" aria-hidden="true"></span>
+        <button id="light" class="light-button" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v5m0 10v5M2 12h5m10 0h5M5 5l3 3m8 8 3 3M5 19l3-3M16 8l3-3"/><circle cx="12" cy="12" r="3"/></svg>投下一束光</button>
+        <button id="pause" class="icon-button" type="button" aria-label="暂停时间" aria-pressed="false"><svg id="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg></button>
+        <button id="keepsake" class="icon-button" type="button" aria-label="带走这一刻"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></button>
+      </div>
+      <div class="colophon"><span>由规则生长，容许偶然。</span><span><kbd>空格</kbd> 暂停 <span class="key-separator">·</span> <kbd>G</kbd> 投光 <span class="key-separator">·</span> <kbd>H</kbd> 静看</span><button type="button" id="new-sea">另一片海 <span aria-hidden="true">↗</span></button></div>
+    </footer>
+  </div>
+  <button id="return" class="return-button" type="button" hidden>返回岸边 <span aria-hidden="true">↙</span></button>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <button class="dialog-close icon-button" data-close type="button" aria-label="关闭关于">×</button>
+    <p class="dialog-kicker">一封放在海边的说明</p><h2 id="about-title">这里没有任务。</h2>
+    <p>这是一只用代码吹出来的玻璃瓶。里面的浮游生物沿着几条简单的规则游动；相遇、分开，偶尔追随你留下的光。</p>
+    <p>它们是想象中的生物。这片海是一件生成艺术作品。</p>
+    <dl class="help-list"><div><dt>潮汐 / 星群 / 入梦</dt><dd>改变流动的性格。</dd></div><div><dt>轻点 / 拖动</dt><dd>留下微光，或拨动海水。点到生物时，会看见它的名字。</dd></div><div><dt>带走这一刻</dt><dd>收下一张明信片，或装瓶保存，再次打开时继续。</dd></div><div><dt>声音</dt><dd>点击才会响起。由浏览器轻轻合成，没有录音。</dd></div></dl>
+    <p class="dialog-fine">无需账号或网络。作品不发送你的操作或文件。关闭页面时海会停下；“装进瓶子”可以保存此刻。已开启系统减弱动态效果时，时间默认暂停。</p>
+  </dialog>
+  <dialog id="keepsake-dialog" aria-labelledby="keepsake-title">
+    <button class="dialog-close icon-button" data-close type="button" aria-label="关闭收藏">×</button>
+    <p class="dialog-kicker">有些片刻，可以留得久一点</p><h2 id="keepsake-title">带走这片小小的海。</h2>
+    <p>一张明信片留下模样。一只瓶子带走时间，下次还可以继续。</p>
+    <div class="keepsake-actions"><button id="save-image" type="button"><span>收下明信片</span><small>保存当前画面 · PNG</small><b aria-hidden="true">↓</b></button><button id="save-world" type="button"><span>装进瓶子</span><small>保存可继续的海 · JSON</small><b aria-hidden="true">↓</b></button><button id="load-world" type="button"><span>打开一只旧瓶子</span><small>读取你之前保存的 JSON 文件</small><b aria-hidden="true">↑</b></button></div>
+    <input id="world-file" type="file" accept=".json,application/json" hidden>
+    <p class="dialog-fine" id="bottle-status" role="status">瓶子只在你的设备上打开。</p>
+  </dialog>
+  <noscript><p class="noscript">这片海需要 JavaScript 才能流动。请启用后重新打开。</p></noscript>
+<script>
+(function (root) {
+  'use strict';
+
+  // A small invented sea. The rules describe motion, not biological life.
+  const TAU = Math.PI * 2;
+  const LIMITS = Object.freeze({ entities: 100, lights: 36, trails: 22, events: 8 });
+  const MODES = ['tide', 'orbit', 'dream'];
+  const NAMES = [
+    '远灯', '迟来的信', '小小回声', '月背', '无名港', '一粒晚风',
+    '余温', '漂流瓶', '浅眠', '星屑', '透明的雨', '旧梦',
+    '缓慢的蓝', '低声', '空白页', '候鸟', '一寸海', '未寄出',
+    '小岛', '夜航', '薄荷月亮', '微末', '遥远的近处', '软着陆',
+    '雨停以后', '云的影子', '下一个春天', '失重', '潮间', '南窗',
+    '萤火', '半颗星', '漫游者', '悬浮的吻', '夜的口袋', '轻轻地'
+  ];
+  const finite = value => typeof value === 'number' && Number.isFinite(value);
+  const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+
+  function pointInDisk(x, y, radius) {
+    const distance = Math.hypot(x, y);
+    return distance > radius ? { x: x / distance * radius, y: y / distance * radius } : { x, y };
+  }
+
+  class GlassSea {
+    constructor(seed = 4721) {
+      this.reset(seed);
+    }
+
+    _random() {
+      // Mulberry32, with explicit state so a bottled sea resumes exactly.
+      this._rng = (this._rng + 0x6D2B79F5) >>> 0;
+      let value = this._rng;
+      value = Math.imul(value ^ value >>> 15, value | 1);
+      value ^= value + Math.imul(value ^ value >>> 7, value | 61);
+      return ((value ^ value >>> 14) >>> 0) / 4294967296;
+    }
+
+    _entity(x, y, kind) {
+      const angle = this._random() * TAU;
+      const speed = .027 + this._random() * .024 + kind * .006;
+      const id = this._nextId++;
+      return {
+        id, kind, x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        angle,
+        phase: this._random() * TAU,
+        size: .008 + this._random() * .010,
+        glow: .35 + this._random() * .5,
+        age: 0,
+        name: NAMES[(id - 1) % NAMES.length],
+        trail: [{ x, y }]
+      };
+    }
+
+    reset(seed = this.seed) {
+      if (!finite(seed)) throw new Error('种子需要是一个有限数字。');
+      this.seed = seed >>> 0;
+      this._rng = this.seed;
+      this._nextId = 1;
+      this._trailClock = 0;
+      this._bondClock = 0;
+      this._lightCount = 0;
+      this.time = 0;
+      this.mode = 'tide';
+      this.pointer = { x: 0, y: 0, active: false };
+      this.entities = [];
+      this.lights = [];
+      this.bonds = [];
+      this.events = [{ time: 0, text: '这一小片海，刚刚醒来。' }];
+      for (let index = 0; index < 64; index++) {
+        const angle = this._random() * TAU;
+        const radius = Math.sqrt(this._random()) * .79;
+        const kind = index % 3;
+        this.entities.push(this._entity(Math.cos(angle) * radius, Math.sin(angle) * radius, kind));
+      }
+      this._refreshBonds();
+      return this;
+    }
+
+    _event(text) {
+      this.events.push({ time: this.time, text });
+      if (this.events.length > LIMITS.events) this.events.shift();
+    }
+
+    setMode(mode) {
+      if (!MODES.includes(mode)) throw new Error('未知潮汐。可选 tide、orbit 或 dream。');
+      if (this.mode !== mode) {
+        this.mode = mode;
+        const messages = {
+          tide: '潮水记起了回家的路。',
+          orbit: '所有相遇，开始绕着一个温柔的中心。',
+          dream: '海放慢了呼吸，梦开始漂浮。'
+        };
+        this._event(messages[mode]);
+      }
+      return this.mode;
+    }
+
+    setPointer(x, y, active = false) {
+      if (!finite(x) || !finite(y)) {
+        this.pointer.active = false;
+        return;
+      }
+      const point = pointInDisk(x, y, .90);
+      this.pointer = { x: point.x, y: point.y, active: Boolean(active) };
+    }
+
+    addLight(x, y) {
+      if (!finite(x) || !finite(y)) throw new Error('光需要一个有限的位置。');
+      const point = pointInDisk(x, y, .86);
+      const light = { x: point.x, y: point.y, age: 0, life: 10 + this._random() * 8, power: .7 + this._random() * .3 };
+      this.lights.push(light);
+      if (this.lights.length > LIMITS.lights) this.lights.shift();
+      this._lightCount++;
+      if (this.entities.length < LIMITS.entities && (this._lightCount === 1 || this._random() < .54)) {
+        this.entities.push(this._entity(point.x, point.y, Math.floor(this._random() * 3)));
+      }
+      if (this._lightCount === 1) this._event('你留下了一束光。它们似乎注意到了。');
+      else if (this._lightCount % 5 === 0) this._event([
+        '有些微光，已经找到彼此。',
+        '没有谁需要抵达哪里。',
+        '你不在的时候，海也会慢慢呼吸。',
+        '一件无用的事，也可以被认真对待。'
+      ][Math.floor(this._lightCount / 5 - 1) % 4]);
+      return light;
+    }
+
+    pick(x, y, radius = .065) {
+      if (!finite(x) || !finite(y) || !finite(radius) || radius < 0) return null;
+      let nearest = null;
+      let best = radius * radius;
+      for (const entity of this.entities) {
+        const distance = (entity.x - x) ** 2 + (entity.y - y) ** 2;
+        if (distance < best) {
+          best = distance;
+          nearest = entity;
+        }
+      }
+      return nearest;
+    }
+
+    _refreshBonds() {
+      const bonds = [];
+      for (let index = 0; index < this.entities.length; index++) {
+        const entity = this.entities[index];
+        let nearest = null;
+        let best = .175 * .175;
+        for (let otherIndex = index + 1; otherIndex < this.entities.length; otherIndex++) {
+          const other = this.entities[otherIndex];
+          if (entity.kind !== other.kind) continue;
+          const distance = (other.x - entity.x) ** 2 + (other.y - entity.y) ** 2;
+          if (distance < best) {
+            best = distance;
+            nearest = other;
+          }
+        }
+        if (nearest) bonds.push({ a: entity.id, b: nearest.id, strength: 1 - Math.sqrt(best) / .175 });
+      }
+      this.bonds = bonds;
+    }
+
+    step(delta) {
+      if (!finite(delta) || delta <= 0) return this;
+      const dt = Math.min(delta, .05);
+      this.time += dt;
+      this._trailClock += dt;
+      this._bondClock += dt;
+      const recordTrail = this._trailClock >= .085;
+      if (recordTrail) this._trailClock %= .085;
+      for (const light of this.lights) light.age += dt;
+      this.lights = this.lights.filter(light => light.age < light.life);
+
+      // All local forces see the same previous frame, independent of draw order.
+      const prior = this.entities.map(entity => ({ x: entity.x, y: entity.y, vx: entity.vx, vy: entity.vy, kind: entity.kind }));
+      for (let index = 0; index < this.entities.length; index++) {
+        const entity = this.entities[index];
+        const current = prior[index];
+        const radius = Math.hypot(current.x, current.y);
+        let targetX;
+        let targetY;
+        let speed = [.048, .067, .043][entity.kind];
+        if (this.mode === 'orbit') {
+          const desiredRing = .30 + entity.kind * .18;
+          const radial = (desiredRing - radius) * .6;
+          const denominator = Math.max(.08, radius);
+          targetX = -current.y / denominator + current.x / denominator * radial * 6;
+          targetY = current.x / denominator + current.y / denominator * radial * 6;
+          speed *= 1.18;
+        } else {
+          // Derivatives of a stream function make several connected currents.
+          // The circular envelope makes flow tangent to the glass rather than
+          // pushing every resident toward one rim. Avoid normalizing these
+          // vectors: their varying speed keeps broad inner and outer currents.
+          const dreaming = this.mode === 'dream';
+          const frequency = dreaming ? 3.4 : 4.2;
+          const drift = this.time * (dreaming ? .023 : .065);
+          const waveX = current.x * frequency + drift + entity.kind * .34;
+          const waveY = current.y * frequency - drift * .73;
+          const envelope = Math.max(0, 1 - radius * radius / .81);
+          const base = dreaming ? .13 : .18;
+          const amplitude = dreaming ? .27 : .24;
+          const stream = base + amplitude * Math.sin(waveX) * Math.cos(waveY);
+          const derivativeX = amplitude * frequency * Math.cos(waveX) * Math.cos(waveY);
+          const derivativeY = -amplitude * frequency * Math.sin(waveX) * Math.sin(waveY);
+          targetX = envelope * derivativeY - 2 * current.y / .81 * stream;
+          targetY = -envelope * derivativeX + 2 * current.x / .81 * stream;
+          if (dreaming) speed *= .52;
+        }
+        const fieldLength = this.mode === 'orbit' ? Math.max(.1, Math.hypot(targetX, targetY)) : 1;
+        targetX = targetX / fieldLength * speed;
+        targetY = targetY / fieldLength * speed;
+
+        let separateX = 0;
+        let separateY = 0;
+        let alignX = 0;
+        let alignY = 0;
+        let neighbors = 0;
+        for (let otherIndex = 0; otherIndex < prior.length; otherIndex++) {
+          if (otherIndex === index) continue;
+          const other = prior[otherIndex];
+          const dx = current.x - other.x;
+          const dy = current.y - other.y;
+          const square = dx * dx + dy * dy;
+          if (square < .0036 && square > .0000001) {
+            const distance = Math.sqrt(square);
+            const repulsion = (1 - distance / .06) * .036;
+            separateX += dx / distance * repulsion;
+            separateY += dy / distance * repulsion;
+          }
+          if (square < .04 && other.kind === entity.kind) {
+            alignX += other.vx;
+            alignY += other.vy;
+            neighbors++;
+          }
+        }
+        if (neighbors) {
+          targetX = targetX * .80 + alignX / neighbors * .20;
+          targetY = targetY * .80 + alignY / neighbors * .20;
+        }
+        targetX += separateX;
+        targetY += separateY;
+        let illumination = 0;
+        const attract = (x, y, power) => {
+          const dx = x - current.x;
+          const dy = y - current.y;
+          const distance = Math.hypot(dx, dy);
+          if (distance < .72 && distance > .012) {
+            const pull = .068 * power * (1 - distance / .72);
+            targetX += dx / distance * pull;
+            targetY += dy / distance * pull;
+            illumination += (1 - distance / .72) * power;
+          }
+        };
+        for (const light of this.lights) attract(light.x, light.y, light.power * Math.sin(Math.PI * light.age / light.life));
+        if (this.pointer.active) attract(this.pointer.x, this.pointer.y, 1.0);
+        if (radius > .76) {
+          const inward = (radius - .76) * .95;
+          targetX -= current.x / radius * inward;
+          targetY -= current.y / radius * inward;
+        }
+        const ease = Math.min(1, dt * 1.25);
+        entity.vx += (targetX - entity.vx) * ease;
+        entity.vy += (targetY - entity.vy) * ease;
+        const actualSpeed = Math.hypot(entity.vx, entity.vy);
+        if (actualSpeed > .15) {
+          entity.vx *= .15 / actualSpeed;
+          entity.vy *= .15 / actualSpeed;
+        }
+        entity.x += entity.vx * dt;
+        entity.y += entity.vy * dt;
+        const nextRadius = Math.hypot(entity.x, entity.y);
+        if (nextRadius > .90) {
+          entity.x = entity.x / nextRadius * .90;
+          entity.y = entity.y / nextRadius * .90;
+          const outward = (entity.vx * entity.x + entity.vy * entity.y) / .81;
+          if (outward > 0) {
+            entity.vx -= entity.x * outward * 1.6;
+            entity.vy -= entity.y * outward * 1.6;
+          }
+        }
+        entity.angle = Math.atan2(entity.vy, entity.vx);
+        entity.phase = (entity.phase + dt * (.8 + entity.kind * .2)) % TAU;
+        entity.age += dt;
+        entity.glow = clamp(.42 + Math.sin(entity.phase) * .18 + illumination * .45, .15, 1);
+        if (recordTrail) {
+          entity.trail.push({ x: entity.x, y: entity.y });
+          if (entity.trail.length > LIMITS.trails) entity.trail.shift();
+        }
+      }
+      if (this._bondClock >= .25) {
+        this._bondClock %= .25;
+        this._refreshBonds();
+      }
+      return this;
+    }
+
+    snapshot() {
+      return JSON.parse(JSON.stringify({
+        format: 'glass-sea/1', seed: this.seed, rng: this._rng, nextId: this._nextId,
+        trailClock: this._trailClock, bondClock: this._bondClock, lightCount: this._lightCount,
+        time: this.time, mode: this.mode, pointer: this.pointer,
+        entities: this.entities, lights: this.lights, bonds: this.bonds, events: this.events
+      }));
+    }
+
+    restore(input) {
+      const fail = detail => { throw new Error('这个漂流瓶无法打开：' + detail); };
+      let data;
+      try { data = JSON.parse(JSON.stringify(input)); }
+      catch (_) { fail('数据无法读取。'); }
+      if (!data || data.format !== 'glass-sea/1') fail('不是可识别的海。');
+      if (!MODES.includes(data.mode)) fail('潮汐无效。');
+      for (const field of ['seed', 'rng', 'nextId', 'lightCount']) {
+        if (!Number.isSafeInteger(data[field]) || data[field] < 0 || data[field] > 4294967295) fail('种子或计数无效。');
+      }
+      if (data.nextId < 1) fail('生命编号无效。');
+      for (const field of ['time', 'trailClock', 'bondClock']) {
+        if (!finite(data[field]) || data[field] < 0) fail('时间无效。');
+      }
+      if (data.trailClock >= .085 || data.bondClock >= .25) fail('时间间隔无效。');
+      const validatePoint = point => point && finite(point.x) && finite(point.y) && Math.hypot(point.x, point.y) <= .900001;
+      if (!validatePoint(data.pointer) || typeof data.pointer.active !== 'boolean') fail('指针位置无效。');
+      if (!Array.isArray(data.entities) || data.entities.length < 1 || data.entities.length > LIMITS.entities) fail('生命数量无效。');
+      const ids = new Set();
+      for (const entity of data.entities) {
+        if (!validatePoint(entity) || !Number.isSafeInteger(entity.id) || entity.id < 1 || entity.id >= data.nextId || ids.has(entity.id)) fail('生命位置或编号无效。');
+        ids.add(entity.id);
+        if (![0, 1, 2].includes(entity.kind) || !finite(entity.age) || entity.age < 0 || typeof entity.name !== 'string' || entity.name.length > 40) fail('生命资料无效。');
+        if (!finite(entity.vx) || !finite(entity.vy) || Math.hypot(entity.vx, entity.vy) > .150001) fail('游动速度无效。');
+        if (!finite(entity.angle) || !finite(entity.phase) || entity.phase < 0 || entity.phase > TAU) fail('方向无效。');
+        if (!finite(entity.size) || entity.size < .004 || entity.size > .04 || !finite(entity.glow) || entity.glow < 0 || entity.glow > 1) fail('微光无效。');
+        if (!Array.isArray(entity.trail) || entity.trail.length < 1 || entity.trail.length > LIMITS.trails || !entity.trail.every(validatePoint)) fail('轨迹无效。');
+      }
+      if (!Array.isArray(data.lights) || data.lights.length > LIMITS.lights) fail('光的数量无效。');
+      for (const light of data.lights) {
+        if (!validatePoint(light) || !finite(light.age) || !finite(light.life) || light.life <= 0 || light.life > 60 || light.age < 0 || light.age >= light.life || !finite(light.power) || light.power < 0 || light.power > 1) fail('光的资料无效。');
+      }
+      if (!Array.isArray(data.bonds) || data.bonds.length > LIMITS.entities) fail('相遇的数量无效。');
+      for (const bond of data.bonds) {
+        if (!bond || !ids.has(bond.a) || !ids.has(bond.b) || bond.a === bond.b || !finite(bond.strength) || bond.strength < 0 || bond.strength > 1) fail('相遇资料无效。');
+      }
+      if (!Array.isArray(data.events) || data.events.length > LIMITS.events) fail('记事数量无效。');
+      for (const event of data.events) {
+        if (!event || !finite(event.time) || event.time < 0 || event.time > data.time || typeof event.text !== 'string' || event.text.length > 160) fail('记事无效。');
+      }
+      this.seed = data.seed;
+      this._rng = data.rng;
+      this._nextId = data.nextId;
+      this._trailClock = data.trailClock;
+      this._bondClock = data.bondClock;
+      this._lightCount = data.lightCount;
+      this.time = data.time;
+      this.mode = data.mode;
+      this.pointer = data.pointer;
+      this.entities = data.entities;
+      this.lights = data.lights;
+      this.bonds = data.bonds;
+      this.events = data.events;
+      return this;
+    }
+  }
+
+  GlassSea.LIMITS = LIMITS;
+  if (typeof module !== 'undefined' && module.exports) module.exports = GlassSea;
+  if (root) root.GlassSea = GlassSea;
+})(typeof window !== 'undefined' ? window : typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script>
+<script>
+(function (root) {
+  'use strict';
+
+  const MODES = {
+    tide: { root: 146.8324, cutoff: 940, level: 0.42 },
+    orbit: { root: 130.8128, cutoff: 1220, level: 0.38 },
+    dream: { root: 164.8138, cutoff: 710, level: 0.35 }
+  };
+  const PENTATONIC = [0, 2, 4, 7, 9, 12, 14, 16, 19];
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+  class SeaSound {
+    constructor() {
+      this.enabled = false;
+      this.mode = 'tide';
+      this.context = null;
+      this._master = null;
+      this._filter = null;
+      this._voices = [];
+      this._notes = new Set();
+      this._lastTouch = -Infinity;
+      this._suspendTimer = null;
+      this._operation = 0;
+      this._disposed = false;
+      this._visibility = this._onVisibility.bind(this);
+      if (root.document) root.document.addEventListener('visibilitychange', this._visibility);
+    }
+
+    _build() {
+      if (this.context) return true;
+      const AudioContextClass = root.AudioContext || root.webkitAudioContext;
+      if (!AudioContextClass || this._disposed) return false;
+      const context = new AudioContextClass();
+      this.context = context;
+      this._master = context.createGain();
+      this._master.gain.value = 0;
+      this._master.connect(context.destination);
+      this._filter = context.createBiquadFilter();
+      this._filter.type = 'lowpass';
+      this._filter.frequency.value = MODES[this.mode].cutoff;
+      this._filter.Q.value = 0.45;
+      this._filter.connect(this._master);
+      const intervals = [0, 7, 14, 19];
+      const levels = [0.038, 0.024, 0.014, 0.009];
+      intervals.forEach((interval, index) => {
+        const oscillator = context.createOscillator();
+        oscillator.type = 'sine';
+        oscillator.frequency.value = MODES[this.mode].root * Math.pow(2, interval / 12);
+        oscillator.detune.value = [-3, 2, -1, 3][index];
+        const gain = context.createGain();
+        gain.gain.value = levels[index];
+        const swell = context.createOscillator();
+        const swellDepth = context.createGain();
+        swell.type = 'sine';
+        swell.frequency.value = 0.027 + index * 0.011;
+        swellDepth.gain.value = levels[index] * 0.28;
+        swell.connect(swellDepth);
+        swellDepth.connect(gain.gain);
+        oscillator.connect(gain);
+        let panner = null;
+        if (typeof context.createStereoPanner === 'function') {
+          panner = context.createStereoPanner();
+          panner.pan.value = [-0.45, 0.4, -0.22, 0.26][index];
+          gain.connect(panner);
+          panner.connect(this._filter);
+        } else gain.connect(this._filter);
+        oscillator.start();
+        swell.start();
+        this._voices.push({ oscillator, gain, swell, swellDepth, panner, interval });
+      });
+      return true;
+    }
+
+    _level(value, seconds) {
+      if (!this.context || !this._master || this.context.state === 'closed') return;
+      const now = this.context.currentTime;
+      const parameter = this._master.gain;
+      if (typeof parameter.cancelAndHoldAtTime === 'function') parameter.cancelAndHoldAtTime(now);
+      else {
+        parameter.cancelScheduledValues(now);
+        parameter.setValueAtTime(parameter.value, now);
+      }
+      parameter.linearRampToValueAtTime(value, now + seconds);
+    }
+
+    async toggle() {
+      if (this._disposed) return false;
+      this.enabled = !this.enabled;
+      const operation = ++this._operation;
+      if (this._suspendTimer !== null) {
+        root.clearTimeout(this._suspendTimer);
+        this._suspendTimer = null;
+      }
+      if (!this.enabled) {
+        this._level(0, 0.45);
+        this._suspendTimer = root.setTimeout(() => {
+          this._suspendTimer = null;
+          if (!this.enabled && this.context && this.context.state !== 'closed') {
+            this.context.suspend().catch(() => {});
+          }
+        }, 520);
+        return false;
+      }
+      try {
+        if (!this._build()) {
+          this.enabled = false;
+          return false;
+        }
+        if (root.document && root.document.hidden) {
+          await this.context.suspend();
+          return this.enabled;
+        }
+        await this.context.resume();
+        if (operation !== this._operation || this._disposed) return this.enabled;
+        if (root.document && root.document.hidden) {
+          await this.context.suspend();
+          return this.enabled;
+        }
+        if (this.context.state !== 'running') {
+          this.enabled = false;
+          return false;
+        }
+        this._level(MODES[this.mode].level, 1.4);
+        return true;
+      } catch (_) {
+        if (operation === this._operation) this.enabled = false;
+        return this.enabled;
+      }
+    }
+
+    setMode(mode) {
+      if (!Object.prototype.hasOwnProperty.call(MODES, mode)) return;
+      this.mode = mode;
+      if (!this.context || this.context.state === 'closed') return;
+      const now = this.context.currentTime;
+      const settings = MODES[mode];
+      this._voices.forEach((voice) => {
+        voice.oscillator.frequency.cancelScheduledValues(now);
+        voice.oscillator.frequency.setTargetAtTime(settings.root * Math.pow(2, voice.interval / 12), now, 0.85);
+      });
+      this._filter.frequency.setTargetAtTime(settings.cutoff, now, 1.1);
+      if (this.enabled && !(root.document && root.document.hidden)) this._level(settings.level, 1.8);
+    }
+
+    touch(x, y, kind) {
+      if (!this.enabled || !this.context || this.context.state !== 'running' || this._disposed) return;
+      if (root.document && root.document.hidden) return;
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+      const context = this.context;
+      const now = context.currentTime;
+      if (now - this._lastTouch < 0.1) return;
+      this._lastTouch = now;
+      if (this._notes.size >= 8) return;
+      kind = Number.isFinite(kind) ? Math.floor(kind) : 0;
+      const pitchIndex = clamp(Math.floor((1 - clamp(y, -1, 1)) * 3.3) + (Math.abs(kind || 0) % 3), 0, PENTATONIC.length - 1);
+      const frequency = MODES[this.mode].root * 2 * Math.pow(2, PENTATONIC[pitchIndex] / 12);
+      const oscillator = context.createOscillator();
+      const overtone = context.createOscillator();
+      const gain = context.createGain();
+      const overtoneGain = context.createGain();
+      const panner = typeof context.createStereoPanner === 'function' ? context.createStereoPanner() : null;
+      oscillator.type = overtone.type = 'sine';
+      oscillator.frequency.value = frequency;
+      overtone.frequency.value = frequency * 2;
+      overtone.detune.value = 2.5;
+      overtoneGain.gain.value = 0.12;
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.105, now + 0.026);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.1);
+      oscillator.connect(gain);
+      overtone.connect(overtoneGain);
+      overtoneGain.connect(gain);
+      if (panner) {
+        panner.pan.value = clamp(x, -1, 1) * 0.65;
+        gain.connect(panner);
+        panner.connect(this._master);
+      } else gain.connect(this._master);
+      const note = { oscillator, overtone, gain, overtoneGain, panner };
+      this._notes.add(note);
+      oscillator.onended = () => {
+        this._notes.delete(note);
+        [oscillator, overtone, gain, overtoneGain, panner].forEach((node) => {
+          if (node) try { node.disconnect(); } catch (_) {}
+        });
+      };
+      oscillator.start(now);
+      overtone.start(now);
+      oscillator.stop(now + 2.2);
+      overtone.stop(now + 2.2);
+    }
+
+    _onVisibility() {
+      const context = this.context;
+      if (!context || context.state === 'closed' || this._disposed) return;
+      if (root.document.hidden) {
+        context.suspend().catch(() => {});
+      } else if (this.enabled) {
+        context.resume().then(() => {
+          if (!this.enabled || this._disposed || root.document.hidden) return;
+          this._level(MODES[this.mode].level, 0.8);
+        }).catch(() => {});
+      }
+    }
+
+    dispose() {
+      if (this._disposed) return;
+      this._disposed = true;
+      this.enabled = false;
+      ++this._operation;
+      if (root.document) root.document.removeEventListener('visibilitychange', this._visibility);
+      if (this._suspendTimer !== null) root.clearTimeout(this._suspendTimer);
+      this._suspendTimer = null;
+      this._voices.forEach((voice) => {
+        try { voice.oscillator.stop(); } catch (_) {}
+        try { voice.swell.stop(); } catch (_) {}
+        [voice.oscillator, voice.swell, voice.gain, voice.swellDepth, voice.panner].forEach((node) => {
+          if (node) try { node.disconnect(); } catch (_) {}
+        });
+      });
+      this._voices.length = 0;
+      this._notes.forEach((note) => {
+        try { note.oscillator.stop(); } catch (_) {}
+        try { note.overtone.stop(); } catch (_) {}
+      });
+      this._notes.clear();
+      if (this.context && this.context.state !== 'closed') this.context.close().catch(() => {});
+    }
+  }
+
+  root.SeaSound = SeaSound;
+  root.SeaPoems = [
+    '一粒光落下，海水让出一个位置。',
+    '水母没有目的地，触须却记得来路。',
+    '潮水绕过你，继续做它的圆。',
+    '有两颗星，刚刚交换了影子。',
+    '一条很小的鱼，穿过了自己的昨天。',
+    '你没有说话，海面也留了一个座位。',
+    '漂走的光，停在另一只透明的手里。',
+    '再等一会儿，那团雾就有了名字。',
+    '远处的星群，像没收好的针线。',
+    '海底没有钟，只有慢慢变暗的光。',
+    '你移开手以后，潮汐还轻轻晃着。',
+    '今天的月亮，只够照亮一小片水。',
+    '它们偶尔相逢，然后各自发亮。',
+    '这片海很浅，装得下一整个傍晚。',
+    '一只浮游生物，正在练习独处。',
+    '玻璃的另一边，也有人看着星光。'
+  ];
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const canvas = $('sea');
+  const ctx = canvas.getContext('2d', { alpha: true });
+  if (!ctx || !window.GlassSea) {
+    $('world-state').textContent = '这片海暂时无法绘制';
+    return;
+  }
+  const TAU = Math.PI * 2;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const sea = new GlassSea(4721);
+  const sound = window.SeaSound ? new SeaSound() : null;
+  const poems = window.SeaPoems || ['海很小，足够放下一次走神。'];
+  const species = ['灯伞 · 一种透明的浮游想象', '游翼 · 把海水当作天空', '星种 · 尚未决定去往哪里'];
+  const colors = [[146,217,210],[183,212,215],[238,198,139]];
+  const modes = { tide:'缓慢的潮汐', orbit:'围绕彼此的星群', dream:'一场没有岸的梦' };
+  let paused = reduced.matches;
+  let quiet = false;
+  let selected = null;
+  let size = 0, radius = 1, cx = 0, cy = 0;
+  let lastFrame = 0, accumulator = 0, frameId = 0;
+  let lastHud = 0, lastPoem = 0, poemIndex = 0;
+  let toastTimer = 0, pointer = null, lastTrailLight = 0;
+  let busyImport = false;
+  let downloadBusy = false;
+  const FIXED_DT = 1 / 60;
+  // The composed initial still has tails and a little history, even with motion reduced.
+  for (let i = 0; i < 150; i++) sea.step(FIXED_DT);
+  const dust = Array.from({ length: 320 }, (_, i) => {
+    const a = hash(i * 9.71) * TAU;
+    const r = Math.sqrt(hash(i * 3.14 + 8)) * .985;
+    return { x: Math.cos(a) * r, y: Math.sin(a) * r, z: hash(i * 5.29 + 12), phase: hash(i + 2) * TAU };
+  });
+
+  function hash(n) { const h = Math.sin(n * 127.1 + 311.7) * 43758.5453; return h - Math.floor(h); }
+  function rgba(c, a) { return `rgba(${c[0]},${c[1]},${c[2]},${Math.max(0, Math.min(1, a))})`; }
+  function arc(x,y,r,start=0,end=TAU) { ctx.beginPath(); ctx.arc(x,y,Math.max(.01,r),start,end); }
+  function toast(message) {
+    $('toast').textContent = message;
+    $('toast').dataset.show = 'true';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { $('toast').dataset.show = 'false'; }, 3500);
+  }
+
+  function resize() {
+    const bounds = canvas.getBoundingClientRect();
+    size = Math.max(1, bounds.width);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(size * dpr);
+    canvas.height = Math.round(size * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    cx = cy = size / 2;
+    radius = size * .435;
+    draw();
+  }
+
+  function draw() {
+    ctx.clearRect(0,0,size,size);
+    const t = sea.time;
+    drawVessel(t);
+    ctx.save();
+    arc(cx,cy,radius*.995); ctx.clip();
+    drawWater(t);
+    drawLights(t);
+    // Sparse, curved filaments appear only around an observed resident.
+    if (selected !== null) drawBonds();
+    for (const e of sea.entities) drawCreature(e,t);
+    ctx.restore();
+    drawGlass(t);
+    if (selected !== null) drawSelection();
+  }
+
+  function drawVessel(t) {
+    const halo = ctx.createRadialGradient(cx,cy,radius*.75,cx,cy,radius*1.12);
+    halo.addColorStop(0,'rgba(38,92,97,0)');
+    halo.addColorStop(.74,'rgba(57,119,123,.06)');
+    halo.addColorStop(.9,'rgba(82,133,135,.025)');
+    halo.addColorStop(1,'rgba(7,20,25,0)');
+    ctx.fillStyle=halo; arc(cx,cy,radius*1.12);ctx.fill();
+    const bowl=ctx.createRadialGradient(cx-radius*.32,cy-radius*.35,0,cx,cy,radius);
+    bowl.addColorStop(0,'#173a40'); bowl.addColorStop(.45,'#102f36'); bowl.addColorStop(.82,'#0c242d'); bowl.addColorStop(1,'#0a1d25');
+    ctx.fillStyle=bowl;arc(cx,cy,radius);ctx.fill();
+    ctx.save();ctx.translate(cx,cy);
+    ctx.strokeStyle='rgba(149,197,191,.11)';ctx.lineWidth=.7;
+    arc(0,0,radius*1.058);ctx.stroke();
+    ctx.setLineDash([1,7]);ctx.strokeStyle='rgba(167,202,196,.14)';arc(0,0,radius*1.08);ctx.stroke();ctx.setLineDash([]);
+    for(let i=0;i<72;i++) {
+      const a=i*TAU/72;
+      const inner=i%6===0?1.019:1.031;
+      const outer=i%6===0?1.043:1.041;
+      ctx.strokeStyle=i%6===0?'rgba(174,206,199,.32)':'rgba(174,206,199,.12)';
+      ctx.beginPath();ctx.moveTo(Math.cos(a)*radius*inner,Math.sin(a)*radius*inner);ctx.lineTo(Math.cos(a)*radius*outer,Math.sin(a)*radius*outer);ctx.stroke();
+    }
+    // A small travelling mark makes the glass read as an instrument, without rotating the whole world.
+    const marker=t*.009-.8;
+    ctx.fillStyle='rgba(229,193,141,.8)';arc(Math.cos(marker)*radius*1.058,Math.sin(marker)*radius*1.058,2);ctx.fill();
+    ctx.restore();
+  }
+
+  function drawWater(t) {
+    ctx.lineWidth=.45;
+    for(let i=0;i<19;i++) {
+      ctx.beginPath();
+      for(let k=0;k<=80;k++) {
+        const x=-1.1+k/80*2.2;
+        const wave=Math.sin(x*3.1+i*.28+t*.025)*.055+Math.sin(x*6.2-i*.33+t*.019)*.018;
+        const y=(i-9)*.096+wave;
+        const px=cx+x*radius,py=cy+y*radius;
+        if(k===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+      }
+      ctx.strokeStyle=`rgba(107,165,166,${.018+.014*Math.sin(i*.7)**2})`;ctx.stroke();
+    }
+    for(const d of dust) {
+      const twinkle=.5+.5*Math.sin(t*.38+d.phase);
+      const drift=Math.sin(t*.027+d.phase)*.009;
+      ctx.fillStyle=d.z>.85?`rgba(220,202,163,${.14+twinkle*.22})`:`rgba(133,190,188,${.07+d.z*.18})`;
+      arc(cx+(d.x+drift)*radius,cy+d.y*radius,.35+d.z*.7);ctx.fill();
+    }
+    // Very broad caustic ribbons: hand-drawn water paths, not an animated gradient backdrop.
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(-.48+Math.sin(t*.01)*.05);
+    for(let i=0;i<5;i++) {
+      ctx.beginPath();ctx.ellipse(radius*.1,(i-2)*radius*.22,radius*.88,radius*(.1+i*.012),0,0,TAU);
+      ctx.strokeStyle=`rgba(147,201,187,${.011+i*.001})`;ctx.lineWidth=5+i*2;ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawLights() {
+    for(const light of sea.lights) {
+      const x=cx+light.x*radius,y=cy+light.y*radius;
+      const fade=Math.max(0,1-light.age/light.life);
+      const r=radius*(.045+Math.min(light.age,3)*.04);
+      const glow=ctx.createRadialGradient(x,y,0,x,y,r);
+      glow.addColorStop(0,`rgba(238,195,130,${fade*.3})`);glow.addColorStop(.22,`rgba(227,184,121,${fade*.09})`);glow.addColorStop(1,'rgba(227,184,121,0)');
+      ctx.fillStyle=glow;arc(x,y,r);ctx.fill();
+      ctx.strokeStyle=`rgba(229,193,141,${fade*.25})`;ctx.lineWidth=.6;
+      arc(x,y,Math.min(.22,.01+light.age*.028)*radius);ctx.stroke();
+      ctx.fillStyle=`rgba(255,225,174,${fade*.9})`;arc(x,y,1.6);ctx.fill();
+    }
+  }
+
+  function drawBonds() {
+    for(const b of sea.bonds) {
+      if(b.a!==selected&&b.b!==selected)continue;
+      const a=sea.entities.find(e=>e.id===b.a),c=sea.entities.find(e=>e.id===b.b);
+      if(!a||!c)continue;
+      const ax=cx+a.x*radius,ay=cy+a.y*radius,bx=cx+c.x*radius,by=cy+c.y*radius;
+      ctx.beginPath();ctx.moveTo(ax,ay);ctx.quadraticCurveTo((ax+bx)/2+8,(ay+by)/2-12,bx,by);
+      ctx.strokeStyle='rgba(229,193,141,.2)';ctx.lineWidth=.65;ctx.setLineDash([2,5]);ctx.stroke();ctx.setLineDash([]);
+    }
+  }
+
+  function drawCreature(e,t) {
+    const col=colors[e.kind];
+    const x=cx+e.x*radius,y=cy+e.y*radius;
+    const featured=e.id%13===1;
+    const s=Math.max(1.8,e.size*radius*(featured?2.8:1.45));
+    const pulse=.92+Math.sin(e.phase+t*(e.kind===0?1.25:.8))*.13;
+    if(e.trail.length>1) {
+      ctx.beginPath();e.trail.forEach((p,i)=>{if(i===0)ctx.moveTo(cx+p.x*radius,cy+p.y*radius);else ctx.lineTo(cx+p.x*radius,cy+p.y*radius);});
+      ctx.strokeStyle=rgba(col,featured?.16:.08);ctx.lineWidth=featured?1:.6;ctx.stroke();
+    }
+    const aura=ctx.createRadialGradient(x,y,0,x,y,s*3.7);
+    aura.addColorStop(0,rgba(col,.075+e.glow*.04));aura.addColorStop(1,rgba(col,0));ctx.fillStyle=aura;arc(x,y,s*3.7);ctx.fill();
+    ctx.save();ctx.translate(x,y);ctx.rotate(e.angle+Math.PI/2);
+    ctx.lineWidth=featured?.75:.55;ctx.lineCap='round';
+    if(e.kind===0) {
+      // The umbrella opens in the direction of travel; the tentacles lag behind it.
+      ctx.beginPath();ctx.moveTo(-s*pulse,0);
+      ctx.bezierCurveTo(-s*1.05*pulse,-s*1.65,s*1.05*pulse,-s*1.65,s*pulse,0);
+      ctx.quadraticCurveTo(s*.48,s*.4,0,s*.12);ctx.quadraticCurveTo(-s*.55,s*.4,-s*pulse,0);
+      const shell=ctx.createLinearGradient(0,-s*1.2,0,s*.3);shell.addColorStop(0,rgba(col,.12));shell.addColorStop(.7,rgba(col,.025));shell.addColorStop(1,rgba(col,.17));
+      ctx.fillStyle=shell;ctx.fill();ctx.strokeStyle=rgba(col,.55+e.glow*.18);ctx.stroke();
+      for(let n=-2;n<=2;n++) {
+        const z=n/2;ctx.beginPath();ctx.moveTo(z*s*.76,s*.1);
+        for(let k=1;k<=16;k++) {const p=k/16;const sway=Math.sin(p*4+t*1.1+e.phase+n*.42)*s*.5*p;ctx.lineTo(z*s*.76+sway,s*.1+p*s*(3.5-Math.abs(z)*.8));}
+        ctx.strokeStyle=rgba(col,.18+(.1-Math.abs(z)*.07));ctx.lineWidth=Math.abs(n)===0?.8:.45;ctx.stroke();
+      }
+      for(let n=-1;n<=1;n++){ctx.beginPath();ctx.moveTo(n*s*.56,0);ctx.quadraticCurveTo(n*s*.42,-s*.7,0,-s*1.08);ctx.strokeStyle=rgba(col,.13);ctx.lineWidth=.4;ctx.stroke();}
+      ctx.fillStyle=rgba(col,.85);arc(0,-s*.26,Math.max(.6,s*.12));ctx.fill();
+    } else if(e.kind===1) {
+      const wing=Math.sin(e.phase+t*1.35)*s*.35;
+      ctx.beginPath();ctx.moveTo(0,-s*.85);ctx.bezierCurveTo(s*.45,-s*.2,s*1.9,-s*.15-wing,s*1.8,s*.65-wing);ctx.quadraticCurveTo(s*.7,s*.12,0,s*.7);ctx.quadraticCurveTo(-s*.7,s*.12,-s*1.8,s*.65-wing);ctx.bezierCurveTo(-s*1.9,-s*.15-wing,-s*.45,-s*.2,0,-s*.85);
+      ctx.fillStyle=rgba(col,.035);ctx.fill();ctx.strokeStyle=rgba(col,.43+e.glow*.15);ctx.lineWidth=.65;ctx.stroke();
+      ctx.beginPath();ctx.moveTo(0,-s*.7);ctx.quadraticCurveTo(s*.2,s*.4,0,s*.7);ctx.bezierCurveTo(Math.sin(t+e.phase)*s,s*2.4,-s*.7,s*2.8,Math.sin(t*.7+e.phase)*s*.4,s*3.8);ctx.strokeStyle=rgba(col,.25);ctx.lineWidth=.6;ctx.stroke();
+      ctx.fillStyle=rgba(col,.8);arc(0,-s*.15,Math.max(.65,s*.1));ctx.fill();
+    } else {
+      const glimmer=.65+Math.sin(e.phase+t*.8)*.2;
+      const core=ctx.createRadialGradient(0,0,0,0,0,s*1.15);core.addColorStop(0,rgba(col,.8));core.addColorStop(.22,rgba(col,.25));core.addColorStop(1,rgba(col,0));ctx.fillStyle=core;arc(0,0,s*1.15);ctx.fill();
+      for(let n=0;n<5;n++){const a=n*TAU/5+t*.09+e.phase;ctx.beginPath();ctx.moveTo(Math.cos(a)*s*.24,Math.sin(a)*s*.24);ctx.quadraticCurveTo(Math.cos(a+.35)*s*.8,Math.sin(a+.35)*s*.8,Math.cos(a+.2)*s*1.38,Math.sin(a+.2)*s*1.38);ctx.strokeStyle=rgba(col,glimmer*.55);ctx.lineWidth=.55;ctx.stroke();}
+      ctx.fillStyle=rgba(col,.95);arc(0,0,Math.max(.75,s*.15));ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawGlass() {
+    const edge=ctx.createLinearGradient(cx-radius,cy-radius,cx+radius,cy+radius);
+    edge.addColorStop(0,'rgba(172,212,199,.48)');edge.addColorStop(.22,'rgba(117,183,185,.1)');edge.addColorStop(.48,'rgba(150,200,191,.16)');edge.addColorStop(.7,'rgba(214,192,146,.28)');edge.addColorStop(1,'rgba(106,160,164,.12)');
+    ctx.lineWidth=1.05;ctx.strokeStyle=edge;arc(cx,cy,radius);ctx.stroke();
+    ctx.strokeStyle='rgba(174,215,207,.055)';ctx.lineWidth=3;arc(cx,cy,radius*.985);ctx.stroke();
+    ctx.strokeStyle='rgba(198,223,211,.22)';ctx.lineWidth=1.3;arc(cx,cy,radius*.991,Math.PI*1.13,Math.PI*1.38);ctx.stroke();
+    ctx.strokeStyle='rgba(229,193,141,.12)';ctx.lineWidth=.6;arc(cx,cy,radius*.978,.3,.72);ctx.stroke();
+  }
+
+  function drawSelection() {
+    const e=sea.entities.find(e=>e.id===selected);
+    if(!e){selected=null;$('creature-label').hidden=true;return;}
+    const x=cx+e.x*radius,y=cy+e.y*radius;
+    ctx.strokeStyle='rgba(229,193,141,.6)';ctx.lineWidth=.65;arc(x,y,15,0,TAU);ctx.setLineDash([2,4]);ctx.stroke();ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(x+17,y);ctx.lineTo(x+30,y-12);ctx.lineTo(x+47,y-12);ctx.strokeStyle='rgba(229,193,141,.4)';ctx.stroke();
+    // Keep the DOM label inside the vessel on every size, without measuring on every frame.
+    const label=$('creature-label');
+    label.style.left=`${Math.max(8,Math.min(size-170,x+32))}px`;
+    label.style.top=`${Math.max(10,Math.min(size-72,y-58))}px`;
+  }
+
+  function updateHud() {
+    $('population').textContent=String(sea.entities.length);
+    const seconds=Math.floor(sea.time);
+    $('elapsed').textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;
+    $('seed-label').textContent=`SEED ${sea.seed}`;
+    $('mode-caption').textContent=modes[sea.mode];
+    $('world-state').textContent=paused?'时间停在这里':'海正在呼吸';
+    $('pause').setAttribute('aria-pressed',String(paused));
+    $('pause').setAttribute('aria-label',paused?'让时间继续':'暂停时间');
+    $('pause-icon').innerHTML=paused?'<path d="m8 5 11 7-11 7V5Z"/>':'<path d="M8 5v14M16 5v14"/>';
+    document.querySelectorAll('[data-mode]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mode===sea.mode)));
+  }
+
+  function frame(now) {
+    frameId=0;
+    const delta=lastFrame?Math.min(.12,(now-lastFrame)/1000):0;
+    lastFrame=now;
+    if(!paused) {
+      accumulator+=delta;
+      let steps=0;
+      while(accumulator>=FIXED_DT&&steps<7){sea.step(FIXED_DT);accumulator-=FIXED_DT;steps++;}
+      draw();
+      if(sea.time-lastPoem>22){poemIndex=(poemIndex+1)%poems.length;showPoem();lastPoem=sea.time;}
+    }
+    if(now-lastHud>500){updateHud();lastHud=now;}
+    if(!paused&&!document.hidden)frameId=requestAnimationFrame(frame);
+  }
+  function schedule(){if(!frameId&&!paused&&!document.hidden){lastFrame=0;frameId=requestAnimationFrame(frame);}}
+  function setPause(value,notify=false) {
+    paused=Boolean(value);accumulator=0;
+    if(paused&&frameId){cancelAnimationFrame(frameId);frameId=0;}
+    updateHud();draw();schedule();
+    if(notify)toast(paused?'时间停下了。海还在。':'这片海继续流动。');
+  }
+  function showPoem(){ $('poem').textContent=poems[poemIndex];$('poem-index').textContent=`${String(poemIndex+1).padStart(2,'0')} / ${poems.length}`; }
+  function changeMode(mode) {sea.setMode(mode);sound?.setMode(mode);updateHud();draw();const lines={tide:'让潮水慢慢经过。',orbit:'这一次，绕着彼此走。',dream:'把夜晚调得轻一些。'};toast(lines[mode]);}
+  function addLight(x,y,notify=false) {
+    sea.addLight(x,y);sound?.touch(x,y,2);draw();updateHud();
+    if(notify)toast(paused?'光留在这里。让时间继续，它们就会靠近。':'留下一点光，看看谁会过来。');
+  }
+  function randomLight(){const angle=hash(sea.time+sea.lights.length*13.7)*TAU;const r=.2+hash(sea.time*7.1+sea.entities.length)*.44;addLight(Math.cos(angle)*r,Math.sin(angle)*r,true);}
+
+  function point(event){const rect=canvas.getBoundingClientRect();return{x:(event.clientX-rect.left-cx)/radius,y:(event.clientY-rect.top-cy)/radius};}
+  function releasePointer(){sea.setPointer(0,0,false);pointer=null;}
+  canvas.addEventListener('pointerdown',event=>{
+    if(event.button!==0||pointer)return;
+    const p=point(event);if(Math.hypot(p.x,p.y)>.99)return;
+    pointer={id:event.pointerId,x:p.x,y:p.y,dragged:false};
+    canvas.setPointerCapture(event.pointerId);sea.setPointer(p.x,p.y,true);
+  });
+  canvas.addEventListener('pointermove',event=>{
+    if(!pointer||pointer.id!==event.pointerId)return;
+    const p=point(event);
+    if(Math.hypot(p.x-pointer.x,p.y-pointer.y)>.025)pointer.dragged=true;
+    sea.setPointer(p.x,p.y,true);
+    if(pointer.dragged&&performance.now()-lastTrailLight>260){addLight(p.x,p.y);lastTrailLight=performance.now();}
+  });
+  canvas.addEventListener('pointerup',event=>{
+    if(!pointer||pointer.id!==event.pointerId)return;
+    const p=point(event);const dragged=pointer.dragged;
+    releasePointer();
+    if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId);
+    if(!dragged) {
+      const e=sea.pick(p.x,p.y,.052);
+      if(e){selected=e.id;$('creature-name').textContent=e.name;$('creature-kind').textContent=species[e.kind];$('creature-label').hidden=false;sound?.touch(e.x,e.y,e.kind);draw();}
+      else {selected=null;$('creature-label').hidden=true;addLight(p.x,p.y);}
+    }
+  });
+  canvas.addEventListener('pointercancel',releasePointer);
+  canvas.addEventListener('lostpointercapture',releasePointer);
+  window.addEventListener('blur',releasePointer);
+  $('unselect').addEventListener('click',()=>{selected=null;$('creature-label').hidden=true;draw();canvas.focus({preventScroll:true});});
+
+  document.querySelectorAll('[data-mode]').forEach(button=>button.addEventListener('click',()=>changeMode(button.dataset.mode)));
+  $('light').addEventListener('click',randomLight);
+  $('pause').addEventListener('click',()=>setPause(!paused,true));
+  $('sound').addEventListener('click',async()=>{
+    const button=$('sound');button.disabled=true;
+    const wasEnabled=!!sound?.enabled;
+    let enabled=false;
+    try{enabled=sound?await sound.toggle():false;}catch{enabled=false;}
+    button.setAttribute('aria-pressed',String(enabled));
+    button.setAttribute('aria-label',enabled?'关闭声音':'开启声音');
+    $('sound-label').textContent=enabled?'声音开启':'声音关闭';
+    $('sound-waves').setAttribute('d',enabled?'M17 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14':'m17 9 5 6m0-6-5 6');
+    button.disabled=false;
+    toast(enabled?'声音很轻。可以把音量留低一点。':wasEnabled?'声音已关闭。':'浏览器暂时无法播放声音，可以继续静静看海。');
+  });
+  function setQuiet(value) {
+    quiet=value;document.body.dataset.quiet=String(value);$('return').hidden=!value;$('quiet').setAttribute('aria-pressed',String(value));
+    document.querySelectorAll('.interface').forEach(element=>{element.inert=value;});
+    if(value)$('return').focus({preventScroll:true});else $('quiet').focus({preventScroll:true});
+  }
+  $('quiet').addEventListener('click',()=>setQuiet(true));$('return').addEventListener('click',()=>setQuiet(false));
+  $('new-sea').addEventListener('click',()=>{
+    const seed=window.crypto?.getRandomValues?crypto.getRandomValues(new Uint32Array(1))[0]:Date.now()>>>0;
+    sea.reset(seed);for(let i=0;i<150;i++)sea.step(FIXED_DT);
+    selected=null;$('creature-label').hidden=true;releasePointer();sound?.setMode(sea.mode);lastPoem=sea.time;poemIndex=(poemIndex+1)%poems.length;showPoem();updateHud();draw();toast('另一片海，刚刚醒来。');
+  });
+
+  function openDialog(id){releasePointer();$(id).showModal();}
+  $('about').addEventListener('click',()=>openDialog('about-dialog'));
+  $('keepsake').addEventListener('click',()=>openDialog('keepsake-dialog'));
+  document.querySelectorAll('[data-close]').forEach(button=>button.addEventListener('click',()=>button.closest('dialog').close()));
+  document.querySelectorAll('dialog').forEach(dialog=>dialog.addEventListener('click',event=>{if(event.target===dialog){const b=dialog.getBoundingClientRect();if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom)dialog.close();}}));
+
+  function download(blob,name){
+    const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+  }
+  function bottle() {
+    const world=sea.snapshot();
+    world.pointer={x:0,y:0,active:false};
+    return {artwork:'sea-of-little-things',version:1,world};
+  }
+  $('save-world').addEventListener('click',()=>{
+    try{download(new Blob([JSON.stringify(bottle())],{type:'application/json'}),`little-sea-${sea.seed}.json`);$('bottle-status').textContent='瓶子已交给浏览器保存。下次可以在这里打开。';}
+    catch{$('bottle-status').textContent='这次没有保存成功，请再试一次。';}
+  });
+  $('save-image').addEventListener('click',async()=>{
+    if(downloadBusy)return;downloadBusy=true;$('save-image').disabled=true;
+    try{
+      const card=document.createElement('canvas');card.width=1600;card.height=1800;const c=card.getContext('2d');
+      c.fillStyle='#071419';c.fillRect(0,0,1600,1800);
+      c.fillStyle='#a2b7b7';c.textAlign='center';c.font='20px "Segoe UI", "Microsoft YaHei", sans-serif';c.fillText('玻 璃 宇 宙  /  A SMALL, UNNECESSARY WORLD',800,104);
+      c.drawImage(canvas,100,175,1400,1400);
+      c.fillStyle='#e4ece7';c.font='62px "Songti SC", SimSun, serif';c.fillText('无 用 之 海',800,1552);
+      c.fillStyle='#b5c8c5';c.font='26px "Songti SC", SimSun, serif';c.fillText(poems[poemIndex],800,1625);
+      c.fillStyle='#9baead';c.font='17px Consolas, monospace';c.fillText(`SEED ${sea.seed}  /  ${modes[sea.mode]}  /  ${$('elapsed').textContent}`,800,1710);
+      const blob=await new Promise(resolve=>card.toBlob(resolve,'image/png'));
+      if(!blob)throw new Error('empty image');
+      download(blob,`little-sea-${sea.seed}.png`);$('bottle-status').textContent='明信片已交给浏览器保存。';
+    }catch{$('bottle-status').textContent='画面保存失败，请尝试装进瓶子。';}
+    finally{downloadBusy=false;$('save-image').disabled=false;}
+  });
+  $('load-world').addEventListener('click',()=>{if(!busyImport)$('world-file').click();});
+  $('world-file').addEventListener('change',async(event)=>{
+    const file=event.target.files?.[0];if(!file||busyImport)return;
+    busyImport=true;$('load-world').disabled=true;
+    try{
+      if(file.size>3*1024*1024)throw new Error('这只瓶子太大了，请选择 3 MB 以内的海洋文件。');
+      const data=JSON.parse(await file.text());
+      if(!data||typeof data!=='object'||data.artwork!=='sea-of-little-things'||data.version!==1||!data.world)throw new Error('这不是这片海保存的瓶子，请选择之前导出的 JSON 文件。');
+      sea.restore(data.world);sea.setPointer(0,0,false);releasePointer();selected=null;$('creature-label').hidden=true;
+      accumulator=0;lastFrame=0;lastPoem=sea.time;sound?.setMode(sea.mode);updateHud();draw();
+      $('bottle-status').textContent='瓶子打开了。上次留下的海，仍在这里。';toast('上次的海，接上了今天的时间。');
+    }catch(error){$('bottle-status').textContent=error instanceof SyntaxError?'瓶子里的文字无法读取，请选择完整的 JSON 文件。':error.message||'这只瓶子暂时打不开。';}
+    finally{busyImport=false;$('load-world').disabled=false;event.target.value='';}
+  });
+
+  document.addEventListener('keydown',event=>{
+    const tag=event.target.tagName;
+    if(event.ctrlKey||event.metaKey||event.altKey||['INPUT','TEXTAREA','SELECT'].includes(tag)||event.target.isContentEditable||document.querySelector('dialog[open]'))return;
+    if(event.key==='Escape'){if(quiet)setQuiet(false);else{selected=null;$('creature-label').hidden=true;draw();}return;}
+    if(event.code==='Space'&&!['BUTTON','A'].includes(tag)){event.preventDefault();if(!event.repeat)setPause(!paused,true);}
+    else if(event.key.toLowerCase()==='g'&&!event.repeat){randomLight();}
+    else if(event.key.toLowerCase()==='h'&&!event.repeat){setQuiet(!quiet);}
+  });
+  document.addEventListener('visibilitychange',()=>{
+    releasePointer();lastFrame=0;accumulator=0;
+    if(document.hidden){if(frameId){cancelAnimationFrame(frameId);frameId=0;}}else schedule();
+  });
+  reduced.addEventListener?.('change',event=>{if(event.matches)setPause(true);});
+  window.addEventListener('pagehide',event=>{releasePointer();if(!event.persisted)sound?.dispose();if(frameId)cancelAnimationFrame(frameId);frameId=0;lastFrame=0;});
+  window.addEventListener('pageshow',event=>{if(event.persisted){frameId=0;lastFrame=0;accumulator=0;schedule();}});
+  if(window.ResizeObserver)new ResizeObserver(resize).observe($('vessel'));else window.addEventListener('resize',resize);
+  showPoem();updateHud();resize();schedule();
+  // Read-only observation surface for accessibility/QA; mutations stay with the real controls.
+  window.seaObservation=Object.freeze({get state(){return{seed:sea.seed,mode:sea.mode,time:sea.time,paused,population:sea.entities.length,lights:sea.lights.length,selected,sound:!!sound?.enabled,quiet};}});
+})();
+
+</script>
+</body>
+</html>
