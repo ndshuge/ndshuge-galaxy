@@ -96,7 +96,8 @@ const PROJECTS = [
   { name: "艺术回廊",   desc: "视觉实验 · 环形回廊",       url: "https://ndshuge.github.io/ndshuge-galaxy/art/", color: "#ff5c8a", glow: "#ff9ec4", z: 9,  moons: 2 },
   { name: "西安勘测",   desc: "真地形 · 从市域推到沟谷",     url: "https://ndshuge.github.io/ndshuge-galaxy/xian/", color: "#4fc3ff", glow: "#a8e3ff", z: 10, moons: 2 },
   { name: "人生罗盘",   desc: "循证生活 · 先看现在最该管的", url: "https://ndshuge.github.io/ndshuge-galaxy/life-guide/", color: "#7cf7c4", glow: "#d5ffe9", z: 8, moons: 3 },
-  { name: "小作品", desc: "随手打开的奇妙小世界", url: "https://ndshuge.github.io/ndshuge-galaxy/little-works/", color: "#91d9cb", glow: "#d5fff0", z: 9, moons: 3 }
+  { name: "小作品", desc: "随手打开的奇妙小世界", url: "https://ndshuge.github.io/ndshuge-galaxy/little-works/", color: "#91d9cb", glow: "#d5fff0", z: 9, moons: 3 },
+  { name: "晨间简报", desc: "18 条世界模型 · 每日归档", url: "https://ndshuge.github.io/ndshuge-galaxy/daily-brief/", color: "#6aa8ff", glow: "#c9ddff", z: 8, moons: 3 }
 ];
 /* ============ 引擎 ============ */
 const W=480,H=270,CX=W/2,CY=H/2,FOCAL=12,TAU=Math.PI*2;
@@ -134,10 +135,10 @@ function makeArms(){
   return pts;}
 
 /* ============ 世界与相机 ============
-   世界比屏幕大：七颗星系散落在 760 x 430 的世界里，屏幕只看到其中一块。
+   世界比屏幕大：八颗星系散落在 760 x 430 的世界里，屏幕只看到其中一块。
    鼠标指向屏幕哪一处，相机就缓缓移向世界的那一片；飞船同时飘向鼠标。
-   右上小地图（T 键开关）标出七颗星的位置和当前视野。 */
-const WX=[150,610,700,110,380,390,545],WY=[110,105,340,350,225,390,255];
+   右上小地图（T 键开关）标出八颗星的位置和当前视野。 */
+const WX=[150,610,700,110,380,390,545,265],WY=[110,105,340,350,225,390,255,70];
 const WWS=760,WHS=430;
 const M={vx:0,vy:0,driveX:WX[4]-CX,driveY:WY[4]-CY,mapA:1,mapOn:true};
 
