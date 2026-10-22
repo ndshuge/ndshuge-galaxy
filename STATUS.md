@@ -10,4 +10,8 @@ v1.8：首页已改为八入口总览与三个星团，提供稳定HTML名称链
 
 发布入口：https://ndshuge.github.io/ndshuge-galaxy/ 。GitHub Pages最终发布状态需以对应提交的部署结果与线上返回内容核对。
 
+v1.8.1（2026-10-23）：恢复无需提前点“漫游”的直接星图拖拽，新增可控惯性和星空视差。桌面与手机视口均可在星空、项目标题位置拖动，滑动不会误触链接，轻点仍可跃迁；“总览”复位。
+验证：`node tests/home-regression.cjs` 39 项通过；`node tests/browser-drag.cjs` 实际 Windows Edge 无头 CDP 鼠标/触控测试通过（1440×900 和 375×812），包含项目标签滑动和点按分离、控制栏在视口内与零 JS 异常。证据位于 `E:\CHATGPT\2026-10-22\zuo\outputs\galaxy-upgrade\`。
+限制：iPhone Safari 真机触感尚未验收；Headless Edge 是自动化测试，不替代 iPhone 验收。
+
 下一步：在真实手机上检查总览、目的地列表与点按/拖动手势。

@@ -68,7 +68,11 @@ body.warping #title,body.warping #brand,body.warping #sys{opacity:0}
 /* v1.8: stable constellation atlas; no changes to destination content. */
 html{overflow-x:hidden;overflow-y:auto}body{overflow:visible;position:relative}
 #space{position:absolute;left:0;top:0;transform:none;touch-action:pan-y;mask-image:none;-webkit-mask-image:none}
-body.exploring #space{touch-action:none}
+#space,.destination{touch-action:none}
+body.exploring #space{cursor:grab}
+body.exploring.dragging #space{cursor:grabbing}
+body.exploring .destination{cursor:pointer}
+body.exploring.dragging .destination{cursor:grabbing}
 #crt{opacity:.45}
 #brand{position:absolute;top:20px;font-size:11px;letter-spacing:.5px}
 #sys{position:absolute;top:12px;border:0;background:transparent;font-family:inherit;color:#b7cfdf;min-height:44px;padding:0 4px}
@@ -122,10 +126,10 @@ body.exploring .constellation{opacity:.35}
 <nav id="destinations" aria-label="星系目的地"></nav>
 <div class="constellation">学习与求知</div><div class="constellation">创作与游乐</div><div class="constellation">现实与日常</div>
 <div id="crt"></div>
-<div id="brand">◆ SHUGE GALAXY OS <b>v1.8</b></div>
+<div id="brand">◆ SHUGE GALAXY OS <b>v1.8.1</b></div>
 <button id="sys" type="button" aria-label="切换音效" aria-pressed="true"><i id="sysDot" aria-hidden="true"></i>SYS ONLINE <b id="sndTag">[M]♪ON</b></button>
 <div id="title"><h1 id="titleText"></h1><div class="line"></div><div class="sub" id="titleSub">S H U G E · G A L A X Y</div></div>
-<div id="hud"><span id="clock">--:--:--</span><span id="hintTxt">选一颗星系，出发。 · T 目的地 · / 终端 · R 总览</span><span id="visits"></span></div>
+<div id="hud"><span id="clock">--:--:--</span><span id="hintTxt">拖动星空自由漫游 · 点击星系进入 · T 目的地 · / 终端 · R 总览</span><span id="visits"></span></div>
 <div id="controls" role="group" aria-label="星图控制"><button id="homeBtn" type="button">总览</button><button id="exploreBtn" type="button" aria-pressed="false">漫游</button><button id="chartBtn" type="button" aria-expanded="false" aria-controls="chart">目的地</button><button id="termBtn" type="button" aria-controls="term">终端</button></div>
 <nav id="chart" aria-label="全部目的地" hidden></nav>
 <div id="term" role="dialog" aria-modal="false" aria-label="跃迁控制台">
@@ -177,7 +181,7 @@ function fit(){
   cv.width=W;cv.height=H;ctx.imageSmoothingEnabled=false;
   cv.style.width=sceneWidth+'px';cv.style.height=sceneHeight+'px';
   document.body.style.minHeight=sceneHeight+'px';
-  document.getElementById('hintTxt').textContent=sceneWidth<620?'选一颗星系，出发。':'选一颗星系，出发。 · T 目的地 · / 终端 · R 总览';
+  document.getElementById('hintTxt').textContent=sceneWidth<620?'拖动星空漫游 · 轻点星系进入':'拖动星空自由漫游 · 点击星系进入 · T 目的地 · / 终端 · R 总览';
   if(viewReady){layoutWorld();refreshBackdrop();resetView();syncLinks();}
 }
 addEventListener('resize',fit);fit();
@@ -202,7 +206,10 @@ function makeArms(){
    漫游是显式模式；普通指针移动只带来轻微背景视差。 */
 const WX=[],WY=[];
 let WWS=W,WHS=H;
-const M={vx:0,vy:0,driveX:0,driveY:0,mapA:1,mapOn:false,explore:false};
+// The atlas starts fully visible. Dragging either the stars or a destination label
+// enters free flight, with direct pan, inertia, and a softly easing camera.
+const M={vx:0,vy:0,driveX:0,driveY:0,targetX:0,targetY:0,
+  inertiaX:0,inertiaY:0,zoom:1,dragging:false,mapA:1,mapOn:false,explore:false};
 const systems=PROJECTS.map(function(p){
   return Object.assign({},p,{hx:CX,hy:CY,x:CX,y:CY,r:1,
     baseR:p.z/FOCAL*(23+(10-p.z)*.6),zEff:p.z,z0:p.z,_fade:1,
@@ -224,7 +231,16 @@ const destinationLinks=[];
   a.addEventListener('pointerleave',function(){if(document.activeElement!==a)focusedSystem=null;});
   a.addEventListener('focus',function(){focusedSystem=p;});
   a.addEventListener('blur',function(){focusedSystem=null;});
-  a.addEventListener('click',function(e){if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();clickPlanet(p);});
+  // Labels share the same gesture controller as the canvas: swipe = roam, tap = warp.
+  a.addEventListener('pointerdown',function(e){startPan(e,a);});
+  a.addEventListener('pointermove',function(e){movePan(e);});
+  a.addEventListener('pointerup',function(e){finishPan(e);});
+  a.addEventListener('pointercancel',function(e){cancelPan(e);});
+  a.addEventListener('click',function(e){
+    if(consumeDraggedLinkClick(e))return;
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+    e.preventDefault();clickPlanet(p);
+  });
   linkLayer.appendChild(a);destinationLinks[i]=a;
   const shortcut=document.createElement('a');shortcut.href=p.url;
   const label=document.createElement('span');label.textContent=p.name;
@@ -270,20 +286,34 @@ document.getElementById('chartBtn').addEventListener('click',function(){setChart
 document.getElementById('termBtn').addEventListener('click',function(){term.classList.contains('open')?hideTerm():openTerm();});
 function setStar(s,hx,hy,ze){if(warp.active&&s===warp.target)return;s.hx=hx;s.hy=hy;s.zEff=ze;s.z=ze;}
 function updateView(dt,t){
-  const k=REDUCED?1:Math.min(1,dt*3),zoom=M.explore?1.35:1;
-  const camTx=M.explore?(clamp(mouseX,0,W)/W-.5)*W*.34:0;
-  const camTy=M.explore?(clamp(mouseY,0,H)/H-.5)*H*.34:0;
+  const k=REDUCED?1:Math.min(1,dt*(M.dragging?24:7));
+  const zoomGoal=M.explore?(REDUCED?1.22:1.48):1;
+  M.zoom+=(zoomGoal-M.zoom)*(REDUCED?1:Math.min(1,dt*8));
+  if(M.explore&&!M.dragging&&!REDUCED){
+    M.targetX=clamp(M.targetX+M.inertiaX*dt,-W*.95,W*.95);
+    M.targetY=clamp(M.targetY+M.inertiaY*dt,-H*.95,H*.95);
+    const friction=Math.exp(-5*dt);
+    M.inertiaX*=friction;M.inertiaY*=friction;
+    if(Math.abs(M.inertiaX)<.5)M.inertiaX=0;
+    if(Math.abs(M.inertiaY)<.5)M.inertiaY=0;
+  }
+  const guide=M.explore&&!IS_TOUCH&&!M.dragging&&!REDUCED?.10:0;
+  const camTx=M.explore?M.targetX+(clamp(mouseX,0,W)/W-.5)*W*guide:0;
+  const camTy=M.explore?M.targetY+(clamp(mouseY,0,H)/H-.5)*H*guide:0;
   const ppx=rocket.x,ppy=rocket.y;
   M.driveX+=(camTx-M.driveX)*k;M.driveY+=(camTy-M.driveY)*k;
   const travel=IS_TOUCH||REDUCED?0:1;
-  rocket.x+=((CX+(mouseX-CX)*.10*travel)-rocket.x)*k;
-  rocket.y+=((H*.48+(mouseY-CY)*.06*travel)-rocket.y)*k;
+  rocket.x+=((CX+(mouseX-CX)*.10*travel)-rocket.x)*(REDUCED?1:Math.min(1,dt*5));
+  rocket.y+=((H*.48+(mouseY-CY)*.06*travel)-rocket.y)*(REDUCED?1:Math.min(1,dt*5));
   M.vx=(rocket.x-ppx)/Math.max(dt,.0001);M.vy=(rocket.y-ppy)/Math.max(dt,.0001);
-  mox=REDUCED?0:(mouseX-CX)*.025;moy=REDUCED?0:(mouseY-CY)*.025;
-  systems.forEach(function(p,i){setStar(p,(WX[i]-CX)*zoom+CX-M.driveX,(WY[i]-CY)*zoom+CY-M.driveY,p.z0);});
+  mox=REDUCED?0:(mouseX-CX)*.025-M.driveX*.055;
+  moy=REDUCED?0:(mouseY-CY)*.025-M.driveY*.055;
+  systems.forEach(function(p,i){setStar(p,(WX[i]-CX)*M.zoom+CX-M.driveX,(WY[i]-CY)*M.zoom+CY-M.driveY,p.z0);});
 }
 function resetView(){
-  M.vx=0;M.vy=0;M.driveX=0;M.driveY=0;
+  M.vx=0;M.vy=0;M.driveX=0;M.driveY=0;M.targetX=0;M.targetY=0;
+  M.inertiaX=0;M.inertiaY=0;M.zoom=1;M.dragging=false;
+  document.body.classList.remove('dragging');
   mouseX=CX;mouseY=CY;rocket.x=CX;rocket.y=H*.48;
   updateView(1/60,0);
   systems.forEach(function(s){s._fade=1;s.x=s.hx;s.y=s.hy;s.r=s.baseR*FOCAL/s.z0;});
@@ -363,17 +393,63 @@ document.getElementById('sys').addEventListener('click',toggleMute);
 /* ============ 输入 ============ */
 function toGame(e){const r=cv.getBoundingClientRect();
   return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height];}
-let pressPoint=null;
-cv.addEventListener('pointermove',function(e){const p=toGame(e);mouseX=p[0];mouseY=p[1];
-  if(pressPoint&&Math.hypot(e.clientX-pressPoint.x,e.clientY-pressPoint.y)>8)pressPoint.dragged=true;});
-cv.addEventListener('pointerdown',function(e){
-  const p=toGame(e);mouseX=p[0];mouseY=p[1];pressPoint={id:e.pointerId,x:e.clientX,y:e.clientY,dragged:false};
-  cv.setPointerCapture(e.pointerId);
-});
-cv.addEventListener('pointercancel',function(){pressPoint=null;});
-cv.addEventListener('pointerup',function(e){
+let pressPoint=null,lastDraggedLink=null,draggedLinkUntil=0;
+function eventTime(e){return Number.isFinite(e.timeStamp)?e.timeStamp:performance.now();}
+function startPan(e,owner){
+  if(warp.active||pressPoint||(e.button!==undefined&&e.button!==0))return;
+  lastDraggedLink=null;
+  const p=toGame(e);mouseX=p[0];mouseY=p[1];
+  pressPoint={id:e.pointerId,x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,
+    lastTime:eventTime(e),dragged:false,owner:owner};
+  if(owner.setPointerCapture)owner.setPointerCapture(e.pointerId);
+}
+function movePan(e){
+  const p=toGame(e);mouseX=p[0];mouseY=p[1];
+  const press=pressPoint;
+  if(!press||press.id!==e.pointerId)return;
+  const total=Math.hypot(e.clientX-press.x,e.clientY-press.y);
+  if(!press.dragged&&total<=7)return;
+  if(!press.dragged){press.dragged=true;setExplore(true);setChart(false);
+    M.dragging=true;M.inertiaX=0;M.inertiaY=0;
+    document.body.classList.add('dragging');}
+  const dx=clamp(e.clientX-press.lastX,-120,120)*W/sceneWidth;
+  const dy=clamp(e.clientY-press.lastY,-120,120)*H/sceneHeight;
+  const elapsed=clamp((eventTime(e)-press.lastTime)/1000,.012,.08);
+  M.targetX=clamp(M.targetX-dx,-W*.95,W*.95);
+  M.targetY=clamp(M.targetY-dy,-H*.95,H*.95);
+  // Direct motion under the pointer, followed by a short damped coast on release.
+  M.driveX=M.targetX;M.driveY=M.targetY;
+  if(Math.hypot(dx,dy)>.1){
+    M.inertiaX=clamp(-dx/elapsed,-W*2,W*2);
+    M.inertiaY=clamp(-dy/elapsed,-H*2,H*2);
+  }
+  press.lastX=e.clientX;press.lastY=e.clientY;press.lastTime=eventTime(e);
+  if(e.cancelable&&e.preventDefault)e.preventDefault();
+}
+function finishPan(e){
+  if(!pressPoint||pressPoint.id!==e.pointerId)return null;
+  movePan(e);
   const press=pressPoint;pressPoint=null;
-  if(!press||press.id!==e.pointerId||press.dragged||Math.hypot(e.clientX-press.x,e.clientY-press.y)>8||warp.active)return;
+  if(press.dragged&&press.owner!==cv){lastDraggedLink=press.owner;
+    draggedLinkUntil=performance.now()+600;}
+  M.dragging=false;document.body.classList.remove('dragging');
+  if(REDUCED||!press.dragged){M.inertiaX=0;M.inertiaY=0;}
+  return press;
+}
+function cancelPan(e){if(!pressPoint||(e&&pressPoint.id!==e.pointerId))return;
+  pressPoint=null;M.dragging=false;M.inertiaX=0;M.inertiaY=0;
+  document.body.classList.remove('dragging');}
+function consumeDraggedLinkClick(e){
+  if(lastDraggedLink===e.currentTarget&&performance.now()<draggedLinkUntil){
+    e.preventDefault();lastDraggedLink=null;return true;}
+  return false;
+}
+cv.addEventListener('pointermove',movePan);
+cv.addEventListener('pointerdown',function(e){startPan(e,cv);});
+cv.addEventListener('pointercancel',cancelPan);
+cv.addEventListener('pointerup',function(e){
+  const press=finishPan(e);
+  if(!press||press.dragged||warp.active)return;
   const m=toGame(e),mx=m[0],my=m[1];audio();
   if(M.mapOn){const box=minimapBox();if(mx>=box.x&&mx<=box.x+box.w&&my>=box.y&&my<=box.y+box.h){
     let selected=null,best=14;
@@ -449,7 +525,7 @@ let visits=1;
 try{const K='shuge-galaxy-visits';
   visits=(parseInt(localStorage.getItem(K)||'0',10)||0)+1;localStorage.setItem(K,String(visits));}catch(err){}
 visitsEl.textContent='第 '+visits+' 次到访';
-if(IS_TOUCH)document.getElementById('hintTxt').textContent='选一颗星系，出发。';
+if(IS_TOUCH)document.getElementById('hintTxt').textContent='拖动星空漫游 · 轻点星系进入';
 
 /* ============ 固定标题：首屏即显示，避免导航期间闪动 ============ */
 const titleText=document.getElementById('titleText'),titleSub=document.getElementById('titleSub');
