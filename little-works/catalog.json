@@ -26,5 +26,19 @@
       "实时交互",
       "A/B 对照"
     ]
+  },
+  {
+    "slug": "liminal",
+    "title": "引力边界 · LIMINAL",
+    "date": "2026.10.22",
+    "type": "WEBGL EXPERIENCE",
+    "description": "穿越事件视界、星云与光速边界。转动视角，靠近宇宙的另一面。",
+    "url": "./liminal/",
+    "cover": "./liminal/cover.svg",
+    "tags": [
+      "WebGL 宇宙",
+      "三重场景",
+      "交互声音"
+    ]
   }
 ]

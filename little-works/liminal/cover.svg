@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="LIMINAL 引力边界：环绕黑洞的炽热吸积盘">
+<defs>
+  <radialGradient id="space"><stop stop-color="#171a26"/><stop offset=".7" stop-color="#0a0d16"/><stop offset="1" stop-color="#04070d"/></radialGradient>
+  <radialGradient id="glow"><stop stop-color="#ffcf91" stop-opacity=".85"/><stop offset=".33" stop-color="#d77e44" stop-opacity=".58"/><stop offset=".67" stop-color="#75351b" stop-opacity=".15"/><stop offset="1" stop-color="#251520" stop-opacity="0"/></radialGradient>
+  <linearGradient id="disk" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#391f19" stop-opacity=".05"/><stop offset=".26" stop-color="#d2713b"/><stop offset=".46" stop-color="#ffd8a7"/><stop offset=".7" stop-color="#9a4a2b"/><stop offset="1" stop-color="#301820" stop-opacity=".08"/></linearGradient>
+  <filter id="blur"><feGaussianBlur stdDeviation="20"/></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+  <pattern id="stars" width="137" height="117" patternUnits="userSpaceOnUse"><circle cx="13" cy="67" r="1" fill="#b5bcd2" opacity=".5"/><circle cx="108" cy="31" r=".7" fill="#d4ccbb" opacity=".45"/><circle cx="80" cy="99" r="1.1" fill="#d1b4a4" opacity=".35"/></pattern>
+</defs>
+<rect width="1200" height="675" fill="url(#space)"/><rect width="1200" height="675" fill="url(#stars)"/>
+<ellipse cx="685" cy="350" rx="505" ry="300" fill="url(#glow)" opacity=".7"/>
+<g transform="translate(675 341)">
+  <ellipse rx="470" ry="126" fill="none" stroke="#c76b39" stroke-width="75" opacity=".36" filter="url(#blur)"/>
+  <ellipse rx="478" ry="114" fill="none" stroke="url(#disk)" stroke-width="65" opacity=".75" transform="rotate(-7)"/>
+  <ellipse rx="458" ry="111" fill="none" stroke="#f2b071" stroke-width="8" opacity=".64" transform="rotate(-7)" filter="url(#soft)"/>
+  <ellipse rx="447" ry="101" fill="none" stroke="#b86a42" stroke-width="4" opacity=".5" transform="rotate(-8)"/>
+  <circle cy="-11" r="202" fill="none" stroke="#d99557" stroke-width="29" opacity=".64" filter="url(#blur)"/>
+  <circle cy="-11" r="200" fill="none" stroke="#e9aa69" stroke-width="5" opacity=".72"/>
+  <circle cy="-11" r="192" fill="#03050a"/>
+  <ellipse cy="42" rx="484" ry="96" fill="none" stroke="url(#disk)" stroke-width="34" transform="rotate(6)" opacity=".92"/>
+  <ellipse cy="55" rx="441" ry="76" fill="none" stroke="#f4b780" stroke-width="4" transform="rotate(6)" opacity=".65"/>
+</g>
+<path d="M62 74H169" stroke="#caa87b" stroke-width="2" opacity=".7"/><text x="64" y="124" font-family="Georgia,serif" font-size="55" fill="#e9e0d5" letter-spacing="8">LIMINAL</text>
+<text x="67" y="159" font-family="sans-serif" font-size="16" fill="#d1b99b" letter-spacing="8">BEYOND THE VISIBLE</text>
+<text x="65" y="620" font-family="Georgia,serif" font-size="14" fill="#a58e7c" letter-spacing="4">AN INTERACTIVE COSMIC EXPERIENCE</text>
+</svg>
