@@ -30,7 +30,7 @@ for(const [w,h] of [[320,568],[375,812],[390,844],[768,1024],[1280,720],[1440,90
   assert.equal(t.run('M.driveX===0&&M.driveY===0'),true);
   t.run('mouseX=0;mouseY=0;for(let n=0;n<60;n++)update(1/60,n/60)');assert.equal(t.run('M.driveX===0&&M.driveY===0'),true);
   t.run('setExplore(true);mouseX=0;mouseY=0;for(let n=0;n<60;n++)update(1/60,n/60)');
-  assert.equal(t.run('M.driveX<0'),w>=620); // Only desktop has a hover-steering pointer.
+  assert.equal(t.run('M.driveX<0'),true); // Original pilot steering works with mouse and touch.
   t.run('setExplore(false)');assert.equal(t.run('M.driveX'),0);
   checks++;
 }

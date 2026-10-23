@@ -106,7 +106,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #a5e9
 #termIn{font-size:14px}#termOut{max-height:180px}#termBar{padding-bottom:2px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 body.warping #destinations,body.warping .constellation,body.warping #controls{opacity:0;pointer-events:none}
-body.exploring .constellation{opacity:.35}
+body.exploring .constellation{opacity:.72}
 @media(max-width:760px){#hud #hintTxt{display:block}#visits{display:none}}
 @media(max-width:619px){
   #brand{top:17px;font-size:11px;left:14px}#sys{right:10px;font-size:11px}#sysDot{width:5px;height:5px}
@@ -126,7 +126,7 @@ body.exploring .constellation{opacity:.35}
 <nav id="destinations" aria-label="星系目的地"></nav>
 <div class="constellation">学习与求知</div><div class="constellation">创作与游乐</div><div class="constellation">现实与日常</div>
 <div id="crt"></div>
-<div id="brand">◆ SHUGE GALAXY OS <b>v1.8.1</b></div>
+<div id="brand">◆ SHUGE GALAXY OS <b>v1.8.2</b></div>
 <button id="sys" type="button" aria-label="切换音效" aria-pressed="true"><i id="sysDot" aria-hidden="true"></i>SYS ONLINE <b id="sndTag">[M]♪ON</b></button>
 <div id="title"><h1 id="titleText"></h1><div class="line"></div><div class="sub" id="titleSub">S H U G E · G A L A X Y</div></div>
 <div id="hud"><span id="clock">--:--:--</span><span id="hintTxt">拖动星空自由漫游 · 点击星系进入 · T 目的地 · / 终端 · R 总览</span><span id="visits"></span></div>
@@ -205,6 +205,7 @@ function makeArms(){
    默认八个入口完整可见。学习、创作游乐、现实日常按空间邻近分组。
    漫游是显式模式；普通指针移动只带来轻微背景视差。 */
 const WX=[],WY=[];
+const groupWorld=[];
 let WWS=W,WHS=H;
 // The atlas starts fully visible. Dragging either the stars or a destination label
 // enters free flight, with direct pan, inertia, and a softly easing camera.
@@ -257,7 +258,10 @@ function layoutWorld(){
     [[.18,.35],[.76,.34],[.29,.57],[.87,.56],[.38,.78],[.59,.79],[.64,.56],[.15,.79]];
   systems.forEach(function(p,i){const q=points[i]||[.5,.5];WX[i]=q[0]*W;WY[i]=Math.min(q[1]*H,(sceneHeight-(mobile?164:210))*H/sceneHeight);});
   const groups=mobile?[[.10,.16],[.10,.36],[.10,.65]]:[[.11,.24],[.64,.23],[.13,.68]];
-  document.querySelectorAll('.constellation').forEach(function(el,i){el.style.left=groups[i][0]*sceneWidth+'px';el.style.top=(!mobile&&i===2?sceneHeight-300:groups[i][1]*sceneHeight)+'px';});
+  document.querySelectorAll('.constellation').forEach(function(el,i){
+    const gy=(!mobile&&i===2)?(sceneHeight-300)/sceneHeight:groups[i][1];
+    groupWorld[i]=[groups[i][0]*W,gy*H];
+  });
 }
 function syncLinks(){
   const sx=sceneWidth/W,sy=sceneHeight/H;
@@ -270,6 +274,15 @@ function syncLinks(){
     const b=minimapBox(),lx=parseFloat(left),ly=parseFloat(top);
     const overMap=M.mapOn&&lx+88>b.x*sx&&lx-88<(b.x+b.w)*sx&&ly<(b.y+b.h)*sy&&ly+52>b.y*sy;
     a.hidden=warp.active||(M.explore&&(outside||overMap));
+  });
+  // Group headings live in exactly the same camera space as their galaxies.
+  // Never leave the grey labels pinned to the viewport when the stars move.
+  document.querySelectorAll('.constellation').forEach(function(el,i){
+    const g=groupWorld[i];if(!g)return;
+    const x=((g[0]-CX)*M.zoom+CX-M.driveX)*sx;
+    const y=((g[1]-CY)*M.zoom+CY-M.driveY)*sy;
+    el.style.left=x+'px';el.style.top=y+'px';
+    el.hidden=warp.active||(M.explore&&(x < -120||x > sceneWidth+20||y < (sceneWidth<620?150:145)||y > sceneHeight-70));
   });
 }
 function setExplore(on){
@@ -286,29 +299,42 @@ document.getElementById('chartBtn').addEventListener('click',function(){setChart
 document.getElementById('termBtn').addEventListener('click',function(){term.classList.contains('open')?hideTerm():openTerm();});
 function setStar(s,hx,hy,ze){if(warp.active&&s===warp.target)return;s.hx=hx;s.hy=hy;s.zEff=ze;s.z=ze;}
 function updateView(dt,t){
-  const k=REDUCED?1:Math.min(1,dt*(M.dragging?24:7));
-  const zoomGoal=M.explore?(REDUCED?1.22:1.48):1;
-  M.zoom+=(zoomGoal-M.zoom)*(REDUCED?1:Math.min(1,dt*8));
-  if(M.explore&&!M.dragging&&!REDUCED){
-    M.targetX=clamp(M.targetX+M.inertiaX*dt,-W*.95,W*.95);
-    M.targetY=clamp(M.targetY+M.inertiaY*dt,-H*.95,H*.95);
-    const friction=Math.exp(-5*dt);
+  // Restore the original game's flight model: the ship follows the pointer
+  // with a visible delay, and the camera trails at the original ~1.5 /sec.
+  // Overview stays readable until the first real drag.
+  const fly=M.explore;
+  const zoomGoal=fly?1.48:1;
+  M.zoom+=(zoomGoal-M.zoom)*Math.min(1,dt*(REDUCED?12:2.8));
+  if(fly&&!M.dragging&&!REDUCED){
+    M.targetX=clamp(M.targetX+M.inertiaX*dt,-W*.78,W*.78);
+    M.targetY=clamp(M.targetY+M.inertiaY*dt,-H*.78,H*.78);
+    const friction=Math.exp(-3.8*dt);
     M.inertiaX*=friction;M.inertiaY*=friction;
     if(Math.abs(M.inertiaX)<.5)M.inertiaX=0;
     if(Math.abs(M.inertiaY)<.5)M.inertiaY=0;
   }
-  const guide=M.explore&&!IS_TOUCH&&!M.dragging&&!REDUCED?.10:0;
-  const camTx=M.explore?M.targetX+(clamp(mouseX,0,W)/W-.5)*W*guide:0;
-  const camTy=M.explore?M.targetY+(clamp(mouseY,0,H)/H-.5)*H*guide:0;
+  // Original steering: camera responds to pointer position instead of
+  // snapping the whole image to each touch event.
+  const steerX=fly?(clamp(mouseX,0,W)/W-.5)*W*.35:0;
+  const steerY=fly?(clamp(mouseY,0,H)/H-.5)*H*.28:0;
+  const camTx=fly?clamp(M.targetX+steerX,-W*.85,W*.85):0;
+  const camTy=fly?clamp(M.targetY+steerY,-H*.85,H*.85):0;
+  const c=REDUCED?1:Math.min(1,dt*1.5);
+  M.driveX+=(camTx-M.driveX)*c;M.driveY+=(camTy-M.driveY)*c;
   const ppx=rocket.x,ppy=rocket.y;
-  M.driveX+=(camTx-M.driveX)*k;M.driveY+=(camTy-M.driveY)*k;
-  const travel=IS_TOUCH||REDUCED?0:1;
-  rocket.x+=((CX+(mouseX-CX)*.10*travel)-rocket.x)*(REDUCED?1:Math.min(1,dt*5));
-  rocket.y+=((H*.48+(mouseY-CY)*.06*travel)-rocket.y)*(REDUCED?1:Math.min(1,dt*5));
-  M.vx=(rocket.x-ppx)/Math.max(dt,.0001);M.vy=(rocket.y-ppy)/Math.max(dt,.0001);
-  mox=REDUCED?0:(mouseX-CX)*.025-M.driveX*.055;
-  moy=REDUCED?0:(mouseY-CY)*.025-M.driveY*.055;
-  systems.forEach(function(p,i){setStar(p,(WX[i]-CX)*M.zoom+CX-M.driveX,(WY[i]-CY)*M.zoom+CY-M.driveY,p.z0);});
+  const rtx=fly?clamp(mouseX,20,W-20):CX;
+  const rty=fly?clamp(mouseY,36,H-95):H*.48;
+  const shipEase=REDUCED?1:Math.min(1,dt*1.2);
+  rocket.x+=(rtx-rocket.x)*shipEase;
+  rocket.y+=(rty-rocket.y)*shipEase;
+  M.vx=(rocket.x-ppx)/Math.max(dt,.0001);
+  M.vy=(rocket.y-ppy)/Math.max(dt,.0001);
+  // Match the original -0.22 parallax instead of v1.8.1's almost static -0.055.
+  mox=REDUCED?0:-M.driveX*.22;
+  moy=REDUCED?0:-M.driveY*.22;
+  systems.forEach(function(p,i){
+    setStar(p,(WX[i]-CX)*M.zoom+CX-M.driveX,(WY[i]-CY)*M.zoom+CY-M.driveY,p.z0);
+  });
 }
 function resetView(){
   M.vx=0;M.vy=0;M.driveX=0;M.driveY=0;M.targetX=0;M.targetY=0;
@@ -415,13 +441,14 @@ function movePan(e){
   const dx=clamp(e.clientX-press.lastX,-120,120)*W/sceneWidth;
   const dy=clamp(e.clientY-press.lastY,-120,120)*H/sceneHeight;
   const elapsed=clamp((eventTime(e)-press.lastTime)/1000,.012,.08);
-  M.targetX=clamp(M.targetX-dx,-W*.95,W*.95);
-  M.targetY=clamp(M.targetY-dy,-H*.95,H*.95);
+  M.targetX=clamp(M.targetX-dx*.62,-W*.78,W*.78);
+  M.targetY=clamp(M.targetY-dy*.62,-H*.78,H*.78);
   // Direct motion under the pointer, followed by a short damped coast on release.
-  M.driveX=M.targetX;M.driveY=M.targetY;
+  // Keep the camera behind the ship, not locked to the finger.
+  // The original fly-through was smooth, not a 1:1 image drag.
   if(Math.hypot(dx,dy)>.1){
-    M.inertiaX=clamp(-dx/elapsed,-W*2,W*2);
-    M.inertiaY=clamp(-dy/elapsed,-H*2,H*2);
+    M.inertiaX=clamp(-dx/elapsed*.20,-W*.8,W*.8);
+    M.inertiaY=clamp(-dy/elapsed*.20,-H*.8,H*.8);
   }
   press.lastX=e.clientX;press.lastY=e.clientY;press.lastTime=eventTime(e);
   if(e.cancelable&&e.preventDefault)e.preventDefault();

@@ -90,6 +90,8 @@ async function setup(w,h,mobile){
   assert.equal(before.explore,false);
   assert.equal(before.destinations,8);
   const aBefore=await evalJs("(()=>{const r=document.querySelector('.destination').getBoundingClientRect();return{x:r.x,y:r.y}})()");
+  const shipBefore=await evalJs('({x:rocket.x,y:rocket.y})');
+  const headingsBefore=await evalJs("[...document.querySelectorAll('.constellation')].map(n=>({x:parseFloat(n.style.left),y:parseFloat(n.style.top)}))");
   if(mobile){
    await touch('touchStart',160,280);
    await touch('touchMove',205,310);
@@ -102,13 +104,19 @@ async function setup(w,h,mobile){
    await mouse('mouseMoved',290,350,1);
    await mouse('mouseReleased',290,350);
   }
-  await sleep(250);
+  await sleep(850); // Original 1.5/sec camera follow: allow its natural easing.
   const moved=await evalJs('window.__gx()');
   assert(moved.explore,'drag must enable explore');
   assert(Math.abs(moved.cam[0])>15,'drag must pan the camera');
   assert.equal(moved.warpActive,false,'drag must not warp');
   const aAfter=await evalJs("(()=>{const r=document.querySelector('.destination').getBoundingClientRect();return{x:r.x,y:r.y}})()");
+  const shipAfter=await evalJs('({x:rocket.x,y:rocket.y})');
+  const headingsAfter=await evalJs("[...document.querySelectorAll('.constellation')].map(n=>({x:parseFloat(n.style.left),y:parseFloat(n.style.top),hidden:n.hidden}))");
   assert(Math.abs(aAfter.x-aBefore.x)>10,'labels must follow starfield');
+  assert(Math.hypot(shipAfter.x-shipBefore.x,shipAfter.y-shipBefore.y)>10,'original rocket must visibly follow the pointer');
+  assert(headingsAfter.some((g,i)=>Math.hypot(g.x-headingsBefore[i].x,g.y-headingsBefore[i].y)>10),'grey cluster headings must travel with the world');
+  const correctGroups=await evalJs("[...document.querySelectorAll('.constellation')].every((el,i)=>{const g=groupWorld[i];const x=((g[0]-CX)*M.zoom+CX-M.driveX)*sceneWidth/W;const y=((g[1]-CY)*M.zoom+CY-M.driveY)*sceneHeight/H;return Math.abs(parseFloat(el.style.left)-x)<.1&&Math.abs(parseFloat(el.style.top)-y)<.1;})");
+  assert(correctGroups,'each group heading must share the exact galaxy-camera transform');
   await screenshot(mobile?'gesture-qa-mobile.png':'gesture-qa-desktop.png');
   const beforeReset=moved.cam[0];
   await send('Runtime.evaluate',{expression:"document.getElementById('homeBtn').click()"});
