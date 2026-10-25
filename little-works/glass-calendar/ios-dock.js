@@ -46,10 +46,10 @@ update();
 // increase it naturally. Do not simulate refraction with an idle CSS blur.
 customElements.whenDefined("lg-dock").then(()=>{
  const glass=dock.querySelector("lg-dock");
- if(!glass?.ps || reduced.matches || matchMedia("(prefers-reduced-transparency: reduce)").matches)return;
+ if(!glass?.ps || matchMedia("(prefers-reduced-transparency: reduce)").matches)return;
  const bounds=glass.items?.getBoundingClientRect();
  if(bounds?.width)glass.xs.set(bounds.width*.49,{immediate:true});
- glass.ps.set(.34);
+ glass.ps.set(.34,{immediate:reduced.matches});
  glass.addEventListener("pointerleave",()=>glass.ps.set(.34));
  glass.addEventListener("focusout",()=>requestAnimationFrame(()=>{if(!glass.contains(document.activeElement))glass.ps.set(.34)}));
 });
