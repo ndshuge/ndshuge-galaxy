@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111c20">
+  <meta name="description" content="月光存档 — Apple 风格沉浸式音乐播放器。三首虚构曲目，模拟播放、同步歌词与液态玻璃交互。">
+  <title>月光存档 · AMBIENT</title>
+  <link rel="icon" href="./cover.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<svg class="icon-bank" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="ic-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></symbol>
+  <symbol id="ic-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="ic-play" viewBox="0 0 24 24"><path d="M8 4.9c0-.9.9-1.4 1.7-.9l10.1 6.6a1.7 1.7 0 0 1 0 2.8L9.7 20c-.8.5-1.7 0-1.7-.9Z"/></symbol>
+  <symbol id="ic-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4.5" height="16" rx="1.5"/><rect x="13.5" y="4" width="4.5" height="16" rx="1.5"/></symbol>
+  <symbol id="ic-prev" viewBox="0 0 24 24"><path d="M5 5v14M19 5 7 12l12 7Z"/></symbol>
+  <symbol id="ic-next" viewBox="0 0 24 24"><path d="M19 5v14M5 5l12 7-12 7Z"/></symbol>
+  <symbol id="ic-list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></symbol>
+  <symbol id="ic-lyrics" viewBox="0 0 24 24"><path d="M4 5.5h16v11H10l-5.5 4v-4H4Z"/><path d="M8 9h8M8 12h5"/></symbol>
+  <symbol id="ic-volume" viewBox="0 0 24 24"><path d="M5 9h4l5-4v14l-5-4H5Z"/><path d="M17 9a4 4 0 0 1 0 6M19.5 6a8 8 0 0 1 0 12"/></symbol>
+  <symbol id="ic-shuffle" viewBox="0 0 24 24"><path d="m17 3 4 4-4 4M3 17h4c6 0 7-10 13-10h1M17 21l4-4-4-4M3 7h4c2.4 0 3.8 1.4 5 3M15 15c1.2 1.2 2.7 2 5 2h1"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+</svg>
+<div class="ambient" aria-hidden="true"><div class="ambient-a"></div><div class="ambient-b"></div><div class="ambient-c"></div><div class="glass-caustic"></div><div class="grain"></div></div>
+<main class="shell" id="app">
+  <header class="topbar">
+    <a class="back-link" href="../" aria-label="返回小东西"><svg class="icon"><use href="#ic-back"/></svg><span>小东西</span></a>
+    <div class="wordmark">AMBIENT <span class="wordmark-dot">·</span> RADIO</div>
+    <span class="demo-chip"><span class="pulse-dot"></span> 虚构音乐演示</span>
+  </header>
+  <div class="experience">
+    <aside class="art-side" aria-label="当前专辑封面">
+      <div class="art-glow"></div>
+      <div class="art-frame"><img id="large-cover" src="./cover.svg" alt="月光下的城市与海面插画" width="500" height="500"></div>
+
+
+    </aside>
+    <section class="player" aria-label="模拟音乐播放器">
+      <div class="track-bar">
+        <div class="mobile-art"><img id="small-cover" src="./cover.svg" alt="" width="76" height="76"></div>
+        <div class="track-heading"><h1 id="song-title">月光存档</h1><p id="song-artist">深蓝电台</p></div>
+        <div class="track-actions">
+          <button class="glass-button" id="favorite" type="button" aria-label="收藏歌曲" aria-pressed="false"><svg class="icon"><use href="#ic-heart"/></svg></button>
+          <button class="glass-button" id="more" type="button" aria-label="更多选项" aria-expanded="false"><svg class="icon"><use href="#ic-more"/></svg></button>
+        </div>
+        <div class="more-menu hidden" id="more-menu" role="menu"><button id="toggle-motion" type="button" role="menuitem">暂停环境动画</button><button id="reset-demo" type="button" role="menuitem">重置演示进度</button><span>没有播放真实音频</span></div>
+      </div>
+      <div class="lyrics-section" id="lyrics-section">
+        <div class="section-label"><span>歌词</span><span class="wave-indicator" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
+        <div class="lyrics-viewport" id="lyrics-viewport" tabindex="0" aria-label="点击歌词可跳转到相应时间"><div class="lyrics-list" id="lyrics-list"></div></div>
+        <div class="lyrics-status"><button class="lyrics-hint" id="toggle-lyrics" type="button" aria-pressed="true"><svg class="icon"><use href="#ic-lyrics"/></svg><span>同步歌词</span></button><span id="lyric-indicator">静静听，静静看</span></div>
+      </div>
+      <div class="control-zone">
+        <div class="seek"><input id="progress" type="range" min="0" max="210" step="0.1" value="0" aria-label="播放进度"><div class="timestamps"><output id="elapsed">0:00</output><span id="remaining">−3:30</span></div></div>
+        <div class="transport">
+          <button class="aux-button" id="shuffle" type="button" aria-pressed="false" aria-label="随机播放"><svg class="icon"><use href="#ic-shuffle"/></svg></button>
+          <button class="transport-skip" id="prev" type="button" aria-label="上一首"><svg class="icon"><use href="#ic-prev"/></svg></button>
+          <button class="transport-main" id="play" type="button" aria-label="暂停模拟播放"><svg class="icon play-icon"><use id="play-use" href="#ic-pause"/></svg></button>
+          <button class="transport-skip" id="next" type="button" aria-label="下一首"><svg class="icon"><use href="#ic-next"/></svg></button>
+          <button class="aux-button queue-trigger" id="queue" type="button" aria-label="打开播放列表" aria-expanded="false"><svg class="icon"><use href="#ic-list"/></svg></button>
+        </div>
+        <div class="volume-line"><svg class="icon volume-icon" aria-hidden="true"><use href="#ic-volume"/></svg><input type="range" id="volume" min="0" max="100" value="62" aria-label="模拟音量"><span id="volume-label">62%</span></div>
+        <div class="controls-bottom"><span class="demo-note">模拟播放 · 无真实音频 / NO AUDIO</span></div>
+      </div>
+    </section>
+  </div>
+  <div class="queue-shade hidden" id="queue-shade"></div>
+  <section class="queue-drawer hidden" id="queue-drawer" aria-label="播放列表" aria-modal="true" role="dialog"><div class="queue-header"><div><span class="overline">UP NEXT</span><h2>夜间播放列表</h2></div><button class="glass-button" id="close-queue" type="button" aria-label="关闭播放列表"><svg class="icon"><use href="#ic-x"/></svg></button></div><div class="queue-items" id="queue-items"></div><p>三首为原创虚构演示曲目，不会发出声音。</p></section>
+  <div id="live-announcement" class="sr-only" role="status" aria-live="polite"></div>
+</main>
+</body></html>

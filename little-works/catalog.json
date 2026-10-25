@@ -1,5 +1,19 @@
 [
     {
+        "slug": "moonlight-player",
+        "title": "月光存档 · Apple 沉浸播放器",
+        "date": "2026.10.25",
+        "type": "IMMERSIVE MUSIC UI",
+        "description": "一台没有真实音乐、却会随歌词呼吸的播放器。三首原创虚构曲目，体验液态玻璃、动态光影、同步歌词和弹性控制。",
+        "url": "./moonlight-player/",
+        "cover": "./moonlight-player/cover.svg",
+        "tags": [
+            "Apple 风格",
+            "同步歌词",
+            "交互演示"
+        ]
+    },
+    {
         "slug": "personal-homepage",
         "title": "鼠哥 · 个人主页",
         "date": "2026.10.25",

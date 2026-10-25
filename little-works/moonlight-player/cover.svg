@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="月夜的城市与安静的海">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2=".2" y2="1"><stop stop-color="#0e2937"/><stop offset=".48" stop-color="#23464f"/><stop offset=".9" stop-color="#6d6550"/><stop offset="1" stop-color="#1b3136"/></linearGradient>
+<radialGradient id="light"><stop stop-color="#fff6d0"/><stop offset=".55" stop-color="#e7d59e"/><stop offset="1" stop-color="#b69e65"/></radialGradient>
+<radialGradient id="halo"><stop stop-color="#eedfb0" stop-opacity=".52"/><stop offset="1" stop-color="#eedfb0" stop-opacity="0"/></radialGradient>
+<linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#2e5a60"/><stop offset="1" stop-color="#0b1d27"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="16"/></filter>
+<pattern id="stars" width="98" height="81" patternUnits="userSpaceOnUse"><circle cx="14" cy="24" r=".8" fill="#ffefbb" opacity=".8"/><circle cx="76" cy="65" r=".6" fill="#fffaea" opacity=".4"/></pattern>
+</defs>
+<rect width="600" height="600" fill="url(#sky)"/><rect width="600" height="395" fill="url(#stars)"/>
+<circle cx="387" cy="180" r="155" fill="url(#halo)"/>
+<circle cx="387" cy="180" r="65" fill="url(#light)"/>
+<path d="M0 378 65 350 127 370 201 328 263 355 329 309 420 357 497 310 600 355V600H0Z" fill="#18363f" opacity=".73"/>
+<path d="M0 401 84 374 156 391 231 359 289 389 361 359 453 395 538 359 600 388V600H0Z" fill="#122b36"/>
+<rect y="408" width="600" height="192" fill="url(#water)"/>
+<g fill="#dfba76" opacity=".72"><rect x="18" y="373" width="3" height="9"/><rect x="64" y="383" width="4" height="12"/><rect x="108" y="358" width="3" height="8"/><rect x="150" y="371" width="3" height="8"/><rect x="242" y="345" width="3" height="7"/><rect x="268" y="372" width="4" height="9"/><rect x="472" y="378" width="4" height="7"/><rect x="510" y="366" width="3" height="9"/></g>
+<path d="M351 421 Q386 438 429 423M360 448Q391 464 423 451M340 477Q387 489 430 475M355 516Q384 526 418 515M362 546Q396 557 425 548" stroke="#e5ca83" stroke-width="9" opacity=".29" stroke-linecap="round" filter="url(#glow)" fill="none"/>
+<path d="M353 422 Q387 430 418 422M359 451Q386 459 416 451M355 476Q387 483 420 476M366 507Q393 512 410 507M350 535Q390 542 426 535" stroke="#ebd398" stroke-width="1.7" opacity=".6" stroke-linecap="round" fill="none"/>
+<path d="M0 489 128 469 229 505 296 483 369 513 476 490 600 516v84H0Z" fill="#10242d" opacity=".7"/>
+<path d="M0 548 109 521 171 547 237 531 305 552 380 532 462 555 547 535 600 549v51H0Z" fill="#071a22"/>
+<g opacity=".68"><path d="M63 496V398h17v98M83 499V374h14v125M100 502V416h17v86M124 493V389h21v104M147 502V413h14v89" stroke="#0c222d" stroke-width="2" fill="#0c222d"/><path d="M458 509V398h18v111M483 509V375h20v134M512 512V413h19v99M540 512V396h15v116" fill="#0c222d"/></g>
+<circle cx="387" cy="180" r="68" stroke="#fff1bb" stroke-width=".7" fill="none" opacity=".34"/>
+<text x="36" y="565" fill="#e5d6ac" font-family="Arial,sans-serif" font-size="12" letter-spacing="6" opacity=".74">MOONLIGHT ARCHIVE</text>
+</svg>

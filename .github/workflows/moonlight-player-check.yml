@@ -1,0 +1,22 @@
+name: Moonlight player QA
+on:
+  push:
+    paths:
+      - "little-works/moonlight-player/**"
+      - "little-works/catalog.json"
+      - ".github/workflows/moonlight-player-check.yml"
+  pull_request:
+    paths:
+      - "little-works/moonlight-player/**"
+      - "little-works/catalog.json"
+      - ".github/workflows/moonlight-player-check.yml"
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Check player
+        run: node little-works/moonlight-player/check.cjs
