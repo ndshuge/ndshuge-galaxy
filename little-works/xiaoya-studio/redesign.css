@@ -1,0 +1,48 @@
+/* XiaoYa / Editorial productivity redesign — planner first, not the original welcome layout. */
+body.design-studio.redesign-v2{background:#eeeae0;--ink:#222920;--sub:#757b72;--sage:#376552;--sage-dark:#274c3d;--soft:#edf0e6;--line:#dcdcd1;--cream:#f7f5ec;--white:#fffefa}
+.design-studio.redesign-v2 .app-layout{grid-template-columns:92px minmax(0,1fr);background:#fcfbf6;max-width:1800px}
+.design-studio.redesign-v2 .sidebar{width:92px;padding:25px 8px;align-items:center;background:#f6f4eb;color:#284e3d;border-right:1px solid #dbdfd3}
+.design-studio.redesign-v2 .sidebar .brand{padding:0 0 40px;flex-direction:column;gap:5px}
+.design-studio.redesign-v2 .sidebar .brand strong{color:#325c47;font-size:13px;letter-spacing:0}
+.design-studio.redesign-v2 .sidebar .brand small,.design-studio.redesign-v2 .sidebar-label,.design-studio.redesign-v2 .sidebar-quote,.design-studio.redesign-v2 .privacy-hint{display:none}
+.design-studio.redesign-v2 .sidebar .side-nav{width:100%;gap:9px}
+.design-studio.redesign-v2 .sidebar .nav-link{display:flex;flex-direction:column;gap:5px;padding:11px 2px;min-height:67px;justify-content:center;text-align:center;border-radius:10px;font-size:11px;color:#4e6355}
+.design-studio.redesign-v2 .sidebar .nav-link svg{width:19px;height:19px}
+.design-studio.redesign-v2 .sidebar .nav-link.is-active{background:#dce9d9;color:#245d44}
+.design-studio.redesign-v2 .sidebar .sidebar-bottom{width:100%}
+.design-studio.redesign-v2 .topbar{background:#fcfbf6;border-color:#e8e8df}
+.design-studio.redesign-v2 .content-grid{grid-template-columns:minmax(0,1fr);padding:22px clamp(18px,4vw,58px) 80px}
+.design-studio.redesign-v2 .right-rail{display:none}
+.design-studio.redesign-v2 .xy-editorial{position:relative}
+.design-studio.redesign-v2 .xy-editorial-kicker{display:flex;justify-content:space-between;border-bottom:1px solid #becbbd;padding:12px 0 17px;color:#436352;font-size:12px;font-weight:600}
+.design-studio.redesign-v2 .xy-editorial-kicker .xy-date-caption{color:#858c7e;font-weight:400}
+.design-studio.redesign-v2 .xy-redesign-intro h2{font-family:"Songti SC","Noto Serif CJK SC",serif;font-weight:500;font-size:clamp(44px,6vw,92px);line-height:1.11;letter-spacing:-.065em;color:#283c30;margin:39px 0 22px}
+.design-studio.redesign-v2 .xy-redesign-intro h2 i{color:#7b987f;font-weight:400;font-style:normal}
+.design-studio.redesign-v2 .xy-redesign-intro p{font-size:15px;color:#687969;margin-bottom:40px;line-height:1.8}
+.design-studio.redesign-v2 .xy-day-strip{min-height:68px;padding:18px 24px;background:#dbe7d8;display:flex;align-items:center;justify-content:space-between;gap:15px;color:#2f5340;font-size:14px;font-weight:600;border-radius:0}
+.design-studio.redesign-v2 .xy-day-strip button{border:none;background:#254b39;color:#f4f7ed;padding:12px 16px;border-radius:5px;font-size:13px;font-weight:600;min-height:44px}
+.design-studio.redesign-v2 .xy-day-strip button span{margin-left:13px}
+.design-studio.redesign-v2 .xy-kanban{display:grid;grid-template-columns:1.1fr .9fr;gap:0;background:#fffefa;border:1px solid #d8ddd0;border-top:0;margin:0}
+.design-studio.redesign-v2 .xy-kanban .panel{border:0;border-radius:0;padding:28px 26px;min-height:290px;background:#fffefa;box-shadow:none}
+.design-studio.redesign-v2 .xy-kanban .panel:first-child{border-right:1px solid #e0e4d9}
+.design-studio.redesign-v2 .xy-kanban .card-topline{margin:0;padding:0 0 18px;border-color:#e2e6da}
+.design-studio.redesign-v2 .xy-kanban .overline{font-size:14px;font-weight:650}
+.design-studio.redesign-v2 .xy-kanban .task-mini{min-height:78px}
+.design-studio.redesign-v2 .xy-kanban .task-title{font-size:15px}
+.design-studio.redesign-v2 .xy-kanban .subline{font-size:12px;margin-top:8px}
+.design-studio.redesign-v2 .xy-kanban .time-pill{font-size:11px}
+.design-studio.redesign-v2 .xy-mini-context{order:5;min-height:0;padding:22px 0 13px;display:block;background:transparent;border:0;border-radius:0;box-shadow:none}
+.design-studio.redesign-v2 .xy-mini-context:before,.design-studio.redesign-v2 .xy-mini-context:after,.design-studio.redesign-v2 .xy-mini-context .hero-decoration{display:none!important}
+.design-studio.redesign-v2 .xy-mini-context .hero-copy{display:flex;align-items:center;flex-wrap:wrap;max-width:none;gap:12px}
+.design-studio.redesign-v2 .xy-mini-context .hero-copy h1,.design-studio.redesign-v2 .xy-mini-context .hero-copy p{display:none}
+.design-studio.redesign-v2 .xy-mini-context .hero-copy .eyebrow{font-size:12px!important;color:#607466;margin:0}
+.design-studio.redesign-v2 .xy-mini-context .hero-actions{margin:0}
+.design-studio.redesign-v2 .xy-mini-context .btn{border-radius:5px}
+.design-studio.redesign-v2 .section-heading h2{font-size:22px}
+.design-studio.redesign-v2 .bottom-stats{margin-top:35px;border-color:#d6dfd1}
+.design-studio.redesign-v2 .bottom-stats strong{font-size:38px}
+.design-studio.redesign-v2 #view-today .ai-today-panel{display:block;margin-top:24px;border-radius:7px}
+.design-studio.redesign-v2 .advice-card{background:#f4f6ed}
+.design-studio.redesign-v2 .panel{border-radius:6px}
+@media(max-width:820px){.design-studio.redesign-v2 .app-layout{grid-template-columns:1fr}.design-studio.redesign-v2 .sidebar{width:auto;display:flex;flex-direction:row;justify-content:space-between;min-height:54px;padding:7px 15px}.design-studio.redesign-v2 .sidebar .brand{padding:0;flex-direction:row}.design-studio.redesign-v2 .sidebar .side-nav{display:none}.design-studio.redesign-v2 .content-grid{padding:17px 14px 80px}}
+@media(max-width:600px){.design-studio.redesign-v2 .xy-redesign-intro h2{font-size:clamp(42px,10vw,57px);margin-top:30px}.design-studio.redesign-v2 .xy-redesign-intro p{font-size:13px;margin-bottom:24px}.design-studio.redesign-v2 .xy-editorial-kicker .xy-date-caption{display:none}.design-studio.redesign-v2 .xy-day-strip{padding:13px 14px;font-size:11px}.design-studio.redesign-v2 .xy-day-strip button{font-size:11px;padding:10px}.design-studio.redesign-v2 .xy-kanban{grid-template-columns:1fr}.design-studio.redesign-v2 .xy-kanban .panel{padding:19px 17px;min-height:0}.design-studio.redesign-v2 .xy-kanban .panel:first-child{border-right:0;border-bottom:1px solid #dde2d6}.design-studio.redesign-v2 .xy-redesign-intro h2 br{display:block}.design-studio.redesign-v2 .xy-mini-context{padding:17px 0}.design-studio.redesign-v2 .xy-mini-context .hero-actions{gap:6px}}

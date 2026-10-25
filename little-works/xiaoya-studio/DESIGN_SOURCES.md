@@ -9,3 +9,6 @@ Apple 版：Apple Web Design OS / Apple Hybrid，克制系统表面 + 磨砂导�
 Skill 版：Taste-Skill（design-taste-frontend app screens，2026-10-25 draw：Editorial greeting，workspace）+ Designeer 设计资源工作流，编辑式问候、任务优先、浅绿纸面与树芽身份、非装饰性标注。未复制第三方版权图像和源代码。
 
 测试说明：浏览器测试、截图、原有代码语法校验和残余问题在仓库根目录的 QA 文档记录。实验版不是比赛提交原版。
+
+## V2 architecture redesign
+Fresh Taste-Skill app draw: creator / Accent ladder / seed 1426137759. Editorial two-line serif header, narrow icon rail, task-first planner grid and compact contextual actions. Real task and schedule content reused; empty-state and AI authorization retained. Files: redesign.js + redesign.css. Previous deficiency: decorative welcome card and identical card structure.
