@@ -1,0 +1,19 @@
+/* Touch stability and information hierarchy. No animated resizing of controls. */
+.below{grid-template-columns:minmax(0,1fr)}
+.month small,.brand small,.sidefoot{display:none!important}
+.shixu-dock__item,.shixu-dock__new{
+ transform:none!important;scale:1!important;touch-action:manipulation;
+ -webkit-tap-highlight-color:transparent;transition:background-color .18s,opacity .18s,box-shadow .18s!important;
+}
+.shixu-dock__item:active{background:#ffffff55}
+.shixu-dock__new:active{filter:brightness(.94)}
+.shixu-dock__rim{touch-action:pan-y;overflow:clip;isolation:isolate}
+.shixu-dock .lg-lens-shadow{pointer-events:none}
+button{touch-action:manipulation}
+@media(max-width:750px){
+ .top h1{font-size:clamp(26px,7vw,30px);font-weight:650;letter-spacing:-.75px}
+ .brand{font-weight:650}
+ .calheader .month{font-size:19px}
+ .shixu-dock::before{opacity:.4}
+}
+@media(prefers-reduced-motion:reduce){.shixu-dock__item,.shixu-dock__new{transition:none!important}}

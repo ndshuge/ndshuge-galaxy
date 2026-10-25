@@ -1,6 +1,6 @@
 /* iOS-like quick actions: real interaction, not a screenshot or decorative overlay. */
 import "./components.js";
-import {createSpring} from "./liquid-glass.js";
+// lg-dock itself handles optical feedback; individual buttons never resize.
 const dock=document.createElement("nav");
 dock.className="shixu-dock";
 dock.setAttribute("aria-label","日历快捷操作");
@@ -16,15 +16,7 @@ dock.innerHTML=`<lg-dock class="shixu-dock__rim" radius="30" refraction="17" bez
   </button>
 </lg-dock>`;
 document.body.append(dock);
-const reduced=matchMedia("(prefers-reduced-motion: reduce)");
-function tapSpring(el){
- if(reduced.matches)return;
- const spring=createSpring(0,value=>{el.style.transform=`scale(${1+value})`},{stiffness:480,damping:29});
- el.addEventListener("pointerdown",()=>spring.set(-0.065));
- const release=()=>spring.set(0);
- ["pointerup","pointercancel","pointerleave"].forEach(event=>el.addEventListener(event,release));
-}
-for(const btn of dock.querySelectorAll("button"))tapSpring(btn);
+// Stable 44px+ hit targets: no transform/scale on a tappable element.
 const press=id=>document.getElementById(id)?.click();
 dock.querySelector("#dockToday").addEventListener("click",()=>press("today"));
 dock.querySelector("#dockCreate").addEventListener("click",()=>press("add"));
@@ -41,15 +33,4 @@ dock.querySelector("#dockView").addEventListener("click",()=>{
 });
 ["monthMode","weekMode"].forEach(id=>document.getElementById(id)?.addEventListener("click",()=>requestAnimationFrame(update)));
 update();
-// The upstream Dock hides its lens entirely at rest. Keep a restrained optical
-// presence for touch-first devices; pointer and keyboard interaction still
-// increase it naturally. Do not simulate refraction with an idle CSS blur.
-customElements.whenDefined("lg-dock").then(()=>{
- const glass=dock.querySelector("lg-dock");
- if(!glass?.ps || matchMedia("(prefers-reduced-transparency: reduce)").matches)return;
- const bounds=glass.items?.getBoundingClientRect();
- if(bounds?.width)glass.xs.set(bounds.width*.49,{immediate:true});
- glass.ps.set(.34,{immediate:reduced.matches});
- glass.addEventListener("pointerleave",()=>glass.ps.set(.34));
- glass.addEventListener("focusout",()=>requestAnimationFrame(()=>{if(!glass.contains(document.activeElement))glass.ps.set(.34)}));
-});
+// Optical lens appears only on actual interaction; never a drifting idle bubble.

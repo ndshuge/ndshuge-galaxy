@@ -46,7 +46,7 @@ async function checkViewport(w,h){
  if(w<=390){
    assert.equal(await evaluate("getComputedStyle(document.querySelector('.shixu-dock')).display"),"block","mobile glass dock absent");
    assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.surface&&!!d?.lens&&typeof d?.xs?.set==='function'})()"),true,"installed optical Dock component not initialized");
-   if(w===390) assert.equal(await evaluate("(()=>{if(matchMedia('(prefers-reduced-transparency: reduce)').matches)return true;const d=document.querySelector('.shixu-dock lg-dock');return d?.presence>=0.2 && !!d?.lens && d?.lens.opts?.hidden!==true})()"),true,"touch-first Dock lens is invisible at rest");
+   if(w===390) assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.lens && d.presence<0.02 && getComputedStyle(document.querySelector('#dockToday')).transform==='none'})()"),true,"Dock must not show an idle bubble or scale interactive buttons");
    await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');const r=d.getBoundingClientRect();d.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,clientX:r.left+r.width/2,clientY:r.top+r.height/2}));})()");
    await sleep(160);
    assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d?.presence>0.02&&d?.lens!==null})()"),true,"optical Dock spring did not respond to pointer");
