@@ -1,5 +1,15 @@
 # 时序 · Skill 应用与验收
 
+## 2026-10-25 iOS system-material refinement
+- User references: iOS App Library dark translucent folder tiles and iOS 27-style Wi-Fi Settings light elevated grouped sheet. Studied reference images directly; **not** copy-pasting a static screenshot or using generated imagery. Adapted the layering to a usable monthly calendar.
+- Implemented mobile and desktop `ios-finish.css`: system-like text scale and spacing, softer screen-wide diffused backgrounds, double-highlight material edges, clear rounded day controls, rounded bottom-sheet event editor, dark App-Library-inspired glass atmosphere.
+- Added a persistent light/dark appearance toggle and a nonpersisting `?appearance=dark` screenshot-preview selector; reduced transparency/motion remain supported. Spring-based press feedback, modal entrance, date selection, view transitions and native optical segmented control stay functional.
+- Iteration evidence: reviewed actual Edge captures `qa-ios-{320,390,1440}.png`, `qa-dark2-390.png`, and actual dialog screenshot `qa-modal-390.png`. Found bold day typography and a visible dialog scrollbar; reduced weight, locked background scroll when modal is open, removed scrollbar and **inspected again**. Kept visible content readable rather than placing high refraction across every cell.
+- `quality-check.cjs` verifies four responsive sizes, creation/edit/delete persistence behaviors, actual SVG refractive filter, original lens demo, theme-toggle behavior and sheet scroll lock; run before delivery. Human preference and native iOS Safari fidelity still need external approval/testing.
+- Design assessment: stronger system-inspired look, not pixel-for-pixel Apple native rendering, not a claim that CSS material alone is genuinely refractive. The true optical implementation remains in bundled `lg-segmented` and the `glass-lab.html` demo.
+
+
+
 Scope: original calendar in Little Works, updated after `cbb44f4`. User brief: Apple-esque typography/material, **real** Liquid Glass and spring-like interaction; calendar features preserved. One real example, not a universal Apple equivalence claim.
 
 | Skill | Distinct method | Action in source | Evidence |

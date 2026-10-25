@@ -1,0 +1,103 @@
+/* iOS-inspired finish. Controls use the bundled refractive optics; sheets rely on
+   live backdrop and legibility rather than claiming a native iOS compositor. */
+:root{color-scheme:light;--ios-ink:#1b1b24;--ios-muted:#747681;--ios-accent:#625af0;--ios-sheet:rgba(255,255,255,.79);--ios-stroke:rgba(255,255,255,.86);--ios-shadow:0 24px 64px rgba(39,36,67,.095)}
+html{background:#ededf2}
+body{color:var(--ios-ink);background:radial-gradient(ellipse 50% 45% at 105% 5%,#dfd8f7a6,transparent 75%),radial-gradient(ellipse 46% 43% at -10% 90%,#cbd7eeb2,transparent 80%),#eeedf3;position:relative;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif}
+body:before{content:"";position:fixed;z-index:-1;pointer-events:none;inset:-22%;background:radial-gradient(ellipse 19% 23% at 23% 79%,#a0a5cd60,transparent),radial-gradient(ellipse 25% 23% at 85% 26%,#a994e85a,transparent);filter:blur(65px)}
+.app{max-width:1440px;grid-template-columns:235px minmax(0,1fr);gap:26px;margin:26px auto;padding:0 24px}
+.glass{background:var(--ios-sheet);border:1px solid var(--ios-stroke);box-shadow:var(--ios-shadow),inset 0 1px 0 #ffffffba;backdrop-filter:blur(32px) saturate(1.55);-webkit-backdrop-filter:blur(32px) saturate(1.55)}
+.sidebar{border-radius:33px;min-height:720px;padding:25px 16px}
+.brand{font-size:22px;font-weight:720;letter-spacing:-.8px;color:var(--ios-ink);margin-bottom:45px}
+.logo{width:39px;height:39px;border-radius:14px;background:#ffffff7c;box-shadow:inset 0 1px #fff,0 7px 20px #6e65cf25;font-weight:500}
+.brand small{color:var(--ios-muted)}
+.side-label,.sidefoot{color:var(--ios-muted);font-size:12px;letter-spacing:0}
+.nav button{color:var(--ios-muted);border-radius:16px;padding:13px 15px;font-weight:570}
+.nav button.active{background:#fffaff;color:#6259d5;box-shadow:0 5px 14px #4843710e}
+.mini-title,.mini-grid button{color:var(--ios-ink)}
+.top{align-items:center;gap:16px;margin:15px 4px 28px}
+.subtitle{font-size:13px;letter-spacing:0;color:var(--ios-muted);font-weight:520}
+.top h1{font-size:clamp(34px,3vw,43px);letter-spacing:-1.7px;font-weight:730;color:var(--ios-ink)}
+.btn{border-radius:17px;border:1px solid #ffffffb5;background:#fff9;box-shadow:inset 0 1px #fff,0 8px 24px #56516a10;color:var(--ios-ink);font-weight:570;min-height:45px}
+.btn:hover{background:#fff;box-shadow:0 12px 24px #56516a19}
+.btn.primary,.actions .primary{border-color:#b3a8ffb0;background:linear-gradient(135deg,#8d84ff,#6156df);color:#fff;box-shadow:0 10px 22px #6156df38;font-weight:620}
+.btn.square{border-radius:50%;height:44px;width:44px;font-size:24px}
+.calendar{background:linear-gradient(145deg,#ffffffda,#ffffffb9);border-radius:34px;box-shadow:0 25px 70px #3f486217,inset 0 1px #fff}
+.calheader{padding:27px 26px 16px}
+.month{font-size:24px;color:var(--ios-ink);font-weight:730}
+.month small{font-size:12px}
+.weekdays span{font-size:12px;color:var(--ios-muted);font-weight:540}
+.grid{grid-auto-rows:minmax(82px,1fr)}
+.day{border-color:#636b8a0f}
+.day:hover{background:#ffffff80}
+.day.selected{background:linear-gradient(150deg,#eae8ff99,#e9ecff4d)}
+.day .number{font-size:14px;color:var(--ios-ink);font-weight:480}
+.day.outside .number{color:#8c8f9a}
+.day.today .number{background:linear-gradient(135deg,#8880ff,#6154e7);box-shadow:0 5px 15px #6e64d848}
+.panel{border-radius:30px}
+.panelhead b{font-size:17px;color:var(--ios-ink)}
+.panelhead span,.quote p{color:var(--ios-muted)}
+.quote strong{font-size:18px;color:#554aab}
+lg-segmented.segment{background:#e8e7ef;padding:4px;border-radius:16px;--lg-surface:#ffffff;--lg-indicator:#fff;--lg-accent:#615bd7;--lg-track:#e7e7ef}
+lg-segmented.segment > button{color:#777a86;min-height:34px}
+lg-segmented.segment > button[aria-checked=true]{color:#3d3674;font-weight:700}
+lg-segmented.segment .lg-lens-shadow{opacity:.75}
+#themeToggle{font-size:17px;display:grid;place-items:center;width:45px;height:45px;padding:0;flex:none;border-radius:50%;font-family:inherit}
+.overlay{backdrop-filter:blur(16px) saturate(.86);-webkit-backdrop-filter:blur(16px) saturate(.86);background:#29263950}
+.modal{background:#f4f4f8f2;color:#212129;border-radius:37px;border:1px solid #fffd;box-shadow:0 40px 120px #14112242,inset 0 1px #fff;padding:32px}
+.modal h2{font-size:26px;font-weight:760;letter-spacing:-.7px}
+.modal label{font-weight:580;color:#555664}
+.modal input,.modal select{background:#fff;border-radius:14px;border:1px solid #e3e3ea;min-height:45px;font-size:16px}
+.modal .btn{background:#fff}
+.modal .primary{background:#7469ec;color:#fff}
+.toast{border-radius:20px;backdrop-filter:blur(24px)}
+html.sheet-open,html.sheet-open body{overflow:hidden!important}
+.modal{scrollbar-width:none}
+.modal::-webkit-scrollbar{width:0;display:none}
+@media(max-width:750px){
+ html{background:#f0eff3}
+ body:before{inset:-30%;filter:blur(42px)}
+ .app{padding:0 11px;margin:12px auto;gap:0}
+ .sidebar{border-radius:25px;padding:11px 14px;min-height:0;margin-bottom:25px;background:#ffffff96}
+ .brand{font-size:19px;letter-spacing:-.6px}
+ .top{display:block;margin:0 3px 22px;position:relative}
+ .top h1{font-size:clamp(26px,7.2vw,32px);letter-spacing:-1.15px;line-height:1.17}
+ .top>div:first-child{padding-right:48px}
+ .actions{display:flex;width:100%;margin-top:17px;justify-content:space-between;gap:9px}
+ .actions #today{margin-right:auto}
+ .actions #prev,.actions #next{width:44px;flex:none}
+ .actions #add{font-size:13px;height:44px;white-space:nowrap;min-width:102px}
+ #themeToggle{position:absolute;top:0;right:0;height:40px;width:40px;min-height:40px}
+ .calendar{border-radius:27px;min-height:0}
+ .calheader{padding:20px 16px 12px}
+ .month{font-size:21px}
+ .weekdays{padding:0 5px}
+ .weekdays span{text-align:center;padding:11px 1px 14px;font-size:11px}
+ .grid{grid-auto-rows:minmax(68px,1fr);padding:0 5px 10px}
+ .day{min-height:68px;padding:7px 2px 4px}
+ .number{margin:auto}
+ .day .number{font-size:13px}
+ .panel{border-radius:25px}
+ .overlay.open{align-items:flex-end;padding:0;background:#27243a49}
+ .modal{width:100%;max-height:min(91dvh,860px);overflow:auto;border-radius:38px 38px 0 0;padding:28px 23px max(26px,env(safe-area-inset-bottom));margin:0;border-bottom:0;background:#f2f2f8f5;transform-origin:bottom center}
+ .modal:before{content:"";display:block;width:39px;height:5px;background:#c7c7d0;border-radius:9px;margin:-13px auto 20px}
+}
+@media(max-width:360px){.top>div:first-child{width:auto}.actions{width:100%}.actions .btn{font-size:12px}.actions #add{min-width:96px}.top h1{font-size:25px}.sidebar{padding:10px}.grid{grid-auto-rows:minmax(61px,1fr)}.day{min-height:61px}}
+/* Dark App Library mood: smoky lenses over luminous blurred scenery. */
+body[data-theme=dark]{color-scheme:dark;--ios-ink:#f7f5ff;--ios-muted:#c4bfcc;--ios-sheet:#292631a4;--ios-stroke:#ffffff26;--ios-shadow:0 25px 80px #0005;background:radial-gradient(ellipse 30% 30% at 26% 88%,#8f57785b,transparent 85%),radial-gradient(ellipse 40% 45% at 90% 25%,#343875b0,transparent 80%),radial-gradient(ellipse 70% 80% at 50% 105%,#435f9866,transparent 80%),#08080e}
+body[data-theme=dark]:before{background:radial-gradient(ellipse 24% 24% at 50% 74%,#d0a0b24d,transparent),radial-gradient(ellipse 20% 28% at 20% 36%,#716cba55,transparent);filter:blur(48px)}
+body[data-theme=dark] .glass{background:linear-gradient(148deg,#ffffff1c,#ffffff0b 80%);border-color:#ffffff32;box-shadow:0 24px 75px #0004,inset 0 1px #ffffff42;backdrop-filter:blur(42px) saturate(1.35);-webkit-backdrop-filter:blur(42px) saturate(1.35)}
+body[data-theme=dark] .calendar{background:linear-gradient(148deg,#45414c9e,#20212d9e);border-color:#ffffff34}
+body[data-theme=dark] .nav button.active,body[data-theme=dark] .btn:not(.primary){background:#ffffff25;color:#fff;border-color:#ffffff3b}
+body[data-theme=dark] .day.selected{background:#aba2fc27}
+body[data-theme=dark] .day:hover{background:#fff2}
+body[data-theme=dark] .day{border-color:#ffffff16}
+body[data-theme=dark] .day.outside .number{color:#aba7b5}
+body[data-theme=dark] .logo{background:#ffffff21}
+body[data-theme=dark] .quote strong{color:#e6ddff}
+body[data-theme=dark] lg-segmented.segment{background:#ffffff24;--lg-surface:#44414f;--lg-track:#4b4956;--lg-accent:#f2eaff}
+body[data-theme=dark] lg-segmented.segment>button{color:#e0dce6}
+body[data-theme=dark] lg-segmented.segment>button[aria-checked=true]{color:#fff}
+body[data-theme=dark] .modal{background:#f4f3f8f4;color:#24232a}
+body[data-theme=dark] .modal label{color:#474653}
+@media(prefers-reduced-motion:reduce){body:before{animation:none!important}}
+@media(prefers-reduced-transparency:reduce){body[data-theme=dark] .glass{background:#272632;backdrop-filter:none!important}}

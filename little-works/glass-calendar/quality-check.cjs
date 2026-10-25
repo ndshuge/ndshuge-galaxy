@@ -41,6 +41,8 @@ async function checkViewport(w,h){
  await evaluate("document.querySelector('#monthMode').click()");
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),42,"month mode failed");
  await evaluate("document.querySelector('#add').click()");
+ assert.equal(await evaluate("document.documentElement.classList.contains(\u0027sheet-open\u0027)"),true,"sheet must lock background scroll");
+ if(w===390){await sleep(450);const snap=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-modal-390.png"),Buffer.from(snap.data,"base64"));}
  assert.equal(await evaluate("document.querySelector('#overlay').classList.contains('open')"),true,"modal didn't open");
  await evaluate("(()=>{document.querySelector('#name').value='日历回归测试';document.querySelector('#date').value='2026-10-25';document.querySelector('#time').value='12:30';document.querySelector('#form').requestSubmit()})()");
  assert.equal(await evaluate("document.querySelectorAll('#agendas .agenda').length"),1,"create failed");
@@ -48,6 +50,10 @@ async function checkViewport(w,h){
  assert.equal(await evaluate("document.querySelector('#formTitle').textContent"),"编辑日程","edit failed");
  await evaluate("document.querySelector('#remove').click()");
  assert.equal(await evaluate("document.querySelectorAll('#agendas .agenda').length"),0,"delete failed");
+ await evaluate("document.querySelector(\u0027#themeToggle\u0027).click()");
+ assert.equal(await evaluate("document.body.dataset.theme"),"dark","dark theme failed");
+ await evaluate("document.querySelector(\u0027#themeToggle\u0027).click()");
+ assert.equal(await evaluate("document.body.dataset.theme"),"light","light theme failed");
  return state;
 }
 (async()=>{
