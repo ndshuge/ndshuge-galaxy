@@ -1,0 +1,32 @@
+name: Saturn Atlas evidence and source checks
+on:
+  push:
+    paths:
+      - "little-works/catalog.json"
+      - "little-works/saturn-atlas/**"
+      - ".github/workflows/saturn-atlas-check.yml"
+  pull_request:
+    paths:
+      - "little-works/catalog.json"
+      - "little-works/saturn-atlas/**"
+      - ".github/workflows/saturn-atlas-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-saturn-exhibit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax
+        run: node --check little-works/saturn-atlas/app.js
+      - name: Asset, science source, interactivity and design evidence
+        run: node little-works/saturn-atlas/check.cjs

@@ -1,0 +1,100 @@
+@charset "UTF-8";
+/* SHUGE COSMOS / plate 006 | astronomy as an archival observation plate.
+   Taste: page-is-the-object / Designeer: editorial section rhythm, restrained typography.
+   NASA photography is scientific source imagery; the ring instrument is explicitly a schematic. */
+:root{--night:#080d12;--night2:#12191d;--paper:#e9e5da;--ink:#18201e;--dim:#83908c;--chalk:#f3efe3;--gold:#dab78b;--mint:#a9bcae;--line:rgba(231,224,207,.21)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--night);color:var(--chalk);font:400 15px/1.65 "Helvetica Neue","PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:5px}.skip{position:absolute;left:12px;top:-90px;background:white;color:black;padding:10px;z-index:999}.skip:focus{top:10px}
+.site-header{height:76px;padding:0 clamp(24px,4.2vw,80px);display:flex;align-items:center;justify-content:space-between;gap:25px;border-bottom:1px solid #ffffff20;background:var(--night);position:relative;z-index:3}
+.home-link{text-decoration:none;font-size:12px;letter-spacing:.1em;color:#d9e2dc;white-space:nowrap;display:flex;gap:12px;align-items:center}.emblem{font-size:24px;color:#c0a17b;font-weight:300}.slash{color:#75837f}.header-index{font:10px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.19em;color:#81918a}.header-return{text-decoration:none;border-bottom:1px solid #b6a58b;color:#e4d4bc;font-size:12px;white-space:nowrap;padding-bottom:4px}.header-return span{font-size:16px}
+.opening{min-height:min(940px,calc(100svh - 76px));min-height:max(750px,calc(100svh - 76px));position:relative;overflow:hidden;display:flex;flex-direction:column;isolation:isolate;background:#030507}
+.opening-visual{position:absolute;inset:0;z-index:-2;overflow:hidden;background:#030507}
+.opening-visual img{position:absolute;width:113%;max-width:none;height:100%;object-fit:contain;object-position:70% 35%;left:5%;top:0;filter:contrast(1.13) saturate(.82);transform:scale(1.03)}
+.opening-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,7,10,.98) 0%,rgba(4,8,12,.78) 22%,rgba(4,8,12,.25) 55%,rgba(5,7,9,.15) 100%),linear-gradient(0deg,rgba(4,8,12,.92),transparent 23%,transparent 65%,rgba(4,8,12,.3))}
+.opening-top{padding:31px clamp(24px,4.2vw,80px) 0;display:flex;justify-content:space-between;color:#c6c9bd;font:10px/1.4 ui-monospace,Consolas,monospace;letter-spacing:.16em}
+.opening-text{margin:auto 0 11vh;padding:25px clamp(24px,8vw,153px) 0;max-width:950px;position:relative}
+.eyeline{display:flex;align-items:center;gap:17px;color:#dbb992;letter-spacing:.19em;font:11px ui-monospace,Consolas,monospace}.eyeline-rule{width:44px;height:1px;background:#b79c76}
+.opening h1{font:400 clamp(96px,11.3vw,208px)/.91 "Songti SC","STSong","SimSun",serif;letter-spacing:-.1em;margin:32px 0 30px;color:#eee8d9;text-wrap:balance}
+.opening h1 em{font-style:normal;letter-spacing:-.09em}.stop{color:#c6a37b}
+.opening-text>p{font-size:clamp(14px,1.2vw,18px);line-height:2;letter-spacing:.035em;color:#cbc8bd;max-width:480px;margin:0 0 33px}
+.discover{display:inline-flex;align-items:center;justify-content:space-between;gap:90px;padding:15px 16px 15px 0;border-top:1px solid #bba58a;border-bottom:1px solid #bba58a;text-decoration:none;color:#e4d0ad;min-width:230px;font-size:13px;transition:gap .25s}.discover:hover{gap:110px}.discover-arrow{font-size:21px}
+.opening-side{position:absolute;right:35px;top:27%;height:250px;writing-mode:vertical-rl;display:flex;justify-content:space-between;color:#b6b9b3;font:10px ui-monospace,Consolas,monospace;letter-spacing:.18em}
+.opening-credit{padding:18px clamp(24px,4.2vw,80px) 25px;display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);font-size:11px;letter-spacing:.06em;color:#969f99}
+.section-light{background:var(--paper);color:var(--ink)}
+.story{padding:clamp(70px,9vw,136px) clamp(24px,8vw,145px) 62px}
+.section-nr{font:500 16px ui-monospace,Consolas,monospace;letter-spacing:.05em;color:#b88554}.section-nr span{font-size:11px;letter-spacing:.14em;color:#747871}
+.story-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:min(10vw,170px);margin:60px 0 85px;align-items:end}
+.mini-label{font:12px ui-monospace,Consolas,monospace;letter-spacing:.18em;color:#9d7147;margin:0 0 28px}
+.story-title h2{font:400 clamp(44px,5.7vw,88px)/1.31 "Songti SC","STSong","SimSun",serif;letter-spacing:-.07em;margin:0}
+.story-title h2 i,.light h2 i{font-weight:400;color:#77847d;font-style:normal}
+.story-copy{font-size:16px;line-height:2.06;color:#4a514a;max-width:420px;padding-bottom:9px}
+.story-copy p{margin:0 0 22px}.source-link{color:#333e3a;text-underline-offset:7px;font-size:13px;display:inline-block;margin-top:11px}
+.facts-band{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #7f8b8066;padding:40px 0 21px;gap:55px}
+.facts-band>div{display:flex;flex-direction:column;gap:6px}.fact-no{font:400 clamp(47px,6vw,85px)/1.02 "Helvetica Neue",Arial,sans-serif;letter-spacing:-.055em}.fact-no small{font:400 19px/1 system-ui,sans-serif;letter-spacing:0;margin-left:8px;color:#626f63}.fact-lbl{font-size:13px;color:#5a635a;letter-spacing:.03em}
+.fact-disclaimer{margin:15px 0 0;color:#697168;font-size:12px}
+.lab{padding:clamp(72px,8vw,125px) clamp(24px,8vw,145px) clamp(85px,9vw,150px);background:#12191c}
+.lab .section-nr{display:block;margin-bottom:65px}
+.lab-headline{display:flex;align-items:flex-end;justify-content:space-between;gap:75px;margin-bottom:66px}
+.lab-headline h2{font:400 clamp(54px,6.2vw,94px)/1.2 "Songti SC","STSong","SimSun",serif;margin:0;letter-spacing:-.065em}.lab-headline h2 em{color:#c9a983;font-style:normal}
+.lab-headline>p{font-size:15px;line-height:2;color:#a5b4af;max-width:360px;margin:0 0 12px}
+.lab .mini-label{color:#c9a983}
+.experiment{display:grid;grid-template-columns:minmax(0,1.27fr) minmax(320px,.73fr);min-height:560px;gap:0;background:#080e11;border:1px solid #d1bd9633}
+.instrument{position:relative;display:flex;flex-direction:column;min-height:560px;overflow:hidden;border-right:1px solid #c0c7b21c;background:radial-gradient(ellipse at 50% 55%,#1d292b 0%,#070d11 73%)}
+.instrument:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(#ffffff09 1px,transparent 1px),linear-gradient(90deg,#ffffff09 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(90deg,transparent,#0009,transparent)}
+.instrument-top,.instrument-bottom{position:relative;z-index:1;display:flex;justify-content:space-between;padding:29px 30px;font:10px ui-monospace,Consolas,monospace;color:#a5b7b1;letter-spacing:.14em;gap:16px}
+.instrument-bottom{margin-top:auto;color:#82958e}.instrument-live{color:#d3b185}.instrument-live i{display:inline-block;width:5px;height:5px;border-radius:50%;background:#c2a17d;vertical-align:middle;margin-right:5px}
+#ringCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
+.crosshair{position:absolute;color:#80978c;font:20px Consolas,monospace;opacity:.6}.top-left{left:20px;top:80px}.bottom-right{right:20px;bottom:80px}
+.experiment-controls{padding:clamp(36px,4vw,70px) clamp(28px,3.5vw,66px);display:flex;flex-direction:column;justify-content:center}
+.control-index{font:10px ui-monospace,Consolas,monospace;letter-spacing:.17em;color:#d3ac83}
+.experiment-controls h3{font:400 clamp(28px,2.9vw,45px)/1.38 "Songti SC","STSong","SimSun",serif;margin:25px 0 64px;letter-spacing:-.04em}
+.angle-line{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:#aab9b4}.angle-line strong{font:300 60px/1 "Helvetica Neue",sans-serif;letter-spacing:-.045em;color:#f2e4ce}
+#angleSlider{width:100%;margin:26px 0 11px;appearance:none;background:transparent;cursor:grab;touch-action:pan-y}#angleSlider:active{cursor:grabbing}#angleSlider::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg,#d4b98f 0 30%,#59615a 30%)}#angleSlider::-moz-range-track{height:2px;background:#7e8577}#angleSlider::-webkit-slider-thumb{appearance:none;border:2px solid #1e2627;background:#e1c399;width:19px;height:19px;border-radius:50%;margin-top:-8px;box-shadow:0 0 0 1px #e1c399}
+#angleSlider::-moz-range-thumb{background:#e1c399;border:2px solid #1e2627;width:17px;height:17px;border-radius:50%}
+.range-ends{display:flex;justify-content:space-between;color:#889a91;font-size:11px}.experiment-note{min-height:64px;color:#d0cdc2;font-size:14px;line-height:1.75;margin-top:38px}.preset-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.preset-row button{color:#b1c0b9;background:transparent;border:1px solid #a1b7a03c;border-radius:0;padding:8px 12px;font-size:11px;transition:background .2s}.preset-row button:hover,.preset-row button.is-active{background:#d5be9730;color:#e5c9a1;border-color:#c9a983}
+.diagram-caveat{color:#788b84;font-size:11px;line-height:1.75;border-top:1px solid #ffffff17;margin:37px 0 0;padding-top:17px}.diagram-caveat b{font-weight:500;color:#a4b4ad}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.light{padding:clamp(75px,9vw,135px) clamp(24px,8vw,145px) 0}
+.light .section-nr{display:block;margin-bottom:70px}
+.light-grid{display:grid;grid-template-columns:1fr 1fr;gap:min(11vw,170px);align-items:start}
+.light h2{font:400 clamp(47px,5.6vw,90px)/1.26 "Songti SC","STSong","SimSun",serif;letter-spacing:-.07em;margin:0}
+.light-copy{margin-top:44px;font-size:15px;line-height:2.05;color:#505d53;max-width:420px}
+.light-right{padding:30px 0 60px}.signal-head{display:flex;justify-content:space-between;gap:20px;font:11px ui-monospace,Consolas,monospace;letter-spacing:.1em;color:#677469}
+.big-time{font:300 clamp(87px,10vw,155px)/1.24 "Helvetica Neue",Arial,sans-serif;letter-spacing:-.065em;color:#182220;white-space:nowrap}.big-time span{font:400 24px "Songti SC",serif;letter-spacing:0;margin-left:8px}
+.signal-rail{display:flex;align-items:center;gap:16px;margin-top:20px;color:#b98b57}.signal-sun{font-size:31px;line-height:1}.signal-dot{font-size:28px;line-height:1;color:#4a6259}
+.signal-track{height:2px;background:#a7aea0;flex:1;position:relative}.signal-progress{height:100%;width:78%;background:#a97e50;position:relative;transition:width .6s cubic-bezier(.22,1,.36,1)}.signal-pulse{position:absolute;right:0;top:-4px;background:#c4a179;height:10px;width:10px;border-radius:50%;box-shadow:0 0 0 6px #ba91664a}
+.signal-ends{display:flex;justify-content:space-between;margin:12px 0 35px;font-size:12px;color:#657367}
+.destination{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.destination button{border:1px solid #adb3a6;padding:12px 5px;background:transparent;color:#566258;border-radius:0;font-size:13px;min-height:46px;transition:background .15s}
+.destination button:hover{background:#dadacc}.destination button.is-active{background:#222e2a;color:#f0ebe0;border-color:#222e2a}
+.signal-desc{font-size:12px;line-height:1.8;color:#617065;margin-top:17px;min-height:45px}
+.outro{margin:135px 0 0;padding:42px 0 85px;border-top:1px solid #888e81;display:flex;justify-content:space-between;gap:30px;font:400 clamp(22px,3vw,42px)/1.5 "Songti SC",serif;letter-spacing:-.03em}
+.outro>div:last-child{color:#81887e}
+.site-footer{background:var(--night);padding:38px clamp(24px,8vw,145px);display:flex;align-items:center;justify-content:space-between;gap:22px;color:#a0aca5;font-size:11px}
+.site-footer b{font-weight:400;color:#657a70;margin-left:15px}.site-footer div{display:flex;gap:20px}.site-footer a{text-underline-offset:4px}
+@media(max-width:1200px){.opening-text{padding-left:7vw}.opening h1{font-size:clamp(98px,12vw,175px)}.story-grid{gap:65px}.experiment-controls{padding:38px}.experiment-controls h3{margin-bottom:45px}}
+@media(max-width:860px){.header-index{display:none}.opening{min-height:780px}.opening-visual img{width:180%;left:-20%;object-position:50%}.opening-shade{background:linear-gradient(90deg,#05090bd9,transparent 90%),linear-gradient(0deg,#05090bf2,transparent 60%)}.opening-text{padding-left:8vw}.opening h1{font-size:clamp(100px,15vw,150px)}.story-grid,.light-grid{grid-template-columns:1fr;gap:36px}.story-title h2{font-size:clamp(53px,8vw,80px)}.story-copy{max-width:670px}.facts-band{gap:20px}.lab-headline{align-items:start;flex-direction:column;gap:24px}.lab-headline>p{max-width:650px}.experiment{grid-template-columns:1fr}.instrument{height:550px;min-height:550px;border-right:0;border-bottom:1px solid #c0c7b11c}.experiment-controls{padding:42px 38px}.experiment-controls h3{margin:18px 0 40px}.light-right{padding-top:10px}.site-footer{flex-wrap:wrap}}
+@media(max-width:580px){.site-header{height:65px;padding:0 20px}.emblem{font-size:19px}.home-link{font-size:11px}.header-return{font-size:11px}
+.opening{min-height:790px;min-height:calc(100svh - 65px);min-height:max(690px,calc(100svh - 65px))}
+.opening-visual img{width:230%;left:-63%;height:100%;object-fit:cover;object-position:53% center;filter:contrast(1.16) saturate(.9)}
+.opening-shade{background:linear-gradient(90deg,rgba(4,8,12,.83),rgba(4,8,12,.06)),linear-gradient(0deg,#04080de8 0,transparent 55%,#04080d7f)}
+.opening-top{padding:23px 20px 0;font-size:9px}
+.opening-text{margin:auto 0 13vh;padding:15px 20px 0}.eyeline{font-size:10px;gap:13px}
+.opening h1{font-size:clamp(83px,18.6vw,116px);letter-spacing:-.095em;margin:27px 0 27px}
+.opening-text>p{font-size:14px;line-height:1.9}.discover{min-width:212px}
+.opening-side{display:none}.opening-credit{padding:14px 20px 22px;font-size:10px;flex-direction:column;gap:5px}
+.story,.lab,.light{padding-left:22px;padding-right:22px}.story{padding-top:80px;padding-bottom:65px}.section-nr{font-size:13px}.story-grid{margin:45px 0 65px;gap:25px}
+.story-title h2{font-size:clamp(41px,10.2vw,61px);line-height:1.4}.mini-label{font-size:11px;margin-bottom:19px}
+.story-copy{font-size:16px;line-height:1.95}
+.facts-band{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding-top:27px}.fact-no{font-size:clamp(37px,11vw,56px)}.fact-no small{font-size:13px;margin-left:3px}.fact-lbl{font-size:11px;line-height:1.5}.fact-disclaimer{font-size:11px;line-height:1.6}
+.lab{padding-top:79px;padding-bottom:88px}.lab .section-nr{margin-bottom:43px}.lab-headline{margin-bottom:39px}.lab-headline h2{font-size:49px}.lab-headline>p{font-size:16px}
+.instrument{height:365px;min-height:365px}.instrument-top,.instrument-bottom{padding:19px 17px;font-size:8px;letter-spacing:.03em}.crosshair{display:none}
+.experiment-controls{padding:35px 23px}.experiment-controls h3{font-size:31px;margin:18px 0 43px}
+.angle-line strong{font-size:53px}.experiment-note{margin-top:27px}.diagram-caveat{margin-top:30px}.preset-row button{padding:9px 10px;font-size:11px}
+.light{padding-top:80px}.light .section-nr{margin-bottom:55px}.light h2{font-size:clamp(47px,10.4vw,60px)}
+.light-copy{margin-top:27px;font-size:16px}.light-right{padding:0 0 35px}.big-time{font-size:clamp(91px,24vw,130px)}.big-time span{font-size:20px}
+.destination{gap:3px}.destination button{font-size:12px}.outro{margin-top:70px;padding:32px 0 70px;display:block;font-size:25px}.outro>div:last-child{margin-top:7px}
+.site-footer{padding:32px 22px;flex-direction:column;align-items:start;gap:13px;font-size:11px}.site-footer div{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.discover,.signal-progress,.destination button,.preset-row button{transition:none}}
