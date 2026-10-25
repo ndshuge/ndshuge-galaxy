@@ -1,5 +1,19 @@
 [
     {
+        "slug": "personal-homepage",
+        "title": "鼠哥 · 个人主页",
+        "date": "2026.10.25",
+        "type": "PERSONAL PORTFOLIO",
+        "description": "把好奇心做成作品。浏览真实的游戏、AI 学习工具与科学实验，切换看看鼠哥做过的东西。",
+        "url": "./personal-homepage/",
+        "cover": "./personal-homepage/cover.webp",
+        "tags": [
+            "个人主页",
+            "作品集",
+            "交互设计"
+        ]
+    },
+    {
         "slug": "xjtu-chronicle",
         "title": "向西而行 · 西安交通大学纪事",
         "date": "2026.10.25",

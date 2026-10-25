@@ -1,0 +1,32 @@
+name: Personal homepage Little Works release checks
+on:
+  push:
+    paths:
+      - "little-works/catalog.json"
+      - "little-works/personal-homepage/**"
+      - ".github/workflows/personal-homepage-check.yml"
+  pull_request:
+    paths:
+      - "little-works/catalog.json"
+      - "little-works/personal-homepage/**"
+      - ".github/workflows/personal-homepage-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-personal-homepage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify script syntax
+        run: node --check little-works/personal-homepage/app.js
+      - name: Verify portfolio catalogue, imagery, links and design evidence
+        run: node little-works/personal-homepage/check.cjs

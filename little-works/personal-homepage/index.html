@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4f0e6">
+<meta name="description" content="鼠哥的个人主页。小游戏、AI 学习工具、科学实验，以及一些从好奇心长出来的小作品。">
+<meta property="og:title" content="鼠哥 · 把好奇心做成能打开的东西">
+<meta property="og:description" content="小游戏、科学实验和 AI 工具，都能亲手打开。">
+<meta property="og:image" content="https://ndshuge.github.io/ndshuge-galaxy/little-works/personal-homepage/cover.webp">
+<title>鼠哥 · 个人主页与作品 | 小东西</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#content">跳转到内容</a>
+<header class="site-header">
+ <a href="#top" class="logo" aria-label="鼠哥个人主页，返回顶部">鼠哥<span class="logo-dot">.</span></a>
+ <nav aria-label="主页导航">
+  <a href="#work">作品</a>
+  <a href="#about">关于我</a>
+  <a href="https://github.com/ndshuge" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+ </nav>
+</header>
+<main id="content">
+ <section class="hero" id="top">
+   <div class="hero-copy">
+    <p class="hello">嗨，我是鼠哥。</p>
+    <h1>把好奇心<br>做成<span class="underline">作品</span><span class="end-dot">。</span></h1>
+    <p class="hero-lede">我在西安读大学。喜欢写代码、做游戏，也喜欢把想不明白的问题做成可以亲手试一试的小实验。</p>
+    <a class="pill-link" href="#work">看看我做了什么 <span aria-hidden="true">↗</span></a>
+   </div>
+   <div class="hero-playground">
+    <div class="hero-image-wrap">
+      <a id="heroProjectLink" class="hero-image-link" href="https://ndshuge.github.io/ndshuge-galaxy/little-works/saturn-atlas/" target="_blank" rel="noopener noreferrer" aria-label="打开环的另一边项目">
+        <img id="heroProjectImage" src="./assets/saturn-scene.webp" alt="《环的另一边》使用的 NASA 卡西尼号真实土星背光影像" width="1400" height="880" fetchpriority="high">
+        <span class="preview-overlay"><span id="heroProjectTitle">环的另一边</span><span class="preview-arrow" aria-hidden="true">↗</span></span>
+      </a>
+    </div>
+    <div class="hero-switch" role="group" aria-label="切换精选作品预览">
+      <button class="switch-button is-active" type="button" data-show="saturn" aria-pressed="true">土星实验</button>
+      <button class="switch-button" type="button" data-show="zhixu" aria-pressed="false">AI 学院</button>
+      <button class="switch-button" type="button" data-show="shanhe" aria-pressed="false">山河为证</button>
+    </div>
+    <p class="preview-caption" id="heroProjectDescription">从卡西尼号的真实影像，走进可以自己操作的土星环实验。</p>
+   </div>
+ </section>
+ <section class="work-section" id="work">
+  <div class="section-heading">
+    <h2>最近做的<br><span>一些东西。</span></h2>
+    <p>有认真研究的问题，也有单纯觉得好玩的点子。都能点开看看。</p>
+  </div>
+  <div class="work-gallery">
+   <a class="project project-wide" href="https://ndshuge.github.io/ndshuge-galaxy/little-works/saturn-atlas/" target="_blank" rel="noopener noreferrer">
+    <div class="project-image picture-dark"><img src="./assets/saturn.webp" alt="《环的另一边》真实网页截图：土星背光影像和深色观测展厅" loading="lazy" width="1400" height="880"></div>
+    <div class="project-line"><div><h3>环的另一边</h3><p>拖一拖滑块，换个角度看土星。</p></div><span aria-hidden="true" class="visit">↗</span></div>
+   </a>
+   <a class="project project-narrow" href="https://ndshuge.github.io/zhixu-ai-academy/" target="_blank" rel="noopener noreferrer">
+    <div class="project-image picture-mint"><img src="./assets/zhixu.webp" alt="知序 AI 学院真实网页截图：科学探究和前测入口" loading="lazy" width="1400" height="880"></div>
+    <div class="project-line"><div><h3>知序 AI 学院</h3><p>先预测，再实验，最后形成自己的判断。</p></div><span aria-hidden="true" class="visit">↗</span></div>
+   </a>
+   <a class="project project-narrow" href="https://ndshuge.github.io/ndshuge-game/" target="_blank" rel="noopener noreferrer">
+    <div class="project-image picture-dark"><img src="./assets/games.webp" alt="鼠哥游戏厅真实网页截图：星球式浏览器游戏选择界面" loading="lazy" width="1400" height="880"></div>
+    <div class="project-line"><div><h3>鼠哥游戏厅</h3><p>一些放进浏览器就能玩的游戏。</p></div><span aria-hidden="true" class="visit">↗</span></div>
+   </a>
+   <a class="project project-wide" href="https://ndshuge.github.io/shanhe-preview/" target="_blank" rel="noopener noreferrer">
+    <div class="project-image picture-dark"><img src="./assets/shanhe.webp" alt="《山河为证》真实网页截图：长征历史交互叙事" loading="lazy" width="1400" height="880"></div>
+    <div class="project-line"><div><h3>山河为证</h3><p>把长征路上的不同故事，重新放回地图和时间里。</p></div><span aria-hidden="true" class="visit">↗</span></div>
+   </a>
+   <a class="project project-wide" href="https://ndshuge.github.io/qingjian-weather/" target="_blank" rel="noopener noreferrer">
+    <div class="project-image picture-light"><img src="./assets/weather.webp" alt="晴间天气真实网页截图：实时天气与一周预报" loading="lazy" width="1400" height="880"></div>
+    <div class="project-line"><div><h3>晴间</h3><p>认真看天气，也认真过好今天。</p></div><span aria-hidden="true" class="visit">↗</span></div>
+   </a>
+   <a class="project project-narrow" href="https://ndshuge.github.io/ndshuge-galaxy/little-works/" target="_blank" rel="noopener noreferrer">
+    <div class="project-image picture-dark"><img src="./assets/gallery.webp" alt="鼠哥星系小作品展厅真实网页截图：创意实验合集" loading="lazy" width="1400" height="880"></div>
+    <div class="project-line"><div><h3>小作品星系</h3><p>给还没长成大项目的灵感留个地方。</p></div><span aria-hidden="true" class="visit">↗</span></div>
+   </a>
+  </div>
+ </section>
+ <section class="about-section" id="about">
+  <div class="about-text">
+    <h2>想到什么，<br>就<span>试一试。</span></h2>
+    <p>有时候，一个问题会变成小游戏。有时候，一节课会变成可以自己调参数的实验。也会有一些做了一半的东西，被我放回工作台，过几天再接着改。</p>
+    <p>这些作品不一定成熟，但都是我真实动手留下的痕迹。</p>
+  </div>
+  <div class="about-side">
+    <div class="handdrawn" aria-hidden="true">
+      <svg viewBox="0 0 280 270" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M57 200c-51-54-24-151 59-154 81-4 136 52 116 121-16 57-83 95-150 67" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+       <path d="M62 164c27-41 73-65 128-57M78 111c47 52 88 69 142 59" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+       <circle cx="78" cy="111" r="12" fill="currentColor"/><circle cx="220" cy="170" r="15" fill="currentColor"/>
+       <path d="M151 18l11-11M166 30l23-4M48 71l-28-8M234 209l26 15" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <a href="https://github.com/ndshuge" target="_blank" rel="noopener noreferrer">在 GitHub 看更多尝试 <span aria-hidden="true">↗</span></a>
+  </div>
+ </section>
+ <section class="closing" id="contact">
+   <div><p>欢迎来到我的小角落。</p><h2>下一个点子，<br>还在路上。</h2></div>
+   <a href="https://github.com/ndshuge" target="_blank" rel="noopener noreferrer">去 GitHub 找我 <span aria-hidden="true">↗</span></a>
+ </section>
+</main>
+<footer class="footer"><span>鼠哥 · ndshuge</span><span>用作品介绍自己。</span><a href="#top">回到顶部 ↑</a></footer>
+</body></html>
