@@ -101,3 +101,38 @@ body[data-theme=dark] .modal{background:#f4f3f8f4;color:#24232a}
 body[data-theme=dark] .modal label{color:#474653}
 @media(prefers-reduced-motion:reduce){body:before{animation:none!important}}
 @media(prefers-reduced-transparency:reduce){body[data-theme=dark] .glass{background:#272632;backdrop-filter:none!important}}
+
+/* Mobile uses one intentional navigation surface: remove redundant top actions.
+   Actual controls remain in DOM for accessible delegated actions and existing tests. */
+@media(max-width:750px){
+ .sidebar{margin-bottom:18px;padding:10px 14px}
+ .sidebar .nav,.sidebar .mini,.sidebar .sidefoot{display:none}
+ .sidebar .brand{margin:0;line-height:40px}
+ .top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:15px}
+ .top>div:first-child{padding-right:45px;flex:1}
+ .top h1{font-size:clamp(25px,7vw,31px)}
+ .top .actions{display:flex;margin:6px 0 0;width:100%;justify-content:flex-end;gap:12px}
+ .top .actions #today,.top .actions #add{display:none}
+ .top .actions #prev,.top .actions #next{background:#ffffffa3}
+ .calendar{margin-bottom:8px}
+}
+@media(max-width:360px){.top h1{font-size:24px}.sidebar{margin-bottom:15px}}
+/* Floating bottom optical-control dock, touch-sized and keyboard accessible. */
+.shixu-dock{display:none}
+@media(max-width:750px){
+ body{padding-bottom:105px}
+ .shixu-dock{display:block;position:fixed;z-index:15;bottom:max(16px,env(safe-area-inset-bottom));left:50%;width:min(calc(100vw - 48px),365px);transform:translateX(-50%);pointer-events:none}
+ .shixu-dock__rim{pointer-events:auto;display:flex;align-items:center;gap:5px;padding:7px 8px 7px 13px;min-height:68px;border-radius:30px;background:linear-gradient(155deg,#ffffffd6,#ece9f4a9);border:1px solid #ffffffee;box-shadow:0 19px 48px #3930533a,inset 0 1px 0 #fff;backdrop-filter:blur(35px) saturate(1.65);-webkit-backdrop-filter:blur(35px) saturate(1.65)}
+ .shixu-dock__item{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;height:51px;border:0;border-radius:20px;background:transparent;color:#575163;font-family:inherit;font-size:13px;font-weight:610;white-space:nowrap;cursor:pointer}
+ .shixu-dock__item svg,.shixu-dock__new svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none;flex:none}
+ .shixu-dock__item:hover,.shixu-dock__item:focus-visible{background:#ffffff9c;outline-offset:2px}
+ .shixu-dock__new{flex:none;width:54px;height:54px;border:1px solid #d5ceff;border-radius:21px;display:grid;place-items:center;background:linear-gradient(145deg,#9389ff,#6b5ee5);box-shadow:0 7px 18px #6d5cde44,inset 0 1px 0 #ffffff7d;color:#fff;cursor:pointer}
+ .shixu-dock__new svg{height:24px;width:24px;stroke-width:2.2}
+ .sheet-open .shixu-dock{visibility:hidden;pointer-events:none}
+ body[data-theme=dark] .shixu-dock__rim{background:linear-gradient(150deg,#393844d9,#1d1c28ba);border-color:#ffffff55;box-shadow:0 17px 60px #000a,inset 0 1px #ffffff5e}
+ body[data-theme=dark] .shixu-dock__item{color:#f6f2ff}
+ body[data-theme=dark] .shixu-dock__item:hover,body[data-theme=dark] .shixu-dock__item:focus-visible{background:#ffffff26}
+}
+@media(max-width:350px){.shixu-dock{width:calc(100vw - 28px)}.shixu-dock__item{gap:4px;font-size:12px}.sidebar{margin-bottom:8px}.top{margin-bottom:7px}.top .actions{margin-top:2px}.calheader{padding-top:15px;padding-bottom:8px}.grid{grid-auto-rows:minmax(54px,1fr)}.day{min-height:54px}}
+@media(prefers-reduced-transparency:reduce){.shixu-dock__rim{background:#f8f7fa;backdrop-filter:none;-webkit-backdrop-filter:none}body[data-theme=dark] .shixu-dock__rim{background:#282733}}
+@media(prefers-reduced-motion:reduce){.shixu-dock,.shixu-dock *{transition:none!important;animation:none!important}}

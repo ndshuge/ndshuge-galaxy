@@ -40,6 +40,16 @@ async function checkViewport(w,h){
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),7,"week mode failed");
  await evaluate("document.querySelector('#monthMode').click()");
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),42,"month mode failed");
+ if(w<=390){
+   assert.equal(await evaluate("getComputedStyle(document.querySelector('.shixu-dock')).display"),"block","mobile glass dock absent");
+   await evaluate("document.querySelector('#dockView').click()");
+   assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),7,"dock week switch failed");
+   await evaluate("document.querySelector('#dockView').click()");
+   assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),42,"dock month switch failed");
+   await evaluate("document.querySelector('#dockCreate').click()");
+   assert.equal(await evaluate("document.querySelector('#overlay').classList.contains('open')"),true,"dock create failed");
+   await evaluate("document.querySelector('#cancel').click()");
+ }
  await evaluate("document.querySelector('#add').click()");
  assert.equal(await evaluate("document.documentElement.classList.contains(\u0027sheet-open\u0027)"),true,"sheet must lock background scroll");
  if(w===390){await sleep(450);const snap=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-modal-390.png"),Buffer.from(snap.data,"base64"));}

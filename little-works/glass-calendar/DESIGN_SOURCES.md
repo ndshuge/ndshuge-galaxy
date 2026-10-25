@@ -1,5 +1,13 @@
 # 时序 · Skill 应用与验收
 
+## 2026-10-25 mobile material refinement and actual QA
+- Applied Taste workspace visual direction and system Settings / App Library reference hierarchy, retaining calendar-first content rather than generic dashboard labels.
+- Added ios-dock.js with live Today, month/week and new event controls. The buttons delegate to existing calendar events and use the installed glass Skill createSpring method. The floating material is translucent and backdrop-blurred; real SVG refraction still lives in the lg-segmented component and optics lab, not falsely claimed for the whole Dock.
+- Visually reviewed headless Edge screenshots at 390, 320, desktop and dark phone state. Found duplicate top controls and the Dock covering the selected date at 320. Removed redundant mobile navigation, compressed the narrowest grid, inspected again.
+- quality-check.cjs now exercises mobile Dock month/week transitions and event creation, preserving existing browser functional and optical checks.
+- Separately audited project discovery: xjtu-campus-3d (actively edited by Codex) was absent from the canonical registry despite FRESH index. Registered the existing checkout, added exact aliases and an README authority fallback; 14 route regressions passed. Does not prove independent cloud ChatGPT sessions automatically load local MD.
+
+
 ## 2026-10-25 iOS system-material refinement
 - User references: iOS App Library dark translucent folder tiles and iOS 27-style Wi-Fi Settings light elevated grouped sheet. Studied reference images directly; **not** copy-pasting a static screenshot or using generated imagery. Adapted the layering to a usable monthly calendar.
 - Implemented mobile and desktop `ios-finish.css`: system-like text scale and spacing, softer screen-wide diffused backgrounds, double-highlight material edges, clear rounded day controls, rounded bottom-sheet event editor, dark App-Library-inspired glass atmosphere.
