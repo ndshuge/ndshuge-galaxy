@@ -136,7 +136,7 @@
     const body = objects[name]; if (!body) return;
     time.replaceChildren(document.createTextNode(body.show+' '));
     const unit = document.createElement('span'); unit.textContent = body.unit; time.appendChild(unit);
-    target.textContent = body.name;
+    target.textContent = '太阳光抵达' + body.label + '，平均约需';
     end.textContent = body.label + ' · 抵达';
     desc.textContent = body.description;
     progress.style.width = (body.minutes / 80 * 100).toFixed(1) + '%';

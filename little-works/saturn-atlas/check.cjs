@@ -19,6 +19,9 @@ const check=[
 ['sunlight comparison is interactive',js.includes("selectWorld(name)")&&html.includes('data-world="earth"')&&html.includes('data-world="saturn"')],
 ['scientific simulation caveat visible',html.includes('非精确')||html.includes('不是精确')],
 ['Taste and Designeer evidenced',sources.includes('Taste-Skill')&&sources.includes('Designeer')&&sources.includes('page-is-the-object')],
+['visual noise removed',!/(PLATE 06|MISSION NO\.|RING PLANE SIMULATOR|OBSERVATION \/ 01|INTERACTIVE LAB|SIGNAL FROM THE SUN|THE DISTANCE|改变视线，<br>改变一颗行星)/.test(html)],
+['scientific qualification available through meaningful disclosure',html.includes('<details class="science-note">')&&html.includes('关于示意图与真实观测')&&html.includes('并非土星自转轴倾角')],
+['light travel signal phrased in primary language',html.includes('太阳光抵达土星，平均约需')&&js.includes("'太阳光抵达' + body.label")],
 ['responsiveness and reduced motion rules',css.includes('@media(max-width:580px)')&&css.includes('prefers-reduced-motion')],
 ['no external runtime JavaScript dependency',!/<script\s+[^>]*src=["']https?:/.test(html)],
 ['no secret or private key material',!/(?:github_pat_|ghp_[a-zA-Z0-9]{20,}|sk-[A-Za-z0-9]{25,}|-----BEGIN (?:RSA|OPENSSH|PRIVATE) KEY-----)/.test(html+js+css)]

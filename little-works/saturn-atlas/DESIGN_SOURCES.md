@@ -21,7 +21,7 @@
 ## 真正使用 Designeer
 
 - 实际打开两类目录： [Inspiration](https://designeer.xyz/inspiration)、[Resources](https://designeer.xyz/resources)，以及以下具体独立条目：
-- [SEESAW](https://designeer.xyz/inspiration/seesaw)（并实际查看其[原站](https://www.seesaw.website/)）→ 不使用它的模板与 UI 素材，借鉴“按具体章节归类”的内容节奏；代码 `.section-nr`、`.story-grid`、`.lab-headline`。
+- [SEESAW](https://designeer.xyz/inspiration/seesaw)（并实际查看其[原站](https://www.seesaw.website/)）→ 不使用它的模板与 UI 素材，借鉴“按具体章节归类”的内容节奏；代码 `.story-grid`、`.lab-headline`；随后用户指出重复编号/微型英文标签造成视觉噪声，本轮已删掉 `.section-nr` 实际标记，只保留内容层级。
 - [Minimal Gallery](https://designeer.xyz/inspiration/minimal-gallery) → 低噪声、照片和排版主导；借鉴为 `.opening` 极少彩色 UI 区、取消图标卡片。仅研究目录条目，不声称复制某个未确认的案例。
 - [Utopia Fluid Type](https://designeer.xyz/resources/utopia) → 适应多视口的流式字号：`.opening h1`、`.fact-no` 和移动端 `.light h2` 的 `clamp()`。
 - [Color.review](https://designeer.xyz/resources/color-review) → 深空文字使用高对比粉白色，暖纸底使用墨色；这是一种颜色验证方法论的采用，不是“安装了它的 CSS”。
@@ -40,3 +40,10 @@
 本地 Taste-Skill 页面审计器已经真实执行，退出码仍为 1：它对大号中文跨行标题、微型档案标签、摄影遮罩渐变、仪器刻度线和部分字体风格报出通用建议；其中大幅摄影与图形刻度服务天文表达。针对可读性已进行第二轮修正，将手机主要科普段落从 14px 提高到 16px。**不宣称 Taste 通用审计全面通过**，最终美术满意度还须人类评价。\n\n本地 `qa-local.cjs` 为浏览器多尺寸交互回归脚本，实际测试图片加载、Canvas 绘制、0°/42°/90° 滑块与预设、地球/木星/土星切换、无横向溢出以及 JS 错误；它留在工作副本，不随公开站点上传，因为包含本地运行环境路径。公开的 `check.cjs` 与独立 GitHub Action 执行语法、来源记录和卡片注册检查，但**并不声称可以自动评价美学**。
 
 授权说明：公开作品不采集用户数据、不需要密钥；仅包含静态内容、绘图脚本与 NASA 影像。视觉满意程度由用户最终决定。
+
+
+## 2026-10-25 · 信息减法与小字号修复
+
+来自真实用户 iPhone 截图反馈：顶部导航英语口号、章节序号、仪器标签、重复英语信息和极小的科学注释造成了明显的廉价“AI 风”。这类标签不能因“美术风格”保留。已删除开场 PLATE/MISSION、三个章节的英语序号和 eyebrow、仪器框内三组英语假状态、技术十字、光行时英语标题，替换为必要的中文解释与更清楚的层级，并在第二轮移除控制区重复的“改变视线，改变一颗行星”大标题，将空间交还给滑块和科学内容。保留摄影署名、数值单位、交互状态与必要科学限定；详细模拟限制改成用户可展开的中文解释。手机端关键文字不再缩成 8–11px 微标签。
+
+审计规则：若一段文字去掉后不影响使用者理解它是什么、是什么值、能执行什么操作或事实是否可靠，则默认删除；没有信息必要性不批准以 9–11px 角标伪装成视觉精致。图中保留的光环示意已通过 Canvas 的 aria-label 与可展开说明标记为非比例示意；不删除科学边界。

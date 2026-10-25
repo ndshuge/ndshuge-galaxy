@@ -5,9 +5,10 @@
 <meta name="theme-color" content="#070b10">
 <meta name="description" content="《环的另一边》——鼠哥星系的互动天文科普实验。透过卡西尼号的真实土星影像，探索土星环、倾角与光行时。">
 <meta property="og:title" content="环的另一边 · 土星观测室"><meta property="og:description" content="一张来自13亿公里外的照片，一次可以亲手操作的深空观测。"><meta property="og:type" content="website">
-<meta property="og:image" content="https://ndshuge.github.io/ndshuge-galaxy/little-works/saturn-atlas/cover.png">
+<meta property="og:image" content="https://ndshuge.github.io/ndshuge-galaxy/little-works/saturn-atlas/cover.webp">
 <title>环的另一边 — 土星观测室 · 鼠哥星系</title>
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">\n<link rel="stylesheet" href="./style.css">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css">
 <link rel="preload" as="image" href="./assets/nasa-saturn.webp">
 <script src="./app.js" defer></script>
 </head>
@@ -15,7 +16,7 @@
 <a href="#main" class="skip">跳转至内容</a>
 <header class="site-header" id="top">
   <a class="home-link" href="../" aria-label="返回鼠哥星系小东西"><span class="emblem" aria-hidden="true">✳</span><span>鼠哥星系<span class="slash"> / </span>小东西</span></a>
-  <span class="header-index">AN OBSERVATION FROM THE OUTER SOLAR SYSTEM</span>
+
   <a class="header-return" href="../">返回目录 <span aria-hidden="true">↗</span></a>
 </header>
 <main id="main">
@@ -24,21 +25,18 @@
       <img src="./assets/nasa-saturn.webp" alt="" fetchpriority="high">
       <div class="opening-shade"></div>
    </div>
-   <div class="opening-top"><span>深空博物志</span><span>PLATE 06&nbsp; / &nbsp;SATURN</span></div>
    <div class="opening-text">
-     <div class="eyeline"><span class="eyeline-rule"></span><span>CASSINI · JUL 19, 2013</span></div>
+     <p class="photo-date">卡西尼号 · 2013 年 7 月 19 日</p>
      <h1>环的<br><em>另一边<span class="stop">。</span></em></h1>
      <p>那一天，卡西尼号躲进土星的阴影。<br>当它回头看，地球也悄悄留在了照片里。</p>
      <a class="discover" href="#story"><span>进入观测室</span><span class="discover-arrow" aria-hidden="true">↘</span></a>
    </div>
-   <div class="opening-side"><span>MISSION NO. 001</span><span>宇宙并不遥远，只是光还在路上。</span></div>
-   <div class="opening-credit"><span>真实影像 · NASA / JPL-Caltech / SSI</span><span>由 141 张广角影像拼接而成</span></div>
+   <div class="opening-credit"><span>真实影像 · NASA / JPL-Caltech / SSI</span></div>
  </section>
 
  <section class="story section-light" id="story">
-   <div class="section-nr">01 <span>/ THE IMAGE</span></div>
    <div class="story-grid">
-     <div class="story-title"><p class="mini-label">一张照片 · 两个世界</p><h2>你看见了土星。<br><i>可土星的背后，</i><br>还有我们。</h2></div>
+     <div class="story-title"><h2>你看见了土星。<br><i>可土星的背后，</i><br>还有我们。</h2></div>
      <div class="story-copy">
        <p>2013 年 7 月 19 日，卡西尼号在土星背光的一侧，拍下这张巨幅全景。明亮的光环，来自被阳光照亮的无数冰粒。</p>
        <p>画面远处，还有一颗几乎无法辨认的小蓝点——地球。在这张照片里，地球不再是中心，只是星海中微小的一部分。</p>
@@ -55,41 +53,34 @@
 
  <section class="lab" id="lab">
    <div class="lab-header">
-      <span class="section-nr">02 <span>/ INTERACTIVE LAB</span></span>
-      <div class="lab-headline"><div><p class="mini-label">把宇宙拿在手心</p><h2>如果从侧面<br><em>看土星环？</em></h2></div>
+      <div class="lab-headline"><div><h2>如果从侧面<br><em>看土星环？</em></h2></div>
       <p>我们通常看到的是展开的椭圆光环；但当视线沿着环平面看过去，它会收成近乎一条细线。拖动滑块，亲自改变观测角度。</p></div>
    </div>
    <div class="experiment">
       <div class="instrument">
-       <div class="instrument-top"><span>RING PLANE SIMULATOR</span><span class="instrument-live"><i></i> INTERACTIVE</span></div>
        <canvas id="ringCanvas" role="img" aria-label="土星与环的二维示意图，环的外观随观测仰角滑块实时变化。此图非比例模型。"></canvas>
-       <span class="crosshair top-left" aria-hidden="true">+</span><span class="crosshair bottom-right" aria-hidden="true">+</span>
-       <span class="instrument-bottom">SCHEMATIC · NOT TO SCALE <span>VIEW FROM SPACE</span></span>
       </div>
       <div class="experiment-controls">
-        <span class="control-index">OBSERVATION / 01</span>
-        <h3>改变视线，<br>改变一颗行星。</h3>
+
         <div class="angle-line"><span>观测仰角</span><strong id="angleValue" aria-live="polite">27°</strong></div>
         <label class="sr-only" for="angleSlider">调整土星环观测仰角，从 0 度到 90 度</label>
         <input id="angleSlider" type="range" min="0" max="90" step="1" value="27">
         <div class="range-ends"><span>0° · 侧视</span><span>90° · 俯视</span></div>
         <div class="experiment-note" id="angleNote" aria-live="polite">从较低的角度看，宽阔的环面被压成狭长的椭圆。</div>
         <div class="preset-row"><button type="button" data-angle="0">完全侧视</button><button type="button" data-angle="27" class="is-active">约 27°</button><button type="button" data-angle="90">从上俯瞰</button></div>
-        <p class="diagram-caveat">这是帮助理解投影几何的交互示意，不是天体实时姿态，也不是精确的土星环纹理模型。这里的“仰角”是观测视线相对环平面的夹角，<b>并非土星自转轴倾角</b>。</p>
+        <details class="science-note"><summary>关于示意图与真实观测</summary><p>这是帮助理解投影几何的交互示意，不是天体实时姿态，也不是精确的土星环纹理模型。这里的“仰角”是观测视线相对环平面的夹角，<strong>并非土星自转轴倾角</strong>。</p></details>
       </div>
    </div>
  </section>
 
  <section class="light section-light" id="light">
-   <span class="section-nr">03 <span>/ THE DISTANCE</span></span>
    <div class="light-grid">
     <div class="light-left">
-      <p class="mini-label">光的旅行 · LIGHT TRAVEL</p>
       <h2>你看到的，<br>永远是<i>过去。</i></h2>
       <p class="light-copy">太阳发出的光，即使以每秒约 30 万公里的速度行进，也需要约 80 分钟才能抵达土星。把目的地换成其他行星，看看光要走多久。</p>
     </div>
     <div class="light-right">
-     <div class="signal-head"><span>SIGNAL FROM THE SUN</span><span id="signalTarget">SATURN</span></div>
+     <p class="signal-context" id="signalTarget">太阳光抵达土星，平均约需</p>
      <div class="big-time" id="lightTime">80 <span>分钟</span></div>
      <div class="signal-rail" aria-hidden="true"><span class="signal-sun">☼</span><div class="signal-track"><div class="signal-progress" id="signalProgress"><span class="signal-pulse"></span></div></div><span class="signal-dot" id="signalDot">◌</span></div>
      <div class="signal-ends"><span>太阳 · 出发</span><span id="signalEnd">土星 · 抵达</span></div>

@@ -98,3 +98,53 @@ a{color:inherit}button,input{font:inherit}button{cursor:pointer}button:focus-vis
 .site-footer{padding:32px 22px;flex-direction:column;align-items:start;gap:13px;font-size:11px}.site-footer div{flex-wrap:wrap}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.discover,.signal-progress,.destination button,.preset-row button{transition:none}}
+
+/* Typography V2: show the astronomy, not decorative instrumentation labels.
+   Scientific detail lives in readable inline copy or an explicit opt-in disclosure. */
+.site-header .home-link{font-size:14px;letter-spacing:0}
+.site-header .header-return{font-size:14px}
+.opening-text .photo-date{margin:0 0 19px;color:#d7b892;font-size:14px;letter-spacing:.015em}
+.opening-credit{font-size:13px;line-height:1.5;color:#b9bfb6;border-top:1px solid rgba(230,221,205,.13);padding-top:19px}
+.story{padding-top:clamp(64px,7vw,105px)}
+.story-grid{margin-top:0}
+.story-title h2{letter-spacing:-.055em}
+.fact-disclaimer{font-size:13px;line-height:1.8;color:#535d55}
+.lab{padding-top:clamp(65px,7vw,110px)}
+.lab-header .lab-headline{margin-bottom:48px}
+.instrument{isolation:isolate}
+.experiment-controls h3{margin-top:0}
+.range-ends{font-size:13px;color:#afb9ae}
+.experiment-note{font-size:16px;line-height:1.8}
+.preset-row button{font-size:13px;min-height:42px}
+.science-note{margin-top:30px;border-top:1px solid rgba(220,221,202,.23);padding-top:18px;color:#aebeb2}
+.science-note summary{cursor:pointer;font-size:14px;font-weight:500;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.science-note summary:after{content:"+";font-size:19px;color:#cfb18b;line-height:1;font-family:system-ui}
+.science-note[open] summary:after{content:"−"}
+.science-note p{font-size:14px;line-height:1.85;margin:16px 0 0;color:#b5c0b9}
+.science-note strong{color:#ead8bb;font-weight:500}
+.light{padding-top:clamp(65px,7vw,105px)}
+.light-right{padding-top:12px}
+.signal-context{font-size:17px;margin:0 0 10px;color:#3c4d42;line-height:1.6}
+.signal-ends{font-size:13px}
+.signal-desc{font-size:14px;line-height:1.85}
+.site-footer{font-size:13px;line-height:1.7}
+@media(max-width:580px){
+  .site-header .home-link{font-size:13px}
+  .site-header .header-return{font-size:13px}
+  .opening-text .photo-date{font-size:13px;margin-bottom:15px}
+  .opening-credit{font-size:12px;line-height:1.55}
+  .story{padding-top:64px}
+  .story-grid{margin-top:0}
+  .fact-disclaimer{font-size:12px}
+  .lab{padding-top:69px}
+  .lab-header .lab-headline{margin-bottom:37px}
+  .experiment-controls h3{margin-top:0}
+  .range-ends{font-size:12px}
+  .experiment-note{font-size:15px}
+  .preset-row button{font-size:12px}
+  .science-note summary{font-size:14px}
+  .light{padding-top:70px}
+  .signal-context{font-size:15px}
+  .signal-desc{font-size:13px}
+  .site-footer{font-size:12px}
+}
