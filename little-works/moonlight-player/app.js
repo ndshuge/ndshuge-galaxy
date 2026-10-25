@@ -89,6 +89,9 @@
     });
   }
   function changeTrack(i){
+    document.body.classList.remove('is-switching');
+    void document.body.offsetWidth;
+    document.body.classList.add('is-switching');
     state.index=(i+tracks.length)%tracks.length;
     state.time=0;state.lastFrame=null;
     const t=current();
@@ -138,6 +141,14 @@
       if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
       else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
     }
+  });
+  // Touch-friendly elastic response: pointer events work on both iPhone Safari and Edge.
+  document.querySelectorAll('.glass-button,.transport-main,.transport-skip,.aux-button').forEach(button=>{
+    const release=()=>button.classList.remove('is-pressing');
+    button.addEventListener('pointerdown',()=>button.classList.add('is-pressing'));
+    button.addEventListener('pointerup',release);
+    button.addEventListener('pointercancel',release);
+    button.addEventListener('pointerleave',release);
   });
   let lastUI=0;
   function tick(ts){
