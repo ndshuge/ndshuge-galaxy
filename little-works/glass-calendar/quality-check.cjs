@@ -1,6 +1,7 @@
 "use strict";
 const fs=require("node:fs"),path=require("node:path"),http=require("node:http"),os=require("node:os"),assert=require("node:assert/strict");
 const {spawn}=require("node:child_process");
+const REMOTE=process.argv.includes("--remote")?"https://ndshuge.github.io/ndshuge-galaxy/little-works/glass-calendar/":null;
 const ROOT=__dirname,PORT=53753,DEBUG=53754,EDGE="C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
 const html=fs.readFileSync(path.join(ROOT,"index.html"),"utf8");
 const css=fs.readFileSync(path.join(ROOT,"refined.css"),"utf8");
@@ -27,15 +28,17 @@ function send(method,params={}){const n=++id;return new Promise((resolve,reject)
 async function evaluate(expression){const r=await send("Runtime.evaluate",{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value}
 async function checkViewport(w,h){
  await send("Emulation.setDeviceMetricsOverride",{width:w,height:h,deviceScaleFactor:1,mobile:false});
- await send("Page.navigate",{url:"http://127.0.0.1:"+PORT+"/index.html?qa="+w});
+ await send("Page.navigate",{url:REMOTE?REMOTE+"?qa="+w+"&v=f1c09f1":"http://127.0.0.1:"+PORT+"/index.html?qa="+w});
  for(let i=0;i<50;i++){if(await evaluate("document.readyState === 'complete' && !!document.querySelector('#grid .day')"))break;await sleep(110)}
  await sleep(400);
  const state=await evaluate(`(()=>{const a=document.querySelector('.actions').getBoundingClientRect(),s=document.querySelector('lg-segmented'),c=s?.querySelector('.lg-refract');return {width:innerWidth,scroll:document.documentElement.scrollWidth,month:document.querySelector('#month').textContent,actionRight:a.right,glass:!!c,filter:c?getComputedStyle(c).filter:null,spring:typeof s?.xs?.set==='function',css:!!document.querySelector('link[href="./refined.css"]'),titleSize:parseFloat(getComputedStyle(document.querySelector('.top h1')).fontSize)}})()`);
  assert(state.scroll<=w+1,"horizontal overflow "+w);
+ if(w<=390) assert((await evaluate("document.documentElement.clientWidth"))>=w-1,"mobile visible document scrollbar "+w);
  assert(state.actionRight<=w+1,"action buttons out of viewport "+w);
  assert(state.glass&&state.spring&&state.css,"Skill runtime failed "+JSON.stringify(state));
  assert(state.filter&&state.filter.includes("url("),"real SVG refraction not applied "+JSON.stringify(state));
  assert(state.titleSize>=20,"title text too small");
+ if(REMOTE&&w===390){const snapshot=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-online-cdp-390.png"),Buffer.from(snapshot.data,"base64"));}
  await evaluate("document.querySelector('#weekMode').click()");
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),7,"week mode failed");
  await evaluate("document.querySelector('#monthMode').click()");
@@ -95,7 +98,7 @@ async function checkViewport(w,h){
  await send("Page.enable");await send("Runtime.enable");
  const reports=[];
  for(const [w,h] of [[320,700],[390,844],[768,900],[1440,900]])reports.push(await checkViewport(w,h));
- await send("Page.navigate",{url:"http://127.0.0.1:"+PORT+"/glass-lab.html"});
+ await send("Page.navigate",{url:REMOTE?REMOTE+"glass-lab.html?v=f1c09f1":"http://127.0.0.1:"+PORT+"/glass-lab.html"});
  for(let i=0;i<40;i++){if(await evaluate("document.readyState===\u0027complete\u0027 && customElements.get(\u0027lg-lens\u0027)!==undefined"))break;await sleep(130)}
  await sleep(450);
  const optical=await evaluate("(()=>{const l=document.querySelector(\u0027lg-lens\u0027);const c=l?.querySelector(\u0027.lg-lens__content\u0027);return {lens:!!l?.glass,spring:typeof l?.xs?.set===\u0027function\u0027,height:c?.getBoundingClientRect().height,filter:c?getComputedStyle(c).filter:null}})()");

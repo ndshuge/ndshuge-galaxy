@@ -120,6 +120,8 @@ body[data-theme=dark] .modal label{color:#474653}
 /* Floating bottom optical-control dock, touch-sized and keyboard accessible. */
 .shixu-dock{display:none}
 @media(max-width:750px){
+ html{scrollbar-width:none}
+ html::-webkit-scrollbar{display:none;width:0}
  body{padding-bottom:105px}
  .shixu-dock{display:block;position:fixed;z-index:15;bottom:max(16px,env(safe-area-inset-bottom));left:50%;width:min(calc(100vw - 48px),365px);transform:translateX(-50%);pointer-events:none}
  .shixu-dock__rim{pointer-events:auto;display:block;width:100%;align-items:center;gap:5px;padding:7px 8px 7px 13px;min-height:68px;border-radius:30px;background:linear-gradient(155deg,#ffffffd6,#ece9f4a9);border:1px solid #ffffffee;box-shadow:0 19px 48px #3930533a,inset 0 1px 0 #fff;backdrop-filter:blur(35px) saturate(1.65);-webkit-backdrop-filter:blur(35px) saturate(1.65)}
