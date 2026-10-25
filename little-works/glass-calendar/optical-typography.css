@@ -1,0 +1,35 @@
+/* Typography and optical affordance pass, reviewed against native Settings density. */
+@media(max-width:750px){
+ .sidebar{border-radius:23px;padding:9px 13px;margin-bottom:13px}
+ .sidebar .brand{font-size:17px;font-weight:650;letter-spacing:-.35px;line-height:34px}
+ .sidebar .logo{width:32px;height:32px;border-radius:11px;font-size:16px}
+ .sidebar .brand small{font-size:11px;font-weight:420}
+ .top{margin:0 3px 12px;gap:0}
+ .top h1{font-size:clamp(25px,6.7vw,28px);font-weight:650;letter-spacing:-.65px;line-height:1.25}
+ .top .subtitle{font-size:12px;font-weight:450;color:#858490;letter-spacing:0}
+ #themeToggle{width:39px;height:39px;min-height:39px;font-size:15px;border-radius:50%}
+ .top .actions{gap:9px;margin:8px 0 0}
+ .top .actions #prev,.top .actions #next{width:42px;height:42px;min-height:42px;font-size:20px}
+ .calheader{padding:17px 15px 10px}
+ .month{font-size:19px;font-weight:650;letter-spacing:-.5px}
+ .month small{font-size:11px;letter-spacing:0;font-weight:420}
+ .weekdays span{font-size:11px;font-weight:470;color:#85838e}
+ .day .number{font-size:13px;font-weight:480}
+ .panelhead b{font-size:16px;font-weight:610}
+ .panelhead span,.empty{font-size:12px}
+ .quote strong{font-size:15px;font-weight:610}
+ .shixu-dock{isolation:isolate}
+ /* Light/rim patterns behind the lens create visible optical cues without flooding content. */
+ .shixu-dock::before{content:"";position:absolute;pointer-events:none;inset:-12px -14px;z-index:-1;border-radius:44px;background:
+ radial-gradient(ellipse at 20% 25%,#bbb0ec83,transparent 40%),
+ radial-gradient(ellipse at 80% 85%,#b6d2fa87,transparent 37%),
+ repeating-linear-gradient(104deg,transparent 0 25px,#8d82b722 26px 27px,transparent 28px 51px);
+ filter:blur(8px);opacity:.86}
+ .shixu-dock__rim{overflow:clip;isolation:isolate;background:linear-gradient(145deg,#fff9,#e9e6f0b8);border-color:#fff;box-shadow:0 16px 44px #51467a33,0 3px 12px #776c9f14,inset 0 1px 0 #fff}
+ .shixu-dock__item{font-size:12px;font-weight:570}
+ .shixu-dock__new{background:linear-gradient(155deg,#978aff,#695ee7);box-shadow:0 5px 17px #6855e851,inset 0 1px 0 #ffffffa8}
+ body[data-theme=dark] .shixu-dock::before{background:radial-gradient(ellipse at 20% 20%,#9079e2a8,transparent 43%),radial-gradient(ellipse at 78% 85%,#587ac89e,transparent 45%),repeating-linear-gradient(110deg,transparent 0 24px,#ffffff26 25px 26px,transparent 27px 52px)}
+ body[data-theme=dark] .top .subtitle{color:#c4bdcc}
+}
+@media(max-width:350px){.top h1{font-size:23px}.sidebar{margin-bottom:8px}.calheader{padding-top:14px}}
+@media(prefers-reduced-transparency:reduce){.shixu-dock::before{display:none}}
