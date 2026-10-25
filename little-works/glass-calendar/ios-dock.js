@@ -1,9 +1,10 @@
 /* iOS-like quick actions: real interaction, not a screenshot or decorative overlay. */
+import "./components.js";
 import {createSpring} from "./liquid-glass.js";
 const dock=document.createElement("nav");
 dock.className="shixu-dock";
 dock.setAttribute("aria-label","日历快捷操作");
-dock.innerHTML=`<div class="shixu-dock__rim">
+dock.innerHTML=`<lg-dock class="shixu-dock__rim" radius="30" refraction="17" bezel=".65" chroma=".09">
   <button type="button" class="shixu-dock__item" id="dockToday" aria-label="回到今天">
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.2" width="17" height="15" rx="3.4"/><path d="M7.5 3.3v4M16.5 3.3v4M4 10h16"/></svg><span>今天</span>
   </button>
@@ -13,7 +14,7 @@ dock.innerHTML=`<div class="shixu-dock__rim">
   <button type="button" class="shixu-dock__new" id="dockCreate" aria-label="新建日程">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg>
   </button>
-</div>`;
+</lg-dock>`;
 document.body.append(dock);
 const reduced=matchMedia("(prefers-reduced-motion: reduce)");
 function tapSpring(el){

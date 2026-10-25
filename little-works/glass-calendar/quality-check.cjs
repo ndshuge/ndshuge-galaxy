@@ -42,6 +42,10 @@ async function checkViewport(w,h){
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),42,"month mode failed");
  if(w<=390){
    assert.equal(await evaluate("getComputedStyle(document.querySelector('.shixu-dock')).display"),"block","mobile glass dock absent");
+   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.surface&&!!d?.lens&&typeof d?.xs?.set==='function'})()"),true,"installed optical Dock component not initialized");
+   await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');const r=d.getBoundingClientRect();d.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,clientX:r.left+r.width/2,clientY:r.top+r.height/2}));})()");
+   await sleep(160);
+   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d?.presence>0.02&&d?.lens!==null})()"),true,"optical Dock spring did not respond to pointer");
    await evaluate("document.querySelector('#dockView').click()");
    assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),7,"dock week switch failed");
    await evaluate("document.querySelector('#dockView').click()");

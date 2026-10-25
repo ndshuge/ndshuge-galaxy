@@ -122,7 +122,10 @@ body[data-theme=dark] .modal label{color:#474653}
 @media(max-width:750px){
  body{padding-bottom:105px}
  .shixu-dock{display:block;position:fixed;z-index:15;bottom:max(16px,env(safe-area-inset-bottom));left:50%;width:min(calc(100vw - 48px),365px);transform:translateX(-50%);pointer-events:none}
- .shixu-dock__rim{pointer-events:auto;display:flex;align-items:center;gap:5px;padding:7px 8px 7px 13px;min-height:68px;border-radius:30px;background:linear-gradient(155deg,#ffffffd6,#ece9f4a9);border:1px solid #ffffffee;box-shadow:0 19px 48px #3930533a,inset 0 1px 0 #fff;backdrop-filter:blur(35px) saturate(1.65);-webkit-backdrop-filter:blur(35px) saturate(1.65)}
+ .shixu-dock__rim{pointer-events:auto;display:block;width:100%;align-items:center;gap:5px;padding:7px 8px 7px 13px;min-height:68px;border-radius:30px;background:linear-gradient(155deg,#ffffffd6,#ece9f4a9);border:1px solid #ffffffee;box-shadow:0 19px 48px #3930533a,inset 0 1px 0 #fff;backdrop-filter:blur(35px) saturate(1.65);-webkit-backdrop-filter:blur(35px) saturate(1.65)}
+ .shixu-dock__rim .lg-dock__items{position:relative;display:flex;align-items:center;gap:5px;padding:0;width:100%;min-height:52px}
+ .shixu-dock__rim .lg-dock__items > .shixu-dock__item{flex:1}
+ .shixu-dock__rim .lg-dock__items > .shixu-dock__new{flex:none}
  .shixu-dock__item{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;height:51px;border:0;border-radius:20px;background:transparent;color:#575163;font-family:inherit;font-size:13px;font-weight:610;white-space:nowrap;cursor:pointer}
  .shixu-dock__item svg,.shixu-dock__new svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none;flex:none}
  .shixu-dock__item:hover,.shixu-dock__item:focus-visible{background:#ffffff9c;outline-offset:2px}
