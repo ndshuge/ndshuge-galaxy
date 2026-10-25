@@ -12,6 +12,12 @@ for(const f of ["index.html","style.css","app.js","cover.svg","AGENTS.md","DESIG
 for(const id of ["song-title","lyrics-list","progress","play","next","prev","volume","favorite","queue","queue-items","toggle-lyrics","toggle-motion"])assert(html.includes('id="'+id+'"'),"missing "+id);
 assert(css.includes("prefers-reduced-motion")&&css.includes("prefers-reduced-transparency")&&css.includes("safe-area-inset-bottom"));
 assert(js.includes("updateLyric")&&js.includes("requestAnimationFrame")&&js.includes("changeTrack"));
+// Skill validation: bundled optical engine is an actual import, not CSS-only fake glass.
+const optics=read("glass-cover.js"),engine=read("liquid-glass.js"),design=read("skill-validation.css");
+assert(html.includes('src="./glass-cover.js"')&&html.includes('href="./skill-validation.css"'));
+assert(optics.includes('createGlass(artwork')&&engine.includes("feDisplacementMap"));
+assert(design.includes(".art-side{display:block")&&design.includes("prefers-reduced-transparency"));
+assert(fs.existsSync(path.join(dir,"LIQUID_GLASS_LICENSE.txt")));
 assert(html.includes("虚构音乐演示")&&html.includes("NO AUDIO"));
 assert(!/https?:\/\/[^\s"']+/.test(js),"unexpected remote JS API");
 assert(!/sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}/.test(html+js+css),"possible secret");

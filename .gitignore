@@ -66,3 +66,8 @@ coverage/
 *.db
 *.p12
 *.pfx
+
+# Local-only generated Skill and browser QA output
+.taste-skill/
+little-works/moonlight-player/qa-*.png
+little-works/moonlight-player/qa-browser-results.json

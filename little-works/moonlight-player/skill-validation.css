@@ -1,0 +1,58 @@
+/* Skill validation: album-first mobile composition, no extra ornamental labels.
+   The cover is the product identity; full-screen glass is intentionally avoided. */
+@media (max-width:700px) and (min-height:740px){
+ .topbar{height:54px;min-height:54px}
+ .wordmark{display:none}
+ .demo-chip{font-size:10px;color:#d5ddd5a8}
+ .pulse-dot{display:none}
+ .experience{gap:0}
+ .art-side{display:block;flex:none;width:min(44vw,205px);max-width:none;align-self:center;margin:4px 0 12px}
+ .art-glow{filter:blur(29px);opacity:.32}
+ .art-frame{max-width:none;width:100%;border-radius:13px;box-shadow:0 18px 50px #0008,0 0 0 1px #ffffff1f}
+ .track-bar{min-height:69px;gap:10px}
+ .mobile-art{display:none}
+ .track-heading h1{font-size:clamp(21px,6vw,25px);font-weight:660}
+ .track-actions{gap:7px}
+ .glass-button{width:43px;height:43px}
+ .lyrics-section{margin-top:8px}
+ .section-label{margin-bottom:0;color:#dedfda9a;letter-spacing:.04em;font-size:11px}
+ .lyrics-list{padding-top:clamp(50px,8dvh,85px);padding-bottom:100px;gap:9px}
+ .lyric{font-size:clamp(23px,6vw,28px);line-height:1.44;letter-spacing:0}
+ .lyric:not(.active){filter:blur(.8px);opacity:.28}
+ .lyric[data-distance="1"]{filter:blur(.35px);opacity:.49}
+ .control-zone{padding-top:12px}
+ .transport{height:88px}
+ .transport-main{height:66px;width:66px}
+ .controls-bottom{margin-top:10px}
+ .volume-line{margin-top:0}
+}
+@media(max-width:700px) and (max-height:739px){
+ .wordmark{display:none}
+ .demo-chip{font-size:10px}
+ .pulse-dot{display:none}
+}
+/* Adjacent verses remain legible; blur no longer hides the secondary hierarchy. */
+.lyric.active{color:#ffffff}
+.lyric:not(.active){filter:blur(.75px);opacity:.46}
+.lyric[data-distance="1"]{filter:blur(.25px);opacity:.66}
+.lyric[data-distance="2"]{filter:blur(.6px);opacity:.49}
+@media(max-width:380px){.glass-button{width:44px;height:44px}}
+@media(max-width:700px) and (min-height:740px){
+ .lyric:not(.active){filter:blur(.6px);opacity:.42}
+ .lyric[data-distance="1"]{filter:blur(.2px);opacity:.63}
+}
+/* Desktop: fit the entire transport in the first viewport rather than clipping it. */
+@media (min-width:701px){
+ .track-heading h1{font-size:clamp(25px,2.2vw,32px)}
+}
+@media (min-width:701px) and (min-height:821px){
+ .experience{min-height:0;height:calc(100dvh - 86px);padding-top:16px;padding-bottom:16px}
+ .player{height:min(710px,calc(100dvh - 135px));min-height:0}
+ .lyrics-section{margin-top:14px}
+ .controls-bottom{margin-top:16px}
+}
+/* Inspector feedback: keep functional disclosures legible; remove duplicate brand ornament. */
+.wordmark{display:none}
+.controls-bottom .demo-note{font-size:11px;letter-spacing:0;color:#c5d1c5b8}
+@media(max-width:700px){.demo-chip{font-size:11px}}
+@media(prefers-reduced-transparency:reduce){.album-refraction-ready{filter:none!important}}

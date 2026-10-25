@@ -70,7 +70,8 @@
     const t=current();
     const s=document.documentElement.style;
     s.setProperty("--base",t.deep);s.setProperty("--light",t.light);s.setProperty("--cool",t.cool);s.setProperty("--accent",t.accent);
-    $("large-cover").style.filter="hue-rotate("+t.hue+")";
+    // Keep the optical engine filter on the image itself; apply track tint to its frame.
+    $("large-cover").closest(".art-frame").style.filter="hue-rotate("+t.hue+")";
     $("small-cover").style.filter="hue-rotate("+t.hue+")";
   }
   function renderQueue(){
