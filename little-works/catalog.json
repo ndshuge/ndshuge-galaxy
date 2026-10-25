@@ -1,5 +1,19 @@
 [
     {
+        "slug": "xjtu-chronicle",
+        "title": "向西而行 · 西安交通大学纪事",
+        "date": "2026.10.25",
+        "type": "CAMPUS CHRONICLE",
+        "description": "从南洋公学到西迁与创新港。沿着四个校史节点，重新认识西安交通大学的校园、建筑与精神。",
+        "url": "./xjtu-chronicle/",
+        "cover": "./xjtu-chronicle/cover.svg",
+        "tags": [
+            "西交校园",
+            "百卅校史",
+            "摄影叙事"
+        ]
+    },
+    {
         "slug": "saturn-atlas",
         "title": "环的另一边 · 土星观测室",
         "date": "2026.10.25",

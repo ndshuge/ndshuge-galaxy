@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="XJTU campus chronicle graphic">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eee6d9"/><stop offset="1" stop-color="#d5c3a6"/></linearGradient><radialGradient id="sun"><stop stop-color="#dd774f" stop-opacity=".77"/><stop offset="1" stop-color="#a7332d" stop-opacity=".08"/></radialGradient></defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<g stroke="#8e4a40" opacity=".2" fill="none"><path d="M0 120h1200M0 185h1200M0 250h1200M0 315h1200M0 380h1200M0 445h1200M0 510h1200M0 575h1200"/><path d="M128 0v675M256 0v675M384 0v675M512 0v675M640 0v675M768 0v675M896 0v675M1024 0v675"/></g>
+<circle cx="912" cy="267" r="228" fill="url(#sun)"/><g fill="none" stroke="#8c332d"><circle cx="912" cy="267" r="210" stroke-width="1" opacity=".25"/><circle cx="912" cy="267" r="183" stroke-width="1" opacity=".25"/></g>
+<path d="M610 567 L610 426 655 426 655 375 678 375 678 314 711 285 744 314 744 375 768 375 768 426 820 426 820 568 Z" fill="#a04434" opacity=".69"/><path d="M678 375h66M655 426h113M681 485h66" stroke="#d5c3a6" stroke-width="7"/><path d="M710 288v-65M686 306h50" stroke="#a04434" stroke-width="7"/><path d="M600 568h475" stroke="#a04434" stroke-width="9"/>
+<path d="M0 0h25M0 0v25M1200 0h-25M1200 0v25M0 675h25M0 675v-25M1200 675h-25M1200 675v-25" stroke="#8c332d" stroke-width="4" fill="none"/>
+<text x="69" y="83" fill="#783a31" font-size="18" letter-spacing="7" font-family="Arial,sans-serif">CAMPUS CHRONICLE / 1896—2026</text>
+<text x="69" y="245" fill="#272d31" font-size="125" letter-spacing="-4" font-weight="500" font-family="Georgia,serif">XJTU</text>
+<text x="75" y="322" fill="#713c35" font-size="27" letter-spacing="5" font-family="Arial,sans-serif">JOURNEY WEST</text>
+<path d="M75 358h390" stroke="#914b3d" stroke-width="2" />
+<text x="75" y="545" fill="#4b4942" font-size="22" letter-spacing="4" font-family="Arial,sans-serif">XI'AN JIAOTONG UNIVERSITY</text>
+<text x="75" y="604" fill="#974d3e" font-size="22" font-family="Georgia,serif">1896  /  1956  /  2019  /  2026</text>
+</svg>
