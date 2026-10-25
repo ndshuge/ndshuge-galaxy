@@ -1,0 +1,24 @@
+name: Shixu calendar quality gate
+on:
+  pull_request:
+    paths:
+      - 'little-works/glass-calendar/**'
+      - '.github/workflows/glass-calendar-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'little-works/glass-calendar/**'
+      - '.github/workflows/glass-calendar-check.yml'
+jobs:
+  shixu:
+    runs-on: windows-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify actual liquid glass, spring and calendar behaviors
+        run: node little-works/glass-calendar/quality-check.cjs
+      - name: Reject a broken Skill wiring intentionally
+        run: node little-works/glass-calendar/quality-check.cjs --static

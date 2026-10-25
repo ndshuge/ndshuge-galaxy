@@ -71,3 +71,5 @@ coverage/
 .taste-skill/
 little-works/moonlight-player/qa-*.png
 little-works/moonlight-player/qa-browser-results.json
+little-works/glass-calendar/qa-*.png
+little-works/glass-calendar/qa-local.json

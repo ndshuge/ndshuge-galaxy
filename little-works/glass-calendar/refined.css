@@ -1,0 +1,71 @@
+/* Shixu / composition refinement — designed for content first, glass on controls. */
+:root{font-size:15px;color:#20212a;--purple:#6256d9;--muted:#727486}
+body{background:radial-gradient(ellipse 42% 48% at 85% 12%,#e9e2ff 0,transparent 80%),radial-gradient(ellipse 35% 65% at 6% 95%,#deeffb 0,transparent 85%),#f7f8fc}
+.app{max-width:1480px;grid-template-columns:228px minmax(0,1fr);gap:28px}
+.glass{background:linear-gradient(135deg,#ffffffd9,#f9faffc4);box-shadow:0 20px 68px #505e9b13,inset 0 1px #fff;border:1px solid #ffffffed}
+.sidebar{border-radius:29px;padding:28px 18px}
+.brand{font-size:22px;letter-spacing:-.6px}
+.brand small{font-size:12px;color:#77798c}
+.side-label,.mini-grid span{font-size:12px;color:#777b8d}
+.nav button{font-size:14px}
+.top{align-items:end;margin:18px 2px 30px}
+.subtitle{font-size:13px;font-weight:530;letter-spacing:.01em;color:#73788e}
+.top h1{font-size:clamp(31px,3vw,40px);letter-spacing:-1.15px;line-height:1.16;font-weight:700}
+.btn{font-size:14px;min-height:44px;border-radius:15px}
+.btn:active{transform:scale(.95)}
+.calendar{border-radius:30px;min-height:610px;box-shadow:0 26px 75px #5a638a14}
+.calheader{padding:25px 27px 14px}
+.month{font-size:23px;font-weight:690;letter-spacing:-.65px}
+.month small{font-size:12px}
+.weekdays span{font-size:12px;font-weight:560;color:#777a91}
+.grid{grid-auto-rows:minmax(86px,1fr)}
+.number{width:36px;height:36px;font-size:13px;font-weight:550}
+.day{transition:background .22s}
+.day.selected{background:linear-gradient(145deg,#ebe9ffce,#f5f2ff7a)}
+.day.today .number{box-shadow:0 5px 14px #7464ec3b}
+.event{font-size:12px;border-radius:8px;padding:6px 8px}
+.panelhead b{font-size:17px}
+.panelhead span,.empty{font-size:13px}
+.quote strong{font-size:16px}
+.segment{display:inline-flex;position:relative;min-height:43px;--lg-accent:#655cda;--lg-track:#eeedf9;--lg-on-glass:#37324f;--lg-text:#4d4c64}
+lg-segmented.segment{padding:4px;border-radius:17px;background:#eeedf7}
+lg-segmented.segment > button{font-size:13px;min-width:43px;min-height:35px;padding:7px 14px;z-index:1}
+lg-segmented.segment .on{background:none;box-shadow:none}
+lg-segmented.segment .lg-refract{z-index:0}
+lg-segmented.segment .lg-lens-shadow{pointer-events:none}
+.actions{gap:8px}
+.actions .primary{background:linear-gradient(125deg,#7669f0,#665bdf);color:white;box-shadow:0 11px 26px #6455c53c;border-color:#c3baff;font-weight:600}
+.actions .primary:hover{background:linear-gradient(125deg,#8478fa,#665bdf)}
+/* Keep the refractive copy optical but remove duplicated glyphs over accessible native option labels. */
+lg-segmented .lg-refract .lg-seg__option{color:transparent!important;font-size:0!important;text-shadow:none!important}
+/* Actual native-component spring on segmented; authored interaction spring for controls below. */
+[data-visual-spring]{transform-origin:center;touch-action:manipulation}
+@media(max-width:1050px){.app{gap:16px}.sidebar{padding:22px 13px}}
+@media(max-width:750px){
+ .app{padding:0 12px;margin:13px auto}
+ .sidebar{margin-bottom:21px;border-radius:23px;min-height:0;padding:12px 16px}
+ .brand{font-size:18px}
+ .nav button{font-size:13px;padding:9px}
+ .top{margin:0 2px 18px;align-items:center;gap:10px}
+ .top h1{font-size:clamp(23px,6.4vw,30px);letter-spacing:-.85px;line-height:1.16}
+ .subtitle{font-size:12px}
+ .actions{gap:5px}
+ .actions .btn{min-height:41px;height:41px;padding:0 10px;font-size:12px}
+ .actions .primary{font-size:12px;padding:0 11px}
+ .actions .square{width:38px;padding:0;font-size:22px}
+ .calendar{border-radius:25px}
+ .calheader{padding:19px 15px 12px}
+ .month{font-size:20px}
+ .weekdays{padding:0 5px}
+ .weekdays span{text-align:center;padding:10px 2px 12px;font-size:11px}
+ .grid{grid-auto-rows:minmax(70px,1fr);padding:0 5px 9px}
+ .day{padding:7px 2px 4px;min-height:70px}
+ .number{margin:auto;font-size:13px;width:32px;height:32px}
+ .event{font-size:10px;padding:4px 3px}
+ .panel{padding:20px;border-radius:24px}
+ .panelhead b{font-size:15px}
+}
+@media(max-width:390px){.top h1{font-size:clamp(21px,5.8vw,24px)}.actions .primary{font-size:11px;padding:0 8px}.actions .square{width:33px}.grid{grid-auto-rows:minmax(66px,1fr)}.day{min-height:66px}.top .subtitle{font-size:11px}}
+@media(max-width:360px){.top{flex-wrap:wrap}.top>div:first-child{width:100%}.actions{width:100%;justify-content:flex-end}.top h1{font-size:24px}.sidebar{padding:11px 12px}.nav button{padding:8px 6px}}
+@media(prefers-reduced-motion:reduce){[data-visual-spring],.day,.calendar{animation:none!important;transition:none!important}}
+@media(prefers-reduced-transparency:reduce){.glass{background:#fff;backdrop-filter:none!important}}
