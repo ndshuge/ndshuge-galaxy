@@ -1,142 +1,156 @@
 [
-    {
-        "slug":  "moonlight-player",
-        "title":  "月光存档 · Apple 沉浸播放器",
-        "date":  "2026.10.25",
-        "type":  "IMMERSIVE MUSIC UI",
-        "description":  "一台没有真实音乐、却会随歌词呼吸的播放器。三首原创虚构曲目，体验液态玻璃、动态光影、同步歌词和弹性控制。",
-        "url":  "./moonlight-player/",
-        "cover":  "./moonlight-player/cover.svg",
-        "tags":  [
-                     "Apple 风格",
-                     "同步歌词",
-                     "交互演示"
-                 ]
-    },
-    {
-        "slug":  "personal-homepage",
-        "title":  "鼠哥 · 个人主页",
-        "date":  "2026.10.25",
-        "type":  "PERSONAL PORTFOLIO",
-        "description":  "把好奇心做成作品。浏览真实的游戏、AI 学习工具与科学实验，切换看看鼠哥做过的东西。",
-        "url":  "./personal-homepage/",
-        "cover":  "./personal-homepage/cover.webp",
-        "tags":  [
-                     "个人主页",
-                     "作品集",
-                     "交互设计"
-                 ]
-    },
-    {
-        "slug":  "xjtu-chronicle",
-        "title":  "向西而行 · 西安交通大学纪事",
-        "date":  "2026.10.25",
-        "type":  "CAMPUS CHRONICLE",
-        "description":  "从南洋公学到西迁与创新港。沿着四个校史节点，重新认识西安交通大学的校园、建筑与精神。",
-        "url":  "./xjtu-chronicle/",
-        "cover":  "./xjtu-chronicle/cover.svg",
-        "tags":  [
-                     "西交校园",
-                     "百卅校史",
-                     "摄影叙事"
-                 ]
-    },
-    {
-        "slug":  "saturn-atlas",
-        "title":  "环的另一边 · 土星观测室",
-        "date":  "2026.10.25",
-        "type":  "INTERACTIVE ASTRONOMY",
-        "description":  "从卡西尼号的真实土星影像出发，改变光环的观测仰角，亲手比较光抵达不同行星的时间。",
-        "url":  "./saturn-atlas/",
-        "cover":  "./saturn-atlas/cover.webp",
-        "tags":  [
-                     "NASA 影像",
-                     "土星环实验",
-                     "光行时"
-                 ]
-    },
-    {
-        "slug":  "xiaoya-lifelab",
-        "title":  "小芽 LifeLab",
-        "date":  "2026.10.22",
-        "type":  "CAMPUS LIFE TOOL",
-        "description":  "陪你整理课表、任务与成长路线的小芽。公开版无需 API，即可体验规则规划与成长复盘。",
-        "url":  "https://ndshuge.github.io/xiaoya-lifelab/",
-        "cover":  "https://ndshuge.github.io/xiaoya-lifelab/assets/brand/xiaoya_hero_v1.webp",
-        "tags":  [
-                     "大学生活",
-                     "成长规划",
-                     "本地规则"
-                 ]
-    },
-    {
-        "slug":  "sea-of-little-things",
-        "title":  "无用之海",
-        "date":  "2026.10.22",
-        "type":  "GENERATIVE ART",
-        "description":  "丢下一点光，轻轻拨动潮汐。没有任务，只有一片会回应你的海。",
-        "url":  "./sea-of-little-things/",
-        "cover":  "./sea-of-little-things/cover.png",
-        "tags":  [
-                     "交互艺术",
-                     "合成声音",
-                     "可离线"
-                 ]
-    },
-    {
-        "slug":  "emergence-lab",
-        "title":  "涌现实验室",
-        "date":  "2026.10.22",
-        "type":  "INTERACTIVE SCIENCE",
-        "description":  "十四个会自己演化的小世界。从粒子、鸟群到化学花纹与幽灵堵车，只改一条规则，发现意想不到的整体行为。",
-        "url":  "./emergence-lab/",
-        "cover":  "./emergence-lab/cover.png",
-        "tags":  [
-                     "14 种模拟",
-                     "参数解释",
-                     "A/B 对照"
-                 ]
-    },
-    {
-        "slug":  "liminal",
-        "title":  "引力边界 · LIMINAL",
-        "date":  "2026.10.22",
-        "type":  "WEBGL EXPERIENCE",
-        "description":  "穿越事件视界、星云与光速边界。转动视角，靠近宇宙的另一面。",
-        "url":  "./liminal/",
-        "cover":  "./liminal/cover.svg",
-        "tags":  [
-                     "WebGL 宇宙",
-                     "三重场景",
-                     "交互声音"
-                 ]
-    },
-    {
-        "slug":  "zhixu-ai-academy",
-        "title":  "知序 AI 学院",
-        "date":  "2026.10.22",
-        "type":  "INTERACTIVE LEARNING",
-        "description":  "亲手预测、运行真实 Logistic 科学实验、批准第二轮并留下学习证据。Pages 科学版不包含在线 AI 模型。",
-        "url":  "./zhixu-ai-academy/",
-        "cover":  "",
-        "tags":  [
-                     "科学探究",
-                     "学习证据",
-                     "可交互"
-                 ]
-    },
-    {
-        "slug":  "page-between",
-        "title":  "页间 · 阅读",
-        "date":  "2026.10.25",
-        "type":  "READING APP",
-        "description":  "一款 Apple 风格的私人阅读器。支持 TXT 导入、阅读设置与本地进度。",
-        "url":  "./page-between/",
-        "cover":  "",
-        "tags":  [
-                     "Apple 风格",
-                     "私人书架",
-                     "本地阅读"
-                 ]
-    }
+  {
+    "slug": "glass-calendar",
+    "title": "时序 · 日历",
+    "date": "2026.10.25",
+    "type": "CALENDAR",
+    "description": "轻盈的液态玻璃日历，支持月周切换、日程管理与本地保存。",
+    "url": "./glass-calendar/",
+    "cover": "./glass-calendar/cover.png",
+    "tags": [
+      "液态玻璃",
+      "日程管理",
+      "响应式"
+    ]
+  },
+  {
+    "slug": "moonlight-player",
+    "title": "月光存档 · Apple 沉浸播放器",
+    "date": "2026.10.25",
+    "type": "IMMERSIVE MUSIC UI",
+    "description": "一台没有真实音乐、却会随歌词呼吸的播放器。三首原创虚构曲目，体验液态玻璃、动态光影、同步歌词和弹性控制。",
+    "url": "./moonlight-player/",
+    "cover": "./moonlight-player/cover.svg",
+    "tags": [
+      "Apple 风格",
+      "同步歌词",
+      "交互演示"
+    ]
+  },
+  {
+    "slug": "personal-homepage",
+    "title": "鼠哥 · 个人主页",
+    "date": "2026.10.25",
+    "type": "PERSONAL PORTFOLIO",
+    "description": "把好奇心做成作品。浏览真实的游戏、AI 学习工具与科学实验，切换看看鼠哥做过的东西。",
+    "url": "./personal-homepage/",
+    "cover": "./personal-homepage/cover.webp",
+    "tags": [
+      "个人主页",
+      "作品集",
+      "交互设计"
+    ]
+  },
+  {
+    "slug": "xjtu-chronicle",
+    "title": "向西而行 · 西安交通大学纪事",
+    "date": "2026.10.25",
+    "type": "CAMPUS CHRONICLE",
+    "description": "从南洋公学到西迁与创新港。沿着四个校史节点，重新认识西安交通大学的校园、建筑与精神。",
+    "url": "./xjtu-chronicle/",
+    "cover": "./xjtu-chronicle/cover.svg",
+    "tags": [
+      "西交校园",
+      "百卅校史",
+      "摄影叙事"
+    ]
+  },
+  {
+    "slug": "saturn-atlas",
+    "title": "环的另一边 · 土星观测室",
+    "date": "2026.10.25",
+    "type": "INTERACTIVE ASTRONOMY",
+    "description": "从卡西尼号的真实土星影像出发，改变光环的观测仰角，亲手比较光抵达不同行星的时间。",
+    "url": "./saturn-atlas/",
+    "cover": "./saturn-atlas/cover.webp",
+    "tags": [
+      "NASA 影像",
+      "土星环实验",
+      "光行时"
+    ]
+  },
+  {
+    "slug": "xiaoya-lifelab",
+    "title": "小芽 LifeLab",
+    "date": "2026.10.22",
+    "type": "CAMPUS LIFE TOOL",
+    "description": "陪你整理课表、任务与成长路线的小芽。公开版无需 API，即可体验规则规划与成长复盘。",
+    "url": "https://ndshuge.github.io/xiaoya-lifelab/",
+    "cover": "https://ndshuge.github.io/xiaoya-lifelab/assets/brand/xiaoya_hero_v1.webp",
+    "tags": [
+      "大学生活",
+      "成长规划",
+      "本地规则"
+    ]
+  },
+  {
+    "slug": "sea-of-little-things",
+    "title": "无用之海",
+    "date": "2026.10.22",
+    "type": "GENERATIVE ART",
+    "description": "丢下一点光，轻轻拨动潮汐。没有任务，只有一片会回应你的海。",
+    "url": "./sea-of-little-things/",
+    "cover": "./sea-of-little-things/cover.png",
+    "tags": [
+      "交互艺术",
+      "合成声音",
+      "可离线"
+    ]
+  },
+  {
+    "slug": "emergence-lab",
+    "title": "涌现实验室",
+    "date": "2026.10.22",
+    "type": "INTERACTIVE SCIENCE",
+    "description": "十四个会自己演化的小世界。从粒子、鸟群到化学花纹与幽灵堵车，只改一条规则，发现意想不到的整体行为。",
+    "url": "./emergence-lab/",
+    "cover": "./emergence-lab/cover.png",
+    "tags": [
+      "14 种模拟",
+      "参数解释",
+      "A/B 对照"
+    ]
+  },
+  {
+    "slug": "liminal",
+    "title": "引力边界 · LIMINAL",
+    "date": "2026.10.22",
+    "type": "WEBGL EXPERIENCE",
+    "description": "穿越事件视界、星云与光速边界。转动视角，靠近宇宙的另一面。",
+    "url": "./liminal/",
+    "cover": "./liminal/cover.svg",
+    "tags": [
+      "WebGL 宇宙",
+      "三重场景",
+      "交互声音"
+    ]
+  },
+  {
+    "slug": "zhixu-ai-academy",
+    "title": "知序 AI 学院",
+    "date": "2026.10.22",
+    "type": "INTERACTIVE LEARNING",
+    "description": "亲手预测、运行真实 Logistic 科学实验、批准第二轮并留下学习证据。Pages 科学版不包含在线 AI 模型。",
+    "url": "./zhixu-ai-academy/",
+    "cover": "",
+    "tags": [
+      "科学探究",
+      "学习证据",
+      "可交互"
+    ]
+  },
+  {
+    "slug": "page-between",
+    "title": "页间 · 阅读",
+    "date": "2026.10.25",
+    "type": "READING APP",
+    "description": "一款 Apple 风格的私人阅读器。支持 TXT 导入、阅读设置与本地进度。",
+    "url": "./page-between/",
+    "cover": "",
+    "tags": [
+      "Apple 风格",
+      "私人书架",
+      "本地阅读"
+    ]
+  }
 ]
