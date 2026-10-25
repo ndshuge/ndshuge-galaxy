@@ -1,0 +1,46 @@
+/* XiaoYa premium Skill edition. Editorial warm paper, oxblood, graphite. */
+body.design-studio.redesign-v2{background:#e9e4dc!important;color:#26211f!important;--ink:#26211f;--sub:#77716c;--sage:#793c42;--sage-dark:#662f35;--soft:#f1e8e4;--line:#ded7cf;--cream:#f8f4ec;--white:#fcfaf5}
+.design-studio.redesign-v2 .app-layout{background:#fcfaf5!important}
+.design-studio.redesign-v2 .comparison-nav{background:#292223!important;color:#eee4db!important}
+.design-studio.redesign-v2 .comparison-links a[aria-current=page]{background:#f1e7dd!important;color:#2f2222!important;border-color:#f1e7dd!important}
+.design-studio.redesign-v2 .sidebar{background:#f0ece6!important;border-right:1px solid #d7cfc5!important;color:#443c39!important}
+.design-studio.redesign-v2 .sidebar .brand strong{color:#793c42!important}
+.design-studio.redesign-v2 .sidebar .nav-link{color:#544b46!important}
+.design-studio.redesign-v2 .sidebar .nav-link.is-active{background:#e8d8d6!important;color:#77373b!important}
+.design-studio.redesign-v2 .topbar{background:#fcfaf5!important;border-color:#e9e3d9!important}
+.design-studio.redesign-v2 .breadcrumb strong,.design-studio.redesign-v2 .breadcrumb span{color:#6d625a!important}
+.design-studio.redesign-v2 .xy-editorial-kicker{border-color:#bdb2a7!important;color:#744d4f!important}
+.design-studio.redesign-v2 .xy-editorial-kicker .xy-date-caption{color:#81746d!important}
+.design-studio.redesign-v2 .xy-redesign-intro h2{font-family:"Songti SC","STSong","Noto Serif CJK SC",serif;letter-spacing:-.085em!important;color:#322724!important}
+.design-studio.redesign-v2 .xy-redesign-intro h2 i{color:#84424b!important}
+.design-studio.redesign-v2 .xy-redesign-intro p{color:#746c64!important;max-width:44ch}
+.design-studio.redesign-v2 .xy-day-strip{background:#e8dbd4!important;color:#653b3c!important}
+.design-studio.redesign-v2 .xy-day-strip button{background:#773a42!important;color:#fff9f4!important}
+.design-studio.redesign-v2 .xy-kanban{background:#fefcf7!important;border-color:#e1d8ce!important}
+.design-studio.redesign-v2 .xy-kanban .panel{background:#fefcf7!important;border-color:#e1d8ce!important}
+.design-studio.redesign-v2 .xy-kanban .card-topline{border-color:#e9e2d8!important}
+.design-studio.redesign-v2 .xy-kanban .overline,.design-studio.redesign-v2 .xy-kanban .task-title{color:#332b29!important}
+.design-studio.redesign-v2 .xy-kanban .subline{color:#827870!important}
+.design-studio.redesign-v2 .xy-kanban .dot.green{background:#84434b!important}
+.design-studio.redesign-v2 .xy-kanban .dot.peach{background:#b98e6f!important}
+.design-studio.redesign-v2 .xy-kanban .time-pill{background:#f1e4df!important;color:#7d4948!important}
+.design-studio.redesign-v2 .xy-mini-context .btn-dark{background:#7d3942!important;color:#fff!important}
+.design-studio.redesign-v2 .xy-mini-context .btn-soft{background:#f0e5df!important;color:#693c3d!important}
+.design-studio.redesign-v2 .bottom-stats strong{color:#7e3f47!important}
+.design-studio.redesign-v2 .advice-card{background:#f5efe9!important;border-color:#e4d7d0!important}
+.design-studio.redesign-v2 .panel{background:#fcfaf5!important;border-color:#e4dcd2!important}
+.design-studio.redesign-v2 .section-heading h2{color:#392b28!important}
+.design-studio.redesign-v2 .btn-dark{background:#763941!important;color:#fff!important}
+.design-studio.redesign-v2 .btn-soft{background:#f0e2df!important;color:#743e42!important}
+.design-studio.redesign-v2 .stat-tile strong{color:#7b3b44!important}
+.design-studio.redesign-v2 .ai-mode-card{background:#f7f1ea!important}
+.design-studio.redesign-v2 .mobile-tabs{background:#f8f4ee!important;border-top:1px solid #ded4ca!important}
+.design-studio.redesign-v2 .mobile-tabs button{color:#756763!important}
+.design-studio.redesign-v2 .mobile-tabs button.active{color:#813d45!important}
+.design-studio.redesign-v2 .xy-day-strip>span{font-size:0!important}
+.design-studio.redesign-v2 .xy-day-strip>span:after{content:"本周计划";font-size:15px!important;font-weight:650}
+.design-studio.redesign-v2 .xy-redesign-intro p{font-size:14px!important;margin-top:0;max-width:none!important}
+.design-studio.redesign-v2 .xy-redesign-intro p:after{content:none!important}
+.design-studio.redesign-v2 .sidebar .nav-link:hover{background:#e9e1da!important}
+.design-studio.redesign-v2 .hero-caption{display:none!important}
+@media(max-width:600px){.design-studio.redesign-v2 .xy-redesign-intro h2{font-size:clamp(39px,10vw,54px)!important}.design-studio.redesign-v2 .xy-day-strip>span:after{font-size:13px!important}}

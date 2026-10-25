@@ -25,10 +25,10 @@
     heading?.classList.add('xy-visually-secondary');
     today.prepend(shell);
   } else {
-    intro.innerHTML = '<div class="xy-editorial-kicker"><span>小芽 · 日常工作台</span><span class="xy-date-caption">今日安排 / 本周进度</span></div><h2>把今天安排好，<br><i>把时间留给自己。</i></h2><p>从真实任务开始，而不是从一张欢迎卡片开始。</p>';
+    intro.innerHTML = '<div class="xy-editorial-kicker"><span>小芽 · 日常工作台</span><span class="xy-date-caption">今日安排 / 本周进度</span></div><h2>把今天安排好，<br><i>把时间留给自己。</i></h2><p>事情有轻重，日子有节奏。</p>';
     const focus = document.createElement('div');focus.className='xy-workspace-board';
     const stripe = document.createElement('div');stripe.className='xy-day-strip';
-    stripe.innerHTML='<span>MY WEEK / 学习与生活</span><button type="button" data-view="schedule">打开完整课表 <span aria-hidden="true">↗</span></button>';
+    stripe.innerHTML='<span>本周计划</span><button type="button" data-view="schedule">打开完整课表 <span aria-hidden="true">↗</span></button>';
     const heading = today.querySelector('.section-heading');
     shell.append(intro,stripe,overview);
     overview.classList.add('xy-kanban');

@@ -11,12 +11,12 @@
   const intro = document.createElement('div');
   intro.className='xy-redesign-intro';
   if (isApple) {
-    intro.innerHTML = '<div class="xy-topline"><span class="xy-live-dot"></span>你的每一天，都有自己的节奏<span class="xy-intro-number">LIFELAB</span></div><p class="xy-intro-line">Make room for <em>today.</em></p>';
+    intro.innerHTML = '<div class="xy-topline"><span class="xy-live-dot"></span>你的每一天，都有自己的节奏<span class="xy-intro-number">LIFELAB</span></div><p class="xy-intro-line">今天，<em>由你定义。</em></p>';
     const focus = document.createElement('section');
     focus.className='xy-focus-stage';
     const marker=document.createElement('div');
     marker.className='xy-focus-marker';
-    marker.innerHTML='<span>NOW / 下一步</span><span class="xy-chevron">↗</span>';
+    marker.innerHTML='<span>下一步</span><span class="xy-chevron">↗</span>';
     const heading = today.querySelector('.section-heading');
     shell.append(intro, hero,marker,overview);
     hero.classList.add('xy-feature');
