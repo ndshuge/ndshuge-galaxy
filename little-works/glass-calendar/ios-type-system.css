@@ -1,0 +1,31 @@
+/* HIG-inspired type scale for a web calendar; not Apple proprietary fonts.
+   Body 17px; group label 17px; section titles 20/22; secondary 13-15.
+   Seven-column date grid uses 15px minimum on small mobile. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-size:17px;line-height:1.4}
+button,input,select{font-size:inherit}
+@media(max-width:750px){
+ .sidebar .brand{font-size:20px!important;font-weight:650!important;line-height:39px!important}
+ .top h1{font-size:34px!important;font-weight:700!important;line-height:1.17!important;letter-spacing:-1.2px!important}
+ .top .subtitle{font-size:13px!important;line-height:19px!important;margin-bottom:5px!important}
+ .month,.calheader .month{font-size:22px!important;font-weight:670!important}
+ .weekdays span{font-size:12px!important;line-height:18px!important;letter-spacing:0!important}
+ .day .number{font-size:15px!important;font-weight:510!important}
+ .panelhead b{font-size:17px!important;font-weight:640!important}
+ .panelhead span,.empty{font-size:14px!important;line-height:20px!important}
+ .shixu-dock__item{font-size:15px!important;font-weight:570!important;min-height:48px}
+ .shixu-dock__new{width:54px;height:54px}
+ lg-segmented.segment > button{font-size:15px!important;min-width:44px;min-height:44px!important}
+ .top .actions .btn{font-size:16px!important;min-width:44px!important;min-height:44px!important}
+ .calheader{gap:10px}
+ .panel{min-height:116px}
+}
+@media(max-width:350px){
+ .top h1{font-size:30px!important}
+ .sidebar .brand{font-size:19px!important}
+ .month,.calheader .month{font-size:20px!important}
+ .weekdays span{font-size:11px!important}
+ .day .number{font-size:15px!important}
+ .shixu-dock__item{font-size:14px!important}
+ .calheader{padding:13px 10px 8px}
+}

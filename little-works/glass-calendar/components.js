@@ -1150,21 +1150,40 @@ class LgDock extends LgElement {
       this.pos = val;
       this.render();
     }, { stiffness: 700, damping: 40 });
+    // Touch-first adaptation of the upstream Skill component (not a rewrite of its optics).
+    this.holdMs = Math.max(0, Math.min(1800, Number(this.getAttribute('hold-ms') || 0)));
+    this.holdTimer = null;
+    const awaken = () => { clearTimeout(this.holdTimer); this.ps.set(1); };
+    const fadeLater = () => {
+      clearTimeout(this.holdTimer);
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) this.ps.set(0, { immediate: true });
+      else this.holdTimer = setTimeout(() => this.ps.set(0), this.holdMs);
+    };
     this.addEventListener('pointermove', (e) => {
       const r = this.items.getBoundingClientRect();
       const x = e.clientX - r.left;
+      clearTimeout(this.holdTimer);
       this.xs.set(x, { immediate: this.presence < 0.05 });
       this.ps.set(1);
     });
-    this.addEventListener('pointerleave', () => this.ps.set(0));
+    this.addEventListener('pointerdown', (e) => {
+      clearTimeout(this.holdTimer);
+      const r = this.items.getBoundingClientRect();
+      this.xs.set(e.clientX-r.left, {immediate:this.presence<0.05});
+      awaken();
+    });
+    this.addEventListener('pointerup', fadeLater);
+    this.addEventListener('pointercancel', fadeLater);
+    this.addEventListener('pointerleave', fadeLater);
     this.addEventListener('focusin', (e) => {
       const r = this.items.getBoundingClientRect();
       const b = e.target.getBoundingClientRect();
+      clearTimeout(this.holdTimer);
       this.xs.set(b.left - r.left + b.width / 2, { immediate: this.presence < 0.05 });
       this.ps.set(1);
     });
     this.addEventListener('focusout', (e) => {
-      if (!this.contains(e.relatedTarget)) this.ps.set(0);
+      if (!this.contains(e.relatedTarget)) fadeLater();
     });
   }
 
@@ -1189,11 +1208,12 @@ class LgDock extends LgElement {
       return;
     }
     const H = this.items.offsetHeight;
-    const size = H * lerp(0.7, 1, p);
-    const x = clamp(this.pos - size / 2, 0, this.items.offsetWidth - size);
-    const y = (H - size) / 2;
-    this.lens.update({ hidden: false, x, y, width: size, height: size, radius: size / 2 });
-    place(this.shadow, x + this.items.offsetLeft, y + this.items.offsetTop, size, size, size / 2);
+    const lensH = H * lerp(0.72, 0.90, p);
+    const lensW = H * lerp(1.00, 1.20, p);
+    const x = clamp(this.pos - lensW / 2, 0, this.items.offsetWidth - lensW);
+    const y = (H - lensH) / 2;
+    this.lens.update({ hidden: false, x, y, width: lensW, height: lensH, radius: lensH / 2 });
+    place(this.shadow, x + this.items.offsetLeft, y + this.items.offsetTop, lensW, lensH, lensH / 2);
     this.shadow.style.opacity = String(p);
   }
 }

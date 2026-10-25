@@ -31,6 +31,11 @@ async function checkViewport(w,h){
  await send("Page.navigate",{url:REMOTE?REMOTE+"?qa="+w+"&v=f1c09f1":"http://127.0.0.1:"+PORT+"/index.html?qa="+w});
  for(let i=0;i<50;i++){if(await evaluate("document.readyState === 'complete' && !!document.querySelector('#grid .day')"))break;await sleep(110)}
  await sleep(400);
+ // Wait for the SVG filter to attach, not merely for DOMContentLoaded.
+ for(let attempt=0;attempt<32;attempt++){
+   if(await evaluate("(()=>{const e=document.querySelector('.segment .lg-refract');return !!e && getComputedStyle(e).filter.includes('url(')})()"))break;
+   await sleep(120);
+ }
  const state=await evaluate(`(()=>{const a=document.querySelector('.actions').getBoundingClientRect(),s=document.querySelector('lg-segmented'),c=s?.querySelector('.lg-refract');return {width:innerWidth,scroll:document.documentElement.scrollWidth,month:document.querySelector('#month').textContent,actionRight:a.right,glass:!!c,filter:c?getComputedStyle(c).filter:null,spring:typeof s?.xs?.set==='function',css:!!document.querySelector('link[href="./refined.css"]'),titleSize:parseFloat(getComputedStyle(document.querySelector('.top h1')).fontSize)}})()`);
  assert(state.scroll<=w+1,"horizontal overflow "+w);
  if(w<=390) assert((await evaluate("document.documentElement.clientWidth"))>=w-1,"mobile visible document scrollbar "+w);
@@ -48,8 +53,20 @@ async function checkViewport(w,h){
    assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.surface&&!!d?.lens&&typeof d?.xs?.set==='function'})()"),true,"installed optical Dock component not initialized");
    if(w===390) assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.lens && d.presence<0.02 && getComputedStyle(document.querySelector('#dockToday')).transform==='none'})()"),true,"Dock must not show an idle bubble or scale interactive buttons");
    await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');const r=d.getBoundingClientRect();d.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,clientX:r.left+r.width/2,clientY:r.top+r.height/2}));})()");
-   await sleep(160);
+   for(let retry=0;retry<10;retry++){
+     if(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d?.presence>0.02&&d?.lens!==null})()"))break;
+     await sleep(100);
+   }
    assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d?.presence>0.02&&d?.lens!==null})()"),true,"optical Dock spring did not respond to pointer");
+   if(w===390 && !await evaluate("matchMedia('(prefers-reduced-motion: reduce)').matches")){
+     await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');const r=d.getBoundingClientRect();d.dispatchEvent(new PointerEvent('pointerleave',{bubbles:false,clientX:r.left+r.width/2,clientY:r.top+r.height/2}));})()");
+     await sleep(470);
+     assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d.presence>0.1 && !!d.lens})()"),true,"glass vanished too soon after release");
+     const active=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
+     fs.writeFileSync(path.join(ROOT,"qa-glass-hold-390.png"),Buffer.from(active.data,"base64"));
+     await sleep(900);
+     assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d.presence<0.08})()"),true,"glass remained as a stray bubble after hold");
+   }
    await evaluate("document.querySelector('#dockView').click()");
    assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),7,"dock week switch failed");
    await evaluate("document.querySelector('#dockView').click()");

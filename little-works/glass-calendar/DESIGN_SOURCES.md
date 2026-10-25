@@ -1,5 +1,14 @@
 # 时序 · Skill 应用与验收
 
+## 2026-10-26 Apple type and sustained optics validation
+- Actual Apple reference consulted: HIG typography (default iOS body 17pt; large title 34pt; supporting roles 13–22pt) and Materials/Motion guidance (Liquid Glass is a control/navigation layer, not whole content). Web CSS sizes are an adaptation rather than literal device point equivalence.
+- **METHOD**: Existing `liquid-glass-web/SKILL.md` provides genuine `lg-dock` with `createGlass` SVG optical displacement and `createSpring` interaction; its upstream default immediately fades on pointerleave and a circular self-content lens makes duplicated labels. **ACTION**: Adapted bundled `components.js` *only in LgDock* to hold for bounded 850ms before spring fade, respond to touch down/up/cancel, preserve immediate reduced-motion exit, reshape the temporary bubble into a contained pill. Retained actual underlying optics, no clickable-button scaling. `ios-type-system.css` uses a deliberate 34/22/17/15/13 scale for hierarchy, increasing calendar/date/dock readability. Project `ios-dock.js` configures the hold interval, not an idle effect.
+- **PROOF**: headless Edge project `quality-check.cjs` tests four breakpoints and the original features, checks real filter attachment and active lens, asserts it survives 470ms after release and falls below visual threshold after another 900ms. Inspected real `qa-type-new-390.png`, `qa-type-new-320.png` and `qa-glass-hold-390.png` after change. These are **local** and ignored by Git. Dynamic Safari/iPhone and user artistic approval remain pending.
+- **Process correction**: A Skill being installed/read does not imply the use of its actual special behavior. Our prior release proved the SVG engine existed but failed optical dwell/readability. The existing Apple Web Design workflow now requires idle/active/release image inspection and typographic role review; no extra registry/system installed.
+- **Disclosure**: True visual similarity to Apple's native compositor is not proven; the web engine can refract browser backdrops but not reproduce all Apple OS effects, and some copied-text distortions remain visible in active optical frames.
+
+
+
 ## 2026-10-25 mobile material refinement and actual QA
 - Applied Taste workspace visual direction and system Settings / App Library reference hierarchy, retaining calendar-first content rather than generic dashboard labels.
 - Added ios-dock.js with live Today, month/week and new event controls. The buttons delegate to existing calendar events and use the installed glass Skill createSpring method. Second iteration replaced its CSS-only rim with the installed upstream lg-dock component; the native-to-the-library Surface and pointer-following refractive lens now really initialize and animate. Optical SVG material also remains in the lg-segmented control and optics lab. This is a browser implementation, not Apple OS native Liquid Glass.
