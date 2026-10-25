@@ -12,7 +12,7 @@ for(const width of widths){
  const page=await context.newPage();page.setDefaultTimeout(5500);page.setDefaultTimeout(5000);
  page.on('pageerror',e=>errors.push({scope:'gallery-'+width,error:e.message}));
  page.on('response',r=>{if(r.status()>=400&&r.url().startsWith(site))errors.push({scope:'gallery-'+width,http:r.status(),url:r.url()})});
- await test('Gallery loads '+width,async()=>{const r=await page.goto(site,{waitUntil:'networkidle',timeout:20000});assert.equal(r.status(),200);assert.equal(await page.locator('.gallery .card').count(),8)});
+ await test('Gallery loads '+width,async()=>{const r=await page.goto(site,{waitUntil:'networkidle',timeout:20000});assert.equal(r.status(),200);assert.equal(await page.locator('.gallery .card').count(),JSON.parse(fs.readFileSync(path.join(__dirname,'little-works','catalog.json'),'utf8')).length)});
  await test('Three XiaoYa buttons '+width,async()=>{
     const card=page.locator('.xiaoya-card');assert.equal(await card.count(),1);
     const links=card.locator('nav a');assert.equal(await links.count(),3);
