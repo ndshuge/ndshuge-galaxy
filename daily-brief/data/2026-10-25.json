@@ -1,0 +1,536 @@
+{
+  "date": "2026-10-25",
+  "weekday": "星期日",
+  "title": "从模型自限到珊瑚礁临界点：系统真正需要什么样的韧性？",
+  "deck": "开放模型安全、量子纠错、软件依赖、网络自稳定与生态风险都在追问：系统遭遇扰动后，能否恢复？",
+  "window": "截至2026年10月25日08:00北京时间；重点10月22—24日，少量高价值10月中旬研究及长期教育证据。",
+  "topSignals": [
+    "开放模型安全发布需要权衡能力与难以撤回的风险。",
+    "半导体竞争延伸到HBM基底、材料测量和软件兼容。",
+    "复杂系统的重要指标是恢复能力与长期韧性。"
+  ],
+  "core": [
+    {
+      "n": 1,
+      "id": "core-1",
+      "title": "月之暗面主动降低Kimi K3.1 Pro网络攻击能力",
+      "tags": [
+        "AI",
+        "模型安全"
+      ],
+      "summary": "10月24日发布介绍，权重计划11月4日开放；公司称内部攻击基准得分由90.5%降至81.0%。Reuters 10月24日报道。",
+      "background": "模型权重公开后难以收回；通用编码能力与网络攻击能力可能交叠。",
+      "importance": "安全削减是一种可量化的能力取舍，但公司自测未经独立验证。",
+      "impact": "本地模型和Agent上线前应做安全测试，不把自测当第三方认证。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.reuters.com/technology/moonshot-curbs-hacking-ability-new-kimi-model-fears-grow-over-ai-powered-2026-10-24/"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "id": "core-2",
+      "title": "OpenAI恢复前沿训练并披露Brotli漏洞",
+      "tags": [
+        "AI",
+        "Agent",
+        "软件供应链"
+      ],
+      "summary": "公司称9月配置错误导致研究模型获得有限联网能力，10月1日加固后恢复训练；10月23日披露Brotli相关漏洞。Reuters 10月23日报道。",
+      "background": "隔离红队测试发现第三方压缩软件风险；源码修复与下游发布可能存在时间差。",
+      "importance": "安全不仅取决于模型行为，还取决于运行环境和依赖版本。",
+      "impact": "检查Mice Hole、Node服务的版本、权限和日志；不假设所有安装都受影响。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.reuters.com/business/openai-resumes-frontier-ai-training-with-enhanced-security-no-internet-access-2026-10-23/"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "id": "core-3",
+      "title": "TorchNeuron降低PyTorch跨芯片迁移门槛",
+      "tags": [
+        "AI",
+        "计算平台",
+        "PyTorch"
+      ],
+      "summary": "10月19日Amazon宣布TorchNeuron，称可通过配置变更在Trainium上运行既有PyTorch代码，拟开源。Reuters同日报道。",
+      "background": "CUDA生态是NVIDIA的重要优势；更换AI加速器时算子、工具链和开发经验构成迁移成本。",
+      "importance": "芯片竞争不仅比算力，还比软件兼容与工程效率。",
+      "impact": "学习PyTorch时区分框架、编译器和设备后端；兼容声明不等于性能一致。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.reuters.com/business/retail-consumer/amazon-says-its-ai-chips-will-work-with-popular-coding-language-challenging-2026-10-19/"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "id": "core-4",
+      "title": "HBM基底芯片或促成Samsung与TSMC工艺协作",
+      "tags": [
+        "半导体",
+        "HBM",
+        "Chiplet"
+      ],
+      "summary": "Reuters 10月18日转述韩国媒体称Samsung可能采用TSMC 3nm工艺生产下一代定制HBM的基底芯片。",
+      "background": "HBM由DRAM堆叠、TSV、逻辑基底及先进封装组成，受带宽、热和良率约束。",
+      "importance": "存储厂、逻辑代工厂与封装厂的分工可能更深。",
+      "impact": "画出HBM截面并核查量产进展；这仍是媒体转述，未获各方正式确认。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.reuters.com/world/asia-pacific/samsung-use-tsmc-technology-nvidias-next-generation-memory-chips-seoul-newspaper-2026-10-18/"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "id": "core-5",
+      "title": "物理感知神经网络改善低剂量原子断层成像",
+      "tags": [
+        "材料",
+        "显微成像",
+        "AI for Science"
+      ],
+      "summary": "10月23日npj Computational Materials论文提出两阶段网络，基准包含42,588个模拟体，并在部分金属纳米粒子实验数据上测试。",
+      "background": "电子束损伤与信噪比构成矛盾；三维重建是受物理约束的逆问题。",
+      "importance": "把物理模型融入网络能改善测量后处理，但不等于无需真实实验。",
+      "impact": "结合线性代数、投影反演与3D可视化学习；材料外推仍需验证。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.nature.com/articles/s41524-026-02363-9"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "id": "core-6",
+      "title": "禾赛推出面向机器人空间数据采集的Kosmo",
+      "tags": [
+        "机器人",
+        "具身智能",
+        "传感器"
+      ],
+      "summary": "10月14日Hesai介绍结合激光雷达和相机的空间映射设备，称与机器人企业合作。Reuters同日报道。",
+      "background": "具身智能训练需要高质量几何和物理世界数据，不只是文本。",
+      "importance": "传感器、数据标注、执行器与标定构成机器人能力的基础。",
+      "impact": "可研究ROS 2传感器标定；合作协议与演示不等于规模化部署。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.reuters.com/technology/chinas-hesai-launches-spatial-camera-boost-ai-powered-robotics-adoption-2026-10-14/"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "id": "core-7",
+      "title": "自主量子纠错突破逻辑量子比特寿命盈亏平衡",
+      "tags": [
+        "物理",
+        "量子计算",
+        "纠错"
+      ],
+      "summary": "10月23日Nature Physics论文展示在囚禁离子多内部态编码逻辑比特，通过自旋—运动耦合与冷却延长寿命。",
+      "background": "常规量子纠错常需反复测量与反馈；自主纠错利用设计好的物理动力学。",
+      "importance": "为降低纠错开销提供实验路线，但不代表通用量子计算已可扩展。",
+      "impact": "用线性代数和经典纠错码理解冗余、噪声与反馈的区别。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.nature.com/articles/s41567-026-03486-y"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "id": "core-8",
+      "title": "Barclays宣布约5000人裁员与AI自动化降本",
+      "tags": [
+        "产业",
+        "就业",
+        "商业模式"
+      ],
+      "summary": "10月22日银行披露计划裁员约5000人、约占员工5%，其中1000个岗位此前已削减；Reuters 22日报道、23日更新。",
+      "background": "银行成本控制涉及AI、其他自动化、组织调整及市场因素。",
+      "importance": "技术变化正在重塑岗位任务，但不能将每个裁员岗位全部归因为AI。",
+      "impact": "关注初级开发、系统集成、审计和专业判断能力的长期需求。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.reuters.com/business/finance/barclays-q3-profit-rises-12-announces-670-million-buyback-2026-10-22/"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "id": "core-9",
+      "title": "6000多名学生随机实验提示AI辅导的长期收益有限且依赖结构",
+      "tags": [
+        "教育",
+        "学习科学",
+        "随机实验"
+      ],
+      "summary": "2026年8月NBER研究由Stanford SCALE整理：AI辅导改善错误后的下一次答题表现，但一周后延迟测试收益有限。",
+      "background": "即时答对率、练习数量和长期保持率是不同指标；研究对象为初中生。",
+      "importance": "学习工具必须评价延迟成绩而非只评价完成率。",
+      "impact": "知序AI学院可增设无AI复测与错因复发跟踪。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://scale.stanford.edu/ai/repository/making-ai-tutoring-productive-evidence-mastery-based-math-practice-experiment"
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "id": "core-10",
+      "title": "超扭转WS₂多层材料实现强手性光学响应",
+      "tags": [
+        "Wildcard",
+        "二维材料",
+        "光子学"
+      ],
+      "summary": "10月23日Nature Communications论文用穹顶状WS₂模板引导生长低应变超扭转多层，并观察明显圆二色性。",
+      "background": "二维材料层间旋转角影响光与物质相互作用，制造应变和缺陷影响一致性。",
+      "importance": "原子尺度几何结构可成为光学功能设计变量。",
+      "impact": "可做层间旋转与偏振光3D科普，明确是实验材料而非成熟产品。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.nature.com/articles/s41467-026-78371-6"
+        }
+      ]
+    }
+  ],
+  "extensions": [
+    {
+      "n": 11,
+      "id": "ext-11",
+      "title": "政治①：美国拟扩大对外投资审查，中国商务部反对",
+      "tags": [
+        "政治",
+        "国际经贸"
+      ],
+      "summary": "美国财政部10月22日提出将生物技术等纳入更广投资限制；中国商务部10月24日公开反对。Reuters 24日报道。",
+      "background": "美方称旨在限制敏感两用技术融资，中方认为相关措施有歧视性并损害经贸。",
+      "importance": "科技资本流动与安全治理交织。",
+      "impact": "关注规则最终文本与适用范围；严格区分政策提案、双方主张和实际效果。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.reuters.com/world/china/china-urges-us-halt-proposed-expansion-outbound-investment-curbs-2026-10-24/"
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "id": "ext-12",
+      "title": "政治②：日本皇室继承法修订10月24日生效",
+      "tags": [
+        "政治",
+        "日本",
+        "制度"
+      ],
+      "summary": "AP 10月24日报道，新规则允许符合条件的远支父系男性被收养进入皇室、女性皇族婚后保留身份，但维持男性继承。",
+      "background": "修法旨在缓解皇室成员减少；反对者质疑性别公平、透明度与实际执行。",
+      "importance": "长期制度传统与现代规范可能出现冲突。",
+      "impact": "区分已生效法律、实施细则和社会评价，不作立场引导。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://apnews.com/article/0bb12e8b9eb3cc5b37c19a572b03ed71"
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "id": "ext-13",
+      "title": "艺术：大德寺700年特展以绘画茶器与空间讲述文化史",
+      "tags": [
+        "艺术",
+        "博物馆",
+        "设计"
+      ],
+      "summary": "东京国立博物馆展览10月14日开幕、12月6日结束；10月24日有专题报道。",
+      "background": "禅宗艺术同时涉及宗教、赞助、绘画、器物与建筑语境。",
+      "importance": "跨媒介策展能启发3D展馆与宣传片叙事。",
+      "impact": "研究展品组织与镜头语言；公开项目使用作品图片需核对版权。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://daitokuji2026.exhn.jp/"
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "id": "ext-14",
+      "title": "生物：FLASHS在394万细胞图谱上识别空间基因模式",
+      "tags": [
+        "生物",
+        "空间转录组",
+        "统计"
+      ],
+      "summary": "10月23日Communications Biology论文提出频域核检验方法，评估50个数据集与9个平台，演示脑图谱大规模分析。",
+      "background": "空间转录组把基因表达与细胞所在位置结合；大规模多尺度模式检测计算昂贵。",
+      "importance": "统计与算法进步能改善生物图谱分析，但空间相关不等于因果。",
+      "impact": "可结合傅里叶分析与假设检验学习；并非临床治疗突破。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.nature.com/articles/s42003-026-11138-3"
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "id": "ext-15",
+      "title": "教育：大学生AI使用与认知负荷的横断面关联研究",
+      "tags": [
+        "教育",
+        "学习科学",
+        "调查"
+      ],
+      "summary": "10月8日Scientific Reports论文调查孟加拉国390名本硕学生，报告AI使用感知与认知负荷、心理状态之间的统计关联。",
+      "background": "横断面调查难以确定因果方向，结果受量表和样本环境限制。",
+      "importance": "研究方法比单个正面结论更值得学习。",
+      "impact": "记录AI辅助与独立解题表现，不把主观轻松直接等同于学习效果。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.nature.com/articles/s41598-026-74412-8"
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "id": "ext-16",
+      "title": "历史：基因组研究重新讨论复活节岛与夏威夷航海迁徙",
+      "tags": [
+        "历史",
+        "考古",
+        "古基因组"
+      ],
+      "summary": "Reuters 10月20日报道：研究分析1000余名波利尼西亚人基因组，提出Rapa Nui与夏威夷早期定居的紧密联系。",
+      "background": "历史重建需要遗传学、考古、语言学和口述传统共同验证。",
+      "importance": "新证据可改变迁徙模型，但遗传相近不自动确定唯一航海路线。",
+      "impact": "关注样本代表性、模型不确定性与当地社区的研究伦理。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://www.reuters.com/science/genetic-study-shows-seafarers-easter-island-settled-hawaii-2026-10-20/"
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "id": "ext-17",
+      "title": "金融：油价上涨与AI资本开支回报疑虑同时压制市场",
+      "tags": [
+        "金融",
+        "宏观",
+        "能源"
+      ],
+      "summary": "AP报道10月23日标普500收跌0.5%，布伦特原油结算价约116.72美元/桶，市场关注利率与AI投资回报。",
+      "background": "油价影响通胀，利率影响长期资本项目折现与融资成本。",
+      "importance": "科技行业也受能源与金融条件制约。",
+      "impact": "学习现金流、融资期限和资本成本；单日市场表现不能推断长期趋势，不荐股。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://apnews.com/article/stocks-markets-ai-oil-inflation-7b47ef3b037bfba4e34f685329b9b963"
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "id": "ext-18",
+      "title": "生态：IUCN将122个珊瑚礁生态区列为极危风险",
+      "tags": [
+        "生态",
+        "气候",
+        "海洋"
+      ],
+      "summary": "IUCN 10月22日全球评估覆盖127个生态区，122个（96%）被列为极危，1个已崩溃，4个数据不足。",
+      "background": "只看过去50年观察，极危占24%；加入未来热浪情景后升至96%。",
+      "importance": "预测风险与已发生崩溃必须分开；保护措施仍可能改变路径。",
+      "impact": "研究情景模拟和生态反馈，不将96%误读成96%珊瑚已经死亡。",
+      "sources": [
+        {
+          "label": "已核验来源",
+          "url": "https://iucn.org/story/202610/red-list-coral-reef-ecosystems"
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "label": "世界模型 / 结构",
+      "text": "Kimi能力削减、Brotli修复、量子纠错、STP和珊瑚礁风险：哪些能靠自动反馈恢复，哪些必须改变外部环境？"
+    },
+    {
+      "label": "与你有关 / 判断",
+      "text": "面对PyTorch后端兼容、原子成像逆问题与AI辅导随机实验，下个月数学、微电子、PyTorch各用什么无AI指标验收？"
+    },
+    {
+      "label": "反事实 / 权衡",
+      "text": "如果Agent严格隔离令开发速度降低25%但减少高风险误操作，你会对课堂练习、公开仓库和私人文件分别设置何种权限？"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Dependency Sentinel",
+      "type": "软件 / AI / 安全",
+      "definition": "汇总多个工程的依赖版本、漏洞公告与升级影响的只读面板。",
+      "why": "现有Mice Hole、ComfyUI、Node与Python项目存在真实依赖管理需求。",
+      "reuse": "FactGuard证据链、工程日志与GitHub工作流。",
+      "mvp": "三个测试仓库的SBOM、漏洞ID、修复版本与误报解释。",
+      "difficulty": "中",
+      "learning": "软件供应链、版本控制、风险评估。",
+      "risk": "误报与盲目升级破坏现有环境。",
+      "next": "研究OSV Scanner的输入与验证流程，不自动升级。",
+      "question": "若漏洞严重但相关代码从未执行，你如何评估真实风险？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/google/osv-scanner"
+      }
+    },
+    {
+      "name": "Loopless Network",
+      "type": "游戏 / 交互",
+      "definition": "通过接线与断线，让数据包到达目标且避免广播环路的策略游戏。",
+      "why": "将图论、生成树和游戏机制结合。",
+      "reuse": "Godot、鼠哥游戏厅、现有动画素材。",
+      "mvp": "六关、八种节点、数据包回放与自动恢复。",
+      "difficulty": "中",
+      "learning": "图论、网络协议、游戏设计。",
+      "risk": "过度简化以太网行为。",
+      "next": "先阅读Godot官方2D演示与STP原理。",
+      "question": "如何解释冗余链路既提高韧性又可能造成环路？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/godotengine/godot-demo-projects"
+      }
+    },
+    {
+      "name": "Pocket Power Lab",
+      "type": "硬件 / 电子",
+      "definition": "设计一块低压电流电压采样板并显示设备功耗曲线。",
+      "why": "与电子科学和嵌入式学习直接相关。",
+      "reuse": "Python、Ubuntu、Blender与电子课程。",
+      "mvp": "KiCad原理图、规则检查、模拟数据与误差预算。",
+      "difficulty": "中",
+      "learning": "PCB、测量、ADC与误差分析。",
+      "risk": "接线错误；仅考虑安全低压，不接市电。",
+      "next": "先核对KiCad样例与采样器件数据手册，不采购。",
+      "question": "如何区分传感器误差与采样频率不足？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/kicad/kicad-source-mirror"
+      }
+    },
+    {
+      "name": "Atom Slice Studio",
+      "type": "视觉 / 3D / 科学",
+      "definition": "把多角度投影和噪声转化为可交互的三维断层重建教学作品。",
+      "why": "连接材料、线性代数与3D视觉。",
+      "reuse": "Blender、Three.js、科学可视化。",
+      "mvp": "一个模拟体素样本、8个投影角与误差图。",
+      "difficulty": "中",
+      "learning": "逆问题、成像算法、空间可视化。",
+      "risk": "简单模型可能夸大真实原子成像能力。",
+      "next": "先研究TomoPy前向投影和重建。",
+      "question": "投影角减少时如何展示重建结果的不确定性？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/tomopy/tomopy"
+      }
+    },
+    {
+      "name": "Reef Tipping Point",
+      "type": "Wildcard / 生态模拟",
+      "definition": "模拟珊瑚、藻类、食草鱼与热浪的相互作用，观察生态临界点。",
+      "why": "可复用现有Boids、Schelling与文明沙盒经验。",
+      "reuse": "群体模型实验、Python与网页交互。",
+      "mvp": "三类代理、温度开关、捕捞参数与多轮重复。",
+      "difficulty": "中",
+      "learning": "复杂系统、反馈、概率模型。",
+      "risk": "模型过于简单不能预测真实珊瑚礁。",
+      "next": "先研究Mesa和IUCN评估变量。",
+      "question": "怎样判断模型崩溃来自真实机制还是参数设置？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/mesa/mesa"
+      }
+    }
+  ],
+  "projectCompare": [
+    "只有7天，Dependency Sentinel和Loopless Network各需什么证据证明学到新知识？",
+    "Pocket Power Lab和Atom Slice Studio如何分别避免只做漂亮演示？",
+    "Reef Tipping Point的长期世界模型价值应怎样衡量？"
+  ],
+  "person": {
+    "name": "Radia Perlman",
+    "subtitle": "网络协议工程师｜STP生成树协议重要设计者｜网络自稳定思想的代表人物",
+    "sections": [
+      {
+        "title": "出身与早期环境",
+        "body": "成长于美国新泽西州的工程师家庭，父亲从事雷达工程、母亲从事编程；同时喜欢数学、音乐与艺术。不同权威传记出生年份略有差异，本期不据此写精确年份。"
+      },
+      {
+        "title": "学生时代与第一次尝试",
+        "body": "高中编程课堂曾因周围人的术语而感到挫败；在MIT参与真实编程工作后改变看法。在Logo实验室开发让儿童用实体模块学习编程的TORTIS。"
+      },
+      {
+        "title": "关键转折",
+        "body": "1973年获MIT数学学士、1976年获硕士，进入BBN研究网络协议；1980年加入DEC解决网络路由与以太网桥接难题。"
+      },
+      {
+        "title": "重要成功",
+        "body": "设计生成树协议，使有冗余连接的以太网桥接网络能避免活动环路；对IS-IS等路由协议与网络安全也有贡献。"
+      },
+      {
+        "title": "明确误判与代价",
+        "body": "她曾以为STP只是过渡几个月的方案，实际却广泛使用数十年；这体现了对既有设备迁移速度的误判，也使非最优转发拓扑长期存在。"
+      },
+      {
+        "title": "选择背后的约束",
+        "body": "大量已部署终端无法同步升级，新方案必须兼容旧设备、易部署且能在故障后自动恢复。"
+      },
+      {
+        "title": "合作者、竞争者与时代",
+        "body": "MIT、BBN、DEC工程团队和以太网产业扩张提供条件；ARPANET早期路由缺陷暴露了自稳定的必要性。"
+      },
+      {
+        "title": "仍值得学习与不应机械模仿",
+        "body": "值得学习清晰表达、图论建模、兼容性与自恢复；不应把STP当成所有现代网络最优架构，也不应把集体工程成果神化为单人发明。"
+      }
+    ],
+    "questions": [
+      "把Mice Hole、GitHub和本机模型看成网络节点，哪些依赖关系可能形成循环？",
+      "你能不依赖AI手算一个带权图的生成树，并解释它与STP的差异吗？",
+      "如果新桥接方案更快却要求修改所有现有项目，你怎样权衡性能与兼容性？",
+      "一个临时方案已被真实用户长期依赖，什么证据会让你决定渐进替换？",
+      "怎样设计小实验，证明自己能向初学者解释网络恢复的底层原理？"
+    ]
+  },
+  "finalSignals": [
+    "安全是持续的能力、版本与权限管理，不是一次性发布检查。",
+    "硬件性能与软件生态互相塑造，材料测量与制造分工同样重要。",
+    "反馈与冗余可提高系统韧性，但跨越临界点后恢复可能困难。",
+    "即时指标与长期结果必须分开，不能把相关性误当因果。",
+    "本科可迁移能力是模型、实验、证据与失败分析的闭环。"
+  ],
+  "deepDive": [
+    "从生成树、量子纠错、Agent隔离到生态临界点：可恢复系统的共同数学。",
+    "HBM基底、低剂量原子成像和PyTorch后端：微电子的软硬协同链条。"
+  ]
+}
