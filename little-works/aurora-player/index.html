@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#141b30"><meta name="description" content="澄音：沉浸式音乐播放器。播放原创试听曲或导入你的本地音乐。">
+<title>澄音 — 让音乐成为风景</title><link rel="icon" href="cover.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css">
+<script type="module" src="app.js"></script></head>
+<body>
+<div class="ambience" aria-hidden="true"><div class="aurora aurora-one"></div><div class="aurora aurora-two"></div><div class="aurora aurora-three"></div><div class="noise"></div></div>
+<div class="app-shell" id="app">
+<header class="global-header">
+<a href="../" class="back-link" aria-label="返回小东西"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg><span>小东西</span></a>
+<a class="brand" href="./" aria-label="澄音首页"><span class="brand-mark"><i></i></span><span>澄音</span></a>
+<div class="header-actions"><label class="import-button" tabindex="0" role="button"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg><span>导入音乐</span><input type="file" id="file-input" accept="audio/*,.mp3,.m4a,.flac,.wav,.ogg" multiple aria-label="选择本地音乐文件"></label></div>
+</header>
+<div class="main-grid">
+<aside class="library-nav">
+<span class="section-caption">音乐空间</span>
+<button class="nav-link active" id="nav-now" type="button"><svg viewBox="0 0 24 24"><path d="m10 7 8 5-8 5z"/><circle cx="12" cy="12" r="9"/></svg>正在播放</button>
+<button class="nav-link" id="nav-library" type="button"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h8"/></svg>我的曲库</button>
+<button class="nav-link" id="nav-favorites" type="button"><svg viewBox="0 0 24 24"><path d="M20.5 8.5c0 5-8.5 10.5-8.5 10.5S3.5 13.5 3.5 8.5a4.5 4.5 0 0 1 8.5-2 4.5 4.5 0 0 1 8.5 2z"/></svg>喜欢的歌</button>
+<div class="nav-divider"></div>
+<div class="playlist-intro"><span>下一首</span><span id="nav-up-next">—</span></div>
+<p class="nav-tip">拖入音频文件，开始听自己的音乐。</p>
+</aside>
+<main class="experience" id="drop-zone">
+<section class="stage">
+<div class="art-column">
+<div class="art-halo" aria-hidden="true"></div>
+<div class="art-cover" id="art-cover"><img id="cover-art" src="cover.svg" alt="专辑视觉：月光、海面与光环" draggable="false"><span class="art-reflection" aria-hidden="true"></span></div>
+<div class="art-indicator" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+</div>
+<div class="track-column">
+<p class="now-label">正在播放 <span class="live-bars" id="live-bars" aria-hidden="true"><b></b><b></b><b></b></span></p>
+<h1 id="track-title">夜色来信</h1><p class="artist" id="track-artist">澄音 · 原创试听</p>
+<div class="description" id="track-subtitle">在漫长的夜里，留一盏灯给自己。</div>
+<div class="track-options"><button class="icon-button" id="favorite-button" type="button" aria-label="喜欢这首歌" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20.5 8.5c0 5-8.5 10.5-8.5 10.5S3.5 13.5 3.5 8.5a4.5 4.5 0 0 1 8.5-2 4.5 4.5 0 0 1 8.5 2z"/></svg></button>
+<button class="icon-button" id="toggle-lyrics" type="button" aria-label="显示或隐藏同步文字" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 4V5zm4 4h8M8 13h6"/></svg></button></div>
+<div class="lyrics-panel" id="lyrics-panel" hidden><p id="current-lyric">让风穿过安静的城市</p><span id="next-lyric">在月亮落下以前</span></div>
+</div>
+</section>
+<section class="library-panel" id="library-panel" hidden><div class="library-heading"><h2>我的音乐</h2><p id="library-description">从右上角导入文件，或试听这三首原创配乐。</p></div><div class="library-items" id="library-items"></div></section>
+<div class="drop-hint" id="drop-hint" aria-hidden="true"><span>松开，加入你的音乐</span></div>
+</main>
+<aside class="queue-column" id="queue-column"><div class="queue-header"><h2 id="queue-heading">接下来播放</h2><button id="close-queue" class="close-queue" type="button" aria-label="收起播放列表"><svg viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></svg></button></div><div class="queue-list" id="queue-list"></div><div class="queue-bottom"><span>三首原创试听曲</span><span id="track-count">3 首</span></div></aside>
+</div>
+<div class="dock-wrap">
+<section class="player-dock" aria-label="音乐播放控制">
+<div class="dock-current"><div class="mini-cover"><img src="cover.svg" alt="" id="mini-cover"></div><div class="dock-track"><strong id="dock-title">夜色来信</strong><span id="dock-artist">澄音</span></div></div>
+<div class="dock-center">
+<div class="transport"><button id="shuffle" type="button" class="transport-sub" aria-label="随机播放" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 7h3c7 0 5 10 12 10h3m-4-4 4 4-4 4M3 17h3c7 0 5-10 12-10h3m-4-4 4-4-4-4"/></svg></button>
+<button id="previous" class="transport-skip" type="button" aria-label="上一首"><svg viewBox="0 0 24 24"><path d="M6 5v14m13-14L8 12l11 7z"/></svg></button>
+<div class="play-lens-container"><span class="play-lens" id="play-lens" aria-hidden="true"></span><button id="play-pause" class="play-main" type="button" aria-label="播放"><svg id="play-icon" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></svg></button></div>
+<button id="next" class="transport-skip" type="button" aria-label="下一首"><svg viewBox="0 0 24 24"><path d="M18 5v14M5 5l11 7-11 7z"/></svg></button>
+<button id="repeat" type="button" class="transport-sub" aria-label="切换循环模式" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h11l-3-3m3 3-3 3M20 16a4 4 0 0 1-4 4H5l3 3m-3-3 3-3"/></svg></button></div>
+<div class="progress-line"><span id="elapsed">0:00</span><input type="range" id="seek" min="0" max="100" value="0" step="0.1" aria-label="播放进度"><span id="duration">0:00</span></div></div>
+<div class="dock-right"><svg class="volume-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM17 9a5 5 0 0 1 0 6"/></svg><input type="range" id="volume" min="0" max="1" step=".01" value=".72" aria-label="音量"><button id="queue-toggle" type="button" class="queue-toggle" aria-label="显示播放列表" aria-expanded="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h11"/></svg></button></div>
+</section>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<audio id="audio" preload="metadata"></audio>
+</div></body></html>

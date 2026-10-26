@@ -1,5 +1,19 @@
 [
   {
+    "slug": "aurora-player",
+    "title": "澄音 · Apple 风格音乐播放器",
+    "date": "2026.10.26",
+    "type": "MUSIC PLAYER",
+    "description": "可播放原创试听曲，支持导入本地音乐、列表切歌、实时进度与沉浸式液态玻璃界面。",
+    "url": "./aurora-player/",
+    "cover": "./aurora-player/cover.svg",
+    "tags": [
+      "Apple 风格",
+      "本地音乐",
+      "液态玻璃"
+    ]
+  },
+  {
     "slug": "glass-calendar",
     "title": "时序 · 日历",
     "date": "2026.10.25",

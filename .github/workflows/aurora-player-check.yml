@@ -1,0 +1,23 @@
+name: Aurora player quality
+on:
+  push:
+    paths:
+      - 'little-works/aurora-player/**'
+      - 'little-works/catalog.json'
+      - '.github/workflows/aurora-player-check.yml'
+  pull_request:
+    paths:
+      - 'little-works/aurora-player/**'
+      - 'little-works/catalog.json'
+      - '.github/workflows/aurora-player-check.yml'
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node little-works/aurora-player/check.cjs
+      - run: node little-works/aurora-player/browser-qa.cjs
