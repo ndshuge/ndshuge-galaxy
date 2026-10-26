@@ -52,7 +52,8 @@ async function checkViewport(w,h){
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),42,"month mode failed");
  if(w<=390){
    assert.equal(await evaluate("getComputedStyle(document.querySelector('.shixu-dock')).display"),"block","mobile glass dock absent");
-   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.surface?.glass&&!!d?.glint&&typeof d?.xs?.set==='function'&&d.surface.mode==='copy'&&getComputedStyle(d.surface.layer).filter.includes('url(')})()"),true,"installed optical Dock component not initialized");
+   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock'),c=document.querySelector('.calendar'),b=document.querySelector('.below');return d.parentElement===c.parentElement && d.getBoundingClientRect().top>=c.getBoundingClientRect().bottom-18 && b.getBoundingClientRect().top>=d.getBoundingClientRect().bottom+10})()"),true,"Dock must stay in normal flow between calendar and agenda, without covering content");
+   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.surface?.glass&&!!d?.glint&&typeof d?.xs?.set==='function'&&d.surface.mode==='backdrop'&&getComputedStyle(d.surface.layer).backdropFilter.includes('url(')})()"),true,"installed optical Dock component not initialized");
    if(w===390) assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.glint && d.presence<0.02 && getComputedStyle(document.querySelector('#dockToday')).transform==='none'})()"),true,"Dock must not show an idle bubble or scale interactive buttons");
    await evaluate("(()=>{const b=document.querySelector('#dockView');const r=b.getBoundingClientRect();b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',clientX:r.left+r.width/2,clientY:r.top+r.height/2}));})()");
    for(let retry=0;retry<10;retry++){
@@ -130,7 +131,7 @@ async function checkViewport(w,h){
  assert(target,"CDP page not available");
  ws=new WebSocket(target.webSocketDebuggerUrl);
  await new Promise((resolve,reject)=>{ws.addEventListener("open",resolve,{once:true});ws.addEventListener("error",reject,{once:true})});
- ws.addEventListener("message",event=>{const m=JSON.parse(event.data);if(m.id){const cb=callbacks.get(m.id);if(cb){callbacks.delete(m.id);m.error?cb.reject(Error(JSON.stringify(m.error))):cb.resolve(m.result)}}if(m.method==="Runtime.exceptionThrown")faults.push(m.params.exceptionDetails.text)});
+ ws.addEventListener("message",event=>{const m=JSON.parse(event.data);if(m.id){const cb=callbacks.get(m.id);if(cb){callbacks.delete(m.id);m.error?cb.reject(Error(JSON.stringify(m.error))):cb.resolve(m.result)}}if(m.method==="Runtime.exceptionThrown")faults.push(m.params.exceptionDetails.exception?.description || JSON.stringify(m.params.exceptionDetails))});
  await send("Page.enable");await send("Runtime.enable");
  const reports=[];
  for(const [w,h] of [[320,650],[320,700],[390,700],[390,844],[768,900],[1440,900]])reports.push(await checkViewport(w,h));

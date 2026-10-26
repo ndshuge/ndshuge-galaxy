@@ -1,5 +1,12 @@
 # 时序 · Skill 应用与验收
 
+## 2026-10-26 系统级界面收口（v3）
+- **Reference → Method:** Apple HIG Materials recommends Liquid Glass primarily for floating navigation, not content cards; HIG Typography provides a 34pt large title / 17pt body baseline. Applied this as a product-specific decision rather than equating more blur to better glass.
+- **ACTION:** Added final `system-v3.css` with neutral content surfaces, restrained border/shadow and consistent 34px title / 16px day labels. Removed the redundant mobile brand bar. Moved mobile Dock into the real layout between calendar and agenda rather than a fixed overlay. Replaced `lg-dock backdrop=body` (which cloned a mismatched background and produced dirty gray bands) with its original SVG optical **backdrop** mode; retained moving highlight and spring interactions without moving text or hit targets. Simplified empty-day copy.
+- **PROOF:** Visually reviewed Edge light/dark 390×844, compact 320×650, and desktop 1440×900 before and after. Six viewport CDP QA now includes no overlap of Dock with date or agenda; validates `backdropFilter:url(...)`, highlight traveling spring, month/week, CRUD, reduced-motion paths and inverse broken-Skill wiring check. No third-party image assets or proprietary Apple font copied. Human art approval and physical iPhone Safari testing remain pending.
+- **Remaining limit:** True iOS system compositor cannot be reproduced pixel-for-pixel in web CSS/SVG; the mobile navigation optic refracts content most visibly when a textured surface scrolls beneath it.
+
+
 ## 2026-10-26 修复文字重影与弹簧交互
 - 使用已安装 `liquid-glass-web` Skill 原有的 `Surface` 光学折射和 `createSpring`，将旧 `lg-dock` 对按钮内容的浮动放大镜替换为 **位于真实可点击文字之下的移动光学高亮**，消除重影、独立圆泡和点击区域漂移；Dock 背景使用 Skill 的已知背景复制模式 `backdrop="body"` 与 SVG `feDisplacementMap`，在支持的浏览器上真正折射背景。
 - 按 Motion Skill 的短反馈、状态驱动与可访问性原则，把动效限定在高亮平移和弹层开启；按钮本人不缩放。短屏幕月历采用 48–54px 日期行高，给浮动控制保留足够的底部滚动安全留白。
