@@ -1,17 +1,24 @@
 const fs=require('fs'),path=require('path');
-const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH||'playwright-core');
+const {chromium,webkit}=require(process.env.PLAYWRIGHT_MODULE_PATH||'playwright-core');
 const url=process.env.XIAOYA_APPLE_TEST_URL||'http://127.0.0.1:5393/little-works/xiaoya-apple/';
 (async()=>{
- const browser=await chromium.launch({channel:'msedge',headless:true});
+ const browser=await chromium.launch(process.env.XIAOYA_BROWSER_CHANNEL==='chromium'?{headless:true}:{channel:'msedge',headless:true});
  const reports=[];
  const dir=path.join(__dirname,'docs','xiaoya-apple-next-qa');fs.mkdirSync(dir,{recursive:true});
  for(const w of [320,390,768,1440]){
   const p=await browser.newPage({viewport:{width:w,height:w<600?844:900},reducedMotion:'no-preference'});
   const errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push('console:'+m.text().slice(0,140))});
-  await p.goto(url,{waitUntil:'domcontentloaded',timeout:25000});await p.waitForSelector('#xy-onboard');await p.waitForTimeout(550);if(w===390){await p.screenshot({path:path.join(dir,'onboarding-390.png')});}await p.locator('#xy-local').evaluate(b=>b.click());await p.waitForTimeout(650);
+  await p.goto(url,{waitUntil:'domcontentloaded',timeout:25000});await p.waitForSelector('#xy-onboard');await p.waitForTimeout(550);if(w===390){await p.screenshot({path:path.join(dir,'onboarding-390.png')});}await p.locator('#xy-local').evaluate(b=>b.click());await p.waitForTimeout(650);const dismissed=await p.locator('#xy-onboard').evaluate(e=>e.hidden);
+  await p.locator('#ai-global-entry').evaluate(b=>b.click());
+  const manualReopen=await p.locator('#xy-onboard').evaluate(e=>!e.hidden);
+  await p.locator('#xy-skip').evaluate(b=>b.click());
+  await p.waitForTimeout(420);
+  const staysDismissed=await p.locator('#xy-onboard').evaluate(e=>e.hidden);
+  if(w<=790)await p.waitForFunction(()=>getComputedStyle(document.querySelector('.xy-glass-indicator')).backdropFilter.includes('url('),{timeout:4000}).catch(()=>{});
   const baseline=await p.evaluate(()=>{
     const d=document.documentElement,nav=document.querySelector('.mobile-tabs'),lens=document.querySelector('.xy-glass-indicator');
-    return {shell:document.body.classList.contains('apple-next'),overflow:d.scrollWidth-innerWidth,glass:nav?.dataset.glass||'',filter:lens?getComputedStyle(lens).backdropFilter:'missing',heroRect:document.querySelector('.xy-cinema')?.getBoundingClientRect().toJSON()};
+    const radius = selector => parseFloat(getComputedStyle(document.querySelector(selector)).borderTopLeftRadius)||0;
+    return {shell:document.body.classList.contains('apple-next'),overflow:d.scrollWidth-innerWidth,glass:nav?.dataset.glass||'',filter:lens?getComputedStyle(lens).backdropFilter:'missing',heroRect:document.querySelector('.xy-cinema')?.getBoundingClientRect().toJSON(),sheetRadius:radius('#xy-onboard .xy-dialog'),groupRadius:radius('#view-settings > .panel'),controlRadius:radius('#xy-connect'),heroRadius:radius('.xy-cinema')};
   });
   await p.screenshot({path:path.join(dir,'after-'+w+'.png')});
   const first=await p.locator('#view-today.view.active').count();
@@ -24,10 +31,80 @@ const url=process.env.XIAOYA_APPLE_TEST_URL||'http://127.0.0.1:5393/little-works
   await back.evaluate(b=>b.click());
   const returned=await p.locator('#view-today.view.active').count();
   const lensVisible=await p.evaluate(()=>{const nav=document.querySelector('.mobile-tabs');const lens=nav?.querySelector('.xy-glass-indicator');if(!lens)return false;const st=getComputedStyle(lens);return st.display!=='none'&&st.visibility!=='hidden'&&Number(st.opacity)!==0&&lens.getBoundingClientRect().width>=35;});
-  reports.push({width:w,...baseline,first,clickedTasks:tasks,returned,lensVisible,errors});
+  reports.push({width:w,...baseline,dismissed,manualReopen,staysDismissed,first,clickedTasks:tasks,returned,lensVisible,errors});
   await p.close();
  }
+ const safari=await browser.newPage({viewport:{width:390,height:844},userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Mobile/15E148 Safari/604.1'});
+ await safari.addInitScript(()=>Object.defineProperty(navigator,'userAgentData',{value:undefined,configurable:true}));
+ await safari.goto(url,{waitUntil:'domcontentloaded'});await safari.waitForTimeout(500);
+ const webkitClaim=await safari.evaluate(()=>({mode:document.querySelector('.mobile-tabs')?.dataset.glass,engine:document.querySelector('.mobile-tabs')?.dataset.glassEngine}));
+ await safari.close();
  const p=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});await p.goto(url);const reduced=await p.evaluate(()=>({motion:matchMedia('(prefers-reduced-motion: reduce)').matches,nav:document.querySelector('.mobile-tabs')?.dataset.glass||''}));await p.close();await browser.close();
- console.log(JSON.stringify({reports,reduced}));
- if(reports.some(x=>x.overflow>2||!x.shell||!x.first||!x.clickedTasks||!x.returned||x.errors.length||(x.width<=790 && (x.glass!=='refraction'||!x.filter.includes('url(')||!x.lensVisible))))process.exitCode=2;
+ const requireWebkit=process.env.XIAOYA_REQUIRE_WEBKIT==='1';
+ let realWebkit={tested:false};
+ try {
+  const wk=await webkit.launch({headless:true});
+  const w=await wk.newPage({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
+  const wkErrors=[];w.on('pageerror',e=>wkErrors.push(e.message));
+  await w.goto(url,{waitUntil:'domcontentloaded',timeout:25000});
+  await w.waitForTimeout(850);
+  if(await w.locator('#xy-skip').isVisible())await w.locator('#xy-skip').click();
+  await w.waitForFunction(()=>{
+    const nav=document.querySelector('.mobile-tabs');
+    const copy=nav?.querySelector('.xy-refract-copy');
+    return nav?.dataset.glass==='content-refraction' && nav.classList.contains('has-content-refraction') && copy && getComputedStyle(copy).filter.includes('url(');
+  },null,{timeout:12000});
+  await w.waitForTimeout(180);
+  await w.screenshot({path:path.join(dir,'webkit-content-refraction-today-390.png')});
+  const before=await w.evaluate(()=>{const nav=document.querySelector('.mobile-tabs'),c=nav?.querySelector('.xy-refract-copy');return {engine:nav?.dataset.glassEngine,mode:nav?.dataset.glass,filter:getComputedStyle(c).filter,clip:c.style.clipPath,overflow:document.documentElement.scrollWidth-innerWidth,realButtons:nav.querySelectorAll('button[data-view]').length,duplicateButtons:c.querySelectorAll('button').length,svgCopies:c.querySelectorAll('svg').length,ariaHidden:c.getAttribute('aria-hidden'),copyPointerEvents:getComputedStyle(c).pointerEvents,dockBackground:getComputedStyle(nav).backgroundColor}});
+  await w.evaluate(()=>{
+    window.__xyOpticWrites = 0;
+    const copy=document.querySelector('.xy-refract-copy');
+    const observer=new MutationObserver(mutations=>{window.__xyOpticWrites+=mutations.filter(m=>m.attributeName==='style').length});
+    observer.observe(copy,{attributes:true,attributeFilter:['style']});
+    window.__xyOpticObserver=observer;
+  });
+  await w.locator('.mobile-tabs button[data-view="tasks"]').tap();
+  await w.waitForTimeout(700);
+  await w.screenshot({path:path.join(dir,'webkit-content-refraction-tasks-390.png')});
+  const after=await w.evaluate(()=>({active:document.querySelector('.mobile-tabs button.active')?.dataset.view,filter:document.querySelector('.xy-refract-copy')?.style.filter,clip:document.querySelector('.xy-refract-copy')?.style.clipPath}));
+  // Exercise native touch hit targets through multiple route changes.
+  for (const route of ['goals','review','schedule','today']) {
+    await w.locator('.mobile-tabs button[data-view="'+route+'"]').tap();
+    await w.waitForTimeout(150);
+  }
+  await w.waitForTimeout(480);
+  const settle=await w.evaluate(async()=>{
+    const copy=document.querySelector('.xy-refract-copy');
+    const initial=copy?.style.filter;
+    await new Promise(resolve=>setTimeout(resolve,380));
+    return {active:document.querySelector('.mobile-tabs button.active')?.dataset.view,
+      stable:copy?.style.filter===initial, animations:document.getAnimations().filter(x=>x.playState==='running').length};
+  });
+  const additionalWidths=[];
+  for(const width of [320,768]){
+    const viewport=await wk.newPage({viewport:{width,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
+    viewport.on('pageerror',e=>wkErrors.push(e.message));
+    await viewport.goto(url,{waitUntil:'domcontentloaded',timeout:25000});
+    await viewport.waitForTimeout(700);
+    if(await viewport.locator('#xy-skip').isVisible())await viewport.locator('#xy-skip').tap();
+    await viewport.waitForFunction(()=>document.querySelector('.mobile-tabs')?.dataset.glass==='content-refraction',null,{timeout:12000});
+    const initial=await viewport.evaluate(()=>({overflow:document.documentElement.scrollWidth-innerWidth,dock:document.querySelector('.mobile-tabs')?.getBoundingClientRect().toJSON(),background:getComputedStyle(document.querySelector('.mobile-tabs')).backgroundColor}));
+    await viewport.locator('.mobile-tabs button[data-view="settings"]').tap();
+    await viewport.waitForTimeout(400);
+    const active=await viewport.locator('.mobile-tabs button.active').getAttribute('data-view');
+    await viewport.screenshot({path:path.join(dir,'webkit-content-refraction-settings-'+width+'.png')});
+    additionalWidths.push({width,...initial,active});
+    await viewport.close();
+  }
+  const opticalWrites=await w.evaluate(()=>{window.__xyOpticObserver.disconnect();return window.__xyOpticWrites});
+  realWebkit={tested:true,before,after,settle,additionalWidths,opticalWrites,errors:wkErrors};
+  await w.close(); await wk.close();
+  if(before.engine!=='webkit'||before.mode!=='content-refraction'||!before.filter.includes('url(')||before.duplicateButtons!==0||before.realButtons!==6||before.svgCopies!==6||before.ariaHidden!=='true'||before.copyPointerEvents!=='none'||before.overflow>2||after.active!=='tasks'||before.clip===after.clip||settle.active!=='today'||!settle.stable||opticalWrites>14||additionalWidths.some(s=>s.overflow>2||s.active!=='settings'||!s.dock||s.dock.width<280||!s.background.startsWith('rgb('))||wkErrors.length)process.exitCode=2;
+ } catch(e) {
+  realWebkit={tested:false,error:e.message.slice(0,180)};
+  if(requireWebkit) process.exitCode=2;
+ }
+ console.log(JSON.stringify({reports,reduced,realWebkit}));
+ if(reports.some(x=>x.overflow>2||!x.shell||!x.dismissed||!x.manualReopen||!x.staysDismissed||x.sheetRadius<32||x.groupRadius<28||x.heroRadius<32||x.controlRadius>19||x.controlRadius>=x.groupRadius||!x.first||!x.clickedTasks||!x.returned||x.errors.length||(x.width<=790 && (x.glass!=='refraction'||!x.filter.includes('url(')||!x.lensVisible))))process.exitCode=2;
 })().catch(e=>{console.error(e.stack);process.exitCode=3})

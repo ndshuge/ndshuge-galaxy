@@ -284,5 +284,12 @@ document.querySelectorAll('[data-ask]').forEach(e=>e.onclick=()=>{q('#xy-input')
 for(const sel of ['#ai-global-entry','#ai-goals-banner-action','#ai-mode-connect','#ai-today-connect','#growth-ai-config-link']){const el=q(sel);if(!el)continue;el.disabled=false;el.removeAttribute('aria-disabled');el.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();open()},true)}
 // The saved profile was already explicitly verified before persistence.
 const automaticallyRestored=restoreSavedSession();
-if(!automaticallyRestored){status();setTimeout(open,350)}
+if(!automaticallyRestored){
+ status();
+ setTimeout(()=>{
+  // The user may have dismissed onboarding before the timeout fired.
+  // Never reopen after explicit dismissal in this tab.
+  if(!api && modal.hidden && sessionStorage.getItem('xiaoya-comparison-xiaoya-apple-onboard-v2')!=='seen')open();
+ },350);
+}
 window.addEventListener('pagehide',()=>{api=null;restoredSession=false;chat=[]});
