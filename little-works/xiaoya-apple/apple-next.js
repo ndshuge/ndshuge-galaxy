@@ -3,6 +3,11 @@ import { createGlass, createSpring, engine } from './glass/liquid-glass.js';
 const body = document.body;
 if (body.classList.contains('design-apple')) {
   body.classList.add('apple-next');
+  // Apple Settings uses a functional page title, not a promotional hero.
+  const settingsHeading = document.querySelector('#view-settings .page-head h1');
+  if (settingsHeading) settingsHeading.textContent = '设置';
+  const settingsSummary = document.querySelector('#view-settings .page-head p');
+  if (settingsSummary) settingsSummary.textContent = '管理学期、提醒、AI 和个人数据。';
   const day = document.getElementById('view-today');
   const shell = day?.querySelector('.xy-cinema');
   const overview = shell?.querySelector('.overview-grid');
@@ -66,7 +71,7 @@ if (body.classList.contains('design-apple')) {
         // Never force layout by reading DOM rects on every spring frame.
         const x = v + copyOffset;
         const now = performance.now();
-        if (velocity === 0 || (now-lastOpticalUpdate >= 64 && Math.abs(x-lastOpticalPosition) >= 4)) {
+        if (velocity === 0) {
           contentOptics.update({x});
           lastOpticalPosition=x;
           lastOpticalUpdate=now;
@@ -76,7 +81,6 @@ if (body.classList.contains('design-apple')) {
     function updateIndicator(instant = false) {
       if (window.innerWidth > 790) return;
       const target = buttons.find(b => b.classList.contains('active')) || buttons[0];
-      if (contentSurface) [...contentSurface.children].forEach((cell,i)=>cell.classList.toggle('is-selected',buttons[i]===target));
       if (!target) return;
       if (contentSurface) [...contentSurface.children].forEach((cell,i)=>cell.classList.toggle('is-selected',buttons[i]===target));
       const r = target.getBoundingClientRect();
@@ -135,8 +139,8 @@ if (body.classList.contains('design-apple')) {
             contentOptics = createGlass(contentSurface, {
               sync:true, clip:true, x:r.left-c.left, y:r.top-c.top,
               width:r.width, height:r.height, radius:23,
-              refraction:7, bezel:.38, curvature:4, chroma:0,
-              specular:.5,specularWidth:1.35
+              refraction:18, bezel:.55, curvature:4, chroma:.08,
+              specular:.7,specularWidth:1.55
             });
             dock.dataset.glass = contentOptics ? 'content-refraction' : 'frosted-fallback';
             if (contentOptics) {

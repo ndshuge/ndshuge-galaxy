@@ -49,9 +49,21 @@ const url=process.env.XIAOYA_APPLE_TEST_URL||'http://127.0.0.1:5393/little-works
   await w.goto(url,{waitUntil:'domcontentloaded',timeout:25000});
   await w.waitForTimeout(850);
   if(await w.locator('#xy-skip').isVisible())await w.locator('#xy-skip').click();
-  await w.waitForTimeout(650);
+  await w.waitForFunction(()=>{
+    const nav=document.querySelector('.mobile-tabs');
+    const copy=nav?.querySelector('.xy-refract-copy');
+    return nav?.dataset.glass==='content-refraction' && nav.classList.contains('has-content-refraction') && copy && getComputedStyle(copy).filter.includes('url(');
+  },null,{timeout:12000});
+  await w.waitForTimeout(180);
   await w.screenshot({path:path.join(dir,'webkit-content-refraction-today-390.png')});
   const before=await w.evaluate(()=>{const nav=document.querySelector('.mobile-tabs'),c=nav?.querySelector('.xy-refract-copy');return {engine:nav?.dataset.glassEngine,mode:nav?.dataset.glass,filter:getComputedStyle(c).filter,clip:c.style.clipPath,overflow:document.documentElement.scrollWidth-innerWidth,realButtons:nav.querySelectorAll('button[data-view]').length,duplicateButtons:c.querySelectorAll('button').length,svgCopies:c.querySelectorAll('svg').length,ariaHidden:c.getAttribute('aria-hidden'),copyPointerEvents:getComputedStyle(c).pointerEvents,dockBackground:getComputedStyle(nav).backgroundColor}});
+  await w.evaluate(()=>{
+    window.__xyOpticWrites = 0;
+    const copy=document.querySelector('.xy-refract-copy');
+    const observer=new MutationObserver(mutations=>{window.__xyOpticWrites+=mutations.filter(m=>m.attributeName==='style').length});
+    observer.observe(copy,{attributes:true,attributeFilter:['style']});
+    window.__xyOpticObserver=observer;
+  });
   await w.locator('.mobile-tabs button[data-view="tasks"]').tap();
   await w.waitForTimeout(700);
   await w.screenshot({path:path.join(dir,'webkit-content-refraction-tasks-390.png')});
@@ -69,9 +81,26 @@ const url=process.env.XIAOYA_APPLE_TEST_URL||'http://127.0.0.1:5393/little-works
     return {active:document.querySelector('.mobile-tabs button.active')?.dataset.view,
       stable:copy?.style.filter===initial, animations:document.getAnimations().filter(x=>x.playState==='running').length};
   });
-  realWebkit={tested:true,before,after,settle,errors:wkErrors};
+  const additionalWidths=[];
+  for(const width of [320,768]){
+    const viewport=await wk.newPage({viewport:{width,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
+    viewport.on('pageerror',e=>wkErrors.push(e.message));
+    await viewport.goto(url,{waitUntil:'domcontentloaded',timeout:25000});
+    await viewport.waitForTimeout(700);
+    if(await viewport.locator('#xy-skip').isVisible())await viewport.locator('#xy-skip').tap();
+    await viewport.waitForFunction(()=>document.querySelector('.mobile-tabs')?.dataset.glass==='content-refraction',null,{timeout:12000});
+    const initial=await viewport.evaluate(()=>({overflow:document.documentElement.scrollWidth-innerWidth,dock:document.querySelector('.mobile-tabs')?.getBoundingClientRect().toJSON(),background:getComputedStyle(document.querySelector('.mobile-tabs')).backgroundColor}));
+    await viewport.locator('.mobile-tabs button[data-view="settings"]').tap();
+    await viewport.waitForTimeout(400);
+    const active=await viewport.locator('.mobile-tabs button.active').getAttribute('data-view');
+    await viewport.screenshot({path:path.join(dir,'webkit-content-refraction-settings-'+width+'.png')});
+    additionalWidths.push({width,...initial,active});
+    await viewport.close();
+  }
+  const opticalWrites=await w.evaluate(()=>{window.__xyOpticObserver.disconnect();return window.__xyOpticWrites});
+  realWebkit={tested:true,before,after,settle,additionalWidths,opticalWrites,errors:wkErrors};
   await w.close(); await wk.close();
-  if(before.engine!=='webkit'||before.mode!=='content-refraction'||!before.filter.includes('url(')||before.duplicateButtons!==0||before.realButtons!==6||before.svgCopies!==6||before.ariaHidden!=='true'||before.copyPointerEvents!=='none'||before.overflow>2||after.active!=='tasks'||before.clip===after.clip||settle.active!=='today'||!settle.stable||wkErrors.length)process.exitCode=2;
+  if(before.engine!=='webkit'||before.mode!=='content-refraction'||!before.filter.includes('url(')||before.duplicateButtons!==0||before.realButtons!==6||before.svgCopies!==6||before.ariaHidden!=='true'||before.copyPointerEvents!=='none'||before.overflow>2||after.active!=='tasks'||before.clip===after.clip||settle.active!=='today'||!settle.stable||opticalWrites>14||additionalWidths.some(s=>s.overflow>2||s.active!=='settings'||!s.dock||s.dock.width<280||!s.background.startsWith('rgb('))||wkErrors.length)process.exitCode=2;
  } catch(e) {
   realWebkit={tested:false,error:e.message.slice(0,180)};
   if(requireWebkit) process.exitCode=2;

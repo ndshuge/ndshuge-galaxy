@@ -31,6 +31,13 @@ const checks = [
     const license = txt('little-works/xiaoya-apple/glass/LICENSE.txt');
     assert.match(license, /MIT License/);
   }],
+  ['WebKit content-copy refraction cannot silently regress to blur', () => {
+    const source = process.env.SKILL_GATE_NEGATIVE_TEST === 'missing-webkit-refraction' ? '' : js;
+    assert.match(source, /className = 'xy-refract-copy'/, 'BLOCK: missing WebKit optical copy');
+    assert.match(source, /clip:true/, 'BLOCK: WebKit copy must use clipped SVG refraction');
+    assert.match(source, /content-refraction/, 'BLOCK: WebKit must report real copied-content refraction');
+    assert.match(css, /\.mobile-tabs \.xy-refract-copy/, 'BLOCK: copied refraction surface lacks styling');
+  }],
   ['Accessibility and fallback are preserved', () => {
     assert.match(js, /aria-hidden/);
     assert.match(js, /prefers-reduced-motion/);
@@ -52,6 +59,17 @@ const checks = [
     assert.match(audit, /Designeer/);
     assert.match(audit, /User art acceptance/);
     exists('qa-apple-next.cjs');
+  }],
+  ['Actual WebKit content optics and native controls', () => {
+    const source = process.env.SKILL_GATE_NEGATIVE_TEST === 'missing-webkit-optics' ? '' : js;
+    assert.match(source, /contentOptics\s*=\s*createGlass\(contentSurface/,
+      'BLOCK: WebKit must use a real SVG content-filter engine, not only blur');
+    assert.match(source, /cell\.append\(/,
+      'BLOCK: WebKit optical surface must copy icon artwork, not only a label');
+    assert.match(source, /has-content-refraction/,
+      'BLOCK: native buttons must stay operable beneath an aria-hidden copy');
+    assert.match(source, /'content-refraction'/,
+      'BLOCK: WebKit material type must be accurately reported');
   }],
   ['Apple corner grammar is applied, not just documented', () => {
     const targetCss = process.env.SKILL_GATE_NEGATIVE_TEST === 'missing-corner-system'

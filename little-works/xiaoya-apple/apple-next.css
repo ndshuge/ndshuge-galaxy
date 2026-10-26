@@ -515,6 +515,21 @@ body.apple-next .xy-floating-panels{align-items:start}
  body.design-apple.redesign-v2.apple-next .mobile-tabs .xy-glass-indicator{background:white!important}
 }
 
+/* On compact screens the settings title needs a balanced break. The optional
+   floating pet must not obscure the primary heading or the account fields. */
+@media(max-width:390px){
+  body.apple-next #view-settings .page-head h1{
+    font-size:clamp(27px,8vw,31px)!important;
+    letter-spacing:-.045em!important;
+    text-wrap:balance;
+    line-height:1.23!important;
+  }
+}
+body.apple-next:has(#view-settings.view.active) #xy-fab,
+body.apple-next:has(#view-settings.view.active) #xy-pet-bubble,
+body.apple-next:has(#view-settings.view.active) #xy-pet-actions{
+  display:none!important;
+}
 /* Prevent bright content from showing through the dock as unblurred glyphs
    (observed in real Playwright WebKit). Prefer opacity to costly giant blur. */
 @media(max-width:790px){
@@ -525,6 +540,18 @@ body.apple-next .xy-floating-panels{align-items:start}
     -webkit-backdrop-filter:blur(6px) saturate(1.1)!important;
   }
 }
+/* The empty state has no decorative emoji tile: quiet iOS Settings hierarchy. */
+body.apple-next .empty-state{padding:28px 12px!important;color:#6e6e73!important}
+body.apple-next .empty-state .empty-art{display:none!important}
+body.apple-next .empty-state strong{font-size:15px!important;line-height:1.45!important;color:#424245!important;font-weight:600!important}
+body.apple-next .empty-state p{font-size:13px!important;line-height:1.55!important;color:#86868b!important;max-width:310px}
+
+/* Empty states: iOS-style typography rather than platform-dependent green emoji glyphs. */
+body.apple-next .empty-state{padding:28px 12px!important;color:#6e6e73!important}
+body.apple-next .empty-state .empty-art{display:none!important}
+body.apple-next .empty-state strong{font-size:16px!important;font-weight:640!important;color:#34343a!important;line-height:1.5}
+body.apple-next .empty-state p{font-size:13px!important;line-height:1.6!important;color:#77777f!important;margin-top:8px!important}
+
 /* Pattern B: a genuinely refracted copy of navigation art for WebKit/Gecko.
    The real native controls remain topmost and receive all input. */
 @media(max-width:790px){
@@ -624,4 +651,38 @@ body.apple-next .xy-floating-panels{align-items:start}
 @media(max-width:790px){
  body.apple-next .mobile-tabs.has-content-refraction button.active{color:#242128!important}
  body.apple-next .mobile-tabs.has-content-refraction .xy-refract-cell.is-selected{opacity:.22}
+}
+
+/* WebKit: refraction of the selected navigation art remains active.
+   Avoid stacking a costly dock-wide blur over the per-item SVG displacement. */
+@media(max-width:790px){
+ body.design-apple.redesign-v2.apple-next .mobile-tabs[data-glass-engine="webkit"]{
+   -webkit-backdrop-filter:blur(4px) saturate(1.15)!important;
+   backdrop-filter:blur(4px) saturate(1.15)!important;
+   box-shadow:0 7px 20px rgba(43,37,54,.14),inset 0 1px 0 rgba(255,255,255,.88)!important;
+ }
+}
+
+
+/* iOS Settings review: system-scale hierarchy, not landing-page billboard type. */
+@media(max-width:790px){
+ body.apple-next #view-settings .page-head h1{
+   font-size:34px!important;line-height:1.18!important;
+   font-weight:690!important;letter-spacing:-.035em!important;
+ }
+ body.apple-next #view-settings .page-head p{
+   font-size:15px!important;line-height:1.5!important;color:#6e6e73!important;
+ }
+ body.apple-next #byok-settings .byok-head .kicker{display:none!important}
+ body.apple-next #view-settings>.panel{margin-block:18px 22px!important}
+}
+
+/* Tablet-sized floating dock: retain an Apple-like compact island, not a full-width strip. */
+@media(min-width:600px) and (max-width:790px){
+ body.design-apple.redesign-v2.apple-next .mobile-tabs{
+   left:50%!important;
+   right:auto!important;
+   width:min(552px,calc(100% - 28px))!important;
+   transform:translateX(-50%) translateZ(0)!important;
+ }
 }

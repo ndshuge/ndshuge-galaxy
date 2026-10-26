@@ -46,6 +46,31 @@ jobs:
             exit 1
           fi
           echo 'PASS: missing Apple corner system blocked as expected'
+          if SKILL_GATE_NEGATIVE_TEST=missing-webkit-optics node qa-xiaoya-apple-static.cjs; then
+            echo 'FAIL: missing WebKit optical engine passed the existing gate'
+            exit 1
+          fi
+          echo 'PASS: missing WebKit content optics blocked as expected'
+          if SKILL_GATE_NEGATIVE_TEST=missing-webkit-refraction node qa-xiaoya-apple-static.cjs; then
+            echo 'FAIL: missing WebKit optical copy passed the existing gate'
+            exit 1
+          fi
+          echo 'PASS: missing WebKit optical copy blocked as expected'
+      - name: Install pinned browser runner
+        run: |
+          npm install --no-save --package-lock=false playwright@1.64.0
+          npx playwright install --with-deps chromium webkit
+      - name: Browser QA — Chromium and real Playwright WebKit
+        env:
+          XIAOYA_BROWSER_CHANNEL: chromium
+          XIAOYA_REQUIRE_WEBKIT: "1"
+        run: |
+          python3 -m http.server 5393 --bind 127.0.0.1 > /tmp/xiaoya-http.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:5393/little-works/xiaoya-apple/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node qa-apple-next.cjs
       - name: Check JavaScript parse
         run: |
           node --check little-works/xiaoya-apple/apple-next.js
