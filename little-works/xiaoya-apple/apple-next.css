@@ -365,3 +365,76 @@ body.apple-next .xy-floating-panels{align-items:start}
 @media(max-width:790px){
  body.apple-next #xy-fab:not([style*="left:"]){top:140px!important;bottom:auto!important;right:19px!important;width:53px!important;height:53px!important;min-width:53px!important;border-radius:18px!important}
 }
+
+/* Apple Next v2 optical/60fps pass: a visible lens over the actual canvas,
+   light compositing and touch-friendly motion, including WebKit fallback. */
+@media(max-width:790px){
+ body.apple-next .mobile-tabs{
+   background:rgba(242,241,247,.54)!important;
+   border:1px solid rgba(255,255,255,.88)!important;
+   box-shadow:0 9px 28px rgba(43,37,54,.18),0 1px 2px rgba(32,30,38,.07),inset 0 1px 0 rgba(255,255,255,.86)!important;
+   backdrop-filter:blur(11px) saturate(1.3)!important;
+   -webkit-backdrop-filter:blur(11px) saturate(1.3)!important;
+   transform:translateZ(0);
+   contain:layout style;
+ }
+ body.apple-next .mobile-tabs .xy-glass-indicator{
+   background:linear-gradient(156deg,rgba(255,255,255,.88) 0%,rgba(255,255,255,.38) 42%,rgba(240,237,248,.56) 100%)!important;
+   border:1px solid rgba(255,255,255,.98)!important;
+   box-shadow:inset 0 2px 1px rgba(255,255,255,.97),inset 1px 0 1px rgba(255,255,255,.62),inset -1px -2px 3px rgba(99,92,115,.16),0 4px 10px rgba(59,50,72,.19),0 1px 2px rgba(59,50,72,.13)!important;
+   -webkit-backdrop-filter:blur(6px) saturate(1.65) brightness(1.055);
+   backdrop-filter:blur(6px) saturate(1.65) brightness(1.055);
+   transform-origin:center;
+   overflow:hidden;
+   isolation:isolate;
+ }
+ body.apple-next .mobile-tabs .xy-glass-indicator::before{
+   content:"";position:absolute;inset:1px;border-radius:inherit;pointer-events:none;
+   background:linear-gradient(135deg,rgba(255,255,255,.72) 0,rgba(255,255,255,.05) 33%,transparent 56%,rgba(255,255,255,.29) 100%);
+ }
+ body.apple-next .mobile-tabs .xy-glass-indicator.is-pressed{
+   background:rgba(255,255,255,.81)!important;
+   box-shadow:inset 0 2px 4px rgba(255,255,255,.98),0 2px 8px rgba(54,47,71,.16)!important;
+ }
+ body.apple-next #xy-fab .xy-pet-art{
+   animation:none!important;
+   transition:transform .23s cubic-bezier(.2,.8,.2,1),background-position .2s ease!important;
+ }
+ body.apple-next #xy-fab[data-state="celebrate"] .xy-pet-art,
+ body.apple-next #xy-fab[data-state="thinking"] .xy-pet-art{
+   animation:xy-pet-idle 2s ease-in-out 2!important;
+ }
+ body.apple-next #xy-fab{transition:transform .18s ease,box-shadow .18s ease!important}
+ body.apple-next .xy-cinema:before{animation:none!important}
+}
+@media(max-width:790px) and (prefers-reduced-transparency:reduce){
+ body.apple-next .mobile-tabs{background:#f4f3f6!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ body.apple-next .mobile-tabs .xy-glass-indicator{background:#fff!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+}
+@media(max-width:790px) and (prefers-reduced-motion:reduce){
+ body.apple-next #xy-fab .xy-pet-art{animation:none!important;transition:none!important}
+}
+
+
+/* Higher-specificity overrides: old comparison.css and Apple V1 must not win. */
+@media(max-width:790px){
+ body.design-apple.redesign-v2.apple-next .mobile-tabs {
+   background:rgba(244,242,250,.48)!important;
+   -webkit-backdrop-filter:blur(9px) saturate(1.28)!important;
+   backdrop-filter:blur(9px) saturate(1.28)!important;
+   box-shadow:0 11px 27px rgba(43,37,54,.19),inset 0 1px 0 #ffffffed!important;
+   border:1px solid rgba(255,255,255,.96)!important;
+ }
+ body.design-apple.redesign-v2.apple-next .mobile-tabs .xy-glass-indicator {
+   background:linear-gradient(155deg,rgba(255,255,255,.93),rgba(255,255,255,.52) 45%,rgba(231,224,241,.64))!important;
+   border:1px solid #ffffffec!important;
+   box-shadow:inset 0 2px 2px #fff,inset -1px -2px 4px #75668028,0 4px 12px #3b324630!important;
+ }
+ body.design-apple.redesign-v2.apple-next .mobile-tabs .xy-glass-indicator.is-pressed{
+   background:rgba(255,255,255,.9)!important;
+ }
+}
+@media(max-width:790px) and (prefers-reduced-transparency:reduce) {
+ body.design-apple.redesign-v2.apple-next .mobile-tabs{background:#f4f3f6!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ body.design-apple.redesign-v2.apple-next .mobile-tabs .xy-glass-indicator{background:white!important}
+}
