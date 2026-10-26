@@ -1,6 +1,6 @@
 const fs=require('fs'),path=require('path');
-const {chromium}=require('E:/CHATGPT/projects/ai-academy/video-studio/node_modules/playwright-core');
-const url='http://127.0.0.1:5393/little-works/xiaoya-apple/';
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH||'playwright-core');
+const url=process.env.XIAOYA_APPLE_TEST_URL||'http://127.0.0.1:5393/little-works/xiaoya-apple/';
 (async()=>{
  const browser=await chromium.launch({channel:'msedge',headless:true});
  const reports=[];
@@ -23,10 +23,11 @@ const url='http://127.0.0.1:5393/little-works/xiaoya-apple/';
   const back=w<=790?p.locator('.mobile-tabs button[data-view="today"]'):p.locator('.side-nav button[data-view="today"]');
   await back.evaluate(b=>b.click());
   const returned=await p.locator('#view-today.view.active').count();
-  reports.push({width:w,...baseline,first,clickedTasks:tasks,returned,errors});
+  const lensVisible=await p.evaluate(()=>{const nav=document.querySelector('.mobile-tabs');const lens=nav?.querySelector('.xy-glass-indicator');if(!lens)return false;const st=getComputedStyle(lens);return st.display!=='none'&&st.visibility!=='hidden'&&Number(st.opacity)!==0&&lens.getBoundingClientRect().width>=35;});
+  reports.push({width:w,...baseline,first,clickedTasks:tasks,returned,lensVisible,errors});
   await p.close();
  }
  const p=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});await p.goto(url);const reduced=await p.evaluate(()=>({motion:matchMedia('(prefers-reduced-motion: reduce)').matches,nav:document.querySelector('.mobile-tabs')?.dataset.glass||''}));await p.close();await browser.close();
  console.log(JSON.stringify({reports,reduced}));
- if(reports.some(x=>x.overflow>2||!x.shell||!x.first||!x.clickedTasks||!x.returned||x.errors.filter(y=>!y.includes('404')).length))process.exitCode=2;
+ if(reports.some(x=>x.overflow>2||!x.shell||!x.first||!x.clickedTasks||!x.returned||x.errors.length||(x.width<=790 && (x.glass!=='refraction'||!x.filter.includes('url(')||!x.lensVisible))))process.exitCode=2;
 })().catch(e=>{console.error(e.stack);process.exitCode=3})

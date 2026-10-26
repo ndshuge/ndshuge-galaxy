@@ -361,3 +361,7 @@ body.apple-next .sidebar .brand small{font-size:12px!important;color:#65616b!imp
 body.apple-next .xy-feature h1{font-size:clamp(32px,3.4vw,49px)!important}
 @media(max-width:640px){body.apple-next .xy-feature h1{font-size:clamp(30px,8vw,35px)!important}}
 body.apple-next .xy-floating-panels{align-items:start}
+/* Keep the companion away from task-card actions on first mobile launch. Explicitly dragged coordinates remain authoritative. */
+@media(max-width:790px){
+ body.apple-next #xy-fab:not([style*="left:"]){top:140px!important;bottom:auto!important;right:19px!important;width:53px!important;height:53px!important;min-width:53px!important;border-radius:18px!important}
+}

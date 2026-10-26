@@ -11,3 +11,4 @@
 - Taste inspect.mjs --app 真实运行，报告 .taste-skill/inspect/report.json；并非全 PASS：自定义温暖底色渐变、真实小芽图像伴随的 emoji、modal 阴影和大型问候标题属于专项审美取舍；历史业务模板仍含 microcopy 与小字，待持续清理。原版业务导航与真实数据必须保留。
 - User art acceptance：PENDING。未调用真实付费 API，没有上传 Key 或私有资料。
 - Rollback：Git revert 当前发布提交；旧版 premium.css 仍在仓库，未删除。
+- 2026-10-26 pre-submit: Windows Edge regression 52/52, independent Apple Next responsive & optical 4/4, no page script errors. Added qa-xiaoya-apple-static.cjs and path-scoped GitHub Actions guard, static checks 6/6. Mobile floating companion first-launch default moved away from card action; reviewed fresh 390px screenshot under docs/xiaoya-apple-next-qa/final-mobile-pet-390.png (synthetic demo only). No paid provider key used. Remote origin/main must be integrated by non-force merge/cherry-pick before publication; do not push detached HEAD to main.
