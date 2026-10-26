@@ -12,7 +12,13 @@ function install(){
  const reduced=matchMedia("(prefers-reduced-motion: reduce)");
  let initialized=false;
  const sync=()=>{
-  const active=labels.find(b=>b.getAttribute("aria-checked")==="true")||labels[0];
+  // Rendered cells are authoritative: programmatic and rapid mode switches
+  // must not leave the selected glass behind the live view.
+  const cells=document.querySelectorAll("#grid .day").length;
+  const expected=cells===7?1:0;
+  if(cells&&control.index!==expected&&typeof control.select==="function")
+    control.select(expected,{immediate:true});
+  const active=cells?labels[expected]:(labels.find(b=>b.getAttribute("aria-checked")==="true")||labels[0]);
   const r=control.getBoundingClientRect(),b=active.getBoundingClientRect();
   if(!r.width||!b.width)return;
   indicator.style.transition=initialized&&!reduced.matches?"transform .27s cubic-bezier(.2,.83,.28,1),width .27s cubic-bezier(.2,.83,.28,1)":"none";
@@ -24,6 +30,8 @@ function install(){
  };
  const observer=new MutationObserver(()=>requestAnimationFrame(sync));
  labels.forEach(b=>observer.observe(b,{attributes:true,attributeFilter:["aria-checked"]}));
+ const grid=document.querySelector("#grid");
+ if(grid)new MutationObserver(()=>requestAnimationFrame(sync)).observe(grid,{childList:true});
  const resize=new ResizeObserver(()=>requestAnimationFrame(sync));
  resize.observe(control);
  control.addEventListener("change",()=>requestAnimationFrame(sync));

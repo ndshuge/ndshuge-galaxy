@@ -1,0 +1,30 @@
+/* A glass response UNDER selected-label text, never magnifying copied glyphs. */
+.calendar-controls lg-segmented.segment{position:relative;isolation:isolate}
+.calendar-controls lg-segmented.segment .shixu-touch-lens{
+ position:absolute;left:0;top:0;z-index:1;pointer-events:none;box-sizing:border-box;
+ border-radius:12px;opacity:calc(var(--press,0)*.95);
+ background:linear-gradient(145deg,rgba(172,158,249,calc(.19 + var(--hold,0)*.2)),rgba(240,236,255,calc(.35 + var(--hold,0)*.24)));
+ border:1px solid rgba(132,114,220,calc(.20 + var(--hold,0)*.27));
+ box-shadow:0 2px calc(8px + var(--hold,0)*11px) rgba(95,84,150,calc(.10 + var(--hold,0)*.12)),inset 0 1px rgba(255,255,255,.65);
+ scale:calc(1 + var(--press,0)*.035 + var(--hold,0)*.035) calc(1 - var(--press,0)*.04);
+ transform-origin:center center;
+ will-change:scale,opacity;
+}
+body[data-theme=dark] .calendar-controls lg-segmented.segment .shixu-touch-lens{
+ background:linear-gradient(140deg,rgba(210,200,255,calc(.23 + var(--hold,0)*.2)),rgba(154,134,241,calc(.17 + var(--hold,0)*.19)));
+ border-color:rgba(245,241,255,.34);
+ box-shadow:0 2px calc(8px + var(--hold,0)*10px) rgba(161,149,240,calc(.15 + var(--hold,0)*.14)),inset 0 1px rgba(255,255,255,.34);
+}
+.calendar-controls lg-segmented.segment > button{
+ user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:manipulation
+}
+.calendar-nav button,#themeToggle,.shixu-dock button,#grid .number{
+ -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation;
+ filter:brightness(calc(1 + var(--sh-press,0)*.08 + var(--sh-hold,0)*.05));
+}
+.calendar-nav button,#themeToggle{box-shadow:inset 0 1px rgba(255,255,255,.1),0 0 calc(var(--sh-hold,0)*13px) rgba(146,129,235,calc(var(--sh-hold,0)*.2))!important}
+.shixu-dock__new{box-shadow:0 5px calc(13px + var(--sh-hold,0)*9px) rgba(103,89,219,calc(.2 + var(--sh-hold,0)*.23))!important}
+@media(prefers-reduced-motion:reduce){
+ .calendar-controls lg-segmented.segment .shixu-touch-lens{scale:1!important;will-change:auto}
+ .calendar-nav button,#themeToggle,.shixu-dock button,#grid .number{filter:none!important}
+}

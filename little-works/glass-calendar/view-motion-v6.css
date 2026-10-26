@@ -1,0 +1,11 @@
+/* View changes preserve spatial continuity without scaling or moving touch targets. */
+.shixu-grid-stage{position:relative;isolation:isolate;overflow:hidden;min-height:0}
+.shixu-grid-stage>.grid{position:relative;z-index:1}
+.shixu-grid-stage>.shixu-grid-ghost{
+  position:absolute!important;z-index:2;inset:0 0 auto;pointer-events:none!important;
+  margin:0!important;width:100%;overflow:hidden;user-select:none
+}
+.shixu-grid-stage>.shixu-grid-ghost *{pointer-events:none!important}
+@media(prefers-reduced-motion:reduce){
+ .shixu-grid-stage,.shixu-grid-stage *{animation:none!important}
+}

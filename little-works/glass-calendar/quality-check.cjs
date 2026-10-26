@@ -2,7 +2,7 @@
 const fs=require("node:fs"),path=require("node:path"),http=require("node:http"),os=require("node:os"),assert=require("node:assert/strict");
 const {spawn}=require("node:child_process");
 const REMOTE=process.argv.includes("--remote")?"https://ndshuge.github.io/ndshuge-galaxy/little-works/glass-calendar/":null;
-const ROOT=__dirname,PORT=53753,DEBUG=53754,EDGE="C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
+const ROOT=__dirname,PORT=Number(process.env.SHIXU_QA_PORT||53853),DEBUG=Number(process.env.SHIXU_QA_DEBUG_PORT||53854),EDGE="C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
 const html=fs.readFileSync(path.join(ROOT,"index.html"),"utf8");
 const css=fs.readFileSync(path.join(ROOT,"refined.css"),"utf8");
 const script=fs.readFileSync(path.join(ROOT,"refined.js"),"utf8");
@@ -49,14 +49,38 @@ async function checkViewport(w,h){
   assert.equal(await evaluate("(()=>{const a=document.querySelector('#prev'),b=document.querySelector('#next');return getComputedStyle(a).transform==='none'&&getComputedStyle(b).transform==='none'&&getComputedStyle(a).width!=='0px'})()"),true,"Nav controls must keep stable tap targets");
  }
  if(REMOTE&&w===390){const snapshot=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-online-cdp-390.png"),Buffer.from(snapshot.data,"base64"));}
+ if(w===390&&h===844){
+  await evaluate("(()=>{const b=document.querySelector('#weekMode'),r=b.getBoundingClientRect();b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',clientX:r.left+r.width/2,clientY:r.top+r.height/2}))})()");
+  await sleep(300);
+  assert.equal(await evaluate("(()=>{const s=document.querySelector('.calendar-controls'),l=s.querySelector('.shixu-touch-lens'),b=document.querySelector('#weekMode');if(!l)return false;const p=parseFloat(l.style.getPropertyValue('--press')),h=parseFloat(l.style.getPropertyValue('--hold'));const lr=l.getBoundingClientRect(),br=b.getBoundingClientRect();return p>.75&&h>.35&&Math.abs((lr.left+lr.right)/2-(br.left+br.right)/2)<2&&getComputedStyle(b).transform==='none'})()"),true,"touch press did not squish and hold optical layer in sync with actual button");
+  const pressed=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
+  fs.writeFileSync(path.join(ROOT,"qa-longpress-390.png"),Buffer.from(pressed.data,"base64"));
+  await evaluate("(()=>{const b=document.querySelector('#weekMode');b.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'touch'}))})()");
+  await sleep(320);
+  assert.equal(await evaluate("parseFloat(document.querySelector('.shixu-touch-lens').style.getPropertyValue('--press'))<.15"),true,"long press remained stuck after release");
+ }
  await evaluate("document.querySelector('#weekMode').click()");
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),7,"week mode failed");
+ if(w===390&&h===844){
+  assert.equal(await evaluate("document.querySelector('.shixu-grid-stage')?.dataset.motionPhase"),"transitioning","view change skipped its transition");
+  await sleep(135);
+  const transition=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
+  fs.writeFileSync(path.join(ROOT,"qa-view-transition-390.png"),Buffer.from(transition.data,"base64"));
+  await sleep(300);
+  assert.equal(await evaluate("(()=>{const s=document.querySelector('.shixu-grid-stage');return s.dataset.motionPhase==='idle'&&s.querySelectorAll('.shixu-grid-ghost').length===0})()"),true,"view change did not clean old snapshot");
+ }
  await sleep(360);
- assert.equal(await evaluate("(()=>{const s=document.querySelector('.calendar-controls lg-segmented'),b=document.querySelector('#weekMode'),i=s?.querySelector('.shixu-segment-indicator');if(!i||getComputedStyle(s.querySelector('.lg-refract')).display!=='none')return false;const a=b.getBoundingClientRect(),c=i.getBoundingClientRect();return Math.abs((a.left+a.right)/2-(c.left+c.right)/2)<1.5&&Math.abs(a.width-c.width)<2})()"),true,"Week indicator detached from real button");
  if(w===390&&h===844){const shot=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-week-verified-390.png"),Buffer.from(shot.data,"base64"));}
 
  await evaluate("document.querySelector('#monthMode').click()");
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),42,"month mode failed");
+ if(w===390&&h===844){
+  await evaluate("(()=>{document.querySelector('#weekMode').click();document.querySelector('#monthMode').click();document.querySelector('#weekMode').click()})()");
+  await sleep(460);
+  assert.equal(await evaluate("(()=>{const s=document.querySelector('.shixu-grid-stage');return document.querySelectorAll('#grid .day').length===7&&s.dataset.motionPhase==='idle'&&!s.querySelector('.shixu-grid-ghost')})()"),true,"fast repeat toggles left a stale view transition");
+  await evaluate("document.querySelector('#monthMode').click()");
+  await sleep(390);
+ }
  if(w<=390){
    assert.equal(await evaluate("getComputedStyle(document.querySelector('.shixu-dock')).display"),"block","mobile glass dock absent");
    assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock'),c=document.querySelector('.calendar'),b=document.querySelector('.below');return d.parentElement===c.parentElement && d.getBoundingClientRect().top>=c.getBoundingClientRect().bottom-18 && b.getBoundingClientRect().top>=d.getBoundingClientRect().bottom+10})()"),true,"Dock must stay in normal flow between calendar and agenda, without covering content");
@@ -145,7 +169,7 @@ async function checkViewport(w,h){
  for(const [w,h] of [[320,650],[320,700],[390,700],[390,844],[768,900],[1440,900]])reports.push(await checkViewport(w,h));
  await send("Page.navigate",{url:REMOTE?REMOTE+"glass-lab.html?v=f1c09f1":"http://127.0.0.1:"+PORT+"/glass-lab.html"});
  for(let i=0;i<40;i++){if(await evaluate("document.readyState===\u0027complete\u0027 && customElements.get(\u0027lg-lens\u0027)!==undefined"))break;await sleep(130)}
- await sleep(450);
+ await sleep(1400);;
  const optical=await evaluate("(()=>{const l=document.querySelector(\u0027lg-lens\u0027);const c=l?.querySelector(\u0027.lg-lens__content\u0027);return {lens:!!l?.glass,spring:typeof l?.xs?.set===\u0027function\u0027,height:c?.getBoundingClientRect().height,filter:c?getComputedStyle(c).filter:null}})()");
  assert(optical.lens&&optical.spring&&optical.height>100&&optical.filter?.includes("url("),"live optics demo did not render "+JSON.stringify(optical));
  reports.push({opticsLab:optical});
