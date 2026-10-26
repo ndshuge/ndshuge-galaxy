@@ -1,0 +1,34 @@
+/* Scoped header grouping and tactile control material. */
+@media(max-width:750px){
+ .top{position:relative!important;display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:unset!important;padding:0!important;margin:18px 7px 18px!important;gap:12px!important}
+ .top>div:first-child{padding:0!important;flex:1;min-width:0}
+ .top h1{font-size:34px!important;font-weight:690!important;letter-spacing:-1.1px!important}
+ .top .subtitle{font-size:13px!important;font-weight:440!important;white-space:normal!important}
+ #themeToggle{position:static!important;width:42px!important;height:42px!important;min-height:42px!important;flex:none!important;border-radius:50%!important}
+ .top .actions{display:none!important}
+ .calheader{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:9px!important;padding:20px 17px 16px!important;flex-wrap:nowrap!important}
+ .calheader .month{min-width:0;font-size:20px!important;white-space:nowrap!important}
+ .calendar-controls{display:flex;align-items:center;gap:10px;flex:none}
+ .calendar-nav{display:flex;align-items:center;gap:4px;min-height:40px}
+ .calendar-nav .btn{display:grid;place-items:center;min-width:38px;width:38px;height:40px;min-height:40px;padding:0;border-radius:16px;font-family:inherit;font-size:25px;font-weight:420;line-height:1;background:rgba(250,250,253,.66);color:#444150;box-shadow:inset 0 1px rgba(255,255,255,.83);border:1px solid rgba(71,64,86,.08);transition:background-color .16s ease,box-shadow .16s ease!important;transform:none!important;scale:1!important}
+ .calendar-nav .btn:active{background:rgba(220,216,237,.7);transform:none!important}
+ .calendar-controls lg-segmented.segment{min-height:43px;padding:3px;border-radius:15px;background:rgba(227,226,236,.82)}
+ .calendar-controls lg-segmented.segment>button{min-width:37px;min-height:36px!important;font-size:15px!important;padding:5px 10px}
+ #themeToggle{background:rgba(250,250,253,.64)!important;color:#504b5f!important;border:1px solid rgba(71,64,86,.08)!important;box-shadow:inset 0 1px rgba(255,255,255,.82)!important;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);transition:background-color .16s ease!important;transform:none!important}
+ #themeToggle:active{background:#e8e5f1!important}
+ body[data-theme=dark] #themeToggle,body[data-theme=dark] .calendar-nav .btn{background:rgba(255,255,255,.085)!important;color:#f5f3fc!important;border-color:rgba(255,255,255,.11)!important;box-shadow:inset 0 1px rgba(255,255,255,.12)!important}
+ body[data-theme=dark] .calendar-nav .btn:active,body[data-theme=dark] #themeToggle:active{background:rgba(255,255,255,.17)!important}
+ body[data-theme=dark] .calendar-controls lg-segmented.segment{background:#35333f}
+}
+@media(max-width:380px){
+ .calheader{padding:16px 10px 13px!important;gap:4px!important}
+ .calheader .month{font-size:17px!important;letter-spacing:-.6px!important}
+ .calendar-controls{gap:5px}
+ .calendar-nav{gap:2px}
+ .calendar-nav .btn{width:33px;min-width:33px;height:37px;min-height:37px;border-radius:13px;font-size:22px}
+ .calendar-controls lg-segmented.segment{padding:2px;min-height:39px}
+ .calendar-controls lg-segmented.segment>button{min-width:30px!important;min-height:34px!important;font-size:14px!important;padding:4px 7px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .calendar-nav .btn,#themeToggle{transition:none!important}
+}

@@ -45,6 +45,10 @@ async function checkViewport(w,h){
  assert(state.glass&&state.spring&&state.css,"Skill runtime failed "+JSON.stringify(state));
  assert(state.filter&&state.filter.includes("url("),"real SVG refraction not applied "+JSON.stringify(state));
  assert(state.titleSize>=20,"title text too small");
+ if(w<=390){
+  assert.equal(await evaluate("(()=>{const head=document.querySelector('.calheader'),prev=document.querySelector('#prev'),next=document.querySelector('#next'),nav=head?.querySelector('.calendar-nav'),theme=document.querySelector('#themeToggle'),top=document.querySelector('.top');if(!nav||prev.parentElement!==nav||next.parentElement!==nav||!top.contains(theme))return false;const a=nav.getBoundingClientRect(),m=head.getBoundingClientRect();return a.left>=m.left && a.right<=m.right+1 && prev.getBoundingClientRect().right<=next.getBoundingClientRect().left+2})()"),true,"Calendar navigation is not correctly grouped or overlaps");
+  assert.equal(await evaluate("(()=>{const a=document.querySelector('#prev'),b=document.querySelector('#next');return getComputedStyle(a).transform==='none'&&getComputedStyle(b).transform==='none'&&getComputedStyle(a).width!=='0px'})()"),true,"Nav controls must keep stable tap targets");
+ }
  if(REMOTE&&w===390){const snapshot=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-online-cdp-390.png"),Buffer.from(snapshot.data,"base64"));}
  await evaluate("document.querySelector('#weekMode').click()");
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),7,"week mode failed");
