@@ -1,5 +1,19 @@
 [
   {
+      "slug":  "study-flow",
+      "title":  "Study Flow · 学习进度",
+      "date":  "2026.10.26",
+      "type":  "STUDY DASHBOARD",
+      "description":  "Apple 风格学习仪表盘：添加学习目标、记录学习时长、查看最近七天趋势，数据保存在浏览器本地。",
+      "url":  "./study-flow/",
+      "cover":  "",
+      "tags":  [
+                   "学习进度",
+                   "目标管理",
+                   "Apple 风格"
+               ]
+  },
+  {
     "slug": "xjtu-campus-3d",
     "title": "西交 · 兴庆 3D 校园",
     "date": "2026.10.26",
