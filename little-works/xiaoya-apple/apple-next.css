@@ -1,5 +1,20 @@
 /* XiaoYa Apple Next · Apple Hybrid, porcelain workspace / refractive control layer */
 body.design-apple.redesign-v2 {
+  /* Apple Corner & Surface System — scoped to the Apple variant.
+     Hierarchical + concentric radii; progressive continuous-corner support. */
+  --xy-radius-sheet: 36px;
+  --xy-radius-hero: 34px;
+  --xy-radius-group: 30px;
+  --xy-radius-card: 28px;
+  --xy-radius-control: 17px;
+  --xy-radius-compact: 13px;
+  --xy-radius-dock: 33px;
+  --xy-radius-lens: 25px;
+  --xy-radius-pill: 999px;
+  --xy-surface: #ffffff;
+  --xy-ground: #f5f5f7;
+  --xy-hairline: rgba(60,60,67,.10);
+  --xy-muted: #6e6e73;
   color-scheme:light!important;
   --ink:#202025!important;--sub:#65656f!important;--line:#e7e6e8!important;
   --soft:#f2f1f3!important;--white:#fff!important;--sage:#19191e!important;
@@ -36,7 +51,7 @@ html{background:#f5f5f7!important}
 .design-apple.redesign-v2 .content-grid #main{min-width:0}
 .design-apple.redesign-v2 .xy-cinema{
   background:linear-gradient(124deg,#fffaf5 0%,#fcf7f3 37%,#f8f1f0 65%,#f3eef4 100%)!important;
-  border:1px solid #efebea!important;border-radius:30px!important;
+  border:1px solid #efebea!important;border-radius:var(--xy-radius-hero)!important;
   padding:0!important;min-height:0!important;overflow:hidden;
   box-shadow:0 8px 32px #38303808,inset 0 1px #fff!important;
 }
@@ -69,7 +84,7 @@ html{background:#f5f5f7!important}
 }
 .design-apple.redesign-v2 .xy-feature .hero-actions{margin:29px 0 0!important;gap:10px}
 .design-apple.redesign-v2 .xy-feature .hero-decoration{display:none!important}
-.design-apple.redesign-v2 .btn{min-height:44px;border-radius:13px;font-size:15px;font-weight:560}
+.design-apple.redesign-v2 .btn{min-height:44px;border-radius:var(--xy-radius-control);font-size:15px;font-weight:560}
 .design-apple.redesign-v2 .btn-dark,.design-apple.redesign-v2 .xy-feature .btn-dark{
   background:#252327!important;color:#fff!important;border:1px solid #252327!important;
   box-shadow:none!important;transition:background .18s ease,box-shadow .2s ease;
@@ -82,7 +97,7 @@ html{background:#f5f5f7!important}
 .design-apple.redesign-v2 .xy-feature .btn-plain:hover{background:#fff!important}
 .design-apple.redesign-v2 .xy-floating-panels{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:16px!important;margin:22px 0 26px!important}
 .design-apple.redesign-v2 .xy-floating-panels .panel{
-  background:#fff!important;border:1px solid #eae8ed!important;border-radius:24px!important;
+  background:#fff!important;border:1px solid #eae8ed!important;border-radius:var(--xy-radius-card)!important;
   color:#25232a!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
   box-shadow:0 3px 16px #17131908!important;min-height:250px;padding:23px;
 }
@@ -96,10 +111,10 @@ html{background:#f5f5f7!important}
 .design-apple.redesign-v2 .xy-floating-panels .time-pill{background:#f5eee9!important;color:#8c5f52!important;font-size:12px!important}
 .design-apple.redesign-v2 .panel,
 .design-apple.redesign-v2 .right-rail .pet-panel,
-.design-apple.redesign-v2 .advice-card{background:#fff!important;border:1px solid #e9e8ec!important;color:#29272e!important;box-shadow:none!important}
+.design-apple.redesign-v2 .advice-card{background:var(--xy-surface)!important;border:1px solid var(--xy-hairline)!important;color:#29272e!important;box-shadow:none!important}
 .design-apple.redesign-v2 .section-heading h2,.design-apple.redesign-v2 .panel h3,
 .design-apple.redesign-v2 .rail-date,.design-apple.redesign-v2 .right-rail .rail-date span{color:#28262c!important}
-.design-apple.redesign-v2 .panel{border-radius:23px}
+.design-apple.redesign-v2 .panel{border-radius:var(--xy-radius-card)}
 .design-apple.redesign-v2 .right-rail .rail-date{padding:5px 7px 18px;font-size:14px}
 .design-apple.redesign-v2 .right-rail .pet-panel{border-radius:25px;padding:21px}
 .design-apple.redesign-v2 .right-rail .pet-panel .overline{display:none}
@@ -163,7 +178,7 @@ html{background:#f5f5f7!important}
   .design-apple.redesign-v2 .topbar{padding:10px 16px!important;min-height:60px!important}
   .design-apple.redesign-v2 .content-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;padding:9px 15px 125px!important;gap:20px}
   .design-apple.redesign-v2 .right-rail{display:block!important;max-width:none}
-  .design-apple.redesign-v2 .xy-cinema{border-radius:25px!important}
+  .design-apple.redesign-v2 .xy-cinema{border-radius:var(--xy-radius-hero)!important}
   .design-apple.redesign-v2 .xy-feature{min-height:280px!important;padding:31px 24px 32px!important}
   .design-apple.redesign-v2 .xy-feature h1{font-size:clamp(33px,7.5vw,46px)!important;line-height:1.22!important;max-width:95%;margin:12px 0 12px!important}
   .design-apple.redesign-v2 .xy-feature p{font-size:16px!important;max-width:98%;line-height:1.6!important}
@@ -175,14 +190,14 @@ html{background:#f5f5f7!important}
     display:grid!important;position:fixed;left:12px!important;right:12px!important;
     bottom:max(12px,env(safe-area-inset-bottom))!important;min-height:70px!important;
     padding:6px 5px!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;
-    gap:0!important;border:1px solid #ffffffc9!important;border-radius:27px!important;
+    gap:0!important;border:1px solid #ffffffc9!important;border-radius:var(--xy-radius-dock)!important;
     background:#eae9ee9c!important;box-shadow:0 12px 44px #342c3b33, inset 0 1px #fff8!important;
     backdrop-filter:blur(19px) saturate(1.22)!important;-webkit-backdrop-filter:blur(19px) saturate(1.22)!important;
     z-index:80!important;overflow:visible!important;isolation:isolate;
   }
   .design-apple.redesign-v2 .mobile-tabs .xy-glass-indicator{
     position:absolute;left:0;top:0;width:15%;height:55px;
-    border-radius:21px;background:#fff9!important;box-shadow:0 1px 7px #30293616, inset 0 1px #fff;
+    border-radius:var(--xy-radius-lens);background:#fff9!important;box-shadow:0 1px 7px #30293616, inset 0 1px #fff;
     pointer-events:none;z-index:0;
     transform:translate3d(0,0,0);
     will-change:transform;transition:background .2s ease,opacity .23s ease;
@@ -225,6 +240,73 @@ html{background:#f5f5f7!important}
   .design-apple.redesign-v2 .comparison-nav{background:#fafafb!important;backdrop-filter:none!important}
 }
 
+/* Apple review: grouped settings cards, coherent nested corners and compact content.
+   Equivalent of iOS Settings grouping, without recreating system chrome. */
+body.design-apple .xy-redesign-intro,
+body.design-apple .xy-focus-marker{display:none!important}
+body.apple-next #view-settings .page-head .kicker,
+body.apple-next #view-schedule .page-head .kicker,
+body.apple-next #view-tasks .page-head .kicker,
+body.apple-next #view-review .page-head .kicker{display:none!important}
+body.apple-next #view-settings > .panel{
+  border-radius:var(--xy-radius-group)!important;
+  background:var(--xy-surface)!important;
+  border:1px solid var(--xy-hairline)!important;
+  box-shadow:0 1px 2px rgba(0,0,0,.015)!important;
+}
+body.apple-next #view-settings .settings-list{
+  padding:4px 22px!important;
+  overflow:hidden;
+}
+body.apple-next #view-settings .settings-list .toggle-row{
+  min-height:64px;
+  padding:14px 0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  border:0!important;
+}
+body.apple-next #view-settings .settings-list .toggle-row + .toggle-row{
+  border-top:1px solid var(--xy-hairline)!important;
+}
+body.apple-next #view-settings .field input:not([type=checkbox]),
+body.apple-next #view-settings .field select,
+body.apple-next #view-settings .field textarea{
+  border-radius:var(--xy-radius-control)!important;
+  background:#f5f5f7!important;
+  border:1px solid var(--xy-hairline)!important;
+  min-height:46px;
+}
+body.apple-next #view-settings .page-head h1{font-size:clamp(32px,5vw,42px)!important;line-height:1.2;letter-spacing:-.045em}
+body.apple-next #view-settings > .panel h3{font-size:18px!important;font-weight:650;letter-spacing:-.02em}
+body.apple-next .btn,
+body.apple-next .small-ghost,
+body.apple-next .icon-button{border-radius:var(--xy-radius-control)!important}
+body.apple-next .icon-button{border-radius:var(--xy-radius-pill)!important}
+body.apple-next .xy-cinema{
+  background:#fbf9fa!important;
+  border-radius:var(--xy-radius-hero)!important;
+}
+body.apple-next .xy-floating-panels .panel{border-radius:var(--xy-radius-card)!important}
+body.apple-next #xy-onboard.xy-shade{backdrop-filter:blur(11px)!important;-webkit-backdrop-filter:blur(11px)!important}
+body.apple-next #xy-onboard .xy-hero{background:#f5f5f7!important}
+body.apple-next #xy-onboard .xy-content{gap:14px!important}
+body.apple-next #xy-onboard .xy-content label{font-size:15px!important}
+body.apple-next #xy-onboard #xy-local,
+body.apple-next #xy-onboard .xy-dialog{box-shadow:0 2px 12px rgba(20,20,30,.04)}
+@supports (corner-shape:squircle){
+  body.apple-next .xy-cinema,body.apple-next .panel,
+  body.apple-next #xy-onboard .xy-dialog,
+  body.apple-next #xy-onboard #xy-local,
+  body.apple-next .mobile-tabs,body.apple-next .xy-glass-indicator{corner-shape:squircle}
+}
+@media(max-width:790px){
+  body.apple-next .xy-cinema{border-radius:var(--xy-radius-hero)!important}
+  body.apple-next .xy-floating-panels .panel{border-radius:var(--xy-radius-card)!important}
+  body.apple-next #view-settings > .panel{border-radius:var(--xy-radius-group)!important}
+  body.apple-next #view-settings .page-head{padding:4px 2px 3px}
+  body.apple-next #xy-onboard .xy-dialog{border-radius:var(--xy-radius-sheet)!important}
+}
+
 /* Post-screenshot optical and typographic refinement. */
 .design-apple.redesign-v2 .side-nav .nav-link svg,.design-apple.redesign-v2 .sidebar-bottom .nav-link svg{color:#69656c!important;opacity:1!important}
 .design-apple.redesign-v2 .side-nav .nav-link.is-active svg{color:#29252d!important}
@@ -244,7 +326,7 @@ body.apple-next #xy-onboard.xy-shade{
   padding:24px!important;
 }
 body.apple-next #xy-onboard .xy-dialog{
-  width:min(795px,100%)!important;border-radius:29px!important;
+  width:min(795px,100%)!important;border-radius:var(--xy-radius-sheet)!important;
   background:#fff!important;color:#25242b!important;border:1px solid #ffffffc7;
   box-shadow:0 30px 100px #21202a36!important;grid-template-columns: .88fr 1.12fr;
 }
@@ -278,7 +360,7 @@ body.apple-next #xy-onboard .xy-content label{font-size:14px!important;font-weig
 body.apple-next #xy-onboard .xy-content input:not([type=checkbox]),
 body.apple-next #xy-onboard .xy-content select{
   background:#f8f8fa!important;color:#28262d!important;border:1px solid #dddbe2!important;
-  border-radius:13px!important;font-size:16px!important;padding:12px 13px!important;min-height:47px;
+  border-radius:var(--xy-radius-control)!important;font-size:16px!important;padding:12px 13px!important;min-height:47px;
 }
 body.apple-next #xy-onboard .xy-content .xy-consent{
   flex-direction:row!important;align-items:flex-start;gap:8px!important;line-height:1.55;
@@ -287,23 +369,23 @@ body.apple-next #xy-onboard .xy-content .xy-consent{
 body.apple-next #xy-onboard .xy-content .xy-consent input{min-width:17px;min-height:17px;margin:2px 0!important}
 body.apple-next #xy-onboard .xy-storage-warning{color:#6d564d!important;font-size:13px!important;line-height:1.55!important}
 body.apple-next #xy-onboard #xy-local{
-  padding:19px!important;border-radius:17px!important;background:#f5f2f4!important;
+  padding:19px!important;border-radius:var(--xy-radius-card)!important;background:#f5f5f7!important;
   border:1px solid #e8e4e8!important;color:#29252d!important;gap:5px!important;min-height:90px;
 }
 body.apple-next #xy-onboard #xy-local strong{font-size:17px;font-weight:680}
 body.apple-next #xy-onboard #xy-local span{font-size:14px!important;color:#6c6871!important}
 body.apple-next #xy-onboard #xy-connect{
-  background:#26242b!important;color:#fff!important;border-radius:14px!important;
+  background:#26242b!important;color:#fff!important;border-radius:var(--xy-radius-control)!important;
   min-height:48px;font-size:15px!important;font-weight:620!important;
 }
 body.apple-next #xy-onboard #xy-forget{
   background:#f5f4f6!important;border:1px solid #e1dfe5!important;
-  color:#49464d!important;font-size:13px!important;border-radius:12px!important;min-height:44px;
+  color:#49464d!important;font-size:13px!important;border-radius:var(--xy-radius-control)!important;min-height:44px;
 }
 body.apple-next #xy-onboard #xy-skip{color:#4b4851!important;font-size:14px!important;min-height:44px}
 body.apple-next #xy-onboard button:focus-visible{outline:3px solid #987a88!important;outline-offset:3px}
 body.apple-next #xy-window{
-  background:#fff!important;border-color:#ece9ef!important;border-radius:24px!important;
+  background:#fff!important;border-color:#ece9ef!important;border-radius:var(--xy-radius-group)!important;
   box-shadow:0 20px 65px #24212b2c!important;
 }
 body.apple-next #xy-window header{background:#f7f2f3!important;color:#25242a!important}
@@ -321,7 +403,7 @@ body.apple-next #xy-pet-bubble{background:#fffaf7!important;border-color:#e9ddd8
 @media(max-width:700px){
   body.apple-next #xy-onboard.xy-shade{padding:13px!important}
   body.apple-next #xy-onboard .xy-dialog{
-    grid-template-columns:1fr!important;max-height:calc(100dvh - 26px)!important;border-radius:25px!important;
+    grid-template-columns:1fr!important;max-height:calc(100dvh - 26px)!important;border-radius:var(--xy-radius-sheet)!important;
   }
   body.apple-next #xy-onboard .xy-hero{
     padding:23px 23px 19px!important;display:block!important;
@@ -347,13 +429,6 @@ body.apple-next #xy-pet-bubble{background:#fffaf7!important;border-color:#e9ddd8
  body.apple-next .topbar .icon-button[data-view="settings"]{flex:0 0 44px!important}
 }
 @media(max-width:390px){body.apple-next .topbar .breadcrumb{max-width:105px}}
-/* Audit remediation: preserve product-specific warm wash and native companion. */
-body.apple-next .breadcrumb span,body.apple-next .breadcrumb strong{color:#49464e!important}
-body.apple-next .xy-floating-panels .panel{min-height:unset!important}
-body.apple-next .sidebar .brand small{font-size:12px!important;color:#65616b!important}
-body.apple-next .xy-feature h1{font-size:clamp(32px,3.4vw,49px)!important}
-@media(max-width:640px){body.apple-next .xy-feature h1{font-size:clamp(30px,8vw,35px)!important}}
-body.apple-next .xy-floating-panels{align-items:start}
 /* Audit remediation: preserve product-specific warm wash and native companion. */
 body.apple-next .breadcrumb span,body.apple-next .breadcrumb strong{color:#49464e!important}
 body.apple-next .xy-floating-panels .panel{min-height:unset!important}

@@ -47,10 +47,41 @@ const checks = [
   }],
   ['Design audit and browser test exist', () => {
     const audit = txt('little-works/xiaoya-apple/DESIGN_AUDIT_APPLE_NEXT.md');
-    assert.match(audit, /Taste-Skill/);
+    const evidence = process.env.SKILL_GATE_NEGATIVE_TEST === 'missing-skill-evidence' ? '' : audit;
+    assert.match(evidence, /Taste-Skill/, 'BLOCK: missing applied Skill evidence');
     assert.match(audit, /Designeer/);
     assert.match(audit, /User art acceptance/);
     exists('qa-apple-next.cjs');
+  }],
+  ['Apple corner grammar is applied, not just documented', () => {
+    const targetCss = process.env.SKILL_GATE_NEGATIVE_TEST === 'missing-corner-system'
+      ? css.replace(/--xy-radius-(?:sheet|hero|group|card|control|dock):[^;]+;/g, '') : css;
+    const names = ['sheet','hero','group','card','control','dock'];
+    for (const name of names) {
+      assert.match(targetCss, new RegExp('--xy-radius-' + name + '\\s*:\\s*\\d+px'),
+        'BLOCK: missing Apple radius token ' + name);
+      assert.match(targetCss, new RegExp('var\\(--xy-radius-' + name + '\\)'),
+        'BLOCK: radius token is unused ' + name);
+    }
+    assert.match(targetCss, /#view-settings \.settings-list \.toggle-row \+ \.toggle-row/,
+      'BLOCK: grouped settings rows must have inset separators');
+    assert.match(targetCss, /@supports \(corner-shape:squircle\)/,
+      'BLOCK: missing progressive continuous-corner enhancement');
+  }],
+  ['Platform honesty and art signoff', () => {
+    const audit = txt('little-works/xiaoya-apple/DESIGN_AUDIT_APPLE_NEXT.md');
+    const hasWebKitBlurFallback = glass.includes("mode === 'backdrop' && engine === 'blink'")
+      && glass.includes('target.style.webkitBackdropFilter = fallback');
+    const supportStatement = process.env.SKILL_GATE_NEGATIVE_TEST === 'unsupported-safari'
+      ? 'Safari full backdrop refraction verified' : audit;
+    if (hasWebKitBlurFallback) {
+      assert.match(supportStatement, /(?:非 Chromium 降级为模糊|Safari.{0,45}(?:fallback|降级|未验)|(?:fallback|降级).{0,45}Safari)/i,
+        'BLOCK: WebKit blur fallback must not be claimed as verified native backdrop refraction');
+      assert.doesNotMatch(supportStatement, /Safari full backdrop refraction verified/i);
+    }
+    assert.match(audit, /User art acceptance[：:]\s*PENDING/i,
+      'BLOCK: existing visual acceptance is pending; do not claim ART_APPROVED');
+    console.log('NOT ART_APPROVED: human visual acceptance remains pending');
   }],
   ['No obvious credentials in newly introduced sources', () => {
     for (const [name, source] of [['JS',js],['CSS',css],['HTML',html]]) {

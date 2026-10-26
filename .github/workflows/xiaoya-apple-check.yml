@@ -28,6 +28,24 @@ jobs:
           node-version: "24"
       - name: Verify Apple source and optics
         run: node qa-xiaoya-apple-static.cjs
+      - name: Verify the release guard actually rejects a false Safari claim
+        shell: bash
+        run: |
+          if SKILL_GATE_NEGATIVE_TEST=unsupported-safari node qa-xiaoya-apple-static.cjs; then
+            echo 'FAIL: unsupported Safari claim passed the existing gate'
+            exit 1
+          fi
+          echo 'PASS: false Safari claim blocked as expected'
+          if SKILL_GATE_NEGATIVE_TEST=missing-skill-evidence node qa-xiaoya-apple-static.cjs; then
+            echo 'FAIL: missing Skill evidence passed the existing gate'
+            exit 1
+          fi
+          echo 'PASS: missing Skill evidence blocked as expected'
+          if SKILL_GATE_NEGATIVE_TEST=missing-corner-system node qa-xiaoya-apple-static.cjs; then
+            echo 'FAIL: removed Apple radius system passed the existing gate'
+            exit 1
+          fi
+          echo 'PASS: missing Apple corner system blocked as expected'
       - name: Check JavaScript parse
         run: |
           node --check little-works/xiaoya-apple/apple-next.js
