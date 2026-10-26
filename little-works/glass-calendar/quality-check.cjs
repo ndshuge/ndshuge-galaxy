@@ -1,7 +1,19 @@
 "use strict";
 const fs=require("node:fs"),path=require("node:path"),http=require("node:http"),os=require("node:os"),assert=require("node:assert/strict");
-const {spawn}=require("node:child_process");
+const {spawn,spawnSync}=require("node:child_process");
 const REMOTE=process.argv.includes("--remote")?"https://ndshuge.github.io/ndshuge-galaxy/little-works/glass-calendar/":null;
+if(!process.argv.includes("--static")&&!process.argv.includes("--app-only")&&!process.argv.includes("--optics-only")){
+ const args=process.argv.includes("--remote")?["--remote"]:[];
+ for(const mode of ["--app-only","--optics-only"]){
+  const r=spawnSync(process.execPath,[__filename,mode,...args],{stdio:"inherit",windowsHide:true,env:process.env,timeout:180000});
+  if(r.status!==0)process.exit(r.status||1);
+ }
+ const app=JSON.parse(fs.readFileSync(path.join(__dirname,"qa-app.json"),"utf8"));
+ const optics=JSON.parse(fs.readFileSync(path.join(__dirname,"qa-optics.json"),"utf8"));
+ fs.writeFileSync(path.join(__dirname,"qa-local.json"),JSON.stringify({pass:true,reports:[...app.reports,...optics.reports],faults:[...app.faults,...optics.faults]},null,2));
+ console.log("PASS: integrated calendar + independent fresh-browser optics");
+ process.exit(0);
+}
 const ROOT=__dirname,PORT=Number(process.env.SHIXU_QA_PORT||53853),DEBUG=Number(process.env.SHIXU_QA_DEBUG_PORT||53854),EDGE="C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
 const html=fs.readFileSync(path.join(ROOT,"index.html"),"utf8");
 const css=fs.readFileSync(path.join(ROOT,"refined.css"),"utf8");
@@ -171,7 +183,6 @@ async function checkViewport(w,h){
  ws.addEventListener("message",event=>{const m=JSON.parse(event.data);if(m.id){const cb=callbacks.get(m.id);if(cb){callbacks.delete(m.id);m.error?cb.reject(Error(JSON.stringify(m.error))):cb.resolve(m.result)}}if(m.method==="Runtime.exceptionThrown")faults.push(m.params.exceptionDetails.exception?.description || JSON.stringify(m.params.exceptionDetails))});
  await send("Page.enable");await send("Runtime.enable");
  const reports=[];
- if(!process.argv.includes("--optics-only"))for(const [w,h] of [[320,650],[320,700],[390,700],[390,844],[768,900],[1440,900]])reports.push(await checkViewport(w,h));
  await send("Page.navigate",{url:REMOTE?REMOTE+"glass-lab.html?v=f1c09f1":"http://127.0.0.1:"+PORT+"/glass-lab.html"});
  for(let i=0;i<40;i++){if(await evaluate("document.readyState===\u0027complete\u0027 && customElements.get(\u0027lg-lens\u0027)!==undefined"))break;await sleep(130)}
  // The optical demo is an interactive lens: simulate a real pointer move,
@@ -196,6 +207,11 @@ async function checkViewport(w,h){
  }
  assert(optical.lens&&optical.spring&&optical.height>100&&optical.filter?.includes("url("),"live optics demo did not render "+JSON.stringify(optical));
  reports.push({opticsLab:optical});
+ if(!process.argv.includes("--optics-only"))for(const [w,h] of [[320,650],[320,700],[390,700],[390,844],[768,900],[1440,900]])reports.push(await checkViewport(w,h));
+ if(!process.argv.includes("--app-only")){
+
+ }
+ if(!process.argv.includes("--optics-only")){
  // Verify OS "Reduce Motion": never replay or animate grid; touch remains stable.
  await send("Emulation.setDeviceMetricsOverride",{width:390,height:844,deviceScaleFactor:1,mobile:false});
  await send("Emulation.setEmulatedMedia",{features:[{name:"prefers-reduced-motion",value:"reduce"}]});
@@ -209,9 +225,10 @@ async function checkViewport(w,h){
  assert.equal(await evaluate("getComputedStyle(document.querySelector('.shixu-touch-lens')).scale"),"1","reduced-motion must prevent deformation");
  await evaluate("document.querySelector('#weekMode').dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'touch'}))");
  reports.push({reducedMotion:"direct calendar switch, no glass squish"});
+ }
  await send("Emulation.setEmulatedMedia",{features:[]});
 
  assert.equal(faults.length,0,"runtime errors: "+faults.join(";"));
  console.log("PASS: six viewports, nonduplicating optical surface, traveling spring, modal, calendar CRUD, release hold, mutation test");
- fs.writeFileSync(path.join(ROOT,"qa-local.json"),JSON.stringify({pass:true,reports,faults},null,2));
+ fs.writeFileSync(path.join(ROOT,process.argv.includes("--optics-only")?"qa-optics.json":process.argv.includes("--app-only")?"qa-app.json":"qa-local.json"),JSON.stringify({pass:true,reports,faults},null,2));
 })().catch(e=>{console.error(e.stack);process.exitCode=1}).finally(()=>{try{ws?.close()}catch{}try{edge?.kill()}catch{}try{server?.close()}catch{}});
