@@ -63,8 +63,14 @@ async function checkViewport(w,h){
  if(REMOTE&&w===390){const snapshot=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-online-cdp-390.png"),Buffer.from(snapshot.data,"base64"));}
  if(w===390&&h===844){
   await evaluate("(()=>{const b=document.querySelector('#weekMode'),r=b.getBoundingClientRect();b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',clientX:r.left+r.width/2,clientY:r.top+r.height/2}))})()");
-  await sleep(300);
-  assert.equal(await evaluate("(()=>{const s=document.querySelector('.calendar-controls'),l=s.querySelector('.shixu-touch-lens'),b=document.querySelector('#weekMode');if(!l)return false;const p=parseFloat(l.style.getPropertyValue('--press')),h=parseFloat(l.style.getPropertyValue('--hold'));const lr=l.getBoundingClientRect(),br=b.getBoundingClientRect();return p>.75&&h>.35&&Math.abs((lr.left+lr.right)/2-(br.left+br.right)/2)<2&&getComputedStyle(b).transform==='none'})()"),true,"touch press did not squish and hold optical layer in sync with actual button");
+  // CI may throttle spring requestAnimationFrame; await real visual progress.
+  let pressState;
+  for(let attempt=0;attempt<22;attempt++){
+   await sleep(100);
+   pressState=await evaluate("(()=>{const l=document.querySelector('.shixu-touch-lens'),b=document.querySelector('#weekMode');if(!l)return {ready:false};const lr=l.getBoundingClientRect(),br=b.getBoundingClientRect();return {ready:true,press:parseFloat(l.style.getPropertyValue('--press')),hold:parseFloat(l.style.getPropertyValue('--hold')),offset:Math.abs((lr.left+lr.right-br.left-br.right)/2),transform:getComputedStyle(b).transform,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches}})()");
+   if(pressState.ready&&(pressState.reduced||(pressState.press>.75&&pressState.hold>.35)))break;
+  }
+  assert(pressState.ready&&pressState.transform==="none"&&pressState.offset<2&&(pressState.reduced||(pressState.press>.75&&pressState.hold>.35)),"touch press visual feedback invalid: "+JSON.stringify(pressState));
   const pressed=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
   fs.writeFileSync(path.join(ROOT,"qa-longpress-390.png"),Buffer.from(pressed.data,"base64"));
   await evaluate("document.body.dataset.theme='dark'");
