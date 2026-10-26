@@ -1,0 +1,38 @@
+/* Apple Settings: sectioned lists, single-column mobile fields and honest disclosure */
+body.design-apple.apple-next #view-settings{min-width:0}
+body.design-apple.apple-next #view-settings .page-head .kicker{display:none!important}
+body.design-apple.apple-next #view-settings>.panel{margin:0 0 15px!important}
+body.design-apple.apple-next .xy-organized-details{margin:0 0 15px;min-width:0;border-radius:26px;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.92);box-shadow:0 5px 22px rgba(45,79,68,.035);overflow:clip}
+body.design-apple.apple-next .xy-organized-details>summary{list-style:none;cursor:pointer;font-size:17px;font-weight:670;letter-spacing:-.025em;padding:23px 25px;display:flex;align-items:center;justify-content:space-between;min-height:68px;color:#20332e}
+body.design-apple.apple-next .xy-organized-details>summary::-webkit-details-marker{display:none}
+body.design-apple.apple-next .xy-organized-details>summary::after{content:'⌄';font-size:21px;font-weight:400;color:#81918a;transition:transform .24s ease}
+body.design-apple.apple-next .xy-organized-details[open]>summary::after{transform:rotate(180deg)}
+body.design-apple.apple-next .xy-organized-details>.panel{margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;padding-top:0!important}
+body.design-apple.apple-next .xy-organized-details>.panel>h3:first-child,body.design-apple.apple-next .xy-organized-details>.panel>.byok-head{display:none!important}
+body.design-apple.apple-next .xy-system-settings{padding:8px 20px!important}
+body.design-apple.apple-next .xy-system-settings .toggle-row{min-width:0}
+body.design-apple.apple-next .xy-system-settings .toggle-row>span:first-child{min-width:0;flex:1}
+body.design-apple.apple-next #view-settings .form-fields{min-width:0}
+body.design-apple.apple-next #view-settings .field,body.design-apple.apple-next #view-settings .field input,body.design-apple.apple-next #view-settings .field select{min-width:0;max-width:100%}
+body.design-apple.apple-next #view-settings .byok-test-row{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:12px!important}
+body.design-apple.apple-next #view-settings .byok-test-row label{display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;gap:12px!important;min-width:0!important;flex-wrap:wrap!important;white-space:normal!important;overflow-wrap:anywhere!important}
+body.design-apple.apple-next #view-settings .byok-test-row label input{flex:0 0 22px;margin:5px 0 0}
+body.design-apple.apple-next #view-settings .byok-test-row label strong{display:inline!important}
+body.design-apple.apple-next #view-settings .setting-buttons{gap:10px!important}
+body.design-apple.apple-next .settings-data .small-note{font-size:12px!important}
+@media(max-width:790px){
+ body.design-apple.apple-next #view-settings .form-fields{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:16px!important}
+ body.design-apple.apple-next #view-settings .form-fields>.field{grid-column:1/-1!important;width:100%!important}
+ body.design-apple.apple-next #view-settings .form-fields input,body.design-apple.apple-next #view-settings .form-fields select{width:100%!important;max-width:100%!important;box-sizing:border-box!important}
+ body.design-apple.apple-next #view-settings .setting-buttons{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+ body.design-apple.apple-next #view-settings .setting-buttons>.btn{width:100%!important;min-width:0!important;white-space:normal!important}
+ body.design-apple.apple-next #view-settings{padding-bottom:calc(235px + env(safe-area-inset-bottom))!important}
+ body.design-apple.apple-next .content-grid{padding-bottom:calc(240px + env(safe-area-inset-bottom))!important}
+ body.design-apple.apple-next #view-settings .xy-organized-details>summary{padding:20px 21px}
+ body.design-apple.apple-next #view-settings .panel{min-width:0;overflow-wrap:anywhere}
+ body.design-apple.apple-next #view-settings .byok-test-row label{display:block!important;line-height:1.65!important}
+ body.design-apple.apple-next #view-settings .byok-test-row label input{display:inline-block!important;margin:0 10px 0 0;vertical-align:middle}
+ body.design-apple.apple-next #view-settings .byok-test-row label strong{display:inline!important}
+ body.design-apple.apple-next .mobile-tabs{bottom:calc(76px + env(safe-area-inset-bottom))!important}
+}
+@media(display-mode:standalone){body.design-apple.apple-next .mobile-tabs{bottom:max(10px,env(safe-area-inset-bottom))!important}}
