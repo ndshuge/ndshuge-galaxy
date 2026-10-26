@@ -42,7 +42,8 @@ async function evaluate(expression){const r=await send("Runtime.evaluate",{expre
 async function checkViewport(w,h){
  await send("Emulation.setDeviceMetricsOverride",{width:w,height:h,deviceScaleFactor:1,mobile:false});
  await send("Page.navigate",{url:REMOTE?REMOTE+"?qa="+w+"&v=f1c09f1":"http://127.0.0.1:"+PORT+"/index.html?qa="+w});
- for(let i=0;i<50;i++){if(await evaluate("document.readyState === 'complete' && !!document.querySelector('#grid .day')"))break;await sleep(110)}
+ for(let i=0;i<80;i++){if(await evaluate("document.readyState === 'complete' && !!document.querySelector('#grid .day') && !!document.querySelector('.shixu-grid-stage') && !!document.querySelector('.shixu-touch-lens')"))break;await sleep(110)}
+ assert.equal(await evaluate("!!document.querySelector('.shixu-grid-stage') && !!document.querySelector('.shixu-touch-lens')"),true,"view motion and touch components must be initialized before QA");
  await sleep(400);
  // Wait for the SVG filter to attach, not merely for DOMContentLoaded.
  for(let attempt=0;attempt<32;attempt++){
@@ -63,8 +64,14 @@ async function checkViewport(w,h){
  if(REMOTE&&w===390){const snapshot=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-online-cdp-390.png"),Buffer.from(snapshot.data,"base64"));}
  if(w===390&&h===844){
   await evaluate("(()=>{const b=document.querySelector('#weekMode'),r=b.getBoundingClientRect();b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',clientX:r.left+r.width/2,clientY:r.top+r.height/2}))})()");
-  await sleep(300);
-  assert.equal(await evaluate("(()=>{const s=document.querySelector('.calendar-controls'),l=s.querySelector('.shixu-touch-lens'),b=document.querySelector('#weekMode');if(!l)return false;const p=parseFloat(l.style.getPropertyValue('--press')),h=parseFloat(l.style.getPropertyValue('--hold'));const lr=l.getBoundingClientRect(),br=b.getBoundingClientRect();return p>.75&&h>.35&&Math.abs((lr.left+lr.right)/2-(br.left+br.right)/2)<2&&getComputedStyle(b).transform==='none'})()"),true,"touch press did not squish and hold optical layer in sync with actual button");
+  // CI may throttle spring requestAnimationFrame; await real visual progress.
+  let pressState;
+  for(let attempt=0;attempt<22;attempt++){
+   await sleep(100);
+   pressState=await evaluate("(()=>{const l=document.querySelector('.shixu-touch-lens'),b=document.querySelector('#weekMode');if(!l)return {ready:false};const lr=l.getBoundingClientRect(),br=b.getBoundingClientRect();return {ready:true,press:parseFloat(l.style.getPropertyValue('--press')),hold:parseFloat(l.style.getPropertyValue('--hold')),offset:Math.abs((lr.left+lr.right-br.left-br.right)/2),transform:getComputedStyle(b).transform,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches}})()");
+   if(pressState.ready&&(pressState.reduced||(pressState.press>.75&&pressState.hold>.35)))break;
+  }
+  assert(pressState.ready&&pressState.transform==="none"&&pressState.offset<2&&(pressState.reduced||(pressState.press>.75&&pressState.hold>.35)),"touch press visual feedback invalid: "+JSON.stringify(pressState));
   const pressed=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
   fs.writeFileSync(path.join(ROOT,"qa-longpress-390.png"),Buffer.from(pressed.data,"base64"));
   await evaluate("document.body.dataset.theme='dark'");
@@ -182,6 +189,9 @@ async function checkViewport(w,h){
  await new Promise((resolve,reject)=>{ws.addEventListener("open",resolve,{once:true});ws.addEventListener("error",reject,{once:true})});
  ws.addEventListener("message",event=>{const m=JSON.parse(event.data);if(m.id){const cb=callbacks.get(m.id);if(cb){callbacks.delete(m.id);m.error?cb.reject(Error(JSON.stringify(m.error))):cb.resolve(m.result)}}if(m.method==="Runtime.exceptionThrown")faults.push(m.params.exceptionDetails.exception?.description || JSON.stringify(m.params.exceptionDetails))});
  await send("Page.enable");await send("Runtime.enable");
+ // Test normal spring interactions independently of the Windows CI host accessibility default.
+ // A separate test later explicitly emulates prefers-reduced-motion: reduce.
+ await send("Emulation.setEmulatedMedia",{features:[{name:"prefers-reduced-motion",value:"no-preference"}]});
  const reports=[];
  await send("Page.navigate",{url:REMOTE?REMOTE+"glass-lab.html?v=f1c09f1":"http://127.0.0.1:"+PORT+"/glass-lab.html"});
  for(let i=0;i<40;i++){if(await evaluate("document.readyState===\u0027complete\u0027 && customElements.get(\u0027lg-lens\u0027)!==undefined"))break;await sleep(130)}
