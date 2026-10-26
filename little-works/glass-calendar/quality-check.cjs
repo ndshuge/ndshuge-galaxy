@@ -112,6 +112,7 @@ async function checkViewport(w,h){
  assert.equal(await evaluate("document.body.dataset.theme"),"dark","dark theme failed");
  await evaluate("document.querySelector(\u0027#themeToggle\u0027).click()");
  assert.equal(await evaluate("document.body.dataset.theme"),"light","light theme failed");
+ if(w<=390)assert.equal(await evaluate("(()=>{const top=document.querySelector('.top').getBoundingClientRect(),cal=document.querySelector('.calendar').getBoundingClientRect(),m=document.querySelector('.calheader .month').getBoundingClientRect(),controls=document.querySelector('.calendar-controls').getBoundingClientRect(),dock=document.querySelector('.shixu-dock').getBoundingClientRect(),below=document.querySelector('.below').getBoundingClientRect();return cal.top-top.bottom>=12&&controls.top-m.bottom>=8&&dock.top-cal.bottom>=8&&below.top-dock.bottom>=12})()"),true,"Apple spacing: header/toolbar/calendar/dock/agenda gaps incorrect");
  return state;
 }
 (async()=>{

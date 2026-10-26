@@ -1,0 +1,59 @@
+/* Shixu / Apple-inspired spacing pass.
+   One 4-8-12-16-24-32 rhythm, content-first hierarchy.
+   Isolated, final cascade only; no duplicated markup or fixed-position layout. */
+:root{--sh-space-1:4px;--sh-space-2:8px;--sh-space-3:12px;--sh-space-4:16px;--sh-space-6:24px;--sh-space-8:32px}
+@media(max-width:750px){
+ .app{padding-inline:16px!important;margin:0 auto!important}
+ .top{display:flex!important;position:relative!important;align-items:center!important;justify-content:space-between!important;min-height:0!important;gap:16px!important;margin:24px 0 24px!important;padding:0!important}
+ .top>div:first-child{display:flex!important;flex:1;min-width:0;flex-direction:column-reverse!important;align-items:flex-start;gap:6px!important;padding:0!important}
+ .top h1{font-size:34px!important;line-height:1.14!important;letter-spacing:-1.1px!important;font-weight:690!important}
+ .top .subtitle{font-size:13px!important;line-height:19px!important;margin:0!important;white-space:normal!important;color:var(--s3-muted)!important}
+ #themeToggle{position:static!important;flex:none;width:44px!important;height:44px!important;min-height:44px!important;margin:0!important;border-radius:17px!important;
+ background:rgba(255,255,255,.065)!important;border:1px solid rgba(255,255,255,.105)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.075)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);transition:background .18s ease!important}
+ body:not([data-theme=dark]) #themeToggle{background:rgba(255,255,255,.78)!important;border-color:rgba(120,112,140,.08)!important;box-shadow:inset 0 1px rgba(255,255,255,.85)!important}
+ #themeToggle:active{transform:none!important;background:rgba(135,124,171,.18)!important}
+ .top .actions{display:none!important}
+ .calendar{margin:0!important;border-radius:27px!important}
+ .calheader{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:16px!important;flex-wrap:nowrap!important;padding:22px 20px 18px!important}
+ .calheader .month{font-size:22px!important;line-height:28px!important;font-weight:660!important;letter-spacing:-.65px!important;min-width:0}
+ .calendar-controls{display:flex!important;width:100%;align-items:center;justify-content:space-between!important;gap:16px!important}
+ .calendar-nav{display:flex;align-items:center;gap:8px!important}
+ .calendar-nav .btn{height:44px!important;min-height:44px!important;width:44px!important;min-width:44px!important;padding:0!important;border-radius:15px!important;
+  background:rgba(255,255,255,.065)!important;border:1px solid rgba(255,255,255,.09)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important;font-size:23px!important;font-weight:380!important;transform:none!important}
+ body:not([data-theme=dark]) .calendar-nav .btn{background:#f3f3f7!important;border-color:rgba(60,55,80,.045)!important;box-shadow:none!important}
+ .calendar-nav .btn:active{background:rgba(150,140,177,.18)!important;transform:none!important}
+ .calendar-controls lg-segmented.segment{margin:0!important;padding:3px!important;min-height:44px!important;border-radius:16px!important;min-width:112px!important}
+ .calendar-controls lg-segmented.segment > button{font-size:16px!important;min-width:52px!important;min-height:38px!important;padding:7px 12px!important}
+ /* Make the optical selection stay inside the track, never duplicate its glyphs. */
+ .calendar-controls lg-segmented.segment{isolation:isolate;overflow:hidden}
+ .calendar-controls lg-segmented.segment .lg-refract .lg-seg__option{color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important}
+ .calendar-controls lg-segmented.segment .lg-lens-shadow{opacity:.18}
+ .weekdays{padding:0 10px!important}
+ .weekdays span{font-size:12px!important;padding:8px 0 12px!important}
+ .grid{padding:0 10px 16px!important}
+ .shixu-dock{position:relative!important;transform:none!important;inset:auto!important;left:auto!important;bottom:auto!important;margin:16px auto 24px!important;width:min(calc(100% - 20px),340px)!important}
+ .shixu-dock__rim{min-height:64px!important;border-radius:24px!important}
+ .below{margin:0!important;padding-bottom:0!important}
+ .panel{padding:24px!important;border-radius:25px!important;min-height:116px!important}
+ .panelhead{margin-bottom:12px!important}
+ .panelhead b{font-size:17px!important}
+ .panelhead span,.empty{font-size:14px!important}
+ .calendar+.shixu-dock+.below{margin-top:0!important}
+}
+@media(max-width:380px){
+ .app{padding-inline:12px!important}
+ .top{margin:18px 0 20px!important}
+ .top h1{font-size:32px!important}
+ .calheader{padding:18px 14px 14px!important;gap:12px!important}
+ .calheader .month{font-size:20px!important}
+ .calendar-controls{gap:8px!important}
+ .calendar-nav{gap:6px!important}
+ .calendar-nav .btn{height:42px!important;min-height:42px!important;width:42px!important;min-width:42px!important;border-radius:14px!important}
+ .calendar-controls lg-segmented.segment{min-height:42px!important;min-width:108px!important}
+ .calendar-controls lg-segmented.segment > button{min-width:49px!important;min-height:36px!important}
+ .shixu-dock{width:calc(100% - 10px)!important;margin:12px auto 20px!important}
+ .panel{padding:20px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #themeToggle,.calendar-nav .btn{transition:none!important;animation:none!important}
+}
