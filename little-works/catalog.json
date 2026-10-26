@@ -1,5 +1,15 @@
 [
   {
+    "slug": "idea-cards",
+    "title": "灵感卡片",
+    "date": "2026.10.27",
+    "type": "IDEA NOTEBOOK",
+    "description": "随时记录、整理、收藏和回顾自己的想法，支持本地备份。",
+    "url": "./idea-cards/",
+    "cover": "",
+    "tags": ["Apple 风格", "灵感整理", "本地保存"]
+  },
+  {
     "slug": "time-capsule",
     "title": "时光胶囊 · Moments",
     "date": "2026.10.26",
