@@ -1,17 +1,31 @@
 [
   {
-      "slug":  "study-flow",
-      "title":  "Study Flow · 学习进度",
-      "date":  "2026.10.26",
-      "type":  "STUDY DASHBOARD",
-      "description":  "Apple 风格学习仪表盘：添加学习目标、记录学习时长、查看最近七天趋势，数据保存在浏览器本地。",
-      "url":  "./study-flow/",
-      "cover":  "",
-      "tags":  [
-                   "学习进度",
-                   "目标管理",
-                   "Apple 风格"
-               ]
+    "slug": "time-capsule",
+    "title": "时光胶囊 · Moments",
+    "date": "2026.10.26",
+    "type": "PERSONAL JOURNAL",
+    "description": "把值得记住的瞬间轻轻收藏。记录、编辑、珍藏与回顾生活故事，支持照片和本地备份。",
+    "url": "./time-capsule/",
+    "cover": "",
+    "tags": [
+      "Apple 风格",
+      "生活记录",
+      "本地保存"
+    ]
+  },
+  {
+    "slug": "study-flow",
+    "title": "Study Flow · 学习进度",
+    "date": "2026.10.26",
+    "type": "STUDY DASHBOARD",
+    "description": "Apple 风格学习仪表盘：添加学习目标、记录学习时长、查看最近七天趋势，数据保存在浏览器本地。",
+    "url": "./study-flow/",
+    "cover": "",
+    "tags": [
+      "学习进度",
+      "目标管理",
+      "Apple 风格"
+    ]
   },
   {
     "slug": "xjtu-campus-3d",
@@ -21,7 +35,11 @@
     "description": "漫游西安交通大学兴庆校区，探索钱学森图书馆、腾飞塔和四大发明广场。基于 OSM 地理数据与实景参考，部分立面仍为示意。",
     "url": "./xjtu-campus-3d/",
     "cover": "",
-    "tags": ["3D 校园", "自由漫游", "地理可视化"]
+    "tags": [
+      "3D 校园",
+      "自由漫游",
+      "地理可视化"
+    ]
   },
   {
     "slug": "aurora-player",
