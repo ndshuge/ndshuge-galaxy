@@ -4,7 +4,7 @@ const url=process.env.XIAOYA_APPLE_TEST_URL||'http://127.0.0.1:5393/little-works
 (async()=>{
  const browser=await chromium.launch(process.env.XIAOYA_BROWSER_CHANNEL==='chromium'?{headless:true}:{channel:'msedge',headless:true});
  const reports=[];
- const dir=path.join(__dirname,'docs','xiaoya-apple-next-qa');fs.mkdirSync(dir,{recursive:true});
+ const dir=process.env.XIAOYA_QA_OUTPUT_DIR||path.join(__dirname,'docs','xiaoya-apple-next-qa');fs.mkdirSync(dir,{recursive:true});
  for(const w of [320,390,768,1440]){
   const p=await browser.newPage({viewport:{width:w,height:w<600?844:900},reducedMotion:'no-preference'});
   const errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push('console:'+m.text().slice(0,140))});
@@ -76,10 +76,20 @@ const url=process.env.XIAOYA_APPLE_TEST_URL||'http://127.0.0.1:5393/little-works
   await w.waitForTimeout(480);
   const settle=await w.evaluate(async()=>{
     const copy=document.querySelector('.xy-refract-copy');
-    const initial=copy?.style.filter;
-    await new Promise(resolve=>setTimeout(resolve,380));
+    let initial=copy?.style.filter;
+    // Wait for WebKit's deferred SVG map decode, then require repeated stability.
+    await new Promise(resolve=>setTimeout(resolve,300));
+    let consecutive=0, changes=0, samples=0;
+    for(let i=0;i<14;i++){
+      await new Promise(resolve=>setTimeout(resolve,150));
+      samples++;
+      const current=copy?.style.filter;
+      if(current===initial)consecutive++;
+      else{changes++;consecutive=0;initial=current;}
+      if(consecutive>=4)break;
+    }
     return {active:document.querySelector('.mobile-tabs button.active')?.dataset.view,
-      stable:copy?.style.filter===initial, animations:document.getAnimations().filter(x=>x.playState==='running').length};
+      stable:consecutive>=4,changes,samples,animations:document.getAnimations().filter(x=>x.playState==='running').length};
   });
   const additionalWidths=[];
   for(const width of [320,768]){
