@@ -494,7 +494,8 @@ body.apple-next .xy-floating-panels{align-items:start}
 /* Higher-specificity overrides: old comparison.css and Apple V1 must not win. */
 @media(max-width:790px){
  body.design-apple.redesign-v2.apple-next .mobile-tabs {
-   background:rgba(244,242,250,.48)!important;
+   /* iOS-like glass should soften underlying text rather than let it collide with tab labels. */
+   background:rgba(250,250,253,.79)!important;
    -webkit-backdrop-filter:blur(9px) saturate(1.28)!important;
    backdrop-filter:blur(9px) saturate(1.28)!important;
    box-shadow:0 11px 27px rgba(43,37,54,.19),inset 0 1px 0 #ffffffed!important;
@@ -512,4 +513,115 @@ body.apple-next .xy-floating-panels{align-items:start}
 @media(max-width:790px) and (prefers-reduced-transparency:reduce) {
  body.design-apple.redesign-v2.apple-next .mobile-tabs{background:#f4f3f6!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
  body.design-apple.redesign-v2.apple-next .mobile-tabs .xy-glass-indicator{background:white!important}
+}
+
+/* Prevent bright content from showing through the dock as unblurred glyphs
+   (observed in real Playwright WebKit). Prefer opacity to costly giant blur. */
+@media(max-width:790px){
+  body.design-apple.redesign-v2.apple-next .mobile-tabs[data-glass-engine="webkit"],
+  body.design-apple.redesign-v2.apple-next .mobile-tabs[data-glass-engine="gecko"]{
+    background:#f8f7fb!important;
+    backdrop-filter:blur(6px) saturate(1.1)!important;
+    -webkit-backdrop-filter:blur(6px) saturate(1.1)!important;
+  }
+}
+/* Pattern B: a genuinely refracted copy of navigation art for WebKit/Gecko.
+   The real native controls remain topmost and receive all input. */
+@media(max-width:790px){
+  body.apple-next .mobile-tabs .xy-refract-copy{
+    position:absolute;left:5px;right:5px;top:6px;bottom:6px;z-index:1;
+    display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+    pointer-events:none;overflow:visible;color:#29272e;
+    visibility:hidden;will-change:auto;
+  }
+  body.apple-next .mobile-tabs .xy-refract-cell{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;min-width:0;min-height:55px;white-space:nowrap;
+    font-size:11px;font-weight:530;color:#6d6973;line-height:normal;visibility:hidden;
+  }
+  body.apple-next .mobile-tabs .xy-refract-cell.is-selected{color:#202027;font-weight:680;visibility:visible}
+  body.apple-next .mobile-tabs .xy-refract-cell svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  body.apple-next .mobile-tabs.has-content-refraction button.active{color:#222027!important}
+  body.apple-next .mobile-tabs.has-content-refraction button.active svg{opacity:1!important}
+  body.apple-next .mobile-tabs.has-content-refraction .xy-refract-copy{
+    visibility:visible;opacity:.16;
+    -webkit-backface-visibility:hidden;backface-visibility:hidden;
+  }
+}
+@media(max-width:790px) and (prefers-reduced-transparency:reduce){
+  body.apple-next .mobile-tabs .xy-refract-copy{display:none!important}
+  body.apple-next .mobile-tabs.has-content-refraction button.active{color:#222027!important}
+  body.apple-next .mobile-tabs.has-content-refraction button.active svg{opacity:1!important}
+}
+
+/* Optical legibility audit: stop live page copy crossing dock labels.
+   Content-copy SVG displacement remains active, never hides native buttons. */
+@media(max-width:790px){
+ body.design-apple.redesign-v2.apple-next .mobile-tabs{
+   background:rgba(249,248,252,.985)!important;
+   -webkit-backdrop-filter:blur(5px) saturate(1.15)!important;
+   backdrop-filter:blur(5px) saturate(1.15)!important;
+   box-shadow:0 9px 24px rgba(37,35,47,.12),inset 0 1px 0 #fff!important;
+ }
+ body.apple-next .mobile-tabs .xy-refract-copy{opacity:.28;mix-blend-mode:normal}
+ body.apple-next .mobile-tabs.has-content-refraction button.active{color:#222027!important}
+ body.apple-next .mobile-tabs.has-content-refraction button.active svg{opacity:1!important}
+ body.apple-next .mobile-tabs button{isolation:isolate}
+}
+
+
+/* WebKit content-refraction: suppress underlying scrolling text bleed while
+   keeping a soft optical surface and preserving native hit targets. */
+@media(max-width:790px){
+ body.design-apple.redesign-v2.apple-next .mobile-tabs.has-content-refraction{
+   background:rgba(249,249,252,.89)!important;
+   -webkit-backdrop-filter:blur(8px) saturate(1.12)!important;
+   backdrop-filter:blur(8px) saturate(1.12)!important;
+   box-shadow:0 8px 22px rgba(43,37,54,.14),inset 0 1px 0 rgba(255,255,255,.97)!important;
+ }
+ body.design-apple.redesign-v2.apple-next .mobile-tabs.has-content-refraction .xy-glass-indicator{
+   background:linear-gradient(160deg,rgba(255,255,255,.98),rgba(247,246,251,.85))!important;
+   box-shadow:inset 0 1px 0 white,0 2px 10px rgba(57,49,75,.13)!important;
+ }
+ body.apple-next .mobile-tabs.has-content-refraction .xy-refract-copy{color:#25232b}
+ body.apple-next .mobile-tabs.has-content-refraction button.active{color:#222027!important}
+}
+
+
+/* WebKit material correction: do not let scrolling content ghost through the
+   navigation dock. Optical displacement remains on selected copied label. */
+@media(max-width:790px){
+ body.design-apple.redesign-v2.apple-next .mobile-tabs.has-content-refraction{
+   background:#f5f4f8!important;
+   -webkit-backdrop-filter:blur(8px) saturate(1.14)!important;
+   backdrop-filter:blur(8px) saturate(1.14)!important;
+ }
+ body.apple-next .mobile-tabs.has-content-refraction .xy-refract-cell:not(.is-selected){
+   color:transparent!important;
+ }
+ body.apple-next .mobile-tabs.has-content-refraction .xy-refract-cell.is-selected{
+   color:#292630!important;font-weight:650!important;
+ }
+ body.apple-next .mobile-tabs.has-content-refraction button.active{
+   color:transparent!important;
+ }
+ body.apple-next .mobile-tabs.has-content-refraction button.active svg{
+   opacity:1!important;color:#292630!important;
+ }
+}
+
+/* On WebKit, an opaque navigation carrier protects legibility while the
+   clipped SVG refraction bends copied dock artwork inside the optical lens.
+   This does NOT claim arbitrary page-backdrop refraction. */
+@media(max-width:790px){
+ body.design-apple.redesign-v2.apple-next .mobile-tabs[data-glass-engine="webkit"]{
+   background:#f9f8fc!important;
+   -webkit-backdrop-filter:none!important;
+   backdrop-filter:none!important;
+ }
+}
+
+@media(max-width:790px){
+ body.apple-next .mobile-tabs.has-content-refraction button.active{color:#242128!important}
+ body.apple-next .mobile-tabs.has-content-refraction .xy-refract-cell.is-selected{opacity:.22}
 }
