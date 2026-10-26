@@ -24,7 +24,7 @@ const checks = [
     assert.ok(catalog.some(v => v.slug === 'xiaoya-lifelab'));
   }],
   ['Optical engine is bundled and attributed', () => {
-    assert.match(js, /import\s*\{\s*createGlass\s*,\s*createSpring\s*\}/);
+    assert.match(js, /import\s*\{\s*createGlass\s*,\s*createSpring\s*,\s*engine\s*\}/);
     assert.match(js, /createGlass\(lens,/);
     assert.match(js, /mode:'backdrop'/);
     assert.match(glass, /feDisplacementMap|displacement/i);

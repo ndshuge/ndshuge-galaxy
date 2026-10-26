@@ -33,7 +33,13 @@ const url=process.env.XIAOYA_APPLE_TEST_URL||'http://127.0.0.1:5393/little-works
   reports.push({width:w,...baseline,dismissed,manualReopen,staysDismissed,first,clickedTasks:tasks,returned,lensVisible,errors});
   await p.close();
  }
+ const safari=await browser.newPage({viewport:{width:390,height:844},userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Mobile/15E148 Safari/604.1'});
+ await safari.addInitScript(()=>Object.defineProperty(navigator,'userAgentData',{value:undefined,configurable:true}));
+ await safari.goto(url,{waitUntil:'domcontentloaded'});await safari.waitForTimeout(500);
+ const webkitClaim=await safari.evaluate(()=>({mode:document.querySelector('.mobile-tabs')?.dataset.glass,engine:document.querySelector('.mobile-tabs')?.dataset.glassEngine}));
+ await safari.close();
  const p=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});await p.goto(url);const reduced=await p.evaluate(()=>({motion:matchMedia('(prefers-reduced-motion: reduce)').matches,nav:document.querySelector('.mobile-tabs')?.dataset.glass||''}));await p.close();await browser.close();
- console.log(JSON.stringify({reports,reduced}));
+ console.log(JSON.stringify({reports,reduced,webkitClaim}));
+ if(webkitClaim.mode!=='frosted-fallback'||webkitClaim.engine!=='webkit')process.exitCode=2;
  if(reports.some(x=>x.overflow>2||!x.shell||!x.dismissed||!x.manualReopen||!x.staysDismissed||x.sheetRadius<32||x.groupRadius<28||x.heroRadius<32||x.controlRadius>19||x.controlRadius>=x.groupRadius||!x.first||!x.clickedTasks||!x.returned||x.errors.length||(x.width<=790 && (x.glass!=='refraction'||!x.filter.includes('url(')||!x.lensVisible))))process.exitCode=2;
 })().catch(e=>{console.error(e.stack);process.exitCode=3})

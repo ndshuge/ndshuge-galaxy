@@ -1,4 +1,4 @@
-import { createGlass, createSpring } from './glass/liquid-glass.js';
+import { createGlass, createSpring, engine } from './glass/liquid-glass.js';
 
 const body = document.body;
 if (body.classList.contains('design-apple')) {
@@ -75,9 +75,10 @@ if (body.classList.contains('design-apple')) {
           const opticalLens = createGlass(lens, {
             mode:'backdrop',fit:true,radius:21,refraction:17,bezel:.68,
             curvature:4,chroma:.1,specular:.68,specularWidth:1.4,
-            fallback:'blur(18px) saturate(1.32)'
+            fallback:'blur(7px) saturate(1.35)'
           });
-          dock.dataset.glass = opticalLens ? 'refraction' : 'fallback';
+          dock.dataset.glass = engine === 'blink' && opticalLens ? 'refraction' : 'frosted-fallback';
+          dock.dataset.glassEngine = engine;
         } catch (e) {
           dock.dataset.glass='fallback';
           console.warn('Glass renderer fallback:',e.message);
