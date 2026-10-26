@@ -47,6 +47,14 @@ const checks = [
     assert.match(css, /focus-visible/);
     assert.match(css, /min-height:55px/);
   }],
+  ['Apple variant uses existing SVG symbol system, not typographic emoji', () => {
+    const app=txt('little-works/xiaoya-apple/app.js');
+    for(const source of [html,app]){
+      assert.doesNotMatch(source,/[✦✧✿✻]/,'Decorative character remains in Apple production sources');
+    }
+    assert.match(html,/xy-inline-icon/);
+    assert.match(app,/xy-inline-icon/);
+  }],
   ['Business and privacy code not replaced', () => {
     ['app.js','core.js','domain.js','byok-ui.js','xiaoya-chat.js','redesign.js','styles.css'].forEach(f => exists('little-works/xiaoya-apple/'+f));
     assert.match(html, /\.\/app\.js/);

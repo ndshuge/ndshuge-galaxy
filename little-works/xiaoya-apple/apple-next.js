@@ -3,6 +3,42 @@ import { createGlass, createSpring, engine } from './glass/liquid-glass.js';
 const body = document.body;
 if (body.classList.contains('design-apple')) {
   body.classList.add('apple-next');
+  // Replace the onboarding placeholder emoji with XiaoYa's licensed local artwork.
+  const introGlyph = document.querySelector('#xy-onboard .xy-hero > span');
+  if (introGlyph) {
+    const art = document.createElement('img');
+    art.className = 'xy-intro-illustration';
+    art.src = './assets/brand/xiaoya_hero_v1.webp';
+    art.alt = '小芽形象';
+    art.width = 56;
+    art.height = 56;
+    introGlyph.replaceWith(art);
+  }
+  // The assistant works locally without a Key. Put optional provider setup behind
+  // an explicit, keyboard-operable disclosure instead of forcing a long form
+  // into every first-launch sheet. All original consent/security nodes stay intact.
+  const onboardingContent = document.querySelector('#xy-onboard .xy-content');
+  if (onboardingContent && !onboardingContent.querySelector('.xy-onboard-optional')) {
+    const local = onboardingContent.querySelector('#xy-local');
+    const skip = onboardingContent.querySelector('#xy-skip');
+    if (local && skip) {
+      const optional = document.createElement('details');
+      optional.className = 'xy-onboard-optional';
+      const summary = document.createElement('summary');
+      summary.textContent = '连接真实 AI（可选）';
+      optional.append(summary);
+      for (const node of [...onboardingContent.children]) {
+        if (node !== local && node !== skip) optional.append(node);
+      }
+      local.after(optional);
+      // An explicit Connect request should open the relevant form directly;
+      // first launch remains compact until the user asks for AI.
+      document.addEventListener('click',event=>{
+        if(event.target.closest('#ai-global-entry,#xy-config,#ai-mode-connect,#ai-today-connect,#ai-goals-banner-action,#growth-ai-config-link'))optional.open=true;
+      },true);
+      window.addEventListener('xiaoya-open-ai-settings',()=>{optional.open=true;});
+    }
+  }
   // Apple Settings uses a functional page title, not a promotional hero.
   const settingsHeading = document.querySelector('#view-settings .page-head h1');
   if (settingsHeading) settingsHeading.textContent = '设置';
@@ -28,6 +64,37 @@ if (body.classList.contains('design-apple')) {
     rest.textContent = '也在慢慢成长';
     h1.append(rest);
     if (period) rest.append(period);
+  }
+  // Keep the semester form primary; move its noncritical explanatory text
+  // into a native disclosure at the end of the existing panel.
+  const semesterPanel = document.querySelector('#view-settings > .panel.rc-settings');
+  const semesterRule = semesterPanel?.querySelector(':scope > p.muted');
+  if (semesterPanel && semesterRule && !semesterPanel.querySelector('.xy-semester-disclosure')) {
+    const details = document.createElement('details');
+    details.className = 'xy-semester-disclosure';
+    const summary = document.createElement('summary');
+    summary.textContent = '学期规则说明';
+    details.append(summary, semesterRule);
+    semesterPanel.append(details);
+  }
+  // iOS-style progressive disclosure: preserve all original BYOK safety text
+  // while keeping the primary action visible near the top of Settings.
+  const aiSettings = document.getElementById('byok-settings');
+  if (aiSettings && !aiSettings.querySelector('.xy-ai-disclosure')) {
+    const notes = [...aiSettings.children].filter(el =>
+      (el.matches('p.muted') || el.matches('small.muted') ||
+       (el.tagName === 'P' && el !== aiSettings.querySelector('p:first-of-type') &&
+        el.textContent.includes('CORS')))
+    );
+    if (notes.length) {
+      const disclosure = document.createElement('details');
+      disclosure.className = 'xy-ai-disclosure';
+      const summary = document.createElement('summary');
+      summary.textContent = 'API 密钥保存与安全说明';
+      disclosure.append(summary);
+      for (const note of notes) disclosure.append(note);
+      aiSettings.append(disclosure);
+    }
   }
   const dock = document.querySelector('.mobile-tabs');
   if (dock) {

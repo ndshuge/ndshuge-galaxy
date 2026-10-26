@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="./xiaoya-chat.css?v=20261023uix4"/>
 <link rel="stylesheet" href="./comparison.css?v=20261025"/>
 <link rel="stylesheet" href="./redesign.css?v=20261025r2"/>
-<link rel="stylesheet" href="./apple-next.css?v=20261026optics4"/>
+<link rel="stylesheet" href="./apple-next.css?v=20261026settings23"/>
 </head>
 <body class="design-apple">
 <nav class="comparison-nav" aria-label="小芽设计版本切换"><span class="comparison-title">小芽 · 设计对照</span><div class="comparison-links"><a href="https://ndshuge.github.io/xiaoya-lifelab/">原版</a><a href="../xiaoya-apple/" aria-current="page">Apple</a><a href="../xiaoya-studio/" >Skill 工作流</a></div><a class="comparison-back" href="../">返回小东西</a></nav>
@@ -38,7 +38,7 @@
 </svg>
 <div class="app-layout" id="app">
 <aside class="sidebar">
- <div class="brand" role="banner"><div class="brand-mark"><span class="mini-leaf">✦</span></div><div><strong>小芽</strong><small>陪你把日子过好</small></div></div>
+ <div class="brand" role="banner"><div class="brand-mark"><img class="xy-brand-avatar" src="./assets/brand/xiaoya_hero_v1.webp" width="44" height="44" alt="小芽"></div><div><strong>小芽</strong><small>陪你把日子过好</small></div></div>
  <div class="sidebar-label">我的空间</div>
  <nav class="side-nav" aria-label="主导航">
   <button class="nav-link is-active" data-view="today"><svg><use href="#i-home"/></svg><span>今天</span><span class="nav-dot"></span></button>
@@ -56,7 +56,7 @@
 <div class="center-wrap">
 <header class="topbar">
  <div class="breadcrumb"><span>我的空间</span><svg><use href="#i-chevron"/></svg><strong id="crumb">今天</strong></div>
- <div class="top-actions"><button type="button" id="ai-global-entry" class="ai-global-indicator" data-view="settings" data-ai-mode="offline" aria-label="AI 未配置，打开设置"><span class="ai-indicator-icon" aria-hidden="true">✧</span><span class="ai-indicator-copy"><strong id="ai-global-title">规则模式</strong><small id="ai-global-subtitle">AI 未配置</small></span><span class="ai-indicator-chevron" aria-hidden="true">›</span></button><a href="./judge.html" class="small-ghost judge-top-link" style="text-decoration:none">评委体验</a><span id="mode-badge" class="mode-badge">私人空白档案</span><button class="small-ghost" id="mode-switch" type="button">载入合成演示</button><button class="icon-button" data-view="settings" aria-label="设置"><svg><use href="#i-settings"/></svg></button></div>
+ <div class="top-actions"><button type="button" id="ai-global-entry" class="ai-global-indicator" data-view="settings" data-ai-mode="offline" aria-label="AI 未配置，打开设置"><span class="ai-indicator-icon" aria-hidden="true"><svg class="xy-inline-icon" aria-hidden="true"><use href="#i-spark"/></svg></span><span class="ai-indicator-copy"><strong id="ai-global-title">规则模式</strong><small id="ai-global-subtitle">AI 未配置</small></span><span class="ai-indicator-chevron" aria-hidden="true">›</span></button><a href="./judge.html" class="small-ghost judge-top-link" style="text-decoration:none">评委体验</a><span id="mode-badge" class="mode-badge">私人空白档案</span><button class="small-ghost" id="mode-switch" type="button">载入合成演示</button><button class="icon-button" data-view="settings" aria-label="设置"><svg><use href="#i-settings"/></svg></button></div>
 </header>
 <div class="content-grid">
 <main id="main"><div id="storage-error" class="panel" role="alert" hidden><p id="storage-error-text"></p><button class="btn btn-soft" id="export-raw" data-export-raw="true">导出原始存储</button><button class="btn btn-soft" data-view="settings">恢复备份</button></div>
@@ -67,7 +67,7 @@
     <p id="hero-description">把重要的事情放在心上，也给喜欢的事情留一点时间。</p>
     <div class="hero-actions"><button class="btn btn-dark" data-add="task"><svg><use href="#i-plus"/></svg> 记录新事项</button><button class="btn btn-plain" data-view="schedule">看看这一周 <svg><use href="#i-arrow"/></svg></button></div>
    </div>
-   <div class="hero-decoration" aria-hidden="true"><div class="sun-disc"><span class="sun-inner">✻</span></div><span class="orb orb-1"></span><span class="orb orb-2"></span><span class="hero-caption">one day at a time</span></div>
+   <div class="hero-decoration" aria-hidden="true"><div class="sun-disc"><span class="sun-inner"><svg class="xy-inline-icon" aria-hidden="true"><use href="#i-spark"/></svg></span></div><span class="orb orb-1"></span><span class="orb orb-2"></span><span class="hero-caption">one day at a time</span></div>
   </div>
   <div class="section-heading"><div><span class="kicker">TODAY'S FOCUS</span><h2>今天的重点 <span class="heading-spark">✳</span></h2></div><span class="muted" id="today-count">一切从这里开始</span></div>
   <div class="overview-grid">
@@ -85,12 +85,12 @@
  </section>
  <section id="view-schedule" class="view"><div class="page-head"><div class="kicker">YOUR WEEK</div><h1>这一周，安排得刚刚好。</h1><p>课程与社团活动放在同一张时间表中，重叠会被真实检测。</p><button class="btn btn-dark" data-add="course"><svg><use href="#i-plus"/></svg> 添加课程</button><button class="btn btn-soft" data-add="event">添加活动</button></div><div class="week-toolbar"><button class="btn btn-soft" id="week-prev" aria-label="上一周">← 上一周</button><span id="week-label"></span><button class="btn btn-soft" id="week-next" aria-label="下一周">下一周 →</button><button class="btn btn-plain" id="week-now">回到本周</button><button class="btn btn-dark" id="schedule-import">导入 CSV / ICS</button><input id="schedule-file" type="file" accept=".csv,.ics,text/csv,text/calendar" hidden></div><div class="panel schedule-board"><div class="board-head"><h3>周课表</h3><span class="muted">点击项目可以编辑</span></div><div class="day-tabs" id="day-tabs"></div><div class="week-grid" id="week-grid"></div><div id="day-detail" class="day-detail"></div></div><div id="schedule-conflicts"></div></section>
  <section id="view-tasks" class="view"><div class="page-head"><div class="kicker">THE IMPORTANT THINGS</div><h1>每一件努力，都算数。</h1><p>不遗漏截止时间，也不把安排变成压力。</p><button class="btn btn-dark" data-add="task"><svg><use href="#i-plus"/></svg> 新建事项</button></div><form id="quick-task-form" class="quick-entry panel"><label for="quick-title">快捷事项</label><input id="quick-title" name="title" placeholder="例如：提交实验报告" required maxlength="160"><input name="due" type="datetime-local" required aria-label="截止日期与时间"><button class="btn btn-dark" type="submit">记录</button></form><div id="task-filters" class="filter-row"><button class="chip selected" data-filter="all">全部</button><button class="chip" data-filter="open">待完成</button><button class="chip" data-filter="done">已完成</button></div><div class="panel list-panel" id="all-tasks"></div></section>
- <section id="view-goals" class="view"><div class="page-head growth-page-head"><h1>成长规划</h1><button class="btn btn-soft" data-add="goal"><svg><use href="#i-plus"/></svg> 添加目标</button></div><div class="ai-goals-banner" id="ai-goals-banner" data-ai-mode="offline" aria-label="成长规划当前模式"><span class="ai-goals-banner-orb" aria-hidden="true">✧</span><div class="ai-goals-banner-copy"><span>GROWTH / YOUR NEXT STEP</span><strong id="ai-goals-banner-title">让计划从你开始</strong><p id="ai-goals-banner-summary">填写目标、基础与时间，选择规则路线或 AI 建议。</p></div><button type="button" id="ai-goals-banner-action" data-view="review">成长复盘 ↗</button></div><div class="growth-tabs"><button class="btn btn-soft" data-view="goals" aria-current="page">我的目标与习惯</button><button class="btn btn-soft" data-view="review">查看成长复盘</button></div><div class="goal-grid" id="all-goals"></div><div class="panel growth-simulator-panel"><h3>制定成长路线</h3>
+ <section id="view-goals" class="view"><div class="page-head growth-page-head"><h1>成长规划</h1><button class="btn btn-soft" data-add="goal"><svg><use href="#i-plus"/></svg> 添加目标</button></div><div class="ai-goals-banner" id="ai-goals-banner" data-ai-mode="offline" aria-label="成长规划当前模式"><span class="ai-goals-banner-orb" aria-hidden="true"><svg class="xy-inline-icon" aria-hidden="true"><use href="#i-spark"/></svg></span><div class="ai-goals-banner-copy"><span>GROWTH / YOUR NEXT STEP</span><strong id="ai-goals-banner-title">让计划从你开始</strong><p id="ai-goals-banner-summary">填写目标、基础与时间，选择规则路线或 AI 建议。</p></div><button type="button" id="ai-goals-banner-action" data-view="review">成长复盘 ↗</button></div><div class="growth-tabs"><button class="btn btn-soft" data-view="goals" aria-current="page">我的目标与习惯</button><button class="btn btn-soft" data-view="review">查看成长复盘</button></div><div class="goal-grid" id="all-goals"></div><div class="panel growth-simulator-panel"><h3>制定成长路线</h3>
   <section class="ai-mode-dashboard" id="ai-mode-dashboard" data-ai-mode="offline" aria-label="规划模式与功能状态">
     <div class="ai-mode-overview"><div><span class="ai-micro-label">PLAN WITH XIAOYA / CAPABILITY</span><h4 id="ai-mode-headline">规则版已就绪，AI 尚未启用</h4><p id="ai-mode-summary">不用 API 也可以规划成长。AI 个性化生成属于独立功能，需要连接模型后明确授权。</p></div><span class="ai-capability-state" data-ai-capability-state data-mode="offline">规则模式 · AI 未配置</span></div>
     <div class="ai-mode-grid">
-      <article class="ai-mode-card ai-mode-card-rule"><div class="ai-mode-icon" aria-hidden="true">01</div><span class="ai-mode-kicker">LOCAL / EXPLAINABLE</span><h5>本机规则规划</h5><p>根据预设规则、目标领域和时间预算，生成两条可解释路线。</p><div class="ai-mode-card-footer"><span class="ai-mode-ready">✓ 无需 API · 已可使用</span></div></article>
-      <article class="ai-mode-card ai-mode-card-cloud"><div class="ai-mode-icon" aria-hidden="true">✧</div><span class="ai-mode-kicker">MODEL / EXPLICIT CONSENT</span><h5>AI 个性化规划</h5><p>仅在你授权后发送填写的目标与预算，由真实模型生成并经过本地校验。</p><div class="ai-mode-card-footer"><span class="ai-mode-cloud-state" id="ai-mode-cloud-state">未配置 · 功能锁定</span><button type="button" class="ai-mode-connect" data-view="settings" id="ai-mode-connect">配置 API →</button></div></article>
+      <article class="ai-mode-card ai-mode-card-rule"><div class="ai-mode-icon" aria-hidden="true">01</div><span class="ai-mode-kicker">LOCAL / EXPLAINABLE</span><h5>本机规则规划</h5><p>根据预设规则、目标领域和时间预算，生成两条可解释路线。</p><div class="ai-mode-card-footer"><span class="ai-mode-ready"><svg class="xy-inline-icon" aria-hidden="true"><use href="#i-check"/></svg>无需 API · 已可使用</span></div></article>
+      <article class="ai-mode-card ai-mode-card-cloud"><div class="ai-mode-icon" aria-hidden="true"><svg class="xy-inline-icon" aria-hidden="true"><use href="#i-spark"/></svg></div><span class="ai-mode-kicker">MODEL / EXPLICIT CONSENT</span><h5>AI 个性化规划</h5><p>仅在你授权后发送填写的目标与预算，由真实模型生成并经过本地校验。</p><div class="ai-mode-card-footer"><span class="ai-mode-cloud-state" id="ai-mode-cloud-state">未配置 · 功能锁定</span><button type="button" class="ai-mode-connect" data-view="settings" id="ai-mode-connect">配置 API →</button></div></article>
     </div>
     <p class="ai-mode-truth" id="ai-mode-truth">下方两种生成方式不是同一个功能；基础规划不会假装调用云端 AI。</p>
   </section>
@@ -151,9 +151,9 @@
   </button>
   <div class="pet-state-label" id="pet-state-label">🌿 正在陪伴你</div>
   <h3 id="pet-title">你好呀，我是小芽</h3><p id="pet-message">日子一点点整理好就行。</p>
-  <button class="pet-action" id="pet-open">看看小芽发现了什么 <svg><use href="#i-arrow"/></svg></button><button class="pet-recheck" id="recheck-btn" type="button">✧ 根据当前记录重新分析</button>
+  <button class="pet-action" id="pet-open">看看小芽发现了什么 <svg><use href="#i-arrow"/></svg></button><button class="pet-recheck" id="recheck-btn" type="button"><svg class="xy-inline-icon" aria-hidden="true"><use href="#i-spark"/></svg> 根据当前记录重新分析</button>
  </section>
- <div class="rail-note"><span class="note-flower">✻</span><strong>一点点的坚持</strong><p>每次完成，都来自你真正记录的行动。</p><div id="rail-progress"></div></div>
+ <div class="rail-note"><span class="note-flower"><svg class="xy-inline-icon" aria-hidden="true"><use href="#i-spark"/></svg></span><strong>一点点的坚持</strong><p>每次完成，都来自你真正记录的行动。</p><div id="rail-progress"></div></div>
 </aside>
 </div>
 </div>
@@ -164,4 +164,4 @@
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script type="module" src="./app.js?v=20261023uix5"></script>
 <script src="./xiaoya-chat.js?v=20261023uix4" defer></script>
-<script src="./redesign.js?v=20261025r2"></script><script type="module" src="./apple-next.js?v=20261026optics6"></script></body></html>
+<script src="./redesign.js?v=20261025r2"></script><script type="module" src="./apple-next.js?v=20261026settings14"></script></body></html>
