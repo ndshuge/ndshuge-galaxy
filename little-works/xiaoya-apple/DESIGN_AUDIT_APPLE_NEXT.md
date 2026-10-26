@@ -1,0 +1,13 @@
+# 小芽 Apple Next 设计验收 · 2026-10-26
+
+- 目标：在现有“小东西”/xiaoya-apple 入口原位替换 Apple 版本，不修改原版、Skill 版本或竞赛提交源。
+- BEFORE：little-works/xiaoya-apple/qa_before_{390,1440}.png。问题：深色大字压低任务首屏；无真实折射；无意义小字与移动导航冗余。
+- Taste-Skill：已读 app-screens.md；执行 draw.mjs --app --kind workspace，抽样 Achromatic ledger seed 2090123085，采用灰白阅读工作台、实体任务数据和清晰原生操作，未照搬无色 KPI 用法。
+- Designeer：浏览资源页与灵感页，打开 /inspiration/60fps 和 /resources/utopia，并查看原创 60fps.design 与 utopia.fyi。采用动效对状态有意义、响应式字号原则；未复制版权组件或引入远程字体。
+- Apple Web Design OS：Hybrid 模式，app 主阅读面非玻璃，六按钮浮动 dock 为光学对象。Bundled MIT liquid-glass engine 位于 glass/liquid-glass.js，chromium backdrop refraction，由 createGlass 实际创建；非 Chromium 降级为模糊。Motion 方法：createSpring 导航指示器，点击区域不缩放。
+- 实现：redesign.js 先装配旧界面，apple-next.js 改写标题结构和内容层级；apple-next.css 以新的侧栏/标题/任务卡/引导对话框覆盖旧 premium 方案。API Key 保存、安全警告、AI 接入与业务脚本不修改。
+- 真实截图：docs/xiaoya-apple-next-qa/{onboarding-390,after-320,after-390,after-768,after-1440,post-release-390}.png。
+- QA：执行 node qa-apple-next.cjs，320/390/768/1440 全通过；4 屏宽横向溢出为 0，点击任务/返回成功，console 脚本错误 0，Chromium 390 屏读到 backdrop-filter:url(#lg...)。prefers-reduced-motion 状态实测 true；真正物理真机 Safari 未验。独立截图人工检查并修改手机标题断行、导航图标对比、初次引导与顶栏布局。
+- Taste inspect.mjs --app 真实运行，报告 .taste-skill/inspect/report.json；并非全 PASS：自定义温暖底色渐变、真实小芽图像伴随的 emoji、modal 阴影和大型问候标题属于专项审美取舍；历史业务模板仍含 microcopy 与小字，待持续清理。原版业务导航与真实数据必须保留。
+- User art acceptance：PENDING。未调用真实付费 API，没有上传 Key 或私有资料。
+- Rollback：Git revert 当前发布提交；旧版 premium.css 仍在仓库，未删除。
