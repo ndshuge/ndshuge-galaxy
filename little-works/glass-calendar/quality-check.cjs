@@ -42,7 +42,8 @@ async function evaluate(expression){const r=await send("Runtime.evaluate",{expre
 async function checkViewport(w,h){
  await send("Emulation.setDeviceMetricsOverride",{width:w,height:h,deviceScaleFactor:1,mobile:false});
  await send("Page.navigate",{url:REMOTE?REMOTE+"?qa="+w+"&v=f1c09f1":"http://127.0.0.1:"+PORT+"/index.html?qa="+w});
- for(let i=0;i<50;i++){if(await evaluate("document.readyState === 'complete' && !!document.querySelector('#grid .day')"))break;await sleep(110)}
+ for(let i=0;i<80;i++){if(await evaluate("document.readyState === 'complete' && !!document.querySelector('#grid .day') && !!document.querySelector('.shixu-grid-stage') && !!document.querySelector('.shixu-touch-lens')"))break;await sleep(110)}
+ assert.equal(await evaluate("!!document.querySelector('.shixu-grid-stage') && !!document.querySelector('.shixu-touch-lens')"),true,"view motion and touch components must be initialized before QA");
  await sleep(400);
  // Wait for the SVG filter to attach, not merely for DOMContentLoaded.
  for(let attempt=0;attempt<32;attempt++){
@@ -188,6 +189,9 @@ async function checkViewport(w,h){
  await new Promise((resolve,reject)=>{ws.addEventListener("open",resolve,{once:true});ws.addEventListener("error",reject,{once:true})});
  ws.addEventListener("message",event=>{const m=JSON.parse(event.data);if(m.id){const cb=callbacks.get(m.id);if(cb){callbacks.delete(m.id);m.error?cb.reject(Error(JSON.stringify(m.error))):cb.resolve(m.result)}}if(m.method==="Runtime.exceptionThrown")faults.push(m.params.exceptionDetails.exception?.description || JSON.stringify(m.params.exceptionDetails))});
  await send("Page.enable");await send("Runtime.enable");
+ // Test normal spring interactions independently of the Windows CI host accessibility default.
+ // A separate test later explicitly emulates prefers-reduced-motion: reduce.
+ await send("Emulation.setEmulatedMedia",{features:[{name:"prefers-reduced-motion",value:"no-preference"}]});
  const reports=[];
  await send("Page.navigate",{url:REMOTE?REMOTE+"glass-lab.html?v=f1c09f1":"http://127.0.0.1:"+PORT+"/glass-lab.html"});
  for(let i=0;i<40;i++){if(await evaluate("document.readyState===\u0027complete\u0027 && customElements.get(\u0027lg-lens\u0027)!==undefined"))break;await sleep(130)}
