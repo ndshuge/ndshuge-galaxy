@@ -96,6 +96,44 @@ if (body.classList.contains('design-apple')) {
       aiSettings.append(disclosure);
     }
   }
+  // Information hierarchy: action first, explanations on demand.
+  // Keep full business/privacy copy in DOM; don't delete or falsify it.
+  const makeDetails = (parent, paragraph, title, shortText) => {
+    if (!parent || !paragraph || paragraph.closest('details')) return;
+    const detail = document.createElement('details');
+    detail.className = 'xy-secondary-info';
+    const summary = document.createElement('summary');
+    summary.textContent = title;
+    const full = paragraph.cloneNode(true);
+    paragraph.textContent = shortText;
+    detail.append(summary, full);
+    paragraph.after(detail);
+  };
+  const byok = document.getElementById('byok-settings');
+  if (byok) {
+    const lead = [...byok.children].find(e => e.tagName === 'P' && !e.classList.contains('muted'));
+    makeDetails(byok, lead, '关于 AI 接入', '基础功能无需连接 AI。需要智能规划时，再连接模型。');
+    const consent = byok.querySelector('label:has(input[type="checkbox"])');
+    if (consent) consent.classList.add('xy-consent-row');
+  }
+  const reminders = document.querySelector('#reminder-leads')?.closest('.panel');
+  if (reminders) {
+    const lead = [...reminders.children].find(e => e.tagName === 'P');
+    makeDetails(reminders, lead, '提醒如何工作', '仅在网页打开时检查提醒；关闭页面后不会通知。');
+  }
+  const onboarding = document.getElementById('onboarding');
+  if (onboarding) {
+    onboarding.classList.add('xy-setup-compact');
+  }
+  const freeTime = document.getElementById('free-time');
+  if (freeTime && !freeTime.closest('details')) {
+    const detail = document.createElement('details');
+    detail.className = 'xy-free-time-details';
+    const summary = document.createElement('summary');
+    summary.textContent = '查看接下来 24 小时的空闲时间';
+    freeTime.before(detail);
+    detail.append(summary,freeTime);
+  }
   const dock = document.querySelector('.mobile-tabs');
   if (dock) {
     const lens = document.createElement('span');
