@@ -20,6 +20,7 @@ button,input,select{font-size:inherit}
  .calheader{gap:10px}
  .panel{min-height:116px}
 }
+@media(max-width:750px){.grid{grid-auto-rows:54px!important}.day{min-height:54px!important}}
 @media(max-width:350px){
  .top h1{font-size:30px!important}
  .sidebar .brand{font-size:19px!important}
@@ -28,4 +29,18 @@ button,input,select{font-size:inherit}
  .day .number{font-size:15px!important}
  .shixu-dock__item{font-size:14px!important}
  .calheader{padding:13px 10px 8px}
+ .grid{grid-auto-rows:48px!important}.day{min-height:48px!important}
 }
+
+
+/* Touch physics: no scaling or bouncing hit targets; highlight and sheet animate. */
+.actions .btn:active,.actions .btn:hover,.nav button:active,#themeToggle:active {
+ transform:none!important;scale:1!important
+}
+.actions .btn.is-pressed,.nav button.is-pressed,#themeToggle.is-pressed{
+ filter:brightness(.95);
+ transition:filter .16s ease,background-color .16s ease!important
+}
+@media(prefers-reduced-motion:reduce){.modal{translate:none!important}}
+/* Reserve a full safe reach zone under the floating dock while scrolling. */
+@media(max-width:750px){.below{padding-bottom:max(118px,calc(env(safe-area-inset-bottom) + 98px))}.shixu-dock{bottom:max(14px,env(safe-area-inset-bottom))}}

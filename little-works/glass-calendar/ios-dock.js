@@ -1,10 +1,10 @@
 /* iOS-like quick actions: real interaction, not a screenshot or decorative overlay. */
-import "./components.js";
+import "./components.js?v=20261026-integrated-dock";
 // lg-dock itself handles optical feedback; individual buttons never resize.
 const dock=document.createElement("nav");
 dock.className="shixu-dock";
 dock.setAttribute("aria-label","日历快捷操作");
-dock.innerHTML=`<lg-dock class="shixu-dock__rim" radius="30" refraction="17" bezel=".65" chroma=".09" hold-ms="850">
+dock.innerHTML=`<lg-dock class="shixu-dock__rim" radius="30" refraction="17" bezel=".65" chroma=".09" hold-ms="850" backdrop="body">
   <button type="button" class="shixu-dock__item" id="dockToday" aria-label="回到今天">
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.2" width="17" height="15" rx="3.4"/><path d="M7.5 3.3v4M16.5 3.3v4M4 10h16"/></svg><span>今天</span>
   </button>

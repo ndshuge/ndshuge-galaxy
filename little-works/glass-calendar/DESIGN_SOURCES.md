@@ -1,5 +1,12 @@
 # 时序 · Skill 应用与验收
 
+## 2026-10-26 修复文字重影与弹簧交互
+- 使用已安装 `liquid-glass-web` Skill 原有的 `Surface` 光学折射和 `createSpring`，将旧 `lg-dock` 对按钮内容的浮动放大镜替换为 **位于真实可点击文字之下的移动光学高亮**，消除重影、独立圆泡和点击区域漂移；Dock 背景使用 Skill 的已知背景复制模式 `backdrop="body"` 与 SVG `feDisplacementMap`，在支持的浏览器上真正折射背景。
+- 按 Motion Skill 的短反馈、状态驱动与可访问性原则，把动效限定在高亮平移和弹层开启；按钮本人不缩放。短屏幕月历采用 48–54px 日期行高，给浮动控制保留足够的底部滚动安全留白。
+- 实际六视口 Edge 回归包含按钮位置不变、无文字折射副本、光学实例和弹簧、移动中间帧与落点、释放后保持与消退、日程 CRUD、月/周切换，且在 320×650 检查 Dock 不遮挡已选中日期。实际审查 `qa-motion-travel-390.png`、`qa-glass-hold-390.png` 与手机稳定帧。
+- 仍需在真正 iPhone Safari 上评估多帧手感及苹果原生材质相似度；**不得把 Edge 中的真实滤镜检验描述成原生 iOS Liquid Glass 全面验收**。
+
+
 ## 2026-10-26 Apple type and sustained optics validation
 - Actual Apple reference consulted: HIG typography (default iOS body 17pt; large title 34pt; supporting roles 13–22pt) and Materials/Motion guidance (Liquid Glass is a control/navigation layer, not whole content). Web CSS sizes are an adaptation rather than literal device point equivalence.
 - **METHOD**: Existing `liquid-glass-web/SKILL.md` provides genuine `lg-dock` with `createGlass` SVG optical displacement and `createSpring` interaction; its upstream default immediately fades on pointerleave and a circular self-content lens makes duplicated labels. **ACTION**: Adapted bundled `components.js` *only in LgDock* to hold for bounded 850ms before spring fade, respond to touch down/up/cancel, preserve immediate reduced-motion exit, reshape the temporary bubble into a contained pill. Retained actual underlying optics, no clickable-button scaling. `ios-type-system.css` uses a deliberate 34/22/17/15/13 scale for hierarchy, increasing calendar/date/dock readability. Project `ios-dock.js` configures the hold interval, not an idle effect.

@@ -141,3 +141,26 @@ body[data-theme=dark] .modal label{color:#474653}
 @media(max-width:350px){.shixu-dock{width:calc(100vw - 28px)}.shixu-dock__item{gap:4px;font-size:12px}.sidebar{margin-bottom:8px}.top{margin-bottom:7px}.top .actions{margin-top:2px}.calheader{padding-top:15px;padding-bottom:8px}.grid{grid-auto-rows:minmax(54px,1fr)}.day{min-height:54px}}
 @media(prefers-reduced-transparency:reduce){.shixu-dock__rim{background:#f8f7fa;backdrop-filter:none;-webkit-backdrop-filter:none}body[data-theme=dark] .shixu-dock__rim{background:#282733}}
 @media(prefers-reduced-motion:reduce){.shixu-dock,.shixu-dock *{transition:none!important;animation:none!important}}
+
+
+/* The Skill's moving glass surface no longer refracts cloned button glyphs.
+   The real backdrop refracts in Blink, and this highlight stays beneath text. */
+.shixu-dock lg-dock .lg-dock__items > button { position:relative;z-index:2 }
+.shixu-dock lg-dock .lg-dock__glint {
+ position:absolute;z-index:0;left:0;top:50%;
+ width:52px;height:49px;pointer-events:none;opacity:0;
+ border-radius:19px;
+ background:linear-gradient(155deg,rgba(255,255,255,.66),rgba(238,233,255,.34));
+ border:1px solid rgba(255,255,255,.74);
+ box-shadow:inset 0 1px rgba(255,255,255,.88),0 5px 15px rgba(71,58,112,.10);
+ will-change:transform,opacity;
+}
+body[data-theme=dark] .shixu-dock lg-dock .lg-dock__glint {
+ background:linear-gradient(155deg,rgba(255,255,255,.22),rgba(255,255,255,.08));
+ border-color:rgba(255,255,255,.3);
+ box-shadow:inset 0 1px rgba(255,255,255,.30),0 5px 12px rgba(0,0,0,.18);
+}
+@media(prefers-reduced-transparency:reduce) {
+ .shixu-dock lg-dock .lg-dock__glint {background:#f3f1ff;border-color:#e0ddf3}
+ body[data-theme=dark] .shixu-dock lg-dock .lg-dock__glint {background:#504961}
+}

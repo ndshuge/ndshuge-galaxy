@@ -1137,84 +1137,82 @@ class LgDock extends LgElement {
   build() {
     this.items = el('div', 'lg-dock__items');
     this.items.append(...this.childNodes);
-    this.shadow = el('span', 'lg-lens-shadow', { 'aria-hidden': 'true' });
-    this.append(this.items, this.shadow);
-    this.surface = new Surface(this, { radius: radiusOf(this, 24), bleed: 4, optics: optics(this, { refraction: 18, bezel: 0.5, curvature: 4, chroma: 0.1, blur: 2, specular: 0.5, specularWidth: 2 }) });
+    // Optical feedback UNDER real, readable controls, rather than duplicating
+    // text through a giant floating magnifier.
+    this.glint = el('span', 'lg-dock__glint', { 'aria-hidden': 'true' });
+    this.items.prepend(this.glint);
+    this.append(this.items);
+    this.surface = new Surface(this, {
+      radius: radiusOf(this, 24), bleed: 4,
+      optics: optics(this, { refraction: 18, bezel: 0.5, curvature: 4, chroma: 0.1, blur: 2, specular: 0.5, specularWidth: 2 })
+    });
     this.pos = 0;
     this.presence = 0;
-    this.ps = createSpring(0, (val) => {
+    this.targetWidth = 52;
+    this.holdMs = Math.max(0, Math.min(1500, Number(this.getAttribute('hold-ms') || 700)));
+    this.holdTimer = null;
+    this.pressed = false;
+    this.ps = createSpring(0, val => {
       this.presence = val;
       this.render();
-    }, { stiffness: 500, damping: 34 });
-    this.xs = createSpring(0, (val) => {
+    }, { stiffness: 305, damping: 34 });
+    this.xs = createSpring(0, val => {
       this.pos = val;
       this.render();
-    }, { stiffness: 700, damping: 40 });
-    // Touch-first adaptation of the upstream Skill component (not a rewrite of its optics).
-    this.holdMs = Math.max(0, Math.min(1800, Number(this.getAttribute('hold-ms') || 0)));
-    this.holdTimer = null;
-    const awaken = () => { clearTimeout(this.holdTimer); this.ps.set(1); };
-    const fadeLater = () => {
+    }, { stiffness: 435, damping: 38 });
+    const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const start = (button, immediate = false) => {
+      if (!button || !this.items.contains(button)) return;
       clearTimeout(this.holdTimer);
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) this.ps.set(0, { immediate: true });
-      else this.holdTimer = setTimeout(() => this.ps.set(0), this.holdMs);
+      const hit = button.getBoundingClientRect();
+      const root = this.items.getBoundingClientRect();
+      this.targetWidth = Math.min(hit.width, root.width);
+      this.glint.style.width = this.targetWidth + 'px';
+      this.glint.style.height = Math.min(49, hit.height) + 'px';
+      this.xs.set(hit.left - root.left + hit.width / 2, { immediate: immediate || reduced() });
+      this.ps.set(1, { immediate: reduced() });
     };
-    this.addEventListener('pointermove', (e) => {
-      const r = this.items.getBoundingClientRect();
-      const x = e.clientX - r.left;
+    const fade = () => {
       clearTimeout(this.holdTimer);
-      this.xs.set(x, { immediate: this.presence < 0.05 });
-      this.ps.set(1);
+      if (reduced()) {
+        this.ps.set(0, { immediate: true });
+      } else {
+        this.holdTimer = setTimeout(() => this.ps.set(0), this.holdMs);
+      }
+    };
+    const from = e => e.target?.closest?.('button');
+    this.addEventListener('pointerdown', e => {
+      this.pressed = true;
+      start(from(e), this.presence < 0.05);
     });
-    this.addEventListener('pointerdown', (e) => {
-      clearTimeout(this.holdTimer);
-      const r = this.items.getBoundingClientRect();
-      this.xs.set(e.clientX-r.left, {immediate:this.presence<0.05});
-      awaken();
+    this.addEventListener('pointermove', e => {
+      if (this.pressed || e.pointerType === 'mouse') start(from(e));
     });
-    this.addEventListener('pointerup', fadeLater);
-    this.addEventListener('pointercancel', fadeLater);
-    this.addEventListener('pointerleave', fadeLater);
-    this.addEventListener('focusin', (e) => {
-      const r = this.items.getBoundingClientRect();
-      const b = e.target.getBoundingClientRect();
-      clearTimeout(this.holdTimer);
-      this.xs.set(b.left - r.left + b.width / 2, { immediate: this.presence < 0.05 });
-      this.ps.set(1);
-    });
-    this.addEventListener('focusout', (e) => {
-      if (!this.contains(e.relatedTarget)) fadeLater();
+    this.addEventListener('pointerup', () => { this.pressed = false; fade(); });
+    this.addEventListener('pointercancel', () => { this.pressed = false; fade(); });
+    this.addEventListener('pointerleave', () => { this.pressed = false; fade(); });
+    this.addEventListener('focusin', e => start(from(e), this.presence < 0.05));
+    this.addEventListener('focusout', e => {
+      if (!this.contains(e.relatedTarget)) fade();
     });
   }
 
   attach() {
+    // Genuine optical Surface; Chromium refracts the backdrop, other engines
+    // have the documented glass fallback rather than cloned/unreadable labels.
     this.surface.attach();
-    // A dome (bezel 1) magnifies the whole disc, not just its rim.
-    this.lens = createGlass(this.items, { hidden: true, refraction: 16, bezel: 1, curvature: 2, chroma: 0, specular: 0.6, specularWidth: 1.5 });
   }
 
   detach() {
+    clearTimeout(this.holdTimer);
     this.surface.detach();
-    this.lens?.destroy();
-    this.lens = null;
   }
 
   render() {
-    if (!this.lens) return;
-    const p = this.presence;
-    if (p < 0.02) {
-      this.lens.update({ hidden: true });
-      this.shadow.style.opacity = '0';
-      return;
-    }
-    const H = this.items.offsetHeight;
-    const lensH = H * lerp(0.72, 0.90, p);
-    const lensW = H * lerp(1.00, 1.20, p);
-    const x = clamp(this.pos - lensW / 2, 0, this.items.offsetWidth - lensW);
-    const y = (H - lensH) / 2;
-    this.lens.update({ hidden: false, x, y, width: lensW, height: lensH, radius: lensH / 2 });
-    place(this.shadow, x + this.items.offsetLeft, y + this.items.offsetTop, lensW, lensH, lensH / 2);
-    this.shadow.style.opacity = String(p);
+    if (!this.glint) return;
+    const x = clamp(this.pos - this.targetWidth / 2, 0, Math.max(0, this.items.clientWidth - this.targetWidth));
+    this.glint.style.transform = 'translate3d(' + x + 'px,-50%,0)';
+    this.glint.style.opacity = String(Math.max(0, Math.min(1, this.presence)));
   }
 }
 

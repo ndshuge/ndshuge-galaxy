@@ -12,15 +12,16 @@ const lab=fs.readFileSync(path.join(ROOT,"glass-lab.html"),"utf8");
 assert(lab.includes("<lg-lens")&&lab.includes("src=\"./components.js\""),"optics demonstration is missing");
 function requirements(source){
  const errors=[];
- if(!source.includes('<lg-segmented')||!source.includes('src="./refined.js"'))errors.push("real glass component wiring absent");
+ if(!source.includes('<lg-segmented')||!source.includes('src="./refined.js?v=20261026-integrated-dock"'))errors.push("real glass component wiring absent");
  if(!fs.existsSync(path.join(ROOT,"LIQUID_GLASS_LICENSE.txt")))errors.push("upstream license missing");
  if(!engine.includes("feDisplacementMap")||!components.includes("createGlass(")||!components.includes("createSpring("))errors.push("actual refraction and spring engine missing");
- if(!script.includes('import "./components.js"')||!script.includes('createSpring('))errors.push("real Skill-based motion unavailable");
+ if(!script.includes('import "./components.js?v=20261026-integrated-dock"')||!script.includes('createSpring('))errors.push("real Skill-based motion unavailable");
  if(!css.includes("@media(prefers-reduced-motion:reduce)")||!css.includes("font-size:13px"))errors.push("motion accessibility / typography missing");
  return errors;
 }
 assert.deepEqual(requirements(html),[], "calendar core requirements");
-const mutant=requirements(html.replace('src="./refined.js"','src="./fake.js"').replace('<lg-segmented','<div'));
+assert(components.includes("lg-dock__glint")&&!components.includes("this.lens = createGlass(this.items"),"regression: full-text circular magnifier may duplicate labels");
+const mutant=requirements(html.replace('src="./refined.js?v=20261026-integrated-dock"','src="./fake.js"').replace('<lg-segmented','<div'));
 assert(mutant.length>0,"NEGATIVE TEST: sabotaged skill integration must be rejected");
 if(process.argv.includes("--static")){console.log("PASS: requirements and intentional sabotage rejection");process.exit(0)}
 let server,edge,ws,id=0;const callbacks=new Map(),faults=[];const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -39,6 +40,7 @@ async function checkViewport(w,h){
  const state=await evaluate(`(()=>{const a=document.querySelector('.actions').getBoundingClientRect(),s=document.querySelector('lg-segmented'),c=s?.querySelector('.lg-refract');return {width:innerWidth,scroll:document.documentElement.scrollWidth,month:document.querySelector('#month').textContent,actionRight:a.right,glass:!!c,filter:c?getComputedStyle(c).filter:null,spring:typeof s?.xs?.set==='function',css:!!document.querySelector('link[href="./refined.css"]'),titleSize:parseFloat(getComputedStyle(document.querySelector('.top h1')).fontSize)}})()`);
  assert(state.scroll<=w+1,"horizontal overflow "+w);
  if(w<=390) assert((await evaluate("document.documentElement.clientWidth"))>=w-1,"mobile visible document scrollbar "+w);
+ if(w<=390 && h<=700)assert.equal(await evaluate("(()=>{const n=document.querySelector('#grid .day.selected .number'),d=document.querySelector('.shixu-dock');return n && n.getBoundingClientRect().bottom+2 < d.getBoundingClientRect().top})()"),true,"floating Dock covers the selected date on compact screens");
  assert(state.actionRight<=w+1,"action buttons out of viewport "+w);
  assert(state.glass&&state.spring&&state.css,"Skill runtime failed "+JSON.stringify(state));
  assert(state.filter&&state.filter.includes("url("),"real SVG refraction not applied "+JSON.stringify(state));
@@ -50,25 +52,41 @@ async function checkViewport(w,h){
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),42,"month mode failed");
  if(w<=390){
    assert.equal(await evaluate("getComputedStyle(document.querySelector('.shixu-dock')).display"),"block","mobile glass dock absent");
-   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.surface&&!!d?.lens&&typeof d?.xs?.set==='function'})()"),true,"installed optical Dock component not initialized");
-   if(w===390) assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.lens && d.presence<0.02 && getComputedStyle(document.querySelector('#dockToday')).transform==='none'})()"),true,"Dock must not show an idle bubble or scale interactive buttons");
-   await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');const r=d.getBoundingClientRect();d.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,clientX:r.left+r.width/2,clientY:r.top+r.height/2}));})()");
+   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.surface?.glass&&!!d?.glint&&typeof d?.xs?.set==='function'&&d.surface.mode==='copy'&&getComputedStyle(d.surface.layer).filter.includes('url(')})()"),true,"installed optical Dock component not initialized");
+   if(w===390) assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.glint && d.presence<0.02 && getComputedStyle(document.querySelector('#dockToday')).transform==='none'})()"),true,"Dock must not show an idle bubble or scale interactive buttons");
+   await evaluate("(()=>{const b=document.querySelector('#dockView');const r=b.getBoundingClientRect();b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',clientX:r.left+r.width/2,clientY:r.top+r.height/2}));})()");
    for(let retry=0;retry<10;retry++){
-     if(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d?.presence>0.02&&d?.lens!==null})()"))break;
+     if(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d?.presence>0.02&&!!d?.glint})()"))break;
      await sleep(100);
    }
-   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d?.presence>0.02&&d?.lens!==null})()"),true,"optical Dock spring did not respond to pointer");
+   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d?.presence>0.02&&!!d?.glint})()"),true,"optical Dock spring did not respond to pointer");
    if(w===390 && !await evaluate("matchMedia('(prefers-reduced-motion: reduce)').matches")){
-     await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');const r=d.getBoundingClientRect();d.dispatchEvent(new PointerEvent('pointerleave',{bubbles:false,clientX:r.left+r.width/2,clientY:r.top+r.height/2}));})()");
+     await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');const r=d.getBoundingClientRect();d.dispatchEvent(new PointerEvent('pointerup',{bubbles:false,pointerType:'touch',clientX:r.left+r.width/2,clientY:r.top+r.height/2}));})()");
      await sleep(470);
-     assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d.presence>0.1 && !!d.lens})()"),true,"glass vanished too soon after release");
+     assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d.presence>0.1 && !!d.glint})()"),true,"glass vanished too soon after release");
      const active=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
      fs.writeFileSync(path.join(ROOT,"qa-glass-hold-390.png"),Buffer.from(active.data,"base64"));
      await sleep(900);
      assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return d.presence<0.08})()"),true,"glass remained as a stray bubble after hold");
    }
+   assert.equal(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');const r=d.getBoundingClientRect();const h=d.glint.getBoundingClientRect();return d.querySelectorAll('.lg-dock__items > button').length===3 && d.querySelectorAll('.lg-dock__items .lg-refract').length===0 && h.left>=r.left-1 && h.right<=r.right+1 && h.height<=r.height && getComputedStyle(d.querySelector('#dockView')).transform==='none';})()"),true,"Dock highlight detached from buttons or duplicated glyphs");
    await evaluate("document.querySelector('#dockView').click()");
    assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),7,"dock week switch failed");
+   if(w===390 && h===844){
+     const x0=await evaluate("(()=>{const b=document.querySelector('#dockToday'),r=b.getBoundingClientRect();b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',clientX:r.left+r.width/2,clientY:r.top+r.height/2}));return document.querySelector('.shixu-dock lg-dock').pos})()");
+     await sleep(120);
+     await evaluate("(()=>{const b=document.querySelector('#dockView'),r=b.getBoundingClientRect();b.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,pointerType:'touch',clientX:r.left+r.width/2,clientY:r.top+r.height/2}))})()");
+     await sleep(115);
+     const x1=await evaluate("document.querySelector('.shixu-dock lg-dock').pos");
+     const xTarget=await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock'),b=document.querySelector('#dockView');return b.getBoundingClientRect().left-d.items.getBoundingClientRect().left+b.offsetWidth/2})()");
+     assert(x1>x0+6 && x1<xTarget+4,"optical highlight did not travel elastically");
+     const moving=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
+     fs.writeFileSync(path.join(ROOT,"qa-motion-travel-390.png"),Buffer.from(moving.data,"base64"));
+     await sleep(260);
+     const x2=await evaluate("document.querySelector('.shixu-dock lg-dock').pos");
+     assert(Math.abs(x2-xTarget)<9,"spring failed to settle to selected control");
+     await evaluate("(()=>{const b=document.querySelector('#dockView'),r=b.getBoundingClientRect();b.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'touch',clientX:r.left+r.width/2,clientY:r.top+r.height/2}))})()");
+   }
    await evaluate("document.querySelector('#dockView').click()");
    assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),42,"dock month switch failed");
    await evaluate("document.querySelector('#dockCreate').click()");
@@ -115,7 +133,7 @@ async function checkViewport(w,h){
  ws.addEventListener("message",event=>{const m=JSON.parse(event.data);if(m.id){const cb=callbacks.get(m.id);if(cb){callbacks.delete(m.id);m.error?cb.reject(Error(JSON.stringify(m.error))):cb.resolve(m.result)}}if(m.method==="Runtime.exceptionThrown")faults.push(m.params.exceptionDetails.text)});
  await send("Page.enable");await send("Runtime.enable");
  const reports=[];
- for(const [w,h] of [[320,700],[390,844],[768,900],[1440,900]])reports.push(await checkViewport(w,h));
+ for(const [w,h] of [[320,650],[320,700],[390,700],[390,844],[768,900],[1440,900]])reports.push(await checkViewport(w,h));
  await send("Page.navigate",{url:REMOTE?REMOTE+"glass-lab.html?v=f1c09f1":"http://127.0.0.1:"+PORT+"/glass-lab.html"});
  for(let i=0;i<40;i++){if(await evaluate("document.readyState===\u0027complete\u0027 && customElements.get(\u0027lg-lens\u0027)!==undefined"))break;await sleep(130)}
  await sleep(450);
@@ -123,6 +141,6 @@ async function checkViewport(w,h){
  assert(optical.lens&&optical.spring&&optical.height>100&&optical.filter?.includes("url("),"live optics demo did not render "+JSON.stringify(optical));
  reports.push({opticsLab:optical});
  assert.equal(faults.length,0,"runtime errors: "+faults.join(";"));
- console.log("PASS: four viewports, real SVG refraction + spring, creation/edit/delete, week/month, mutation test");
+ console.log("PASS: six viewports, nonduplicating optical surface, traveling spring, modal, calendar CRUD, release hold, mutation test");
  fs.writeFileSync(path.join(ROOT,"qa-local.json"),JSON.stringify({pass:true,reports,faults},null,2));
 })().catch(e=>{console.error(e.stack);process.exitCode=1}).finally(()=>{try{ws?.close()}catch{}try{edge?.kill()}catch{}try{server?.close()}catch{}});
