@@ -1,5 +1,15 @@
 [
   {
+    "slug": "xjtu-campus-3d",
+    "title": "西交 · 兴庆 3D 校园",
+    "date": "2026.10.26",
+    "type": "INTERACTIVE 3D CAMPUS",
+    "description": "漫游西安交通大学兴庆校区，探索钱学森图书馆、腾飞塔和四大发明广场。基于 OSM 地理数据与实景参考，部分立面仍为示意。",
+    "url": "./xjtu-campus-3d/",
+    "cover": "",
+    "tags": ["3D 校园", "自由漫游", "地理可视化"]
+  },
+  {
     "slug": "aurora-player",
     "title": "澄音 · Apple 风格音乐播放器",
     "date": "2026.10.26",
