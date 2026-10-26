@@ -1,0 +1,13 @@
+/* Single native-style sliding layer; optical copy is intentionally suppressed
+   here because copies of Chinese glyphs produce a detached double-image lens. */
+.calendar-controls lg-segmented.segment{position:relative!important;isolation:isolate;overflow:hidden!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:4px!important;border-radius:16px!important;background:#e9e9ef!important;--lg-track:transparent;--lg-surface:transparent}
+.calendar-controls lg-segmented.segment .lg-refract,
+.calendar-controls lg-segmented.segment .lg-lens-shadow{display:none!important}
+.calendar-controls lg-segmented.segment .shixu-segment-indicator{position:absolute;left:0;top:0;pointer-events:none;z-index:1;border-radius:12px;background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.88);box-shadow:0 1px 5px rgba(21,19,42,.09);will-change:transform}
+.calendar-controls lg-segmented.segment>button{position:relative!important;z-index:2!important;transform:none!important;flex:none;transition:color .18s ease!important;color:#757581!important}
+.calendar-controls lg-segmented.segment>button[aria-checked=true]{color:#302a5a!important;font-weight:660!important;background:transparent!important;box-shadow:none!important}
+body[data-theme=dark] .calendar-controls lg-segmented.segment{background:#34323d!important;border-color:transparent!important}
+body[data-theme=dark] .calendar-controls lg-segmented.segment .shixu-segment-indicator{background:linear-gradient(160deg,#696573,#55525f);border-color:rgba(255,255,255,.16);box-shadow:inset 0 1px rgba(255,255,255,.2),0 1px 4px rgba(0,0,0,.12)}
+body[data-theme=dark] .calendar-controls lg-segmented.segment>button{color:#bcbbc8!important}
+body[data-theme=dark] .calendar-controls lg-segmented.segment>button[aria-checked=true]{color:#fff!important}
+@media(prefers-reduced-motion:reduce){.calendar-controls lg-segmented.segment .shixu-segment-indicator{will-change:auto}}

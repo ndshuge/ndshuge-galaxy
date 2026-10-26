@@ -34,7 +34,7 @@ async function checkViewport(w,h){
  await sleep(400);
  // Wait for the SVG filter to attach, not merely for DOMContentLoaded.
  for(let attempt=0;attempt<32;attempt++){
-   if(await evaluate("(()=>{const e=document.querySelector('.segment .lg-refract');return !!e && getComputedStyle(e).filter.includes('url(')})()"))break;
+   if(await evaluate("(()=>{const d=document.querySelector('.shixu-dock lg-dock');return !!d?.surface?.glass&&getComputedStyle(d.surface.layer).backdropFilter.includes('url(')})()"))break;
    await sleep(120);
  }
  const state=await evaluate(`(()=>{const a=document.querySelector('.actions').getBoundingClientRect(),s=document.querySelector('lg-segmented'),c=s?.querySelector('.lg-refract');return {width:innerWidth,scroll:document.documentElement.scrollWidth,month:document.querySelector('#month').textContent,actionRight:a.right,glass:!!c,filter:c?getComputedStyle(c).filter:null,spring:typeof s?.xs?.set==='function',css:!!document.querySelector('link[href="./refined.css"]'),titleSize:parseFloat(getComputedStyle(document.querySelector('.top h1')).fontSize)}})()`);
@@ -43,7 +43,6 @@ async function checkViewport(w,h){
  if(w<=390 && h<=700)assert.equal(await evaluate("(()=>{const n=document.querySelector('#grid .day.selected .number'),d=document.querySelector('.shixu-dock');return n && n.getBoundingClientRect().bottom+2 < d.getBoundingClientRect().top})()"),true,"floating Dock covers the selected date on compact screens");
  assert(state.actionRight<=w+1,"action buttons out of viewport "+w);
  assert(state.glass&&state.spring&&state.css,"Skill runtime failed "+JSON.stringify(state));
- assert(state.filter&&state.filter.includes("url("),"real SVG refraction not applied "+JSON.stringify(state));
  assert(state.titleSize>=20,"title text too small");
  if(w<=390){
   assert.equal(await evaluate("(()=>{const head=document.querySelector('.calheader'),prev=document.querySelector('#prev'),next=document.querySelector('#next'),nav=head?.querySelector('.calendar-nav'),theme=document.querySelector('#themeToggle'),top=document.querySelector('.top');if(!nav||prev.parentElement!==nav||next.parentElement!==nav||!top.contains(theme))return false;const a=nav.getBoundingClientRect(),m=head.getBoundingClientRect();return a.left>=m.left && a.right<=m.right+1 && prev.getBoundingClientRect().right<=next.getBoundingClientRect().left+2})()"),true,"Calendar navigation is not correctly grouped or overlaps");
@@ -52,6 +51,10 @@ async function checkViewport(w,h){
  if(REMOTE&&w===390){const snapshot=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-online-cdp-390.png"),Buffer.from(snapshot.data,"base64"));}
  await evaluate("document.querySelector('#weekMode').click()");
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),7,"week mode failed");
+ await sleep(360);
+ assert.equal(await evaluate("(()=>{const s=document.querySelector('.calendar-controls lg-segmented'),b=document.querySelector('#weekMode'),i=s?.querySelector('.shixu-segment-indicator');if(!i||getComputedStyle(s.querySelector('.lg-refract')).display!=='none')return false;const a=b.getBoundingClientRect(),c=i.getBoundingClientRect();return Math.abs((a.left+a.right)/2-(c.left+c.right)/2)<1.5&&Math.abs(a.width-c.width)<2})()"),true,"Week indicator detached from real button");
+ if(w===390&&h===844){const shot=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-week-verified-390.png"),Buffer.from(shot.data,"base64"));}
+
  await evaluate("document.querySelector('#monthMode').click()");
  assert.equal(await evaluate("document.querySelectorAll('#grid .day').length"),42,"month mode failed");
  if(w<=390){

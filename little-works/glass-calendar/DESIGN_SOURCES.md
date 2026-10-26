@@ -1,5 +1,12 @@
 # 时序 · Skill 应用与验收
 
+## 2026-10-26 月/周选中层与 GitHub iOS 参考实测
+- 参考用户提供的 GitHub iOS 页面截图及 10 秒录屏（实际抽帧分析），归纳为：正常阅读字号、自然的卡片留白、控件按功能分组、选中层与文字分离、反馈克制；并非照搬苹果系统源码或品牌资产。
+- 复查本地 Apple Web Design / Liquid Glass / Motion Skills：Liquid Glass 原组件 `LgSegmented` 的 B overlay-copy 光学模式会把中文字符叠层卷入折射，且多次尺寸覆盖造成“周”透镜越界。本项目**只对该切换控件**关闭这个容易失真的光学副本，增加独立的 DOM 选中底板，通过按钮真实 `getBoundingClientRect()` 及 `aria-checked` 同步，使用 270ms 克制缓动；键盘/点击/编程切换都能跟随，且尊重减少动态效果。Dock 仍使用已安装 Skill 的原 SVG `Surface` 折射。
+- 排除了模块初始化竞态：月/周底板待 `calendar-toolbar.js` 把真实按钮放入卡片后才挂载；`ResizeObserver` 处理视口切换。
+- 六视口浏览器 QA 对月/周按钮中心与选中底板的偏差给出小于 1.5px 的实际断言，检查旧折射副本隐藏、月/周切换的 7/42 日期数、日程 CRUD 与 Dock 真正光学实例。检查 `qa-week-verified-390.png`，注意网页不能等同于 iOS 原生材质，iPhone Safari 动态验收仍需要真机。
+
+
 ## 2026-10-26 系统级界面收口（v3）
 - **Reference → Method:** Apple HIG Materials recommends Liquid Glass primarily for floating navigation, not content cards; HIG Typography provides a 34pt large title / 17pt body baseline. Applied this as a product-specific decision rather than equating more blur to better glass.
 - **ACTION:** Added final `system-v3.css` with neutral content surfaces, restrained border/shadow and consistent 34px title / 16px day labels. Removed the redundant mobile brand bar. Moved mobile Dock into the real layout between calendar and agenda rather than a fixed overlay. Replaced `lg-dock backdrop=body` (which cloned a mismatched background and produced dirty gray bands) with its original SVG optical **backdrop** mode; retained moving highlight and spring interactions without moving text or hit targets. Simplified empty-day copy.
