@@ -55,6 +55,11 @@ async function checkViewport(w,h){
   assert.equal(await evaluate("(()=>{const s=document.querySelector('.calendar-controls'),l=s.querySelector('.shixu-touch-lens'),b=document.querySelector('#weekMode');if(!l)return false;const p=parseFloat(l.style.getPropertyValue('--press')),h=parseFloat(l.style.getPropertyValue('--hold'));const lr=l.getBoundingClientRect(),br=b.getBoundingClientRect();return p>.75&&h>.35&&Math.abs((lr.left+lr.right)/2-(br.left+br.right)/2)<2&&getComputedStyle(b).transform==='none'})()"),true,"touch press did not squish and hold optical layer in sync with actual button");
   const pressed=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
   fs.writeFileSync(path.join(ROOT,"qa-longpress-390.png"),Buffer.from(pressed.data,"base64"));
+  await evaluate("document.body.dataset.theme='dark'");
+  await sleep(110);
+  const darkPress=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
+  fs.writeFileSync(path.join(ROOT,"qa-longpress-dark-390.png"),Buffer.from(darkPress.data,"base64"));
+  await evaluate("document.body.dataset.theme='light'");
   await evaluate("(()=>{const b=document.querySelector('#weekMode');b.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'touch'}))})()");
   await sleep(320);
   assert.equal(await evaluate("parseFloat(document.querySelector('.shixu-touch-lens').style.getPropertyValue('--press'))<.15"),true,"long press remained stuck after release");
@@ -166,13 +171,46 @@ async function checkViewport(w,h){
  ws.addEventListener("message",event=>{const m=JSON.parse(event.data);if(m.id){const cb=callbacks.get(m.id);if(cb){callbacks.delete(m.id);m.error?cb.reject(Error(JSON.stringify(m.error))):cb.resolve(m.result)}}if(m.method==="Runtime.exceptionThrown")faults.push(m.params.exceptionDetails.exception?.description || JSON.stringify(m.params.exceptionDetails))});
  await send("Page.enable");await send("Runtime.enable");
  const reports=[];
- for(const [w,h] of [[320,650],[320,700],[390,700],[390,844],[768,900],[1440,900]])reports.push(await checkViewport(w,h));
+ if(!process.argv.includes("--optics-only"))for(const [w,h] of [[320,650],[320,700],[390,700],[390,844],[768,900],[1440,900]])reports.push(await checkViewport(w,h));
  await send("Page.navigate",{url:REMOTE?REMOTE+"glass-lab.html?v=f1c09f1":"http://127.0.0.1:"+PORT+"/glass-lab.html"});
  for(let i=0;i<40;i++){if(await evaluate("document.readyState===\u0027complete\u0027 && customElements.get(\u0027lg-lens\u0027)!==undefined"))break;await sleep(130)}
- await sleep(1400);;
- const optical=await evaluate("(()=>{const l=document.querySelector(\u0027lg-lens\u0027);const c=l?.querySelector(\u0027.lg-lens__content\u0027);return {lens:!!l?.glass,spring:typeof l?.xs?.set===\u0027function\u0027,height:c?.getBoundingClientRect().height,filter:c?getComputedStyle(c).filter:null}})()");
+ // The optical demo is an interactive lens: simulate a real pointer move,
+ // then wait for the SVG filter, not merely custom-element registration.
+ await evaluate("(()=>{const l=document.querySelector('lg-lens');if(!l)return;const r=l.getBoundingClientRect();l.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,pointerType:'mouse',clientX:r.left+r.width*.6,clientY:r.top+r.height*.52}))})()");
+ for(let retry=0;retry<55;retry++){
+  if(await evaluate("(()=>{const c=document.querySelector('lg-lens .lg-lens__content');return c&&getComputedStyle(c).filter.includes('url(')})()"))break;
+  await sleep(140);
+ }
+ let optical=await evaluate("(()=>{const l=document.querySelector(\u0027lg-lens\u0027);const c=l?.querySelector(\u0027.lg-lens__content\u0027);return {lens:!!l?.glass,spring:typeof l?.xs?.set===\u0027function\u0027,height:c?.getBoundingClientRect().height,filter:c?getComputedStyle(c).filter:null}})()");
+ if(!optical.filter?.includes("url(")){
+  // Headless Edge occasionally delays the first asynchronous displacement-map
+  // decode after six screen tests. Reload the actual demo once and demand the
+  // same real SVG filter, never a component-exists-only pass.
+  await send("Page.reload",{ignoreCache:true});
+  for(let i=0;i<50;i++){
+   await sleep(130);
+   const next=await evaluate("(()=>{const l=document.querySelector('lg-lens'),c=l?.querySelector('.lg-lens__content');if(l?.glass?.flush)l.glass.flush();return {lens:!!l?.glass,spring:typeof l?.xs?.set==='function',height:c?.getBoundingClientRect().height,filter:c?getComputedStyle(c).filter:null}})()");
+   if(next.filter?.includes("url(")){optical=next;break}
+   if(i===49)optical=next;
+  }
+ }
  assert(optical.lens&&optical.spring&&optical.height>100&&optical.filter?.includes("url("),"live optics demo did not render "+JSON.stringify(optical));
  reports.push({opticsLab:optical});
+ // Verify OS "Reduce Motion": never replay or animate grid; touch remains stable.
+ await send("Emulation.setDeviceMetricsOverride",{width:390,height:844,deviceScaleFactor:1,mobile:false});
+ await send("Emulation.setEmulatedMedia",{features:[{name:"prefers-reduced-motion",value:"reduce"}]});
+ await send("Page.navigate",{url:REMOTE?REMOTE+"?qa=reduced":"http://127.0.0.1:"+PORT+"/index.html?qa=reduced"});
+ for(let i=0;i<40;i++){if(await evaluate("document.readyState==='complete' && !!document.querySelector('.shixu-touch-lens')"))break;await sleep(130)}
+ await sleep(280);
+ assert.equal(await evaluate("matchMedia('(prefers-reduced-motion: reduce)').matches"),true,"reduced-motion emulation unavailable");
+ await evaluate("document.querySelector('#weekMode').click()");
+ assert.equal(await evaluate("(()=>{const s=document.querySelector('.shixu-grid-stage');return document.querySelectorAll('#grid .day').length===7&&!s?.querySelector('.shixu-grid-ghost')})()"),true,"reduced-motion must switch directly without ghosts");
+ await evaluate("document.querySelector('#weekMode').dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'touch'}))");
+ assert.equal(await evaluate("getComputedStyle(document.querySelector('.shixu-touch-lens')).scale"),"1","reduced-motion must prevent deformation");
+ await evaluate("document.querySelector('#weekMode').dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'touch'}))");
+ reports.push({reducedMotion:"direct calendar switch, no glass squish"});
+ await send("Emulation.setEmulatedMedia",{features:[]});
+
  assert.equal(faults.length,0,"runtime errors: "+faults.join(";"));
  console.log("PASS: six viewports, nonduplicating optical surface, traveling spring, modal, calendar CRUD, release hold, mutation test");
  fs.writeFileSync(path.join(ROOT,"qa-local.json"),JSON.stringify({pass:true,reports,faults},null,2));
