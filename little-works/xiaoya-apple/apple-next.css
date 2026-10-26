@@ -321,8 +321,8 @@ body.apple-next #xy-onboard .xy-dialog{box-shadow:0 2px 12px rgba(20,20,30,.04)}
    Preserve all real permission, CORS, cost and local-storage warnings. */
 body.apple-next #xy-onboard.xy-shade{
   background:rgba(32,30,40,.42)!important;
-  backdrop-filter:blur(20px) saturate(1.1)!important;
-  -webkit-backdrop-filter:blur(20px) saturate(1.1)!important;
+  backdrop-filter:blur(8px) saturate(1.06)!important;
+  -webkit-backdrop-filter:blur(8px) saturate(1.06)!important;
   padding:24px!important;
 }
 body.apple-next #xy-onboard .xy-dialog{
