@@ -1,0 +1,34 @@
+name: XiaoYa Apple release guard
+on:
+  push:
+    paths:
+      - "little-works/xiaoya-apple/**"
+      - "little-works/index.html"
+      - "little-works/catalog.json"
+      - "qa-apple-next.cjs"
+      - "qa-xiaoya-apple-static.cjs"
+      - ".github/workflows/xiaoya-apple-check.yml"
+  pull_request:
+    paths:
+      - "little-works/xiaoya-apple/**"
+      - "little-works/index.html"
+      - "little-works/catalog.json"
+      - "qa-apple-next.cjs"
+      - "qa-xiaoya-apple-static.cjs"
+      - ".github/workflows/xiaoya-apple-check.yml"
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Verify Apple source and optics
+        run: node qa-xiaoya-apple-static.cjs
+      - name: Check JavaScript parse
+        run: |
+          node --check little-works/xiaoya-apple/apple-next.js
+          node --check little-works/xiaoya-apple/glass/liquid-glass.js
