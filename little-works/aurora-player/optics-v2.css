@@ -1,0 +1,86 @@
+/* Material & motion pass — purpose-built for the audio player. */
+.ambience{z-index:0;isolation:isolate;pointer-events:none}
+.ambience:after{content:"";position:absolute;inset:41% -12% -28%;background:
+ radial-gradient(ellipse 40% 20% at 13% 77%,rgba(132,177,206,.22),transparent 75%),
+ radial-gradient(ellipse 47% 20% at 79% 88%,rgba(219,156,185,.21),transparent 74%),
+ linear-gradient(113deg,transparent 30%,rgba(245,203,225,.045) 54%,transparent 76%);
+ filter:blur(28px);pointer-events:none}
+.app-shell{z-index:1;position:relative}
+.aurora-one{opacity:.65}.aurora-two{opacity:.64}.aurora-three{opacity:.52}
+.stage{position:relative}
+.art-cover{box-shadow:0 48px 100px rgba(5,11,30,.41),0 6px 24px rgba(6,8,24,.12),inset 0 1px rgba(255,255,255,.3)}
+.art-cover .art-reflection{background:linear-gradient(134deg,rgba(255,255,255,.24),rgba(255,255,255,0) 32%,rgba(239,215,255,.03) 77%,rgba(255,255,255,.16));}
+.player-dock{
+ isolation:isolate;
+ background:linear-gradient(119deg,rgba(215,225,250,.12),rgba(243,224,250,.06) 47%,rgba(204,226,249,.10));
+ border:1px solid rgba(246,242,255,.52);
+ box-shadow:0 20px 82px rgba(7,12,34,.35),0 0 0 1px rgba(255,255,255,.06),
+ inset 0 1.5px 1px rgba(255,255,255,.58),inset 0 -1px 1px rgba(199,213,255,.23);
+ backdrop-filter:blur(34px) saturate(1.8) brightness(1.08);
+ -webkit-backdrop-filter:blur(34px) saturate(1.8) brightness(1.08);
+ overflow:hidden;
+}
+.player-dock::before{
+ content:"";position:absolute;inset:0;border-radius:inherit;
+ background:linear-gradient(156deg,rgba(255,255,255,.23),transparent 19% 79%,rgba(246,219,255,.09)),
+ linear-gradient(93deg,rgba(232,206,245,.15),transparent 25% 75%,rgba(211,233,251,.13));
+ opacity:.84;pointer-events:none;z-index:0;
+}
+.player-dock::after{
+ content:"";position:absolute;left:5%;right:5%;top:1px;height:2px;
+ background:linear-gradient(90deg,transparent,rgba(255,255,255,.55) 20%,rgba(236,211,255,.76) 52%,rgba(255,255,255,.32) 80%,transparent);
+ border-radius:100%;filter:blur(.7px);pointer-events:none;z-index:2;
+}
+.liquid-dock-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;pointer-events:none;border-radius:inherit;z-index:0;transition:opacity 350ms ease}
+.liquid-dock-canvas.gpu-ready{opacity:.95}
+.player-dock > :not(.liquid-dock-canvas){position:relative;z-index:1}
+.play-main{
+ background:linear-gradient(145deg,rgba(255,255,255,.36),rgba(222,211,248,.15) 54%,rgba(203,215,242,.28))!important;
+ box-shadow:inset 0 1px 1px rgba(255,255,255,.9),inset 0 -2px 4px rgba(73,74,114,.24),
+ 0 5px 15px rgba(9,17,41,.2),0 0 0 1px rgba(255,255,255,.24);
+ border:1px solid rgba(255,255,255,.77)!important;
+ backdrop-filter:blur(13px) saturate(1.5);
+ -webkit-backdrop-filter:blur(13px) saturate(1.5);
+ transform:none!important;
+}
+.play-main svg{width:27px;height:27px;filter:drop-shadow(0 1px 2px rgba(13,20,53,.28))}
+.play-lens-container{isolation:isolate}
+.play-lens{
+ inset:-5px!important;opacity:.68!important;transform:scale(1)!important;
+ background:conic-gradient(from 222deg,rgba(255,255,255,.02),rgba(240,223,255,.54) 14%,rgba(130,151,193,.09) 29%,
+ rgba(255,255,255,.72) 53%,rgba(217,205,244,.16) 68%,rgba(255,255,255,.02) 100%)!important;
+ box-shadow:0 0 16px rgba(250,229,255,.28),inset 0 0 5px rgba(255,255,255,.26);
+ filter:blur(.3px)!important;border:1px solid rgba(255,255,255,.35);
+ transition:opacity .55s ease,box-shadow .5s ease!important;
+}
+.play-lens.active,.glass-pressed .play-lens{
+ opacity:1!important;box-shadow:0 0 26px rgba(245,218,255,.48),inset 0 0 9px rgba(255,255,255,.58)
+}
+.glass-pressed .play-main{background:linear-gradient(160deg,rgba(255,255,255,.43),rgba(236,224,255,.17))!important;box-shadow:inset 0 2px 2px rgba(255,255,255,.92),0 3px 22px rgba(242,210,255,.22)}
+.transport-sub,.transport-skip{border-radius:50%;position:relative}
+.transport-sub:before,.transport-skip:before{
+ content:"";position:absolute;inset:2px;border-radius:inherit;
+ background:radial-gradient(ellipse at 22% 8%,rgba(255,255,255,.27),rgba(255,255,255,.025) 67%);
+ opacity:0;border:1px solid rgba(255,255,255,.14);transition:opacity .32s ease;pointer-events:none}
+.transport-sub:hover:before,.transport-skip:hover:before,.transport-sub:active:before,.transport-skip:active:before{opacity:1}
+.transport button{position:relative}
+.transport button svg{position:relative;z-index:2}
+.progress-line input,.dock-right input{background:linear-gradient(90deg,rgba(255,255,255,.98) var(--filled,0%),rgba(255,255,255,.25) var(--filled,0%));height:4px}
+.progress-line input::-webkit-slider-thumb,.dock-right input::-webkit-slider-thumb{background:linear-gradient(135deg,#fff,#e3e2f7);width:15px;height:15px;box-shadow:0 1px 8px rgba(5,10,29,.29),0 0 0 2px rgba(255,255,255,.10)}
+.track-column h1{font-weight:650;letter-spacing:-.052em}
+.queue-item.selected{background:rgba(255,255,255,.18)}
+@media(max-width:760px){
+ .player-dock{background:linear-gradient(115deg,rgba(217,219,250,.21),rgba(207,208,243,.13) 55%,rgba(194,209,241,.18));border-color:rgba(255,255,255,.56);box-shadow:0 15px 65px rgba(11,15,45,.40),inset 0 1px rgba(255,255,255,.48)}
+ .liquid-dock-canvas.gpu-ready{opacity:.9}
+ .track-column h1{font-size:clamp(35px,9vw,55px);letter-spacing:-.065em}
+ .description{font-size:15px;line-height:1.55;max-width:320px}
+ .art-halo{opacity:.4}
+ .play-lens{inset:-5px!important}
+ .player-dock::before{opacity:.92}
+}
+@media(prefers-reduced-motion:reduce){.liquid-dock-canvas,.play-lens{transition:none!important}}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){
+ .liquid-dock-canvas{display:none!important}
+ .player-dock{background:#30354f!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ .play-lens{opacity:.25!important}
+}

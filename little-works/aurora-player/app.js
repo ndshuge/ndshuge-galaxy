@@ -10,7 +10,7 @@ audio.volume=.72;
 const fmt=t=>{if(!Number.isFinite(t)||t<0)return"0:00";return Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0")};
 const notify=msg=>{const t=$("toast");t.textContent=msg;t.classList.add("visible");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("visible"),2400)};
 const showTrack=()=>{const track=tracks[current];if(!track)return; $("track-title").textContent=track.title;$("track-artist").textContent=track.artist;$("track-subtitle").textContent=track.description||"来自你的本地音乐文件";$("dock-title").textContent=track.title;$("dock-artist").textContent=track.artist;$("favorite-button").setAttribute("aria-pressed",String(favorites.has(track.id)));$("favorite-button").setAttribute("aria-label",favorites.has(track.id)?"取消喜欢":"喜欢这首歌");
- const palette=track.colors||["#b29abf","#4f7998","#74648f"];document.querySelectorAll(".aurora").forEach((el,i)=>el.style.setProperty("--a",palette[i]));document.documentElement.style.setProperty("--art-hue",(track.tint||0)+"deg");
+ const palette=track.colors||["#b29abf","#4f7998","#74648f"];document.querySelectorAll(".aurora").forEach((el,i)=>el.style.setProperty("--a",palette[i]));document.documentElement.style.setProperty("--art-hue",(track.tint||0)+"deg");window.__auroraSetMaterialPalette?.(palette);
  $("nav-up-next").textContent=tracks[(current+1)%tracks.length]?.title||"—";
  $("lyrics-panel").hidden=!lyricOpen||!track.lyrics;$("toggle-lyrics").disabled=!track.lyrics;$("toggle-lyrics").setAttribute("aria-pressed",String(lyricOpen&&!!track.lyrics));
  $("cover-art").alt="当前音乐的原创专辑视觉";renderQueue();renderLibrary();updateLyric()};

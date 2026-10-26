@@ -1,11 +1,14 @@
 "use strict";
 const fs=require("node:fs"),path=require("node:path"),assert=require("node:assert/strict");
 const read=n=>fs.readFileSync(path.join(__dirname,n),"utf8");
-const html=read("index.html"),js=read("app.js"),css=read("style.css");
+const html=read("index.html"),js=read("app.js"),css=read("style.css"),material=read("liquid-surface.js"),optics=read("optics-v2.css");
 for(const id of ["audio","file-input","play-pause","seek","queue-list","volume","cover-art"])assert(html.includes('id="'+id+'"'),id);
 for(const phrase of ["audio.play()","URL.createObjectURL","createGlass","feDisplacementMap"])assert(js.includes(phrase),phrase);
 for(const phrase of ["prefers-reduced-motion","prefers-reduced-transparency"])assert(css.includes(phrase),phrase);
 assert(fs.existsSync(path.join(__dirname,"LIQUID_GLASS_LICENSE.txt")));
+for(const part of ["liquid-dock-canvas","liquid-surface.js","optics-v2.css"])assert(html.includes(part),part);
+for(const part of ["getContext(\"webgl\"","texture2D(u_album","gl.drawArrays","state.press","state.velocity","u_albumLoaded","prefers-reduced-transparency","prefers-reduced-motion"])assert(material.includes(part),part);
+assert(optics.includes(".glass-pressed .play-main")&&optics.includes(".liquid-dock-canvas.gpu-ready"));
 for(const n of ["night-drive","blue-tide","afterglow"])assert(fs.statSync(path.join(__dirname,"audio",n+".mp3")).size>10000);
 assert(read("DESIGN_SOURCES.md").includes("Taste-Skill")&&read("DESIGN_SOURCES.md").includes("Designeer"));
 const catalog=JSON.parse(fs.readFileSync(path.join(__dirname,"../catalog.json"),"utf8"));assert(catalog.some(x=>x.slug==="aurora-player"));

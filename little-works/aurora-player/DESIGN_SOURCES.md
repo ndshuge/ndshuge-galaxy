@@ -17,6 +17,15 @@
 - 视觉截图：qa-desktop.png、qa-mobile.png、qa-edge-320.png、qa-edge-390.png、qa-edge-768.png、qa-edge-1440.png；实际检查了桌面和手机屏幕。
 - 自动化：node little-works/aurora-player/browser-qa.cjs PASS，四档 320/390/768/1440，实音播放、进度、上一首/下一首、收藏、歌词、列表、随机循环、文件导入、SVG 位移、减少动态/透明度和零 JS 异常。
 
+## 2026-10-26 用户反馈后的材料与动效重构
+- **截图诊断**：iPhone 实拍显示早期 Dock 只有高斯毛玻璃和简单的泛光；背景过暗，缺少有内容可弯折的光学层；播放按钮按下与松开几乎没有可感知的物理时间变化。主结构保持，但不能以此前的 SVG 封面滤镜冒称「播放器 Dock 已实现液态玻璃」。
+- **实施**：新增 `liquid-surface.js`（WebGL1）与 `optics-v2.css`，给底部悬浮 Dock 绘制低频的专辑调色板光场，加入专辑封面 SVG 作为实际的 WebGL 纹理样本，用扰动采样、细微 RGB 色散和 Fresnel 式边缘高光绘制玻璃材质。控制按钮仍为原生 HTML 元素，GPU Canvas 不响应鼠标、触摸事件。此方案**折射自带的专辑/氛围纹理**，不是对任意页面背景 DOM 的完整透视光线折射；不可声称与 Apple 原生 Liquid Glass 等效。
+- **真实弹性**：有速度、阻尼、目标和逐帧积分的物理弹簧。根据按压位置平滑移动光学透镜；释放后自然衰减。修复验收发现的过度反向弹性，使用接近临界阻尼 92/19.5。光学覆盖层持续约 400ms 可见反馈，最后干净归零；控件命中区域不改变，禁止整体缩放。
+- **效率**：静止时降到约 12fps，音乐播放时约 28fps，交互期间可达 60fps；Canvas 最大像素比 1.8。尊重 `prefers-reduced-motion` 并禁用指针弹性；`prefers-reduced-transparency` / 增强对比度使用不透明材料，WebGL 不可用则退回 CSS 材质。
+- **视觉回看**：先后检查 `qa-before-glass-upgrade-390.png`、`qa-glass-v2-390.png`、`qa-glass-v2-1440.png`、`qa-glass-v3-390.png`，判定初次光带稍显霓虹，之后降低流光亮度和收窄高光，加入更柔和的专辑纹理折射。按压和释放 `qa-edge-390-pressed.png`、`qa-edge-390-released-400ms.png`、`qa-edge-390-idle-after.png` 实际查看。
+- **专项自动化**：`AURORA_MOTION_ONLY=1 node little-works/aurora-player/browser-qa.cjs` 检验真实 WebGL、封面纹理、SVG 封面滤镜、玻璃变形、400ms 后持续反馈、完全复位、按钮目标尺寸与位置不变；`node little-works/aurora-player/browser-qa.cjs` 则完整复测四档响应式与真实音频、导入等原有功能。技术通过不等于用户视觉审美认可。
+- **仍待独立核查**：真实 iPhone Safari 的 WebGL 细节、性能/降级与动画触觉感受；网页无法获取 Apple 原生平台 Liquid Glass 的专有材质渲染器。
+
 ## 限制与发布边界
 - iPhone 真机 Safari 和 Firefox 尚未独立逐项检查；用户视觉认可仍待确认。
 - 导入的文件只在本次页面会话存在，刷新不自动恢复。

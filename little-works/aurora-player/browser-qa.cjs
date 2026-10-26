@@ -7,7 +7,7 @@ let server,edge,socket,id=0;const pending=new Map(),errors=[],reports=[];
 function call(method,params={}){const n=++id;return new Promise((resolve,reject)=>{pending.set(n,{resolve,reject});socket.send(JSON.stringify({id:n,method,params}));setTimeout(()=>{if(pending.has(n)){pending.delete(n);reject(Error("Timeout "+method))}},14000)})}
 async function ev(expression){const r=await call("Runtime.evaluate",{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value}
 async function until(test){for(let i=0;i<65;i++){if(await test())return;await wait(120)}throw Error("Page never became ready")}
-async function screenshot(w){const r=await call("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-edge-"+w+".png"),Buffer.from(r.data,"base64"))}
+async function screenshot(w,suffix=""){const r=await call("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});fs.writeFileSync(path.join(ROOT,"qa-edge-"+w+suffix+".png"),Buffer.from(r.data,"base64"))}
 async function scenario(w,h){await call("Emulation.setDeviceMetricsOverride",{width:w,height:h,deviceScaleFactor:1,mobile:false});
 await call("Page.navigate",{url:"http://127.0.0.1:"+PORT+"/index.html?size="+w});
 await until(async()=>await ev("document.readyState==='complete'&&!!window.__auroraPlayer&&document.querySelector('#audio').readyState>=1"));await wait(1700);
@@ -17,7 +17,32 @@ assert(measure.dockBottom<=h+4&&measure.dockBottom>h-95,"Dock out of view "+w);
 assert(measure.artWidth>185,"Art too small "+w);
 assert(measure.audioDuration>35,"Audio decode metadata incorrect "+measure.audioDuration);
 assert(measure.glass&&measure.displacement>0&&measure.filter.includes("url("),"SVG optical engine not active "+w+" "+measure.filter+" "+await ev("JSON.stringify({error:window.__glassError,ready:document.readyState,size:document.querySelector(\u0027#cover-art\u0027).clientWidth,reduced:matchMedia(\u0027(prefers-reduced-transparency: reduce)\u0027).matches,glass:typeof window.__auroraGlass})"));
+assert.equal(await ev("window.__liquidDockState.engine"),"webgl","WebGL material missing "+w);
+assert.equal(await ev("window.__liquidDockState.albumRefracted"),true,"Album texture refraction missing "+w);
+assert(await ev("window.__liquidDockState.frames")>1,"Shader did not render "+w);
 await screenshot(w);
+if(process.env.AURORA_MOTION_ONLY){
+ const before=await ev("(()=>{const e=document.querySelector('#play-pause'),r=e.getBoundingClientRect();return {width:r.width,height:r.height,x:r.x,y:r.y}})()");
+ const point=await ev("(()=>{const r=document.querySelector('#play-pause').getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}})()");
+ await ev("(()=>{const r=document.querySelector('#play-pause').getBoundingClientRect();document.querySelector('#play-pause').dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerId:1,clientX:r.left+r.width/2,clientY:r.top+r.height/2}))})()");
+ await wait(250);
+ const pressed=await ev("window.__liquidDockState.press");
+ assert(pressed>.4,"Glass did not deform on press "+pressed);
+ await screenshot(w,"-pressed");
+ await ev("window.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerId:1}))");
+ await wait(400);
+ const settling=await ev("window.__liquidDockState.press");
+ assert(settling>.005&&settling<.4,"No lingering spring after 400ms "+settling);
+ await screenshot(w,"-released-400ms");
+ await wait(950);
+ const reset=await ev("window.__liquidDockState.press");
+ assert(Math.abs(reset)<.012,"Glass did not settle back "+reset);
+ const after=await ev("(()=>{const r=document.querySelector('#play-pause').getBoundingClientRect();return {width:r.width,height:r.height,x:r.x,y:r.y}})()");
+ assert.deepEqual(after,before,"Interaction changed button hit box");
+ await screenshot(w,"-idle-after");
+ reports.push({viewport:[w,h],glass:{pressed,settling,reset},checks:["gpu-material","400ms-post-release-lens","spring-reset","stable-hitbox","true-svg-album-refraction"]});
+ return;
+}
 await ev("document.querySelector('#play-pause').click()");await until(async()=>await ev("document.querySelector('#audio').currentTime>0.04"));
 const playback=await ev("({playing:!document.querySelector('#audio').paused,time:document.querySelector('#audio').currentTime,duration:document.querySelector('#audio').duration})");
 assert(playback.playing&&playback.time>0,"Audio did not actually play "+w+" "+JSON.stringify(playback));
@@ -39,16 +64,16 @@ let target;for(let i=0;i<75;i++){try{target=JSON.parse(await get("http://127.0.0
 socket=new WebSocket(target.webSocketDebuggerUrl);await new Promise((r,j)=>{socket.addEventListener("open",r,{once:true});socket.addEventListener("error",j,{once:true})});
 socket.addEventListener("message",e=>{const m=JSON.parse(e.data);if(m.id){const q=pending.get(m.id);if(q){pending.delete(m.id);m.error?q.reject(Error(JSON.stringify(m.error))):q.resolve(m.result)}}if(m.method==="Runtime.exceptionThrown")errors.push(m.params.exceptionDetails.text)});
 await call("Page.enable");await call("Runtime.enable");
-for(const dims of [[320,700],[390,844],[768,900],[1440,900]])await scenario(...dims);
-await ev("window.__auroraPlayer.importFiles([new File([new Uint8Array(1000)],'test-audio.wav',{type:'audio/wav'})])");
+for(const dims of (process.env.AURORA_MOTION_ONLY?[[390,844]]:[[320,700],[390,844],[768,900],[1440,900]]))await scenario(...dims);
+if(!process.env.AURORA_MOTION_ONLY){await ev("window.__auroraPlayer.importFiles([new File([new Uint8Array(1000)],'test-audio.wav',{type:'audio/wav'})])");
 assert.equal(await ev("window.__auroraPlayer.getState().tracks"),4,"Import failed");
 await call("Emulation.setEmulatedMedia",{features:[{name:"prefers-reduced-motion",value:"reduce"},{name:"prefers-reduced-transparency",value:"reduce"}]});
 await call("Page.navigate",{url:"http://127.0.0.1:"+PORT+"/index.html?reduced"});
 await until(async()=>await ev("document.readyState==='complete'&&!!window.__auroraPlayer"));await wait(200);
 const reduced=await ev("({glass:!!window.__auroraGlass,animation:getComputedStyle(document.querySelector('.aurora-one')).animationName})");
 assert(!reduced.glass&&reduced.animation==="none","Reduced media fallback broken");
-reports.push({reduced,checks:["reduced-motion","reduced-transparency","local-file-import"]});
+reports.push({reduced,checks:["reduced-motion","reduced-transparency","local-file-import"]});}
 assert.equal(errors.length,0,errors.join(" | "));
 fs.writeFileSync(path.join(ROOT,"qa-browser-results.json"),JSON.stringify({pass:true,reports,errors},null,2));
-console.log("PASS: 320/390/768/1440 real audio and controls, import, SVG optics, reduced settings, 0 exceptions");
+console.log("PASS: "+(process.env.AURORA_MOTION_ONLY?"press/release motion states, WebGL, fixed hit-box":"320/390/768/1440 real audio and controls, import, SVG optics, reduced settings, 0 exceptions"));
 })().catch(e=>{console.error(e.stack);process.exitCode=1}).finally(()=>{try{socket?.close()}catch{}try{edge?.kill()}catch{}try{server?.close()}catch{}});
