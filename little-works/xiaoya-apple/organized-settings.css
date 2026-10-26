@@ -35,4 +35,23 @@ body.design-apple.apple-next .settings-data .small-note{font-size:12px!important
  body.design-apple.apple-next #view-settings .byok-test-row label strong{display:inline!important}
  body.design-apple.apple-next .mobile-tabs{bottom:calc(76px + env(safe-area-inset-bottom))!important}
 }
-@media(display-mode:standalone){body.design-apple.apple-next .mobile-tabs{bottom:max(10px,env(safe-area-inset-bottom))!important}}
+@media(display-mode:standalone){body.design-apple.apple-next .mobile-tabs{bottom:max(10px,env(safe-area-inset-bottom))!important}}/* True hierarchical Settings navigation */
+body.design-apple.apple-next #view-settings .xy-settings-menu{margin:8px 0 30px;display:grid;gap:0;border-radius:27px;overflow:hidden;background:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.9)}
+body.design-apple.apple-next #view-settings .xy-settings-group-label{background:#f1f4f3;margin:0;padding:16px 22px 8px;font-size:12px;color:#7c8a85;font-weight:600}
+body.design-apple.apple-next #view-settings .xy-settings-item{display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;width:100%;border:0;background:transparent;padding:17px 22px;min-height:68px;color:#24332f;font:inherit;cursor:pointer}
+body.design-apple.apple-next #view-settings .xy-settings-item+.xy-settings-item{border-top:1px solid #e9eeeb}
+body.design-apple.apple-next #view-settings .xy-settings-item-main{display:flex;flex-direction:column;gap:4px;min-width:0}
+body.design-apple.apple-next #view-settings .xy-settings-item strong{font-size:16px;font-weight:600}
+body.design-apple.apple-next #view-settings .xy-settings-item small{color:#84918b;font-size:12px;line-height:1.35}
+body.design-apple.apple-next #view-settings .xy-settings-chevron{color:#a9b1ae;font-size:26px;font-weight:300}
+body.design-apple.apple-next #view-settings .xy-settings-item:active{background:#eaf0ed}
+body.design-apple.apple-next #view-settings .xy-settings-subnav{display:flex;align-items:center;gap:16px;margin:14px 0 22px}
+body.design-apple.apple-next #view-settings .xy-settings-back{border:0;background:transparent;color:#157267;font-size:17px;padding:10px 4px;min-height:44px;cursor:pointer}
+body.design-apple.apple-next #view-settings .xy-settings-current{font-size:24px;font-weight:700;margin:0;letter-spacing:-.04em}
+body.design-apple.apple-next #view-settings .xy-settings-sections>[hidden],body.design-apple.apple-next #view-settings .xy-settings-menu[hidden],body.design-apple.apple-next #view-settings .xy-settings-subnav[hidden]{display:none!important}
+body.design-apple.apple-next #view-settings .xy-settings-sections>.xy-organized-details{border:0;background:transparent;box-shadow:none;overflow:visible}
+body.design-apple.apple-next #view-settings .xy-settings-sections>.xy-organized-details>summary{display:none!important}
+body.design-apple.apple-next #view-settings .xy-settings-sections>.xy-organized-details>.panel{background:rgba(255,255,255,.85)!important;border-radius:26px!important;padding:22px!important}
+body.design-apple.apple-next #view-settings .xy-settings-sections>.xy-organized-details>.panel>.byok-head{display:flex!important}
+body.design-apple.apple-next #view-settings .xy-settings-detail .page-head{display:none!important}
+@media(max-width:790px){body.design-apple.apple-next #view-settings .xy-settings-menu{border-radius:25px}body.design-apple.apple-next #view-settings .xy-settings-item{padding:16px 20px}body.design-apple.apple-next #view-settings .xy-settings-sections>.xy-organized-details>.panel{padding:20px!important}}
