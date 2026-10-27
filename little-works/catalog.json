@@ -1,5 +1,19 @@
 [
   {
+    "slug": "luma-gallery",
+    "title": "光屿 Luma · 私人照片画廊",
+    "date": "2026.10.27",
+    "type": "PRIVATE PHOTO GALLERY",
+    "description": "把光影放进自己的私人空间。支持本机照片上传、分类、收藏、沉浸浏览、长按菜单和完整原图备份。",
+    "url": "./luma-gallery/",
+    "cover": "./luma-gallery/cover.svg",
+    "tags": [
+      "Apple 风格",
+      "私人画廊",
+      "照片收藏"
+    ]
+  },
+  {
       "slug":  "habit-flow",
       "title":  "Habit Flow · 习惯追踪",
       "date":  "2026.10.27",
