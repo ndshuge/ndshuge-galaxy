@@ -1,0 +1,24 @@
+name: Habit Flow static gate
+on:
+  push:
+    paths:
+      - 'little-works/habit-flow/**'
+      - 'little-works/catalog.json'
+      - 'tests/habit-flow-static.cjs'
+      - '.github/workflows/habit-flow-check.yml'
+  pull_request:
+    paths:
+      - 'little-works/habit-flow/**'
+      - 'little-works/catalog.json'
+      - 'tests/habit-flow-static.cjs'
+      - '.github/workflows/habit-flow-check.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check little-works/habit-flow/app.js
+      - run: node tests/habit-flow-static.cjs
