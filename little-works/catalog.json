@@ -3,11 +3,15 @@
     "slug": "idea-cards",
     "title": "灵感卡片",
     "date": "2026.10.27",
-    "type": "IDEA NOTEBOOK",
-    "description": "随时记录、整理、收藏和回顾自己的想法，支持本地备份。",
+    "type": "IDEA BOARD",
+    "description": "随时收藏闪现的想法，分类整理、全文搜索、收藏和随机回顾。浏览器本地保存，支持备份。",
     "url": "./idea-cards/",
-    "cover": "",
-    "tags": ["Apple 风格", "灵感整理", "本地保存"]
+    "cover": "./idea-cards/cover.png",
+    "tags": [
+      "想法整理",
+      "随机回顾",
+      "本地保存"
+    ]
   },
   {
     "slug": "time-capsule",
