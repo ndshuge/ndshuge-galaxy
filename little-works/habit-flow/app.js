@@ -240,6 +240,20 @@
   $("#prevRange").addEventListener("click",()=>{offset=Math.max(offset-1,-120);renderReview();});
   $("#nextRange").addEventListener("click",()=>{offset=Math.min(0,offset+1);renderReview();});
   ["#habitDialog","#backupDialog"].forEach(s=>$(s).addEventListener("click",e=>{if(e.target===$(s))$(s).close();}));
+  // Continuous press feedback. Pointer capture ensures cancellation clears the held state.
+  const tactileSelector=".mobile-nav button,.check-habit,.week-day,.add-btn,.primary-btn";
+  document.addEventListener("pointerdown",e=>{
+    const button=e.target.closest?.(tactileSelector);
+    if(!button||button.disabled||e.button!==0)return;
+    button.classList.add("is-held");
+  });
+  const clearHeld=()=>document.querySelectorAll(".is-held").forEach(el=>el.classList.remove("is-held"));
+  ["pointerup","pointercancel","dragstart","visibilitychange"].forEach(type=>document.addEventListener(type,clearHeld));
+  window.addEventListener("blur",clearHeld);
+  document.addEventListener("keydown",e=>{
+    if((e.key===" "||e.key==="Enter")&&e.target.matches?.(tactileSelector))e.target.classList.add("is-held");
+  });
+  document.addEventListener("keyup",clearHeld);
   render();
   window.HabitFlowQA={today,key,parse,shift,monday,normalize,getState:()=>JSON.parse(JSON.stringify(data)),selectDay:d=>{if(validDate(d)&&d<=today()){selected=d;render();}},navigate};
 })();

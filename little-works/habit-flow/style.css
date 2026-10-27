@@ -35,5 +35,11 @@
 .week-day{min-height:62px;touch-action:manipulation}
 @media(prefers-reduced-motion:reduce){.mobile-nav button{transition:none!important}}
 @media(prefers-reduced-transparency:reduce){.mobile-nav{background:#f7f9f6!important}.mobile-nav::before{display:none}}
+/* Hold feedback persists throughout touch and cancels on pointer loss. */
+.mobile-nav button.is-held,.week-day.is-held,.add-btn.is-held,.primary-btn.is-held{transform:scale(.93);filter:brightness(.98)}
+.check-habit.is-held{transform:scale(.82);box-shadow:0 0 0 7px rgba(78,143,96,.10)}
+.mobile-nav button:focus-visible,.check-habit:focus-visible,.week-day:focus-visible{outline:3px solid #467f60;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.mobile-nav button.is-held,.week-day.is-held,.add-btn.is-held,.primary-btn.is-held,.check-habit.is-held{transform:none;filter:none}}
+
 
 
