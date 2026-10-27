@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-27",
+    "label": "10月27日",
+    "path": "./data/2026-10-27.json",
+    "title": "从AI科学证明到芯片封装：技术进步如何跨越验证与规模化？",
+    "summary": "AI科学证明、EDA、先进封装、微电网、Project Scout和Frances Allen。"
+  },
+  {
     "date": "2026-10-26",
     "label": "10月26日",
     "path": "./data/2026-10-26.json",
