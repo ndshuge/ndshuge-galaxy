@@ -205,8 +205,8 @@ async function thumbnail(blob){
  let bitmap,srcUrl,img;
  try{
   let width,height,canvas=document.createElement("canvas");
-  if("createImageBitmap" in window){bitmap=await createImageBitmap(blob);width=bitmap.width;height=bitmap.height;}
-  else{srcUrl=URL.createObjectURL(blob);img=new Image();img.src=srcUrl;await img.decode();width=img.naturalWidth;height=img.naturalHeight;}
+  if("createImageBitmap" in window){try{bitmap=await createImageBitmap(blob);width=bitmap.width;height=bitmap.height;}catch(e){console.debug("使用图片元素解码",e);}}
+  if(!bitmap){srcUrl=URL.createObjectURL(blob);img=new Image();img.src=srcUrl;await img.decode();width=img.naturalWidth;height=img.naturalHeight;}
   if(!width||!height)throw Error("照片尺寸无效");
   const factor=Math.min(1,900/Math.max(width,height));
   canvas.width=Math.max(1,Math.round(width*factor));canvas.height=Math.max(1,Math.round(height*factor));
@@ -218,7 +218,7 @@ async function thumbnail(blob){
 }
 async function importFiles(files){
  if(!db){notify("数据库暂不可用，请刷新重试");return;}
- const accepted=["image/jpeg","image/png","image/webp","image/gif","image/avif","image/bmp"];
+ const accepted=["image/jpeg","image/png","image/webp","image/gif","image/avif","image/bmp","image/heic","image/heif"];
  let ok=0,fail=0;
  notify("正在把照片安全保存到这台设备…");
  for(const file of files){
@@ -263,7 +263,7 @@ async function restore(file){
   if(!confirm("将恢复 "+data.photos.length+" 张照片。相同 ID 的照片会更新，其他照片保留。继续吗？"))return;
   let imported=0;
   for(const item of data.photos){
-   if(!item||typeof item.dataUrl!=="string"||!/^data:image\/(jpeg|png|webp|gif|avif|bmp);base64,/i.test(item.dataUrl))continue;
+   if(!item||typeof item.dataUrl!=="string"||!/^data:image\/(jpeg|png|webp|gif|avif|bmp|heic|heif);base64,/i.test(item.dataUrl))continue;
    const res=await fetch(item.dataUrl),blob=await res.blob();
    if(!blob.size||blob.size>70*1048576)continue;
    const p={id:typeof item.id==="string"&&item.id.length<100?item.id:crypto.randomUUID(),name:String(item.name||"未命名照片").slice(0,110),originalName:String(item.originalName||"photo").slice(0,180),category:String(item.category||"日常").slice(0,24),favorite:!!item.favorite,addedAt:Number(item.addedAt)||Date.now(),size:blob.size,blob,thumb:await thumbnail(blob)};
