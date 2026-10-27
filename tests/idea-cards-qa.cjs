@@ -29,6 +29,7 @@ async function start(){
  await send('Page.reload',{ignoreCache:true});await pause(750);
  assert(await evaluate("document.querySelectorAll('.card').length===5"),'迁移验证后恢复独立测试数据');
  assert(await evaluate("getComputedStyle(document.querySelector('.dock')).display !== 'none'"),'手机底部 Dock 可见');
+ assert(await evaluate("getComputedStyle(document.querySelector('.card')).animationName==='none'"),'首屏卡片不再先淡出后出现');
  assert(await evaluate("getComputedStyle(document.querySelector('.top-buttons [data-action=backup]')).display !== 'none'"),'手机备份入口可见');
  assert(await evaluate("document.querySelector('.side-create').offsetParent===null"),'手机侧栏隐藏');
  await viewport(320,720);assert(await evaluate('document.documentElement.scrollWidth <= innerWidth+1'),'320px 无横向溢出');await capture('mobile-320.png');
