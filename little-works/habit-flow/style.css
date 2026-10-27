@@ -20,3 +20,20 @@
 @media(max-width:680px){.habit-info p{font-size:11px}.hero-label{font-size:10px}.week-panel{display:none}}
 @media(max-width:365px){.habit-info p{font-size:10px}}
 
+/* Habit Flow R2: tactile glass dock and accessible hit areas. */
+@media(max-width:950px){
+.mobile-nav{isolation:isolate;overflow:hidden;background:rgba(244,250,244,.68);border:1px solid rgba(255,255,255,.85);box-shadow:0 2px 3px rgba(255,255,255,.75) inset,0 14px 38px rgba(33,72,47,.14),0 1px 0 rgba(56,110,71,.13)}
+.mobile-nav::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.72),transparent 35%,rgba(255,255,255,.07) 72%,rgba(255,255,255,.42));opacity:.68;z-index:-1}
+.mobile-nav button{min-width:70px;min-height:48px;position:relative;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform .48s cubic-bezier(.18,1.55,.42,1),background-color .28s ease,color .28s ease}
+.mobile-nav button:active{transform:scale(.90);background:rgba(208,232,210,.65)}
+.mobile-nav button.active{box-shadow:0 1px 0 rgba(255,255,255,.75) inset}
+.top-menu{min-width:44px;min-height:44px}
+}
+.check-habit{position:relative}
+.check-habit::after{content:"";position:absolute;inset:-6px;border-radius:50%;cursor:pointer}
+.check-habit:active{transform:scale(.82)}
+.week-day{min-height:62px;touch-action:manipulation}
+@media(prefers-reduced-motion:reduce){.mobile-nav button{transition:none!important}}
+@media(prefers-reduced-transparency:reduce){.mobile-nav{background:#f7f9f6!important}.mobile-nav::before{display:none}}
+
+
