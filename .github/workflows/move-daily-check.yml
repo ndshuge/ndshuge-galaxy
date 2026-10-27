@@ -1,0 +1,24 @@
+name: Move Daily static quality gate
+on:
+  push:
+    paths:
+      - 'little-works/move-daily/**'
+      - 'little-works/catalog.json'
+      - 'tests/move-daily-static.cjs'
+      - '.github/workflows/move-daily-check.yml'
+  pull_request:
+    paths:
+      - 'little-works/move-daily/**'
+      - 'little-works/catalog.json'
+      - 'tests/move-daily-static.cjs'
+      - '.github/workflows/move-daily-check.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check little-works/move-daily/app.js
+      - run: node tests/move-daily-static.cjs

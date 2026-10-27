@@ -1,0 +1,13 @@
+const fs=require('fs'),path=require('path'),assert=require('assert/strict');
+const root=path.resolve(__dirname,'..'),dir=path.join(root,'little-works','move-daily');
+for(const file of ['index.html','style.css','app.js','icon.svg','cover.svg','README.md'])assert.ok(fs.statSync(path.join(dir,file)).size>100,'Missing '+file);
+const html=fs.readFileSync(path.join(dir,'index.html'),'utf8'),css=fs.readFileSync(path.join(dir,'style.css'),'utf8'),source=fs.readFileSync(path.join(dir,'app.js'),'utf8'),catalog=JSON.parse(fs.readFileSync(path.join(root,'little-works','catalog.json'),'utf8'));
+const works=catalog.filter(x=>x.slug==='move-daily');assert.equal(works.length,1,'Missing/duplicate catalog');assert.equal(works[0].url,'./move-daily/');assert.equal(works[0].cover,'./move-daily/cover.svg');
+for(const id of ['todayMinutes','calendarGrid','trendStats','recordForm','recordOverlay','bottomDock','settingsOverlay','goalProgress'])assert.ok(html.includes('id="'+id+'"'),'Missing control '+id);
+for(const fn of ['normalizeRecord','renderToday','renderCalendar','renderTrends','openRecord','saveRecord','restore','validDate'])assert.ok(source.includes(fn),'Missing behavior '+fn);
+assert.ok((process.env.MOVE_DAILY_NEGATIVE_TEST?'':source).includes('localStorage'),'Missing persistent storage');
+assert.ok(css.includes('prefers-reduced-motion'),'Missing motion fallback');
+assert.ok(css.includes('prefers-reduced-transparency'),'Missing glass fallback');
+assert.ok(css.includes('glass-refraction'),'Missing optics');
+assert.ok(!html.includes('https://fonts.googleapis.com'),'External font dependency');
+console.log('PASS: Move Daily assets, catalog, behaviors, glass fallbacks and offline font gate');

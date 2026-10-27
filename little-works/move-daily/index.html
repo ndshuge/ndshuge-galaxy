@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f2f4f7">
+<meta name="description" content="动迹：记录真实完成的运动，回顾每日打卡、训练日历与运动趋势。">
+<title>动迹 · 运动打卡</title>
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css">
+<script src="./app.js" defer></script>
+</head>
+<body data-glass="l2">
+<canvas id="ambient" aria-hidden="true"></canvas>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="应用导航">
+    <a class="brand" href="./" aria-label="动迹首页"><span class="brand-mark" data-icon="trail" aria-hidden="true"></span><span class="brand-copy"><strong>动迹</strong><small>运动打卡</small></span></a>
+    <nav class="side-nav" aria-label="主导航">
+      <button type="button" class="nav-item is-active" data-view="today" aria-current="page"><span data-icon="check" aria-hidden="true"></span><span>今天</span></button>
+      <button type="button" class="nav-item" data-view="calendar"><span data-icon="calendar" aria-hidden="true"></span><span>日历</span></button>
+      <button type="button" class="nav-item" data-view="trends"><span data-icon="chart" aria-hidden="true"></span><span>趋势</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button type="button" class="side-utility" id="sidebarSettings"><span data-icon="settings" aria-hidden="true"></span><span>备份与设置</span></button>
+      <p class="privacy-note"><span class="privacy-dot"></span>记录只保存在当前浏览器</p>
+    </div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <a class="mobile-brand" href="./" aria-label="动迹首页"><span class="brand-mark" data-icon="trail" aria-hidden="true"></span><strong>动迹</strong></a>
+      <button type="button" class="icon-button glass" id="openSettings" aria-label="打开设置" title="设置"><canvas class="glass-refraction" aria-hidden="true"></canvas><span data-icon="settings" aria-hidden="true"></span></button>
+    </header>
+    <main class="main-content">
+      <section class="view is-active" id="todayView" aria-labelledby="todayTitle">
+        <div class="page-header">
+          <div class="page-heading"><p class="page-date" id="todayDate"></p><h1 id="todayTitle">今天，动过了吗？</h1></div>
+          <button type="button" class="primary-button record-trigger" id="newRecord"><span class="button-plus" aria-hidden="true">+</span><span>记录运动</span><span class="hold-orbit" aria-hidden="true"></span></button>
+        </div>
+        <div class="dashboard-grid">
+          <section class="panel today-panel" aria-labelledby="todayPanelTitle">
+            <div class="today-copy">
+              <h2 class="section-title" id="todayPanelTitle">今日运动</h2>
+              <div class="big-metric"><span id="todayMinutes">0</span><small>分钟</small></div>
+              <p class="goal-message" id="todayMessage">从一次轻松的运动开始，让今天留下痕迹。</p>
+              <div class="goal-track" id="goalProgress" role="progressbar" aria-label="今日运动目标进度" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0"><span id="goalProgressFill"></span></div>
+              <div class="goal-meta"><span>今日目标 <strong id="goalValue">30 分钟</strong></span><button type="button" id="editGoal">调整</button></div>
+            </div>
+            <div class="ring-wrap"><svg class="progress-ring" viewBox="0 0 120 120" role="img" aria-labelledby="ringTitle ringDescription"><title id="ringTitle">今日目标进度</title><desc id="ringDescription">完成分钟数占每日目标的比例</desc><circle class="ring-track" cx="60" cy="60" r="47"></circle><circle class="ring-value" id="ringValue" cx="60" cy="60" r="47"></circle><text class="ring-percent" x="60" y="57" id="ringPercent">0%</text><text class="ring-caption" x="60" y="73">已完成</text></svg></div>
+          </section>
+          <section class="panel week-panel" aria-labelledby="weekTitle">
+            <div class="panel-heading"><div><h2 id="weekTitle">本周节奏</h2><p>把每一次运动连成自己的轨迹</p></div><div class="week-total"><strong id="weekMinutes">0</strong><span>分钟</span></div></div>
+            <div class="chart-frame">
+              <div class="chart-y-axis" aria-hidden="true"><span id="axisTop">60</span><span id="axisMid">30</span><span>0</span></div>
+              <svg id="weekChart" class="week-chart" viewBox="0 0 700 150" preserveAspectRatio="none" role="img" aria-label="本周每天的运动时长，单位为分钟"><line x1="12" y1="20" x2="688" y2="20" class="chart-gridline"></line><line x1="12" y1="70" x2="688" y2="70" class="chart-gridline"></line><line x1="12" y1="120" x2="688" y2="120" class="chart-gridline"></line><path id="chartArea" class="chart-area" d=""></path><path id="chartLine" class="chart-line" d=""></path><g id="chartPoints"></g></svg>
+            </div>
+            <div class="week-labels" id="weekLabels"></div><p class="chart-empty" id="chartEmpty">完成第一次运动后，你的轨迹会从这里开始。</p>
+          </section>
+        </div>
+        <div class="stats-row" aria-label="运动摘要">
+          <div class="stat-item"><span>连续打卡</span><strong><span id="streakDays">0</span><small>天</small></strong><p id="streakHint">第一天，随时可以开始</p></div>
+          <div class="stat-item"><span>本周运动</span><strong><span id="weekSessions">0</span><small>次</small></strong><p id="weekActiveDays">0 个运动日</p></div>
+          <div class="stat-item"><span>本月运动</span><strong><span id="monthActiveDays">0</span><small>天</small></strong><p><span id="monthMinutes">0</span> 分钟累计</p></div>
+        </div>
+        <div class="lower-grid">
+          <section class="panel records-panel" aria-labelledby="recentTitle"><div class="panel-heading"><div><h2 id="recentTitle">最近运动</h2><p>每一条都来自你的真实记录</p></div><button type="button" class="text-button" id="allRecords">查看日历 <span aria-hidden="true">↗</span></button></div><div class="record-list" id="recentRecords"></div></section>
+          <section class="panel quick-panel" aria-labelledby="quickTitle"><div class="panel-heading"><div><h2 id="quickTitle">快速记录</h2><p>选择运动类型，细节可以稍后补充</p></div></div><div class="quick-activities" id="quickActivities"></div><button type="button" class="quick-main" id="quickRecord">＋ 记录一项运动</button></section>
+        </div>
+      </section>
+
+      <section class="view" id="calendarView" aria-labelledby="calendarTitle" hidden>
+        <div class="page-header"><div class="page-heading"><p class="page-date">回头看，也是一种前进</p><h1 id="calendarTitle">运动日历</h1></div><button type="button" class="primary-button" id="calendarNewRecord"><span class="button-plus" aria-hidden="true">+</span><span>记录运动</span></button></div>
+        <section class="panel calendar-panel" aria-label="按月查看运动记录">
+          <div class="calendar-toolbar"><div class="month-switch"><button type="button" class="icon-button small-icon" id="prevMonth" aria-label="上个月">‹</button><h2 id="calendarMonth"></h2><button type="button" class="icon-button small-icon" id="nextMonth" aria-label="下个月">›</button></div><button type="button" class="text-button" id="todayMonth">回到今天</button></div>
+          <div class="calendar-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+          <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="每月运动日历"></div>
+        </section>
+        <section class="panel selected-day-panel" aria-labelledby="selectedDayTitle"><div class="panel-heading"><div><h2 id="selectedDayTitle">当天记录</h2><p id="selectedDaySubtitle">选择日期查看运动</p></div><div class="selected-day-total" id="selectedDayTotal">0 分钟</div></div><div class="record-list" id="selectedDayRecords"></div></section>
+      </section>
+
+      <section class="view" id="trendsView" aria-labelledby="trendsTitle" hidden>
+        <div class="page-header"><div class="page-heading"><p class="page-date">看见自己的节奏</p><h1 id="trendsTitle">运动趋势</h1></div></div>
+        <div class="trend-stats" id="trendStats"></div>
+        <div class="trends-grid">
+          <section class="panel trend-panel" aria-labelledby="monthChartTitle"><div class="panel-heading"><div><h2 id="monthChartTitle">最近四周</h2><p>每周累计运动时长</p></div></div><div class="month-chart" id="monthChart"></div></section>
+          <section class="panel trend-panel" aria-labelledby="activityBreakdownTitle"><div class="panel-heading"><div><h2 id="activityBreakdownTitle">运动分布</h2><p>不同运动类型的累计时长</p></div></div><div class="activity-breakdown" id="activityBreakdown"></div></section>
+        </div>
+        <section class="panel all-records-panel" aria-labelledby="allRecordsTitle"><div class="panel-heading"><div><h2 id="allRecordsTitle">全部记录</h2><p>可以随时修改或删除</p></div><span class="record-count" id="allRecordCount">0 条</span></div><div class="record-list" id="allRecordsList"></div></section>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-dock glass" id="bottomDock" aria-label="主导航"><canvas class="glass-refraction" aria-hidden="true"></canvas>
+    <button type="button" class="dock-item is-active" data-view="today" aria-current="page"><span data-icon="check" aria-hidden="true"></span><span>今天</span></button>
+    <button type="button" class="dock-item" data-view="calendar"><span data-icon="calendar" aria-hidden="true"></span><span>日历</span></button>
+    <button type="button" class="dock-item" data-view="trends"><span data-icon="chart" aria-hidden="true"></span><span>趋势</span></button>
+  </nav>
+</div>
+
+<div class="overlay" id="recordOverlay" hidden><div class="overlay-backdrop" data-close-overlay="record" aria-hidden="true"></div>
+  <section class="sheet glass" id="recordSheet" role="dialog" aria-modal="true" aria-labelledby="recordSheetTitle" tabindex="-1"><canvas class="glass-refraction" aria-hidden="true"></canvas><div class="sheet-content">
+    <div class="sheet-grabber" aria-hidden="true"></div><div class="sheet-head"><div><h2 id="recordSheetTitle">记录运动</h2><p id="recordSheetSub">把真实完成的运动记下来。</p></div><button type="button" class="icon-button close-button" id="closeRecord" aria-label="关闭记录窗口">×</button></div>
+    <form id="recordForm" novalidate>
+      <fieldset class="activity-fieldset"><legend>运动类型</legend><div class="activity-options" id="activityOptions"></div></fieldset>
+      <div class="form-grid">
+        <label class="field-label">日期<input id="recordDate" name="date" type="date" required></label>
+        <label class="field-label">时长（分钟）<input id="recordDuration" name="duration" type="number" inputmode="numeric" min="1" max="600" step="1" value="30" required></label>
+        <label class="field-label">距离（可选）<div class="distance-input-row"><input id="recordDistance" name="distance" type="number" inputmode="decimal" min="0" max="500" step="0.01" placeholder="例如 3.2"><select id="recordDistanceUnit" name="distanceUnit" aria-label="距离单位"><option value="km">公里</option><option value="m">米</option></select></div></label>
+        <fieldset class="effort-fieldset"><legend>运动强度</legend><div class="effort-picker" id="effortPicker" role="group" aria-label="运动强度，1 轻松到 5 很强"></div><span class="field-hint">1 轻松 · 5 很强</span></fieldset>
+      </div>
+      <label class="field-label note-label">备注（可选）<input id="recordNote" name="note" type="text" maxlength="160" placeholder="今天的感觉如何？"></label>
+      <p class="form-error" id="recordError" role="alert" hidden></p>
+      <div class="sheet-actions"><button type="button" class="secondary-button" id="cancelRecord">取消</button><button type="submit" class="primary-button">保存记录</button></div>
+    </form>
+  </div></section>
+</div>
+
+<div class="overlay" id="settingsOverlay" hidden><div class="overlay-backdrop" data-close-overlay="settings" aria-hidden="true"></div>
+  <section class="sheet glass settings-sheet" id="settingsSheet" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" tabindex="-1"><canvas class="glass-refraction" aria-hidden="true"></canvas><div class="sheet-content">
+    <div class="sheet-grabber" aria-hidden="true"></div><div class="sheet-head"><div><h2 id="settingsTitle">偏好与数据</h2><p>按你的节奏调整，记录始终由你掌握。</p></div><button type="button" class="icon-button close-button" id="closeSettings" aria-label="关闭设置">×</button></div>
+    <div class="settings-section"><h3>每日目标</h3><p class="settings-description">设定适合自己的运动时长，不会影响已有记录。</p><label class="goal-setting">每天运动时长<input id="settingsGoal" type="number" min="5" max="180" step="5" value="30"><span>分钟</span></label></div>
+    <div class="settings-section"><h3>界面效果</h3>
+      <label class="setting-row"><span><strong>玻璃材质</strong><small>可选折射、磨砂或不透明</small></span><select id="glassLevel"><option value="l2">L2 · 折射</option><option value="l1">L1 · 磨砂</option><option value="l0">L0 · 实色</option></select></label>
+      <label class="setting-row"><span><strong>减少动态效果</strong><small>关闭持续背景运动与弹性过渡</small></span><input id="reduceMotion" type="checkbox" class="switch-input"></label>
+      <label class="setting-row"><span><strong>减少透明效果</strong><small>使用高对比的实色表面</small></span><input id="reduceTransparency" type="checkbox" class="switch-input"></label>
+    </div>
+    <div class="settings-section"><h3>备份与恢复</h3><p class="settings-description">数据只保存在当前浏览器。导出文件可以在另一台设备恢复。</p><div class="backup-actions"><button type="button" class="secondary-button" id="exportBackup">导出备份</button><button type="button" class="secondary-button" id="importBackup">导入备份</button></div><button type="button" class="danger-text-button" id="clearRecords">清空全部记录</button></div>
+    <p class="local-storage-note"><span class="privacy-dot"></span>不上传运动记录，也不需要注册账号。</p>
+  </div></section>
+</div>
+
+<div class="overlay confirm-overlay" id="confirmOverlay" hidden><div class="overlay-backdrop" data-close-overlay="confirm" aria-hidden="true"></div>
+  <section class="confirm-dialog glass" id="confirmDialog" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" tabindex="-1"><canvas class="glass-refraction" aria-hidden="true"></canvas><div class="confirm-content"><h2 id="confirmTitle">确认操作</h2><p id="confirmMessage"></p><div class="confirm-actions"><button type="button" class="secondary-button" id="cancelConfirm">取消</button><button type="button" class="danger-button" id="confirmAction">确认</button></div></div></section>
+</div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

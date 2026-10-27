@@ -1,4 +1,18 @@
 [
+  {
+    "slug": "move-daily",
+    "title": "动迹 · 运动打卡",
+    "date": "2026.10.28",
+    "type": "SPORTS CHECK-IN",
+    "description": "让每次运动都留下痕迹。记录跑步、步行、赛艇和力量训练，回顾真实的日历、连续打卡与运动趋势。",
+    "url": "./move-daily/",
+    "cover": "./move-daily/cover.svg",
+    "tags": [
+      "运动打卡",
+      "液态玻璃",
+      "训练趋势"
+    ]
+  },
   {"slug":"interaction-lab","title":"光感 · Interaction Lab","date":"2026.10.28","type":"INTERACTIVE EXPERIENCE","description":"一间会回应你的光之实验室。拖动光球、长按收集光线，切换晨光、落日与星夜，感受流畅的 Apple 风格触控反馈。","url":"./interaction-lab/","cover":"./interaction-lab/cover.svg","tags":["Apple 交互","自然弹性","液态玻璃"]},
   {
     "slug": "focus-aura",
