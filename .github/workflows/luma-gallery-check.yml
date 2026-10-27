@@ -1,0 +1,41 @@
+name: Luma private gallery QA
+on:
+  push:
+    paths:
+      - 'little-works/luma-gallery/**'
+      - 'tests/luma-gallery-qa.cjs'
+      - '.github/workflows/luma-gallery-check.yml'
+  pull_request:
+    paths:
+      - 'little-works/luma-gallery/**'
+      - 'tests/luma-gallery-qa.cjs'
+      - '.github/workflows/luma-gallery-check.yml'
+permissions:
+  contents: read
+jobs:
+  gallery:
+    runs-on: windows-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Syntax, catalog, and content checks
+        shell: pwsh
+        run: |
+          node --check little-works/luma-gallery/app.js
+          node --check tests/luma-gallery-qa.cjs
+          node -e "const fs=require('fs');const c=require('./little-works/catalog.json');if(!c.some(x=>x.slug==='luma-gallery'))process.exit(1);for(const f of ['index.html','app.js','style.css','cover.svg','icon.svg'])if(!fs.existsSync('little-works/luma-gallery/'+f))process.exit(2);"
+      - name: Start static test server
+        shell: pwsh
+        run: |
+          $proc = Start-Process -FilePath python -ArgumentList @('-m','http.server','8931','--bind','127.0.0.1') -PassThru -WindowStyle Hidden
+          Write-Host "Static server PID $($proc.Id)"
+          for ($i=0; $i -lt 30; $i++) {
+            try { $r=Invoke-WebRequest -Uri 'http://127.0.0.1:8931/little-works/luma-gallery/' -UseBasicParsing -TimeoutSec 2; if ($r.StatusCode -eq 200) { break } }
+            catch { Start-Sleep -Milliseconds 300 }
+          }
+      - name: Browser integration and responsive QA
+        shell: pwsh
+        run: node tests/luma-gallery-qa.cjs
