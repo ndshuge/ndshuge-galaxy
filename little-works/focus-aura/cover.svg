@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+<title id="t">Focus Aura</title><desc id="d">晨光中的沉浸式专注计时器</desc>
+<defs><linearGradient id="bg" x2=".8" y2="1"><stop stop-color="#111f30"/><stop offset=".58" stop-color="#416a78"/><stop offset="1" stop-color="#78979a"/></linearGradient><radialGradient id="sun"><stop stop-color="#f5e4bd" stop-opacity=".85"/><stop offset="1" stop-color="#f1c2a6" stop-opacity="0"/></radialGradient><radialGradient id="glow"><stop stop-color="#ccfaee" stop-opacity=".22"/><stop offset="1" stop-color="#b2eeed" stop-opacity="0"/></radialGradient><filter id="blur"><feGaussianBlur stdDeviation="26"/></filter></defs>
+<rect width="1200" height="675" fill="url(#bg)"/>
+<ellipse cx="805" cy="260" rx="440" ry="320" fill="url(#sun)" filter="url(#blur)"/>
+<ellipse cx="485" cy="565" rx="580" ry="340" fill="url(#glow)"/>
+<g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" fill="#f3fafa">
+<circle cx="150" cy="82" r="17" stroke="#ebfff9" stroke-width="4" fill="none"/><circle cx="150" cy="82" r="8" fill="#e5fff3"/>
+<text x="185" y="92" font-size="32" font-weight="500">Focus <tspan font-weight="300">Aura</tspan></text>
+<g transform="translate(598 340)"><circle r="224" fill="none" stroke="#d8f8f1" stroke-opacity=".13" stroke-width="2"/><circle r="223" fill="none" stroke="#e0fff4" stroke-width="3" stroke-dasharray="1160 240" stroke-linecap="round" transform="rotate(-90)" opacity=".82"/><circle r="197" fill="#dff9f2" opacity=".035"/><rect x="-155" y="-126" width="310" height="56" rx="28" fill="#102737" fill-opacity=".48"/><text x="0" y="-90" text-anchor="middle" font-size="22" opacity=".78">专注　　短休息　　长休息</text><text x="-6" y="64" font-size="136" font-weight="200" text-anchor="middle" letter-spacing="-9">25:00</text><text y="115" text-anchor="middle" font-size="22" opacity=".7">现在，开始属于你的时间</text><rect x="-173" y="142" width="346" height="65" rx="34" fill="#edfdfb" fill-opacity=".2" stroke="#fff" stroke-opacity=".48"/><rect x="-75" y="150" width="185" height="49" rx="25" fill="#e7fbfc"/><text y="184" x="16" text-anchor="middle" fill="#183c48" font-size="23" font-weight="600">开始专注</text></g>
+</g></svg>

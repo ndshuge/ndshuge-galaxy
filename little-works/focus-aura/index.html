@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1827">
+<meta name="description" content="Focus Aura｜沉浸式专注空间，安静而专注地度过每一分钟。">
+<title>Focus Aura｜沉浸式专注空间</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='%23a6e6d9'/%3E%3Ccircle cx='32' cy='32' r='17' fill='%230c2431'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css">
+<script src="./app.js" defer></script>
+</head>
+<body data-scene="dawn" data-glass="l2">
+<canvas id="world" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="app">
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="返回小东西"><span class="brand-symbol" aria-hidden="true"><span></span></span><span>Focus <strong>Aura</strong></span></a>
+    <div class="top-right"><span class="top-clock" id="clock">00:00</span><button class="icon-button top-settings holdable" id="settings-open" aria-label="打开设置" title="设置"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2.3" fill="currentColor" stroke="none"/><circle cx="16" cy="17" r="2.3" fill="currentColor" stroke="none"/></svg></button></div>
+  </header>
+  <main class="main">
+    <div class="intro"><div class="eyebrow"><span class="live-dot"></span><span id="session-label">留一段时间，给重要的事</span></div><h1 id="scene-title">让思绪，慢慢清晰。</h1></div>
+    <div class="focus-stage" id="focus-stage">
+      <div class="timer-ring" id="timer-ring" aria-hidden="true">
+        <svg class="progress-ring" viewBox="0 0 420 420"><circle class="ring-track" cx="210" cy="210" r="190"/><circle class="ring-progress" id="ring-progress" cx="210" cy="210" r="190"/></svg>
+        <span class="ring-glint"></span>
+      </div>
+      <div class="timer-content">
+        <div class="mode-switch" id="mode-switch" role="group" aria-label="计时模式">
+          <button type="button" class="mode active holdable" data-mode="focus" aria-pressed="true">专注</button>
+          <button type="button" class="mode holdable" data-mode="short" aria-pressed="false">短休息</button>
+          <button type="button" class="mode holdable" data-mode="long" aria-pressed="false">长休息</button>
+        </div>
+        <div class="time-block"><output id="time" class="time" role="timer" aria-label="剩余时间">25:00</output><p id="timer-hint">现在，开始属于你的时间</p></div>
+        <div class="timer-actions glass-panel refract" id="timer-actions">
+          <canvas class="optical-canvas" aria-hidden="true"></canvas>
+          <button type="button" class="secondary-action holdable" id="reset" aria-label="重置计时" title="重置计时"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10a9 9 0 1 1 .9 6.8"/><path d="M3 4v6h6"/></svg></button>
+          <button type="button" class="primary-action holdable" id="start"><span id="start-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m8.1 5.3 11 6.7-11 6.7z"/></svg></span><span id="start-label">开始专注</span></button>
+          <button type="button" class="secondary-action holdable" id="skip" aria-label="切换至下一模式" title="下一模式"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 5 9 7-9 7V5ZM18 5v14"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="lower-area">
+      <div class="scene-picker" role="group" aria-label="环境氛围">
+        <button class="scene-button selected holdable" data-scene="dawn" aria-pressed="true"><span class="scene-swatch dawn"></span>晨光</button>
+        <button class="scene-button holdable" data-scene="ocean" aria-pressed="false"><span class="scene-swatch ocean"></span>深海</button>
+        <button class="scene-button holdable" data-scene="night" aria-pressed="false"><span class="scene-swatch night"></span>星夜</button>
+      </div>
+      <button class="today-link holdable" id="stats-open"><span class="stat-icon" aria-hidden="true">↗</span><span>今日已专注 <strong id="today-count">0 分钟</strong></span><span aria-hidden="true" class="forward">⌁</span></button>
+    </div>
+  </main>
+  <footer class="footer"><span>专注当下，自有回响。</span><span>FOCUS AURA · 2026</span></footer>
+</div>
+<div class="overlay" id="overlay" hidden><div class="overlay-backdrop" id="overlay-backdrop"></div><section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-handle" aria-hidden="true"></div><div class="sheet-header"><div><p class="sheet-kicker" id="sheet-kicker">FOCUS AURA</p><h2 id="sheet-title">设置</h2></div><button class="icon-button holdable" id="sheet-close" aria-label="关闭面板">✕</button></div>
+  <div id="settings-view" class="sheet-view">
+    <p class="group-label">计时时长 <span>分钟</span></p>
+    <div class="settings-group">
+      <label class="setting-row"><span>专注时长</span><span class="input-wrap"><input type="number" id="duration-focus" min="1" max="180" step="1" inputmode="numeric" aria-label="专注时长（分钟）"><span>分钟</span></span></label>
+      <label class="setting-row"><span>短休息</span><span class="input-wrap"><input type="number" id="duration-short" min="1" max="180" step="1" inputmode="numeric" aria-label="短休息（分钟）"><span>分钟</span></span></label>
+      <label class="setting-row"><span>长休息</span><span class="input-wrap"><input type="number" id="duration-long" min="1" max="180" step="1" inputmode="numeric" aria-label="长休息（分钟）"><span>分钟</span></span></label>
+    </div>
+    <p class="group-label">显示效果</p>
+    <div class="settings-group">
+      <label class="setting-row"><span>玻璃材质</span><select id="glass-level" aria-label="玻璃材质"><option value="l2">L2 · 光学折射</option><option value="l1">L1 · 柔和模糊</option><option value="l0">L0 · 清晰实体</option></select></label>
+      <label class="setting-row"><span>减少动态效果</span><input type="checkbox" id="motion-reduce" class="toggle" aria-label="减少动态效果"></label>
+      <label class="setting-row"><span>减少透明度</span><input type="checkbox" id="transparency-reduce" class="toggle" aria-label="减少透明度"></label>
+    </div>
+    <p class="settings-note">计时状态和专注记录仅保存在当前浏览器中。完成一次专注后自动计入统计；中途重置不计入。</p>
+  </div>
+  <div id="stats-view" class="sheet-view" hidden>
+    <div class="stats-highlight"><div><span>今日专注</span><strong id="stat-today">0 <small>分钟</small></strong></div><div><span>连续专注</span><strong id="stat-streak">0 <small>天</small></strong></div></div>
+    <div class="weekly-heading"><h3>最近 7 天</h3><span id="weekly-total">累计 0 分钟</span></div>
+    <div class="bars" id="weekly-bars" role="img" aria-label="最近七天专注时长"></div>
+    <div class="history-heading"><h3>最近记录</h3><span id="session-total">0 次专注</span></div><div class="history" id="history"></div>
+  </div>
+</section></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>

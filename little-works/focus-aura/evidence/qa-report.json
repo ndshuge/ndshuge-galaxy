@@ -1,0 +1,120 @@
+{
+  "url": "http://127.0.0.1:8731/",
+  "chrome": "Edge headless / CDP",
+  "createdAt": "2026-10-27T16:14:27.157Z",
+  "passed": 16,
+  "failed": 0,
+  "results": [
+    {
+      "name": "initial timer and L2 pixel displacement",
+      "pass": true,
+      "data": 2808
+    },
+    {
+      "name": "responsive 320",
+      "pass": true,
+      "data": {
+        "overflow": 0,
+        "verticalOverflow": 0
+      }
+    },
+    {
+      "name": "responsive 390",
+      "pass": true,
+      "data": {
+        "overflow": 0,
+        "verticalOverflow": 0
+      }
+    },
+    {
+      "name": "responsive 768",
+      "pass": true,
+      "data": {
+        "overflow": 0,
+        "verticalOverflow": 0
+      }
+    },
+    {
+      "name": "responsive 1440",
+      "pass": true,
+      "data": {
+        "overflow": 0,
+        "verticalOverflow": 0
+      }
+    },
+    {
+      "name": "three modes and atmosphere switching",
+      "pass": true,
+      "data": "25/5/15 + three scenes"
+    },
+    {
+      "name": "interruptible scenery crossfade",
+      "pass": true,
+      "data": {
+        "scene": "dawn",
+        "hasSnapshot": true
+      }
+    },
+    {
+      "name": "settings validation and persistence",
+      "pass": true,
+      "data": "1 minute and L1 persisted"
+    },
+    {
+      "name": "timer accuracy pause resume",
+      "pass": true,
+      "data": {
+        "drift": 1363,
+        "pausedDiff": 0,
+        "afterRefresh": 57923
+      }
+    },
+    {
+      "name": "live duration change does not rewrite active session",
+      "pass": true,
+      "data": {
+        "configured": 4,
+        "activeDurationMs": 60000,
+        "remainingMs": 57919
+      }
+    },
+    {
+      "name": "finish logged exactly once after hidden/reload time",
+      "pass": true,
+      "data": {
+        "sessions": 1,
+        "today": 1
+      }
+    },
+    {
+      "name": "reduce motion, transparency and L0 fallback",
+      "pass": true,
+      "data": {
+        "cls": "reduce-motion reduce-transparency",
+        "glass": "l0",
+        "opt": "inactive"
+      }
+    },
+    {
+      "name": "sheet quick interruption and escape",
+      "pass": true,
+      "data": "reversible"
+    },
+    {
+      "name": "pointer long hold and cancellation",
+      "pass": true,
+      "data": "held feedback and release"
+    },
+    {
+      "name": "rapid clicks remain usable",
+      "pass": true,
+      "data": false
+    },
+    {
+      "name": "no runtime exceptions",
+      "pass": true,
+      "data": "0"
+    }
+  ],
+  "errors": []
+}

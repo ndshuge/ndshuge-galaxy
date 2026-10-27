@@ -1,5 +1,19 @@
 [
   {
+    "slug": "focus-aura",
+    "title": "Focus Aura · 沉浸式专注空间",
+    "date": "2026.10.28",
+    "type": "FOCUS TIMER",
+    "description": "在晨光、深海与星夜之间，留一段时间给重要的事。自定义番茄钟、专注记录与七天统计，保存在浏览器本地。",
+    "url": "./focus-aura/",
+    "cover": "./focus-aura/cover.svg",
+    "tags": [
+      "番茄钟",
+      "沉浸氛围",
+      "本地记录"
+    ]
+  },
+{
     "slug": "luma-gallery",
     "title": "光屿 Luma · 私人照片画廊",
     "date": "2026.10.27",

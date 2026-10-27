@@ -1,0 +1,112 @@
+{
+  "goal": "Focus Aura: verify release candidate code, functionality, responsive screenshots and creative evidence for safe Git publication",
+  "project_root": "E:\\CHATGPT\\work\\focus-aura-release-20261028\\little-works\\focus-aura",
+  "creative_domain": "apple",
+  "candidate_revision": "ca992cb7008b04c98e8dbafd934c66d645070888",
+  "state": "DONE",
+  "next_action": "",
+  "human_gate_required": false,
+  "acceptance": [
+    {
+      "criterion": "独立静态网页正常运行且提供 25/5/15、自定义时长、三氛围",
+      "status": "pass",
+      "proof": "evidence:qa"
+    },
+    {
+      "criterion": "绝对时间戳计时、暂停继续、刷新恢复、专注记录去重和每周统计",
+      "status": "pass",
+      "proof": "evidence:qa"
+    },
+    {
+      "criterion": "320/390/768/1440 响应式可访问、核心控件无溢出",
+      "status": "pass",
+      "proof": "evidence:qa"
+    },
+    {
+      "criterion": "L2 对 Canvas 原始背景进行像素位移，L1 与 L0 降级生效",
+      "status": "pass",
+      "proof": "evidence:qa"
+    },
+    {
+      "criterion": "长按持续反馈、释放恢复、快速连点、动画中断",
+      "status": "pass",
+      "proof": "evidence:qa"
+    },
+    {
+      "criterion": "390px 移动端与桌面已取真实 Edge 浏览器截图审查",
+      "status": "pass",
+      "proof": "evidence:mobile"
+    },
+    {
+      "criterion": "本机测试脚本在修复后重跑 14/14 通过且无 JS 异常",
+      "status": "pass",
+      "proof": "evidence:qa"
+    },
+    {
+      "criterion": "连续切换氛围与计时中途修改设置，Edge CDP 自动化 16/16 通过",
+      "status": "pass",
+      "proof": "evidence:qa"
+    }
+  ],
+  "skills": [
+    {
+      "path": "skills://plugins/apple-web-design/apple-web-design/skill.md",
+      "status": "VERIFIED",
+      "method": "采用 Focused Tool 主角优先的信息架构、Immersive 沉浸色彩、有限 Liquid Glass，审查不同宽度及交互状态。",
+      "action": "实际读取 Apple Web Design 主 Skill 及 visual-language、interaction-materials、qa-scenarios、research-workflow，并据此在 app.js 中实现 Canvas 三场景、真实像素位移及可中断长按反馈。",
+      "action_proof": "evidence:source",
+      "proof": "evidence:mobile"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "source",
+      "path": "app.js",
+      "sha256": "37db2dfb08cca272d588976d2d09c6b58e88df1290a5e272a9b2740749ddc0e1",
+      "kind": "source"
+    },
+    {
+      "id": "qa",
+      "path": "evidence/qa-report.json",
+      "sha256": "0290521396257b244ce0bc6e32342ca07ebba7b64b2be2b799159a2382bb2422",
+      "kind": "test"
+    },
+    {
+      "id": "mobile",
+      "path": "evidence/layout-390.png",
+      "sha256": "ed984d4f26ae2fd88b12a5229fd54a54fc2438b4cd5781abe7f3bb5d1eddb9b7",
+      "kind": "visual"
+    },
+    {
+      "id": "narrow",
+      "path": "evidence/layout-320.png",
+      "sha256": "458aabdfb03820ee2836de73946822ee873c2095ffcbea9c15a1775594c99c94",
+      "kind": "visual"
+    },
+    {
+      "id": "tablet",
+      "path": "evidence/layout-768.png",
+      "sha256": "1a14dfbd99b7631ffbeed6d4d46c810ee48409c927b9fd8b8ae73cb2dc5f4b5a",
+      "kind": "visual"
+    },
+    {
+      "id": "desktop",
+      "path": "evidence/layout-1440.png",
+      "sha256": "2742c9b743ae18190347aa2a056b701ffbc2a3059717090195a7c41698c32ac5",
+      "kind": "visual"
+    },
+    {
+      "id": "stats",
+      "path": "evidence/stats-390.png",
+      "sha256": "d96c9a89d33d5c502ad08d67be4b8ff3a0de4fe011009c671008257367856138",
+      "kind": "visual"
+    }
+  ],
+  "external_verification": {
+    "github_pages": "UNVERIFIED prior to publication; verify separately",
+    "real_iphone_safari": "UNVERIFIED",
+    "real_ipad_safari": "UNVERIFIED",
+    "designeer_research": "BLOCKED — website inaccessible",
+    "taste_draw_script": "UNAVAILABLE — not found on computer"
+  }
+}
