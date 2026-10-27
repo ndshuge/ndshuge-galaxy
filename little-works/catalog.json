@@ -1,5 +1,19 @@
 [
   {
+      "slug":  "habit-flow",
+      "title":  "Habit Flow · 习惯追踪",
+      "date":  "2026.10.27",
+      "type":  "HABIT TRACKER",
+      "description":  "轻松记录每日习惯完成情况，按周查看节奏，按月回顾足迹；本机保存、支持备份恢复。",
+      "url":  "./habit-flow/",
+      "cover":  "./habit-flow/icon.svg",
+      "tags":  [
+                   "习惯养成",
+                   "每日打卡",
+                   "周月回顾"
+               ]
+  },
+  {
     "slug": "mood-journal",
     "title": "心绪 · 心情日记",
     "date": "2026.10.27",
