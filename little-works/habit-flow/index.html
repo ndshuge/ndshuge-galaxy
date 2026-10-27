@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f5f7f3">
+<meta name="description" content="Habit Flow · 温柔而坚定地养成好习惯。每日打卡、每周节奏、每月回顾，记录保存在当前浏览器。">
+<title>Habit Flow · 让每一天，慢慢变好</title>
+<link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="应用导航">
+    <a class="brand" href="./" aria-label="Habit Flow 首页"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><path d="M18 6v24M6 18h24M9.5 9.5l17 17M26.5 9.5l-17 17" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="18" cy="18" r="5.5" fill="currentColor"/></svg></span><span class="brand-type"><strong>Habit Flow</strong><small>美好的事，慢慢来</small></span></a>
+    <div class="nav-section-label">我的空间</div>
+    <nav class="side-nav" aria-label="功能视图">
+      <button type="button" class="side-tab active" data-view="today" aria-current="page"><span class="nav-ico" aria-hidden="true">◷</span><span>每日习惯</span></button>
+      <button type="button" class="side-tab" data-view="review"><span class="nav-ico" aria-hidden="true">▦</span><span>回顾与趋势</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <p class="side-caption">「坚持」不是完美，<br>是愿意再次开始。</p>
+      <button type="button" class="side-link" id="sidebarBackup">↓ <span>备份与恢复</span></button>
+      <a class="side-link" href="../">↗ <span>返回小东西</span></a>
+      <div class="storage-note"><span class="storage-dot"></span> 数据仅保存在本机浏览器</div>
+    </div>
+  </aside>
+  <div class="page-wrap">
+    <header class="topbar">
+      <span class="topbar-brand"><span class="tiny-leaf">✳</span> Habit Flow</span>
+      <span class="top-date" id="topDate"></span>
+      <button type="button" class="top-menu icon-button" id="mobileBackup" aria-label="备份与恢复" title="备份与恢复">⋯</button>
+      <div class="desktop-top-meta"><span class="live-dot"></span> 你的每一天都算数</div>
+    </header>
+    <main class="main-content">
+      <section id="todayView" class="view active" aria-label="每日习惯">
+        <div class="page-intro">
+          <div><p class="eyeline" id="greeting"></p><h1>把今天，过成喜欢的样子<span class="title-stop">.</span></h1><p class="lead">从一件小事开始，慢慢成为更好的自己。</p></div>
+          <button type="button" class="add-btn" id="newHabitTop"><span aria-hidden="true">＋</span> 新建习惯</button>
+        </div>
+        <div class="overview-grid">
+          <section class="today-hero" aria-label="今日进度">
+            <div class="hero-copy">
+              <div class="hero-label">今日进度 <span class="hero-date" id="selectedLabel"></span></div>
+              <div class="hero-headline" id="progressHeadline">每一点进步<br>都值得记录。</div>
+              <p class="hero-sub" id="progressSub">完成一件小事，点亮今天。</p>
+              <div class="hero-footer"><span class="today-complete" id="completedCount">0 / 0</span><span>项习惯已完成</span></div>
+            </div>
+            <div class="ring-zone"><div class="progress-ring" id="progressRing" role="img" aria-label="今日完成比例"><svg viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="77" fill="none" stroke="#e4eee6" stroke-width="10"/><circle class="ring-fill" id="ringFill" cx="90" cy="90" r="77" fill="none" stroke="#417b5e" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" transform="rotate(-90 90 90)"/></svg><div class="ring-middle"><strong id="progressPercent">0%</strong><span>今日达成</span></div></div></div>
+          </section>
+          <section class="week-panel" aria-label="最近一周">
+            <div class="section-top"><div><h2>这一周</h2><p id="weekSubtitle">从每一天看见变化</p></div><span class="tiny-tag" id="weekTag">本周</span></div>
+            <div class="week-rail" id="weekRail" aria-label="选择日期"></div>
+            <div class="week-insight"><span class="insight-icon" aria-hidden="true">↗</span><span id="weekInsight">新的节奏，从今天开始。</span></div>
+          </section>
+        </div>
+        <div class="habits-head"><div><h2>每日清单 <span id="habitNumber" class="count-badge">0</span></h2><p id="listSubtitle">无需着急，一件一件完成。</p></div><button type="button" id="manageHabits" class="text-link">管理习惯 <span aria-hidden="true">↗</span></button></div>
+        <div id="habitsList" class="habit-list" aria-live="polite"></div>
+        <div class="bottom-quote"><span class="quote-line"></span> Small steps, remarkable changes. <span class="quote-line"></span></div>
+      </section>
+      <section id="reviewView" class="view" aria-label="回顾与趋势" hidden>
+        <div class="page-intro review-intro"><div><p class="eyeline">习惯足迹</p><h1>每一步，都留下了痕迹<span class="title-stop">.</span></h1><p class="lead">把那些看似普通的日子，连成属于自己的风景。</p></div></div>
+        <div class="review-controls"><div class="segmented" role="group" aria-label="选择回顾周期"><button type="button" class="selected" data-period="week" aria-pressed="true">按周</button><button type="button" data-period="month" aria-pressed="false">按月</button><span class="segment-bg" aria-hidden="true"></span></div><div class="range-controls"><button type="button" class="arrow-btn" id="prevRange" aria-label="上一周期">‹</button><strong id="rangeTitle"></strong><button type="button" class="arrow-btn" id="nextRange" aria-label="下一周期">›</button></div></div>
+        <div class="review-stats"><div class="stat"><span>完成次数</span><strong id="statDone">0</strong><small>次用心的坚持</small></div><div class="stat"><span>达成率</span><strong id="statRate">—</strong><small>已完成 / 可完成</small></div><div class="stat"><span>最久连续</span><strong id="statStreak">0 <em>天</em></strong><small>按习惯连续达成</small></div></div>
+        <section class="review-chart"><div class="section-top"><div><h2 id="chartTitle">这一周的节奏</h2><p id="chartSubtitle">每天的完成情况</p></div><span class="tiny-tag">完成节奏</span></div><div id="reviewChart" class="chart-body"></div><p class="chart-caption" id="chartCaption"></p></section>
+        <section class="review-detail"><div class="section-top"><div><h2>习惯记录</h2><p id="detailSubtitle">这一段时间的坚持</p></div></div><div id="reviewHabits" class="review-habits"></div></section>
+      </section>
+    </main>
+  </div>
+</div>
+<nav class="mobile-nav" aria-label="手机导航"><button type="button" data-view="today" class="active"><span aria-hidden="true">◷</span>今天</button><button type="button" data-view="review"><span aria-hidden="true">▦</span>回顾</button><button type="button" id="mobileAdd"><span aria-hidden="true">＋</span>添加</button></nav>
+<dialog id="habitDialog" class="modal" aria-labelledby="dialogTitle"><form method="dialog" id="habitForm" class="modal-inner"><div class="modal-header"><div><p class="eyeline">MAKE IT A RITUAL</p><h2 id="dialogTitle">添加新习惯</h2></div><button type="button" class="close-btn" id="closeHabit" aria-label="关闭">×</button></div><label for="habitName">习惯名称</label><input id="habitName" name="name" maxlength="32" required placeholder="例如：每天散步 20 分钟" autocomplete="off"><label for="habitNote">给自己一句提醒 <span class="optional">选填</span></label><input id="habitNote" name="note" maxlength="70" placeholder="慢慢来，也是一种前进" autocomplete="off"><p class="field-caption">选择一个代表它的颜色</p><div id="colorPicker" class="color-picker" role="radiogroup" aria-label="习惯颜色"></div><div class="modal-actions"><button type="button" id="deleteHabit" class="danger" hidden>删除习惯</button><span class="modal-spacer"></span><button type="button" class="cancel-btn" id="cancelHabit">取消</button><button class="primary-btn" id="saveHabit" type="submit">添加习惯</button></div></form></dialog>
+<dialog id="backupDialog" class="modal" aria-labelledby="backupTitle"><div class="modal-inner"><div class="modal-header"><div><p class="eyeline">YOUR DATA, YOURS</p><h2 id="backupTitle">保管你的记录</h2></div><button type="button" class="close-btn" id="closeBackup" aria-label="关闭">×</button></div><p class="backup-description">习惯和打卡记录仅保存在当前浏览器，不会自动在设备之间同步。建议定期下载备份。</p><button type="button" class="backup-option" id="exportData"><span>↓</span><strong>下载所有记录<small>保存为 JSON 备份文件</small></strong>↗</button><button type="button" class="backup-option" id="importData"><span>↑</span><strong>导入备份记录<small>合并习惯与历史，重名 ID 以导入内容为准</small></strong>↗</button><input type="file" id="importFile" accept="application/json,.json" hidden><p class="backup-fine">恢复前建议先导出一份现有备份。</p></div></dialog>
+<div class="toast" role="status" aria-live="polite" id="toast"></div>
+</body></html>
