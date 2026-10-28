@@ -1,0 +1,73 @@
+{
+  "context": "Edge headless Windows, viewport emulation only; not physical GPU or Safari",
+  "reports": [
+    {
+      "width": 390,
+      "reducedMotion": false,
+      "frames": 126,
+      "durationMs": 752.6999999284744,
+      "p50FrameMs": 5.8,
+      "p95FrameMs": 10.5,
+      "maxFrameMs": 17.9,
+      "over32Ms": 0,
+      "observedLongTasks": 0,
+      "totalLongTaskMs": 0,
+      "glass": "refraction",
+      "engine": "blink",
+      "filter": "url(\"#lg1-v3\")",
+      "localStorageKeyPresent": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "reducedMotion": true,
+      "frames": 126,
+      "durationMs": 735.2000000476837,
+      "p50FrameMs": 6,
+      "p95FrameMs": 6.1,
+      "maxFrameMs": 12.1,
+      "over32Ms": 0,
+      "observedLongTasks": 0,
+      "totalLongTaskMs": 0,
+      "glass": "refraction",
+      "engine": "blink",
+      "filter": "url(\"#lg2-v2\")",
+      "localStorageKeyPresent": false,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "reducedMotion": false,
+      "frames": 126,
+      "durationMs": 749.6999999284744,
+      "p50FrameMs": 6,
+      "p95FrameMs": 6.1,
+      "maxFrameMs": 17.5,
+      "over32Ms": 0,
+      "observedLongTasks": 0,
+      "totalLongTaskMs": 0,
+      "glass": "refraction",
+      "engine": "blink",
+      "filter": "url(\"#lg1-v3\")",
+      "localStorageKeyPresent": false,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "reducedMotion": true,
+      "frames": 126,
+      "durationMs": 1354.5999999046326,
+      "p50FrameMs": 6,
+      "p95FrameMs": 6.2,
+      "maxFrameMs": 472.8,
+      "over32Ms": 2,
+      "observedLongTasks": 0,
+      "totalLongTaskMs": 0,
+      "glass": "refraction",
+      "engine": "blink",
+      "filter": "url(\"#lg1-v2\")",
+      "localStorageKeyPresent": false,
+      "errors": []
+    }
+  ]
+}

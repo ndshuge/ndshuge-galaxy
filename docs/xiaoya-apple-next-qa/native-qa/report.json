@@ -1,0 +1,460 @@
+{
+  "url": "http://127.0.0.1:5394/little-works/xiaoya-apple/",
+  "createdAt": "2026-10-28T04:36:38.692Z",
+  "widths": [
+    {
+      "width": 320,
+      "baseline": {
+        "overflow": 0,
+        "component": "LgSegmented",
+        "filterReady": false,
+        "engine": {
+          "version": "20261028",
+          "glassComponent": "LgSegmented",
+          "filters": true,
+          "animations": "WAAPI",
+          "storageWrites": 0
+        },
+        "glass": "refraction",
+        "hasStore": true,
+        "key": "password",
+        "main": true
+      },
+      "final": {
+        "overflow": 0,
+        "viewport": 320,
+        "top": 75,
+        "glass": "refraction",
+        "glassEngine": "blink",
+        "native": {
+          "version": "20261028",
+          "glassComponent": "LgSegmented",
+          "filters": true,
+          "animations": "WAAPI",
+          "storageWrites": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "width": 390,
+      "baseline": {
+        "overflow": 0,
+        "component": "LgSegmented",
+        "filterReady": false,
+        "engine": {
+          "version": "20261028",
+          "glassComponent": "LgSegmented",
+          "filters": true,
+          "animations": "WAAPI",
+          "storageWrites": 0
+        },
+        "glass": "refraction",
+        "hasStore": true,
+        "key": "password",
+        "main": true
+      },
+      "final": {
+        "overflow": 0,
+        "viewport": 390,
+        "top": 75,
+        "glass": "refraction",
+        "glassEngine": "blink",
+        "native": {
+          "version": "20261028",
+          "glassComponent": "LgSegmented",
+          "filters": true,
+          "animations": "WAAPI",
+          "storageWrites": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "width": 768,
+      "baseline": {
+        "overflow": 0,
+        "component": "LgSegmented",
+        "filterReady": false,
+        "engine": {
+          "version": "20261028",
+          "glassComponent": "LgSegmented",
+          "filters": true,
+          "animations": "WAAPI",
+          "storageWrites": 0
+        },
+        "glass": "refraction",
+        "hasStore": true,
+        "key": "password",
+        "main": true
+      },
+      "final": {
+        "overflow": 0,
+        "viewport": 768,
+        "top": 75,
+        "glass": "refraction",
+        "glassEngine": "blink",
+        "native": {
+          "version": "20261028",
+          "glassComponent": "LgSegmented",
+          "filters": true,
+          "animations": "WAAPI",
+          "storageWrites": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "baseline": {
+        "overflow": 0,
+        "component": "LgSegmented",
+        "filterReady": false,
+        "engine": {
+          "version": "20261028",
+          "glassComponent": "LgSegmented",
+          "filters": true,
+          "animations": "WAAPI",
+          "storageWrites": 0
+        },
+        "glass": "refraction",
+        "hasStore": true,
+        "key": "password",
+        "main": true
+      },
+      "final": {
+        "overflow": 0,
+        "viewport": 1440,
+        "top": 90,
+        "glass": "refraction",
+        "glassEngine": "blink",
+        "native": {
+          "version": "20261028",
+          "glassComponent": "LgSegmented",
+          "filters": true,
+          "animations": "WAAPI",
+          "storageWrites": 0
+        }
+      },
+      "errors": []
+    }
+  ],
+  "checks": [
+    {
+      "ok": true,
+      "name": "APP business API exists 320"
+    },
+    {
+      "ok": true,
+      "name": "Native Skill custom element registered 320",
+      "extra": "LgSegmented"
+    },
+    {
+      "ok": true,
+      "name": "No initial horizontal overflow 320"
+    },
+    {
+      "ok": true,
+      "name": "Navigation today 320"
+    },
+    {
+      "ok": true,
+      "name": "Navigation schedule 320"
+    },
+    {
+      "ok": true,
+      "name": "Navigation tasks 320"
+    },
+    {
+      "ok": true,
+      "name": "Navigation goals 320"
+    },
+    {
+      "ok": true,
+      "name": "Navigation review 320"
+    },
+    {
+      "ok": true,
+      "name": "Navigation settings 320"
+    },
+    {
+      "ok": true,
+      "name": "Task filter controls 320"
+    },
+    {
+      "ok": true,
+      "name": "Refractive segmented renderer mounted 320",
+      "extra": {
+        "value": "all",
+        "filter": "radiogroup",
+        "runtime": true
+      }
+    },
+    {
+      "ok": true,
+      "name": "Task filter selection responds 320"
+    },
+    {
+      "ok": true,
+      "name": "Long press holds state 320"
+    },
+    {
+      "ok": true,
+      "name": "Long press release clears 320"
+    },
+    {
+      "ok": true,
+      "name": "No final horizontal overflow 320"
+    },
+    {
+      "ok": true,
+      "name": "No JS/page console errors 320",
+      "extra": []
+    },
+    {
+      "ok": true,
+      "name": "APP business API exists 390"
+    },
+    {
+      "ok": true,
+      "name": "Native Skill custom element registered 390",
+      "extra": "LgSegmented"
+    },
+    {
+      "ok": true,
+      "name": "No initial horizontal overflow 390"
+    },
+    {
+      "ok": true,
+      "name": "Navigation today 390"
+    },
+    {
+      "ok": true,
+      "name": "Navigation schedule 390"
+    },
+    {
+      "ok": true,
+      "name": "Navigation tasks 390"
+    },
+    {
+      "ok": true,
+      "name": "Navigation goals 390"
+    },
+    {
+      "ok": true,
+      "name": "Navigation review 390"
+    },
+    {
+      "ok": true,
+      "name": "Navigation settings 390"
+    },
+    {
+      "ok": true,
+      "name": "Task filter controls 390"
+    },
+    {
+      "ok": true,
+      "name": "Refractive segmented renderer mounted 390",
+      "extra": {
+        "value": "all",
+        "filter": "radiogroup",
+        "runtime": true
+      }
+    },
+    {
+      "ok": true,
+      "name": "Task filter selection responds 390"
+    },
+    {
+      "ok": true,
+      "name": "Long press holds state 390"
+    },
+    {
+      "ok": true,
+      "name": "Long press release clears 390"
+    },
+    {
+      "ok": true,
+      "name": "Real business task saved to isolated browser localStorage",
+      "extra": {
+        "task": true,
+        "key": true,
+        "keys": 1
+      }
+    },
+    {
+      "ok": true,
+      "name": "Task persists after full reload"
+    },
+    {
+      "ok": true,
+      "name": "Task completion persists in domain store"
+    },
+    {
+      "ok": true,
+      "name": "API credential field remains password"
+    },
+    {
+      "ok": true,
+      "name": "Original BYOK provider selector remains"
+    },
+    {
+      "ok": true,
+      "name": "No final horizontal overflow 390"
+    },
+    {
+      "ok": true,
+      "name": "No JS/page console errors 390",
+      "extra": []
+    },
+    {
+      "ok": true,
+      "name": "APP business API exists 768"
+    },
+    {
+      "ok": true,
+      "name": "Native Skill custom element registered 768",
+      "extra": "LgSegmented"
+    },
+    {
+      "ok": true,
+      "name": "No initial horizontal overflow 768"
+    },
+    {
+      "ok": true,
+      "name": "Navigation today 768"
+    },
+    {
+      "ok": true,
+      "name": "Navigation schedule 768"
+    },
+    {
+      "ok": true,
+      "name": "Navigation tasks 768"
+    },
+    {
+      "ok": true,
+      "name": "Navigation goals 768"
+    },
+    {
+      "ok": true,
+      "name": "Navigation review 768"
+    },
+    {
+      "ok": true,
+      "name": "Navigation settings 768"
+    },
+    {
+      "ok": true,
+      "name": "Task filter controls 768"
+    },
+    {
+      "ok": true,
+      "name": "Refractive segmented renderer mounted 768",
+      "extra": {
+        "value": "all",
+        "filter": "radiogroup",
+        "runtime": true
+      }
+    },
+    {
+      "ok": true,
+      "name": "Task filter selection responds 768"
+    },
+    {
+      "ok": true,
+      "name": "Long press holds state 768"
+    },
+    {
+      "ok": true,
+      "name": "Long press release clears 768"
+    },
+    {
+      "ok": true,
+      "name": "No final horizontal overflow 768"
+    },
+    {
+      "ok": true,
+      "name": "No JS/page console errors 768",
+      "extra": []
+    },
+    {
+      "ok": true,
+      "name": "APP business API exists 1440"
+    },
+    {
+      "ok": true,
+      "name": "Native Skill custom element registered 1440",
+      "extra": "LgSegmented"
+    },
+    {
+      "ok": true,
+      "name": "No initial horizontal overflow 1440"
+    },
+    {
+      "ok": true,
+      "name": "Navigation today 1440"
+    },
+    {
+      "ok": true,
+      "name": "Navigation schedule 1440"
+    },
+    {
+      "ok": true,
+      "name": "Navigation tasks 1440"
+    },
+    {
+      "ok": true,
+      "name": "Navigation goals 1440"
+    },
+    {
+      "ok": true,
+      "name": "Navigation review 1440"
+    },
+    {
+      "ok": true,
+      "name": "Navigation settings 1440"
+    },
+    {
+      "ok": true,
+      "name": "Task filter controls 1440"
+    },
+    {
+      "ok": true,
+      "name": "Refractive segmented renderer mounted 1440",
+      "extra": {
+        "value": "all",
+        "filter": "radiogroup",
+        "runtime": true
+      }
+    },
+    {
+      "ok": true,
+      "name": "Task filter selection responds 1440"
+    },
+    {
+      "ok": true,
+      "name": "Long press holds state 1440"
+    },
+    {
+      "ok": true,
+      "name": "Long press release clears 1440"
+    },
+    {
+      "ok": true,
+      "name": "No final horizontal overflow 1440"
+    },
+    {
+      "ok": true,
+      "name": "No JS/page console errors 1440",
+      "extra": []
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "WebKit on Windows and real iPhone Safari not run",
+    "Live paid model calls require user-owned API credentials"
+  ],
+  "failed": 0,
+  "passed": 69
+}

@@ -1,0 +1,117 @@
+{
+  "baseline": "44eff19b1d5f9aac97fa25e8b89fd554affa2375",
+  "manifest": [
+    {
+      "version": "before",
+      "width": 390,
+      "view": "today",
+      "name": "before-today-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "before",
+      "width": 390,
+      "view": "tasks",
+      "name": "before-tasks-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "before",
+      "width": 390,
+      "view": "settings",
+      "name": "before-settings-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "before",
+      "width": 390,
+      "view": "schedule",
+      "name": "before-schedule-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "before",
+      "width": 390,
+      "view": "goals",
+      "name": "before-goals-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "before",
+      "width": 1440,
+      "view": "today",
+      "name": "before-today-1440.png",
+      "overflow": 0
+    },
+    {
+      "version": "before",
+      "width": 1440,
+      "view": "review",
+      "name": "before-review-1440.png",
+      "overflow": 0
+    },
+    {
+      "version": "before",
+      "width": 1440,
+      "view": "settings",
+      "name": "before-settings-1440.png",
+      "overflow": 0
+    },
+    {
+      "version": "after",
+      "width": 390,
+      "view": "today",
+      "name": "after-today-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "after",
+      "width": 390,
+      "view": "tasks",
+      "name": "after-tasks-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "after",
+      "width": 390,
+      "view": "settings",
+      "name": "after-settings-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "after",
+      "width": 390,
+      "view": "schedule",
+      "name": "after-schedule-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "after",
+      "width": 390,
+      "view": "goals",
+      "name": "after-goals-390.png",
+      "overflow": 0
+    },
+    {
+      "version": "after",
+      "width": 1440,
+      "view": "today",
+      "name": "after-today-1440.png",
+      "overflow": 0
+    },
+    {
+      "version": "after",
+      "width": 1440,
+      "view": "review",
+      "name": "after-review-1440.png",
+      "overflow": 0
+    },
+    {
+      "version": "after",
+      "width": 1440,
+      "view": "settings",
+      "name": "after-settings-1440.png",
+      "overflow": 0
+    }
+  ]
+}
