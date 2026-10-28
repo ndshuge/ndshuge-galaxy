@@ -4,6 +4,7 @@
    No science, rubric, or API key implementation is copied into this edition.
 */
 import './assets/components.js';
+import { decorateZhixuR2 } from './r2-present.js';
 const ORIGINAL='/zhixu-ai-academy/';
 const $=(sel,scope=document)=>scope.querySelector(sel);
 const $$=(sel,scope=document)=>Array.from(scope.querySelectorAll(sel));
@@ -81,10 +82,17 @@ function setView(view,opt={}){
  });
  $('#crumb').textContent=views[view];
  if(view!=='learn')lesson.maxStep=lesson.highest;
- const render=()=>{renderView();window.scrollTo({top:0,behavior:'instant'});if(opt.focus)main.focus({preventScroll:true});};
- if(!opt.initial&&document.startViewTransition&&!matchMedia('(prefers-reduced-motion:reduce)').matches) document.startViewTransition(render);
- else render();
+ // No double document snapshots: old page leaves immediately, only new content animates.
+ renderView();
+ window.scrollTo({top:0,behavior:'instant'});
+ if(opt.focus)main.focus({preventScroll:true});
+ if(!opt.initial&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+   const page=main.firstElementChild;
+   const animate=window.ZHIXU_APPLE_MOTION?.animate;
+   if(page&&animate)animate(page,{opacity:[.95,1],y:[4,0]},{duration:.17,ease:[.22,.73,.21,1]});
+ }
 }
+window.ZHIXU_APPLE_NAVIGATE=(view)=>setView(view,{focus:true});
 function renderView(){
  try{sessionStorage.setItem('zx-apple-lesson-v1',JSON.stringify(lesson));}catch{}
  loadSummary();
@@ -94,6 +102,7 @@ function renderView(){
  if(currentView==='library')main.innerHTML=library();
  if(currentView==='growth')main.innerHTML=growth();
  if(currentView==='settings')main.innerHTML=settings();
+ decorateZhixuR2(main);
 }
 function home(){
  const n=summary?.recommended;
@@ -543,20 +552,19 @@ const initMotion=async()=>{
 };
 async function boot(){
  document.documentElement.dataset.effect=pref.effect?'on':'off';
- setView(location.hash.replace('#','')||'today',{initial:true});
- initMotion(); // The interface should respond before the remote science engine is ready.
+ initMotion(); // Nonblocking: SSR fallback is already readable.
  engineReadyPromise=attachOriginal();
  try{
   lib=await import(ORIGINAL+'learning-store.js');
   store=lib.loadLearning(localStorage);
   loadSummary();
-  renderView();
  }catch(error){
   console.error('[Zhixu Apple data]',error);
   showToast('原版学习数据读取失败：'+error.message);
  }
+ setView(location.hash.replace('#','')||'today',{initial:true});
  const success=await engineReadyPromise;
- if(success)showToast('已连接原版科学引擎');
+ if(success)document.documentElement.dataset.engineReady='true'; // Status is already conveyed in #bridge-state; no floating overlay over study text.
  else showToast('当前网络无法连接原版，可查看已保存的学习记录');
 }
 frame.addEventListener('error',()=>$('#bridge-state').textContent='加载原版科学引擎失败');

@@ -1,0 +1,46 @@
+[
+  {
+    "name": "No transient success toast covers lesson",
+    "pass": true
+  },
+  {
+    "name": "Drag preview does not change learning view before release",
+    "pass": true
+  },
+  {
+    "name": "Pointercancel restores selected tab, avoids route change",
+    "pass": true,
+    "extra": {
+      "tab": "today",
+      "hash": "#today",
+      "scrubbing": false,
+      "copy": "hidden"
+    }
+  },
+  {
+    "name": "Keyboard Enter navigates using genuine control",
+    "pass": true
+  },
+  {
+    "name": "Reduced motion stable, no double text, correct navigation",
+    "pass": true,
+    "extra": {
+      "copy": "hidden",
+      "active": "courses",
+      "vt": 0
+    }
+  },
+  {
+    "name": "60 rapid view retargets preserve a single view and selected state",
+    "pass": true,
+    "extra": {
+      "hash": "#library",
+      "selected": [
+        "library"
+      ],
+      "numViews": 1,
+      "renderCopies": 1,
+      "ink": "hidden"
+    }
+  }
+]

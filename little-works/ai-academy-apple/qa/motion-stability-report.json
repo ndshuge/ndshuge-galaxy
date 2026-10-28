@@ -1,0 +1,120 @@
+{
+  "records": [
+    {
+      "n": "single picture and crisp idle ink 320",
+      "ok": true,
+      "x": {
+        "hidden": "hidden",
+        "real": "visible",
+        "clones": 1,
+        "viewTransition": false,
+        "screens": 320,
+        "viewport": 320,
+        "img": true,
+        "text": "继续学习",
+        "originals": 1
+      }
+    },
+    {
+      "n": "single picture and crisp idle ink 390",
+      "ok": true,
+      "x": {
+        "hidden": "hidden",
+        "real": "visible",
+        "clones": 1,
+        "viewTransition": false,
+        "screens": 390,
+        "viewport": 390,
+        "img": true,
+        "text": "继续学习",
+        "originals": 1
+      }
+    },
+    {
+      "n": "Motion Lab press keeps optical layer behind readable labels",
+      "ok": true,
+      "x": {
+        "pressed": true,
+        "copy": "hidden",
+        "original": "visible"
+      }
+    },
+    {
+      "n": "Motion Lab finger-follow targets course tab",
+      "ok": true,
+      "x": {
+        "pressed": true,
+        "preview": 2,
+        "current": 0,
+        "x": 148,
+        "moved": true,
+        "target": 0,
+        "stretch": 32,
+        "direction": 1,
+        "lift": 20
+      }
+    },
+    {
+      "n": "release selects course once and restores sharp text",
+      "ok": true,
+      "x": {
+        "active": [
+          "courses"
+        ],
+        "cloned": "hidden",
+        "ink": "visible",
+        "ghosts": 0,
+        "scroll": 390
+      }
+    },
+    {
+      "n": "12 consecutive taps have stable final route",
+      "ok": true
+    },
+    {
+      "n": "repeated taps end with one selected tab and hidden clone",
+      "ok": true,
+      "x": {
+        "tab": "today",
+        "copies": "hidden"
+      }
+    },
+    {
+      "n": "single picture and crisp idle ink 768",
+      "ok": true,
+      "x": {
+        "hidden": "hidden",
+        "real": "visible",
+        "clones": 1,
+        "viewTransition": false,
+        "screens": 768,
+        "viewport": 768,
+        "img": true,
+        "text": "继续学习",
+        "originals": 1
+      }
+    },
+    {
+      "n": "single picture and crisp idle ink 1440",
+      "ok": true,
+      "x": {
+        "hidden": "hidden",
+        "real": "visible",
+        "clones": 1,
+        "viewTransition": false,
+        "screens": 1440,
+        "viewport": 1440,
+        "img": true,
+        "text": "继续学习",
+        "originals": 1
+      }
+    },
+    {
+      "n": "uncaught page exceptions",
+      "ok": true,
+      "x": []
+    }
+  ],
+  "fail": [],
+  "exceptions": []
+}
