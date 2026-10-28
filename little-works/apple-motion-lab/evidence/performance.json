@@ -1,0 +1,64 @@
+{
+  "environment": "Windows Edge Chromium headless SwiftShader; not mobile hardware GPU",
+  "date": "2026-10-28T04:02:15.390Z",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "frame": {
+        "frames": 463,
+        "durationMs": 2301,
+        "fps": 201,
+        "slowFramesOver32ms": 2,
+        "p95FrameMs": 4
+      },
+      "interruptions": [
+        0.981,
+        0.738,
+        0.574,
+        0.533,
+        0.533,
+        0.615,
+        0.648,
+        0.697,
+        0.73,
+        0.792,
+        0.772,
+        0.578
+      ],
+      "finalProgress": 1,
+      "webgl": true,
+      "drawCalls": 34,
+      "jsErrors": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "frame": {
+        "frames": 552,
+        "durationMs": 2303,
+        "fps": 240,
+        "slowFramesOver32ms": 0,
+        "p95FrameMs": 4
+      },
+      "interruptions": [
+        0.995,
+        0.799,
+        0.808,
+        0.809,
+        0.848,
+        0.677,
+        0.674,
+        0.446,
+        0.422,
+        0.424,
+        0.412,
+        0.421
+      ],
+      "finalProgress": 1,
+      "webgl": true,
+      "drawCalls": 39,
+      "jsErrors": []
+    }
+  ]
+}

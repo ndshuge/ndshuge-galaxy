@@ -1,5 +1,19 @@
 [
   {
+    "slug": "apple-motion-lab",
+    "title": "Apple Motion Lab · 原生级交互实验室",
+    "date": "2026.10.28",
+    "type": "INTERACTIVE MOTION",
+    "description": "WebGL 真实光学折射、可打断的物理弹簧与可拖动的共享播放器。",
+    "url": "./apple-motion-lab/",
+    "cover": "./apple-motion-lab/cover.png",
+    "tags": [
+      "Liquid Glass",
+      "Motion",
+      "交互实验"
+    ]
+  },
+  {
     "slug": "mouseverse",
     "title": "Mouseverse · 微小宇宙",
     "date": "2026.10.28",

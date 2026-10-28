@@ -1,0 +1,1256 @@
+{
+ "url": "http://127.0.0.1:5219/little-works/apple-motion-lab/",
+ "at": "2026-10-28T03:58:37.886Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.34,
+    0.13
+   ],
+   "motion": {
+    "elements": 3,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 3,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1566,
+     "screens": 1.7,
+     "words": 107,
+     "img": 1,
+     "video": 0,
+     "canvas": 2,
+     "svg": 18,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "让声音 有形。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 105,
+     "vw": 7.3,
+     "font": "-apple-system",
+     "weight": 750,
+     "tracking": -0.09,
+     "leading": 1.08,
+     "top": 215,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "让声音 有形。",
+     "words": 2,
+     "lines": 2,
+     "size": 105.1,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "让声音 有形。",
+      "words": 2,
+      "chars": 7,
+      "lines": 2,
+      "size": 105.1,
+      "vw": 7.3,
+      "font": "-apple-system",
+      "weight": 750,
+      "tracking": -0.09,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.31,
+      "top": 215,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.99,
+       "mono": false
+      },
+      {
+       "family": "Georgia",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      21,
+      22,
+      25,
+      27,
+      105
+     ],
+     "sizeCount": 13,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 105.1,
+      "vw": 7.3,
+      "font": "-apple-system",
+      "text": "让声音"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 1,
+     "microLabelShare": 0.06,
+     "microSamples": [
+      "APPLE MOTION LAB NOT AN APPLE PRODUCT"
+     ],
+     "upperShare": 0.14,
+     "centerShare": 0.09,
+     "smallText": 13
+    },
+    "eyebrows": [
+     {
+      "text": "你的听觉空间",
+      "above": "让声音 有形。",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 171
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090c17",
+     "bodyBgHsl": {
+      "h": 227,
+      "s": 0.44,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#ffffff",
+       "share": 0.1
+      },
+      {
+       "color": "#5f657d",
+       "share": 0.09
+      },
+      {
+       "color": "#e7d0d6",
+       "share": 0.09
+      },
+      {
+       "color": "#979bac",
+       "share": 0.08
+      },
+      {
+       "color": "#9196ad",
+       "share": 0.07
+      }
+     ],
+     "button": {
+      "bg": "#f8d2db",
+      "hsl": {
+       "h": 346,
+       "s": 0.73,
+       "l": 0.9
+      },
+      "fg": "#3f2035"
+     },
+     "lowContrast": [
+      {
+       "text": "APPLE MOTION LAB NOT AN APPLE PRODUCT",
+       "ratio": 3.1,
+       "need": 4.5,
+       "size": 10,
+       "fg": "#595f78",
+       "bg": "#090c17"
+      },
+      {
+       "text": "Made with Motion + liquidglass.devWeb ex",
+       "ratio": 3.4,
+       "need": 4.5,
+       "size": 10,
+       "fg": "#5f657d",
+       "bg": "#090c17"
+      }
+     ]
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 54,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "开始聆听"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 4,
+     "shadowOverlay": 5,
+     "shadowSamples": [
+      "button#heroOpen.hero-action → rgba(223, 140, 167, 0.227) 0px 9px 40px 0px",
+      "div.cover-image.hero-cover → rgba(0, 0, 0, 0.533) 0px 40px 85px 0px, rgba(221, 111, 139, 0.17) 0px 0px 45px 0",
+      "div.hero-badge → rgba(7, 9, 18, 0.533) 0px 14px 40px 0px",
+      "span.lg-lens-shadow → rgba(0, 0, 0, 0.08) 0px 1px 3px 0px"
+     ],
+     "gradients": 4,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.ambient → radial-gradient(47% 50% at 91% 28%, rgba(95, 54, 83, 0.667), rgba(0, 0, 0, 0) 72%), radial-gradient(43% 54% at",
+      "div.hero-shine → radial-gradient(at 40% 45%, rgba(223, 115, 152, 0.333), rgba(0, 0, 0, 0) 61%)",
+      "section#player.player → linear-gradient(150deg, rgb(64, 51, 68), rgb(21, 27, 49) 60%, rgb(21, 21, 40))",
+      "div.player-ambience → radial-gradient(at 50% 35%, rgba(208, 110, 143, 0.66), rgba(0, 0, 0, 0) 60%), radial-gradient(at 20% 90%, rgba"
+     ],
+     "gradientText": 0,
+     "hairlines": 7,
+     "hairlineSamples": [
+      "header.topbar 1440px",
+      "aside.sidebar 238px",
+      "button.track.selected 970px",
+      "button.track 970px",
+      "button.track 970px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 2,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "bg-image",
+      "ratio": 0.15
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 76,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1566,
+    "margins": {
+     "left": 37,
+     "right": 116
+    },
+    "sections": [
+     {
+      "sel": "div#listen-view.editorial",
+      "tag": "div",
+      "top": 132,
+      "height": 510,
+      "words": 6,
+      "media": 1,
+      "middle": 205,
+      "heading": {
+       "text": "让声音",
+       "size": 105,
+       "tag": "h1"
+      },
+      "left": 324,
+      "right": 116,
+      "textLeft": 324,
+      "textRight": 116,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.playlist",
+      "tag": "section",
+      "top": 722,
+      "height": 320,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "今日声景",
+       "size": 27,
+       "tag": "h2"
+      },
+      "left": 324,
+      "right": 146,
+      "textLeft": 324,
+      "textRight": 146,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#contextPanel.explore-panel",
+      "tag": "section",
+      "top": 1116,
+      "height": 175,
+      "words": 9,
+      "media": 0,
+      "middle": 387,
+      "heading": {
+       "text": "交互的细节",
+       "size": 27,
+       "tag": "h2"
+      },
+      "left": 324,
+      "right": 146,
+      "textLeft": 324,
+      "textRight": 146,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "让声音 有形。",
+      "size": 105,
+      "top": 215,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 324,
+      "n": 4
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.07,
+    "voidBox": {
+     "x": 0,
+     "y": 600,
+     "w": 300,
+     "h": 300
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#090c17",
+    "sidebar": {
+     "w": 238,
+     "tag": "aside",
+     "links": 4,
+     "share": 0.17
+    },
+    "topbar": {
+     "h": 76
+    },
+    "canvas": {
+     "left": 86,
+     "right": 116
+    },
+    "hero": {
+     "text": "让声音 有形。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 105,
+     "vw": 7.3,
+     "font": "-apple-system",
+     "weight": 750,
+     "tracking": -0.09,
+     "leading": 1.08,
+     "top": 215,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 2,
+     "radii": [
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 2,
+     "borderSamples": [
+      "#ffffff on #090c17 (19.51:1)",
+      "#ffffff on #090c17 (19.51:1)"
+     ],
+     "heavyShadows": 1,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgba(0, 0, 0, 0.467) 0px 8px 40px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 337,
+       "size": 54,
+       "radius": "9px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.64,
+     "tiny": 9,
+     "tinySamples": [
+      "Made with Motion + liqui 10px",
+      "Web experiment · 2026 10px",
+      "APPLE MOTION LAB 10px",
+      "NOT AN APPLE PRODUCT 10px"
+     ],
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      21,
+      22,
+      27,
+      105
+     ]
+    },
+    "title": {
+     "text": "让声音\n有形。",
+     "size": 105,
+     "top": 215
+    },
+    "colourShare": 0.035
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.56,
+    0.35
+   ],
+   "motion": {
+    "elements": 3,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 3,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 1570,
+     "screens": 1.9,
+     "words": 85,
+     "img": 1,
+     "video": 0,
+     "canvas": 2,
+     "svg": 18,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "让声音 有形。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 64,
+     "vw": 16.4,
+     "font": "-apple-system",
+     "weight": 750,
+     "tracking": -0.09,
+     "leading": 1.08,
+     "top": 138,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "让声音 有形。",
+     "words": 2,
+     "lines": 2,
+     "size": 64,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "◉ MotionLab",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 25,
+      "vw": 6.4,
+      "font": "-apple-system",
+      "weight": 750,
+      "tracking": -0.042,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.31,
+      "top": 13,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "让声音 有形。",
+      "words": 2,
+      "chars": 7,
+      "lines": 2,
+      "size": 64,
+      "vw": 16.4,
+      "font": "-apple-system",
+      "weight": 750,
+      "tracking": -0.09,
+      "leading": 1.08,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 138,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "今日声景",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.055,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.23,
+      "top": 683,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "↗",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.08,
+      "top": 766,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "↗",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.08,
+      "top": 852,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "↗",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.08,
+      "top": 938,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "交互的细节",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 27,
+      "vw": 6.9,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.055,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 1072,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 7,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.99,
+       "mono": false
+      },
+      {
+       "family": "Georgia",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      22,
+      24,
+      25,
+      27,
+      64
+     ],
+     "sizeCount": 14,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 64,
+      "vw": 16.4,
+      "font": "-apple-system",
+      "text": "让声音"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 1,
+     "microLabelShare": 0.078,
+     "microSamples": [
+      "APPLE MOTION LAB NOT AN APPLE PRODUCT"
+     ],
+     "upperShare": 0.18,
+     "centerShare": 0.12,
+     "smallText": 12
+    },
+    "eyebrows": [
+     {
+      "text": "你的听觉空间",
+      "above": "让声音 有形。",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12,
+      "top": 105
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090c17",
+     "bodyBgHsl": {
+      "h": 227,
+      "s": 0.44,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#ffffff",
+       "share": 0.12
+      },
+      {
+       "color": "#e7d0d6",
+       "share": 0.11
+      },
+      {
+       "color": "#979bac",
+       "share": 0.1
+      },
+      {
+       "color": "#9196ad",
+       "share": 0.09
+      },
+      {
+       "color": "#b6b5c9",
+       "share": 0.08
+      }
+     ],
+     "button": {
+      "bg": "#f8d2db",
+      "hsl": {
+       "h": 346,
+       "s": 0.73,
+       "l": 0.9
+      },
+      "fg": "#3f2035"
+     },
+     "lowContrast": [
+      {
+       "text": "APPLE MOTION LAB NOT AN APPLE PRODUCT",
+       "ratio": 3.1,
+       "need": 4.5,
+       "size": 10,
+       "fg": "#595f78",
+       "bg": "#090c17"
+      }
+     ]
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 49,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "开始聆听"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 4,
+     "shadowOverlay": 5,
+     "shadowSamples": [
+      "button#heroOpen.hero-action → rgba(223, 140, 167, 0.227) 0px 9px 40px 0px",
+      "div.cover-image.hero-cover → rgba(0, 0, 0, 0.533) 0px 40px 85px 0px, rgba(221, 111, 139, 0.17) 0px 0px 45px 0",
+      "div.hero-badge → rgba(7, 9, 18, 0.533) 0px 14px 40px 0px",
+      "span.lg-lens-shadow → rgba(0, 0, 0, 0.08) 0px 1px 3px 0px"
+     ],
+     "gradients": 4,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.ambient → radial-gradient(47% 50% at 91% 28%, rgba(95, 54, 83, 0.667), rgba(0, 0, 0, 0) 72%), radial-gradient(43% 54% at",
+      "div.hero-shine → radial-gradient(at 40% 45%, rgba(223, 115, 152, 0.333), rgba(0, 0, 0, 0) 61%)",
+      "section#player.player → linear-gradient(150deg, rgb(64, 51, 68), rgb(21, 27, 49) 60%, rgb(21, 21, 40))",
+      "div.player-ambience → radial-gradient(at 50% 35%, rgba(208, 110, 143, 0.66), rgba(0, 0, 0, 0) 60%), radial-gradient(at 20% 90%, rgba"
+     ],
+     "gradientText": 0,
+     "hairlines": 5,
+     "hairlineSamples": [
+      "header.topbar 390px",
+      "button.track.selected 346px",
+      "button.track 346px",
+      "button.track 346px",
+      "section#contextPanel.explore-panel 346px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 2,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "bg-image",
+      "ratio": 0.16
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 62,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 1570,
+    "margins": {
+     "left": 22,
+     "right": 22
+    },
+    "sections": [
+     {
+      "sel": "div#listen-view.editorial",
+      "tag": "div",
+      "top": 87,
+      "height": 554,
+      "words": 6,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "让声音",
+       "size": 64,
+       "tag": "h1"
+      },
+      "left": 22,
+      "right": 32,
+      "textLeft": 22,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.playlist",
+      "tag": "section",
+      "top": 683,
+      "height": 313,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "今日声景",
+       "size": 24,
+       "tag": "h2"
+      },
+      "left": 22,
+      "right": 22,
+      "textLeft": 22,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#contextPanel.explore-panel",
+      "tag": "section",
+      "top": 1041,
+      "height": 244,
+      "words": 9,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "交互的细节",
+       "size": 27,
+       "tag": "h2"
+      },
+      "left": 22,
+      "right": 35,
+      "textLeft": 22,
+      "textRight": 35,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "让声音 有形。",
+      "size": 64,
+      "top": 138,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 22,
+      "n": 4
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#090c17",
+    "sidebar": null,
+    "topbar": {
+     "h": 62
+    },
+    "canvas": {
+     "left": 21,
+     "right": 22
+    },
+    "hero": {
+     "text": "让声音 有形。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 64,
+     "vw": 16.4,
+     "font": "-apple-system",
+     "weight": 750,
+     "tracking": -0.09,
+     "leading": 1.08,
+     "top": 138,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 2,
+     "radii": [
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 2,
+     "borderSamples": [
+      "#ffffff on #090c17 (19.51:1)",
+      "#ffffff on #090c17 (19.51:1)"
+     ],
+     "heavyShadows": 1,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgba(0, 0, 0, 0.467) 0px 8px 40px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 337,
+       "size": 54,
+       "radius": "9px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.7,
+     "tiny": 11,
+     "tinySamples": [
+      "WebGL + SVG · 已启用 10px",
+      "Made with Motion + liqui 10px",
+      "Web experiment · 2026 10px",
+      "声音，仍在流动 10px"
+     ],
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      24,
+      27,
+      64
+     ]
+    },
+    "title": {
+     "text": "让声音\n有形。",
+     "size": 64,
+     "top": 138
+    },
+    "colourShare": 0.038
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "micro-label",
+   "width": 1440,
+   "message": "1 tiny uppercase letter-spaced label(s): \"APPLE MOTION LAB NOT AN APPLE PRODUCT\"",
+   "fix": "Prefer sentence case at body size.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "4 gradient fill(s): div.ambient → radial-gradient(47% 50% at 91% 28%, rgba(95, 54, 83, 0.667), rgba(0, 0, 0, 0) 72%), radial-gradient(43% 54% at | div.hero-shine → radial-gradient(at 40% 45%, rgba(223, 115, 152, 0.333), rgba(0, 0, 0, 0) 61%) | section#player.player → linear-gradient(150deg, rgb(64, 51, 68), rgb(21, 27, 49) 60%, rgb(21, 21, 40))",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "button-fx",
+   "width": 1440,
+   "message": "Buttons with shadow/glow.",
+   "fix": "Flat fill, one colour.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "contrast",
+   "width": 1440,
+   "message": "Low-contrast text: \"APPLE MOTION LAB NOT AN APPLE PRODUCT\" 3.1:1 needs 4.5:1; \"Made with Motion + liquidglass.devWeb ex\" 3.4:1 needs 4.5:1",
+   "fix": "Darken or lighten the text colour.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "heavy-shadow",
+   "width": 1440,
+   "message": "1 panel shadow(s) heavy enough to read as floating: rgba(0, 0, 0, 0.467) 0px 8px 40px 0px",
+   "fix": "Panels sit on the ground: separate them with a fill one step from the ground or a quiet 1px border. A shadow, if any, is under 8% black with a small blur. Real overlays (menus, dialogs, popovers) may float.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "9 text blocks under 11px: Made with Motion + liqui 10px, Web experiment · 2026 10px, APPLE MOTION LAB 10px, NOT AN APPLE PRODUCT 10px.",
+   "fix": "Nothing below 11px; secondary text 12px, data 13–14px.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "app-title-size",
+   "width": 1440,
+   "message": "The h1 is 105px (\"让声音\n有形。\").",
+   "fix": "An app screen is not a landing page: the title is 18-32px (20-24px on a phone).",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "covered-text",
+   "width": 1440,
+   "message": "Large text lies under another element at some scroll position: \"让声音 有形。\" (screen 1, 100% hidden); \"今日声景\" (screen 2, 100% hidden); \"交互的细节\" (screen 2, 100% hidden)",
+   "fix": "Nothing may sit on top of a headline or statement. Move the picture, shorten the pinned run, or raise the text above it (z-index) and give it a ground.",
+   "alsoAt": [
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "E:\\CHATGPT\\work\\apple-motion-lab-deep-20261028\\little-works\\apple-motion-lab\\evidence\\taste-inspect\\desktop-fold.jpg",
+   "pages": [
+    "E:\\CHATGPT\\work\\apple-motion-lab-deep-20261028\\little-works\\apple-motion-lab\\evidence\\taste-inspect\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "E:\\CHATGPT\\work\\apple-motion-lab-deep-20261028\\little-works\\apple-motion-lab\\evidence\\taste-inspect\\mobile-fold.jpg",
+   "pages": [
+    "E:\\CHATGPT\\work\\apple-motion-lab-deep-20261028\\little-works\\apple-motion-lab\\evidence\\taste-inspect\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

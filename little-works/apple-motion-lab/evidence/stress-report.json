@@ -1,0 +1,199 @@
+{
+  "testedAt": "2026-10-28T04:04:18.084Z",
+  "environment": "Edge headless, Windows, simulated mobile viewport; NOT Safari/iPhone",
+  "url": "http://127.0.0.1:5219/little-works/apple-motion-lab/",
+  "tests": [
+    {
+      "name": "GPU lens map uploaded during initial render",
+      "pass": true,
+      "details": {
+        "map": 1,
+        "source": 3
+      }
+    },
+    {
+      "name": "70 interruptible spring retargets settle at full",
+      "pass": true,
+      "details": {
+        "p": 1,
+        "renderCount": 10
+      }
+    },
+    {
+      "name": "Moving/resizing player did not rebuild lens map",
+      "pass": true,
+      "details": {
+        "before": {
+          "map": 1,
+          "source": 4
+        },
+        "after": {
+          "map": 1,
+          "source": 10
+        }
+      }
+    },
+    {
+      "name": "L2 output differs from L1 fallback",
+      "pass": true,
+      "details": {
+        "L2bytes": 83562,
+        "L1bytes": 81456
+      }
+    },
+    {
+      "name": "Web Audio playback advances time",
+      "pass": true,
+      "details": {
+        "time": "1",
+        "playing": true
+      }
+    },
+    {
+      "name": "Web Audio pause changes transport state",
+      "pass": true,
+      "details": {
+        "time": "1",
+        "playing": false
+      }
+    },
+    {
+      "name": "Escape dismisses expanded player",
+      "pass": true,
+      "details": {
+        "p": 0
+      }
+    },
+    {
+      "name": "Navigation spring maintains press feedback and releases",
+      "pass": true,
+      "details": {
+        "pressedScale": 0.929999,
+        "releasedScale": 1
+      }
+    },
+    {
+      "name": "Performance samples captured",
+      "pass": true,
+      "details": {
+        "samples": 140,
+        "medianMs": 4.1,
+        "p95Ms": 5.1,
+        "maxMs": 6.1,
+        "environment": "Windows headless Edge, SwiftShader; not mobile GPU"
+      }
+    },
+    {
+      "name": "prefers-reduced-motion snaps to target",
+      "pass": true,
+      "details": {
+        "p": 1
+      }
+    },
+    {
+      "name": "WebGL unavailable keeps album art visible",
+      "pass": true,
+      "details": {
+        "diag": {
+          "version": "1.0.0",
+          "svgEngine": "blink",
+          "webgl": false,
+          "quality": "auto",
+          "gpuRenders": 0,
+          "glError": "Error: WebGL is not available",
+          "interpolatedGeometry": {
+            "p": 0,
+            "x": 12,
+            "y": 680,
+            "w": 366,
+            "h": 68,
+            "r": 20,
+            "artX": 9,
+            "artY": 7,
+            "artSize": 54,
+            "infoY": 14
+          },
+          "motionValue": true,
+          "componentNavbar": "LgNavbar",
+          "componentSegmented": "LgSegmented",
+          "engineHasWebGL": true,
+          "fps": 0,
+          "playing": false,
+          "track": 0,
+          "gesture": {
+            "drag": false,
+            "start": 0,
+            "last": 0,
+            "gesture": false,
+            "velocity": 0
+          }
+        },
+        "state": "fail",
+        "visible": "visible"
+      }
+    },
+    {
+      "name": "No JS uncaught exceptions",
+      "pass": true,
+      "details": []
+    }
+  ],
+  "perf": {
+    "frameIntervals": {
+      "samples": 140,
+      "medianMs": 4.1,
+      "p95Ms": 5.1,
+      "maxMs": 6.1,
+      "environment": "Windows headless Edge, SwiftShader; not mobile GPU"
+    },
+    "approxFps": 140
+  },
+  "enginePaths": {
+    "live": {
+      "gpu": {
+        "version": "1.0.0",
+        "svgEngine": "blink",
+        "webgl": true,
+        "quality": "auto",
+        "gpuRenders": 3,
+        "glError": "",
+        "interpolatedGeometry": {
+          "p": 0,
+          "x": 12,
+          "y": 680,
+          "w": 366,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14
+        },
+        "motionValue": true,
+        "componentNavbar": "LgNavbar",
+        "componentSegmented": "LgSegmented",
+        "engineHasWebGL": true,
+        "fps": 0,
+        "playing": false,
+        "track": 0,
+        "gesture": {
+          "drag": false,
+          "start": 0,
+          "last": 0,
+          "gesture": false,
+          "velocity": 0
+        }
+      },
+      "uploads": {
+        "map": 1,
+        "source": 3
+      },
+      "customElements": "LgNavbar"
+    }
+  },
+  "errors": [],
+  "summary": {
+    "passed": 12,
+    "total": 12
+  }
+}
