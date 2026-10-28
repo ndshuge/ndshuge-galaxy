@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-28T05:50:00.409Z",
+  "environment": "Windows Edge Chromium touch emulation",
+  "checks": [
+    {
+      "name": "Multiple direction reversals while held",
+      "pass": true,
+      "details": [
+        {
+          "target": 195,
+          "preview": 1,
+          "x": 123
+        },
+        {
+          "target": 311,
+          "preview": 2,
+          "x": 238
+        },
+        {
+          "target": 195,
+          "preview": 1,
+          "x": 123
+        },
+        {
+          "target": 79,
+          "preview": 0,
+          "x": 7
+        },
+        {
+          "target": 311,
+          "preview": 2,
+          "x": 238
+        },
+        {
+          "target": 79,
+          "preview": 0,
+          "x": 7
+        },
+        {
+          "target": 195,
+          "preview": 1,
+          "x": 123
+        }
+      ]
+    },
+    {
+      "name": "View unchanged until finger release",
+      "pass": true,
+      "details": "让声音\n流动。"
+    },
+    {
+      "name": "Release at middle selects middle",
+      "pass": true,
+      "details": {
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 1,
+          "x": 121.99789457343684,
+          "moved": false,
+          "target": 1
+        },
+        "title": "发现\n另一面。",
+        "exportCount": 3,
+        "dimensions": {
+          "64x32": 1,
+          "358x72": 1,
+          "112x58": 1
+        },
+        "sampleParams": [
+          {
+            "v": 0,
+            "x": 6,
+            "w": 112,
+            "h": 58,
+            "r": 29
+          }
+        ],
+        "lastParams": [
+          {
+            "v": 0,
+            "x": 6,
+            "w": 112,
+            "h": 58,
+            "r": 29
+          }
+        ]
+      }
+    },
+    {
+      "name": "Moving refractive lens does not rerasterize the SVG displacement map",
+      "pass": true,
+      "details": {
+        "before": 3,
+        "after": 3
+      }
+    },
+    {
+      "name": "No JS exceptions",
+      "pass": true,
+      "details": []
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "total": 5
+  }
+}

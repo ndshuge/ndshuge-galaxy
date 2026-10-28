@@ -860,7 +860,9 @@ class LgNavbar extends LgElement {
   render() {
     if (!this.glass || !this.links.length) return;
     const first = this.links[0];
-    const stretch = Math.min(14, Math.abs(this.v) * 0.025);
+    // Quantize velocity squish to 2 CSS px steps: unchanged shape reuses the
+    // existing optical displacement map instead of rasterizing micro-deltas.
+    const stretch = Math.round(Math.min(14, Math.abs(this.v) * 0.025) / 2) * 2;
     const w = this.widthAt(this.x) + stretch;
     const h = first.offsetHeight - stretch * 0.2;
     const left = this.x - stretch / 2;

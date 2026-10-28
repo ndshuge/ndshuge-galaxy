@@ -52,9 +52,11 @@ async function main(){
   const escaped=await page.evaluate(()=>__motionLab.progress());
   check('Escape dismisses expanded player',escaped<.1,{p:escaped});
   const downBtn=page.locator('#navigation > button').first();
-  await downBtn.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true})));await pause(200);
+  const downRect=await downBtn.boundingBox();
+  await page.mouse.move(downRect.x+downRect.width/2,downRect.y+downRect.height/2);
+  await page.mouse.down();await pause(200);
   const pressedScale=await downBtn.evaluate(el=>new DOMMatrix(getComputedStyle(el).transform).a);
-  await downBtn.evaluate(el=>el.dispatchEvent(new PointerEvent('pointerup',{bubbles:true})));await pause(350);
+  await page.mouse.up();await pause(350);
   const releasedScale=await downBtn.evaluate(el=>new DOMMatrix(getComputedStyle(el).transform).a);
   check('Navigation spring maintains press feedback and releases',pressedScale<.98&&releasedScale>.98,{pressedScale,releasedScale});
   
