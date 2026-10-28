@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" width="960" height="720" preserveAspectRatio="xMidYMid slice">
+  <defs>
+   <linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#172225"/><stop offset=".62" stop-color="#4d5e51"/><stop offset="1" stop-color="#172225"/></linearGradient>
+   <radialGradient id="flare"><stop stop-color="#e9c28d" stop-opacity=".38"/><stop offset="1" stop-color="#e9c28d" stop-opacity="0"/></radialGradient>
+   <radialGradient id="orb" cx=".37" cy=".29" r=".76"><stop stop-color="#fff" stop-opacity=".96"/><stop offset=".14" stop-color="#e2e2ce"/><stop offset=".58" stop-color="#e9c28d"/><stop offset="1" stop-color="#4d5e51"/></radialGradient>
+   <radialGradient id="shade"><stop offset=".42" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".56"/></radialGradient>
+   <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="23"/></filter>
+   </defs><rect width="960" height="720" fill="url(#base)"/>
+  <ellipse cx="570" cy="250" rx="550" ry="500" fill="url(#flare)" />
+  <circle cx="725" cy="235" r="145" fill="#e9c28d" opacity=".45" filter="url(#glow)"/><path d="M 0 480 Q 170 370 390 435 T 960 395 L 960 720 L 0 720Z" fill="#e9c28d" opacity="0.055"/><path d="M 0 553 Q 170 443 390 508 T 960 468 L 960 720 L 0 720Z" fill="#e9c28d" opacity="0.11"/><path d="M 0 626 Q 170 516 390 581 T 960 541 L 960 720 L 0 720Z" fill="#e9c28d" opacity="0.165"/><path d="M 0 699 Q 170 589 390 654 T 960 614 L 960 720 L 0 720Z" fill="#e9c28d" opacity="0.22"/><path d="M 0 772 Q 170 662 390 727 T 960 687 L 960 720 L 0 720Z" fill="#e9c28d" opacity="0.275"/><path d="M 300 474 l 42 -63 206 0 65 63 160 19 22 63 -517 0 Z" fill="#151d20"/><rect x="400" y="368" width="168" height="79" rx="20" fill="#232f2f"/><rect x="525" y="379" width="205" height="17" rx="8" fill="#0b1719"/><circle cx="335" cy="546" r="33" fill="#090f12" /><circle cx="413" cy="546" r="33" fill="#090f12" /><circle cx="491" cy="546" r="33" fill="#090f12" /><circle cx="569" cy="546" r="33" fill="#090f12" /><circle cx="647" cy="546" r="33" fill="#090f12" /><circle cx="725" cy="546" r="33" fill="#090f12" /><path d="M 0 555 Q 520 500 960 550" fill="none" stroke="#e9c28d" stroke-width="3" opacity=".3"/>
+  <rect width="960" height="720" fill="url(#shade)" opacity=".7"/>
+  </svg>

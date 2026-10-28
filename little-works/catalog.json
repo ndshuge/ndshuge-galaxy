@@ -1,5 +1,19 @@
 [
   {
+    "slug": "arcade-library",
+    "title": "游戏库 · SHUGE Arcade",
+    "date": "2026.10.28",
+    "type": "INTERACTIVE GAMES",
+    "description": "16 款原创浏览器小游戏。从像素动作到物理实验，支持搜索、分类、收藏与最近游玩，点开即玩。",
+    "url": "./arcade-library/",
+    "cover": "./arcade-library/cover.svg",
+    "tags": [
+      "Apple 风格",
+      "游戏收藏",
+      "16 款游戏"
+    ]
+  },
+  {
     "slug": "frequency",
     "title": "Frequency · 听见此刻",
     "date": "2026.10.28",
