@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101113">
+  <meta name="description" content="Mouseverse 鼠类图鉴：在影像与故事中，重新认识身边这些微小又了不起的生命。">
+  <title>Mouseverse｜微小宇宙 · 老鼠图鉴</title>
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="preload" as="image" href="./assets/hero-harvest.webp">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<svg class="svg-library" width="0" height="0" aria-hidden="true">
+  <symbol id="ic-home" viewBox="0 0 24 24"><path d="m3.5 10 8.5-7 8.5 7v10H3.5z"/><path d="M9 20v-7h6v7"/></symbol>
+  <symbol id="ic-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.8 8.2-2.4 5.2-5.2 2.4 2.4-5.2z"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24"><path d="M20.6 8.3c0 4.4-8.6 10.1-8.6 10.1S3.4 12.7 3.4 8.3a4.7 4.7 0 0 1 8.6-2.5 4.7 4.7 0 0 1 8.6 2.5Z"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></symbol>
+  <symbol id="ic-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></symbol>
+  <symbol id="ic-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+</svg>
+<div class="app-shell" id="home">
+  <aside class="sidebar" aria-label="主要导航">
+    <a class="brand" href="#home" aria-label="Mouseverse 首页"><span class="brand-symbol" aria-hidden="true"><span></span><span></span></span><span>MOUSEVERSE<span class="brand-note">微小宇宙</span></span></a>
+    <p class="sidebar-label">你的探索空间</p>
+    <nav class="side-nav" aria-label="图鉴导航">
+      <button data-nav="home" class="nav-action active"><svg><use href="#ic-home"/></svg><span>现在探索</span></button>
+      <button data-nav="discover" class="nav-action"><svg><use href="#ic-compass"/></svg><span>发现老鼠</span></button>
+      <button data-nav="saved" class="nav-action"><svg><use href="#ic-heart"/></svg><span>我的收藏</span><span id="savedCount" class="nav-count">0</span></button>
+    </nav>
+    <div class="sidebar-bottom"><div class="aside-motif" aria-hidden="true"><span class="motif-circle"></span><span class="motif-orbit"></span></div><p>每个小小的生命，<br>都有自己的宇宙。</p><a href="../">← 返回小东西</a></div>
+  </aside>
+
+  <div class="main-column">
+    <header class="topbar">
+      <div class="mobile-brand"><span class="mobile-brand-dot"></span> Mouseverse</div>
+      <div class="topbar-leading"><span class="topbar-title">探索</span><span class="topbar-separator">/</span><span class="topbar-subtitle">微小宇宙</span></div>
+      <div class="topbar-actions"><button class="icon-btn" id="searchTrigger" aria-label="搜索老鼠"><svg><use href="#ic-search"/></svg></button><div class="avatar" title="自然观察者">M</div></div>
+    </header>
+    <main class="content">
+      <section class="welcome" aria-label="探索首页"><p>好奇心，从这里开始。</p><h1>发现那些<br><em>小小的伟大。</em></h1></section>
+
+      <section class="feature" aria-labelledby="featureName">
+        <div class="feature-photo" data-lg-backdrop="img"><img class="hero-photo" src="./assets/hero-harvest.webp" alt="巢鼠攀附在草茎之间，毛色与草地交织" fetchpriority="high"></div>
+        <div class="feature-gradient" aria-hidden="true"></div>
+        <div class="feature-copy"><div class="feature-category"><span class="spot"></span> 本周精选 · 自然图鉴</div><h2 id="featureName">世界很大，<br>我很小。</h2><p>在高草与晨光之间，认识一位只有几克重的攀爬高手。</p>
+          <div class="feature-actions"><button class="primary-pill" data-open="harvest"><svg><use href="#ic-play"/></svg> 开始探索</button><button class="hero-more" id="randomMouse" aria-label="随机认识一只老鼠">随便认识一只 <svg><use href="#ic-arrow"/></svg></button></div>
+        </div>
+        <span class="feature-caption">巢鼠 · Micromys minutus</span>
+      </section>
+
+      <section class="collection" id="discover" aria-labelledby="collectionTitle">
+        <div class="section-heading"><div><h2 id="collectionTitle">认识这些小家伙</h2><p>不同的栖息地，同样鲜活的生命。</p></div><button id="scrollRight" class="section-link" aria-label="向右浏览图鉴">继续探索 <svg><use href="#ic-chevron"/></svg></button></div>
+        <lg-segmented id="typeFilter" value="all" label="按栖息地筛选老鼠"><button value="all">全部</button><button value="wild">野外</button><button value="human">人类身边</button></lg-segmented>
+        <div class="album-track" id="albumTrack" aria-label="鼠类图鉴" tabindex="0"></div>
+      </section>
+
+      <section class="editorial" id="story" aria-label="专题故事">
+        <div class="editorial-image"><img src="./assets/wood-mouse-alt.webp" alt="林姬鼠停留在自然栖地中" loading="lazy"></div>
+        <div class="editorial-copy"><div class="editorial-overline">深入了解 · 野外生活</div><h2>在夜色中，<br>听见世界。</h2><p>对许多鼠类而言，黑夜不是障碍，而是另一种充满讯息的白天。触须、气味与细微声响，构成它们感知环境的方式。</p><button class="text-link" data-open="wood">阅读林姬鼠的故事 <svg><use href="#ic-arrow"/></svg></button></div>
+      </section>
+
+      <section class="knowledge" id="facts" aria-labelledby="factsTitle">
+        <div class="section-heading"><div><h2 id="factsTitle">一只老鼠的隐藏技能</h2><p>轻点每一个发现，看看它们如何感知世界。</p></div></div>
+        <div class="fact-layout"><div class="fact-visual"><div class="fact-orb" id="factOrb" aria-hidden="true"><div class="orb-disc"></div><div class="orb-ring ring-one"></div><div class="orb-ring ring-two"></div></div><span class="fact-visual-label" id="factLabel">触须感知</span></div>
+          <div class="fact-list" id="factList">
+            <button class="fact-row selected" data-fact="whiskers" aria-pressed="true"><span class="fact-index">01</span><span class="fact-text"><strong>像雷达一样的触须</strong><small>触觉，帮助判断周围的形状与距离。</small></span><svg><use href="#ic-chevron"/></svg></button>
+            <button class="fact-row" data-fact="smell" aria-pressed="false"><span class="fact-index">02</span><span class="fact-text"><strong>气味留下的地图</strong><small>辨别食物、同伴与活动痕迹。</small></span><svg><use href="#ic-chevron"/></svg></button>
+            <button class="fact-row" data-fact="hearing" aria-pressed="false"><span class="fact-index">03</span><span class="fact-text"><strong>你听不到的声音</strong><small>部分鼠类会发出超声波进行交流。</small></span><svg><use href="#ic-chevron"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="saved-section" id="saved" aria-labelledby="savedTitle"><div class="section-heading"><div><h2 id="savedTitle">我的收藏</h2><p>留住你想再次认识的小生命。</p></div></div><div id="savedGallery" class="saved-gallery"></div></section>
+      <footer><div class="footer-brand">MOUSEVERSE <span>· 微小宇宙</span></div><p>善待野生动物，保持距离观察，不直接触摸或捕捉。</p><div class="footer-links"><a href="./credits.html">图片与资料来源</a><a href="../">回到小东西</a></div></footer>
+    </main>
+  </div>
+</div>
+<nav class="mobile-dock" aria-label="移动端导航"><button class="dock-tab selected" data-nav="home" aria-label="现在探索"><svg><use href="#ic-home"/></svg><span>探索</span></button><button class="dock-tab" data-nav="discover" aria-label="发现老鼠"><svg><use href="#ic-compass"/></svg><span>发现</span></button><button class="dock-tab" data-nav="saved" aria-label="我的收藏"><svg><use href="#ic-heart"/></svg><span>收藏</span></button></nav>
+
+<dialog class="detail-modal" id="detailDialog" aria-labelledby="detailTitle"><div class="detail-card"><div class="detail-photo-wrap"><img src="" id="detailImage" alt=""><div class="detail-shade"></div><button id="closeDetail" class="detail-close" aria-label="关闭详情"><svg><use href="#ic-x"/></svg></button><div class="detail-photo-text"><span id="detailKind">野外探索</span><h2 id="detailTitle"></h2><em id="detailLatin"></em></div></div><div class="detail-body"><p id="detailDescription"></p><div class="detail-properties" id="detailProperties"></div><button id="detailSave" class="save-action"><svg><use href="#ic-heart"/></svg><span>加入收藏</span></button><p class="detail-annotation">观察提示：尊重动物的栖息地，不接触野生鼠类。</p></div></div></dialog>
+<dialog class="search-modal" id="searchDialog" aria-labelledby="searchTitle"><form method="dialog" class="search-sheet"><div class="search-top"><h2 id="searchTitle">搜索图鉴</h2><button value="cancel" class="icon-btn" aria-label="关闭搜索"><svg><use href="#ic-x"/></svg></button></div><label class="search-field"><svg><use href="#ic-search"/></svg><input id="searchInput" autocomplete="off" type="search" placeholder="试试「巢鼠」或「夜行」" aria-label="搜索老鼠和知识"></label><div id="searchResults" class="search-results" role="status"></div></form></dialog>
+<script type="module" src="./app.js"></script>
+</body>
+</html>

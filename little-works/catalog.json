@@ -1,5 +1,19 @@
 [
   {
+    "slug": "mouseverse",
+    "title": "Mouseverse · 微小宇宙",
+    "date": "2026.10.28",
+    "type": "WILDLIFE FIELD GUIDE",
+    "description": "像 Apple Music 一样探索真实老鼠的世界：巢鼠、林姬鼠、家鼠与鹿鼠，沉浸式故事、图鉴和收藏。",
+    "url": "./mouseverse/",
+    "cover": "./mouseverse/assets/cover.webp",
+    "tags": [
+      "Apple Music 风格",
+      "自然图鉴",
+      "互动探索"
+    ]
+  },
+  {
     "slug": "apple-design-lab",
     "title": "Apple Design Lab · 真实液态玻璃",
     "date": "2026.10.28",
