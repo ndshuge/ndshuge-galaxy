@@ -2,6 +2,15 @@
 
 这是一个独立的光学折射实验页。最初在本机独立分支完成测试，随后经用户授权发布到「小东西」；主游戏库仅新增入口，原有游戏功能保持不变。
 
+## 2026-10-28 移动端性能优化
+
+- 根因：原先在浏览器里执行三通道 SVG `feDisplacementMap`、高分辨率位移贴图、每次拖动的 `left/top` 布局更新，以及按下时的透镜形状重算；与 Apple 系统原生 GPU 管线不同。
+- **保留 Skill 原版引擎**，不修改 `liquid-glass.js` 或 `components.js`。只从实验页调用引擎已支持的 `mapScale` / `chroma` 参数。
+- 触屏与窄屏默认 `mapScale:1, chroma:0`，从三个色散采样通道压缩为一条真正的光学位移通道；高 DPR 下贴图生成像素量约减少至原来的四分之一。桌面 `mapScale:1.25, chroma:0.08`。
+- 拖动改为 `translate3d()` + `requestAnimationFrame` 合并事件，降低布局更新频率；手指按住时保留 CSS 即时反馈，避免每次触摸按压都重新生成滤镜贴图。独立的“按压反馈”演示按钮依然保留一次光学形变。
+- Chromium 回归：17/17 项功能断言通过，另有真实指针拖动和降低透明度模式通过、运行错误为零；截图检查移动/桌面视觉仍有 L2 折射。
+- **未取得真实 iPhone Safari 帧率数据**。无头 Chromium 下帧率不等于手机上的实际 60/120 FPS，不宣称已达到 Apple 原生流畅度；若仍卡，需要进一步在 Safari 真机 Profile 并考虑只在静止时开启高阶折射或改用 GPU Shader。
+
 ## 本次实装
 
 - 项目地址：`little-works/arcade-library/glass-lab.html`

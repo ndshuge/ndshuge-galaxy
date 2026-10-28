@@ -7,3 +7,7 @@ body[data-mode="l1"] .lens-panel .lg-surface,body[data-mode="l0"] .lens-panel .l
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 @media(prefers-reduced-transparency:reduce){.lens-panel .lg-surface{display:none!important}.lens-panel{background:#233b4c!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.material-note{color:#f5fbff}}
 @media(prefers-contrast:more){.lens-panel .lg-surface{display:none!important}.lens-panel{background:#14212c!important;border:2px solid white!important}.material-choices button.selected{outline:2px solid white}}
+
+/* Performance: compositor movement only; keep the SVG filter on the existing small layer. */
+.lens-panel{will-change:transform;backface-visibility:hidden}
+.lens-panel.dragging{transition:none}
