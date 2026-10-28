@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-10-28T07:23:27.998Z",
+  "mode": "JavaScript deliberately blocked",
+  "screens": [
+    "first-paint-without-javascript-390.png",
+    "first-paint-without-javascript-1440.png"
+  ],
+  "checks": [
+    {
+      "name": "first paint content 390",
+      "pass": true,
+      "detail": {
+        "contentLength": 167
+      }
+    },
+    {
+      "name": "functional Original fallback 390",
+      "pass": true,
+      "detail": "https://ndshuge.github.io/zhixu-ai-academy/"
+    },
+    {
+      "name": "no horizontal overflow 390",
+      "pass": true
+    },
+    {
+      "name": "first paint content 1440",
+      "pass": true,
+      "detail": {
+        "contentLength": 187
+      }
+    },
+    {
+      "name": "functional Original fallback 1440",
+      "pass": true,
+      "detail": "https://ndshuge.github.io/zhixu-ai-academy/"
+    },
+    {
+      "name": "no horizontal overflow 1440",
+      "pass": true
+    }
+  ]
+}

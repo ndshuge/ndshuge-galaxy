@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-10-28T06:28:00.597Z",
+  "startedAt": "2026-10-28T07:30:35.007Z",
   "checks": [
     {
       "name": "first screen renders",
@@ -30,6 +30,20 @@
       "name": "Motion module",
       "ok": true,
       "detail": "Motion"
+    },
+    {
+      "name": "lean Original learning runtime with original BYOK module",
+      "ok": true,
+      "detail": {
+        "ready": true,
+        "store": true,
+        "components": true,
+        "optic": true,
+        "motion": "Motion",
+        "lightweight": true,
+        "byok": true,
+        "engineInfo": "same-origin-original-learning"
+      }
     },
     {
       "name": "horizontal overflow 320",
@@ -94,6 +108,16 @@
       "detail": null
     },
     {
+      "name": "both original pre questions required",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "second pre starts unselected",
+      "ok": true,
+      "detail": null
+    },
+    {
       "name": "Original scientific experiment returned",
       "ok": true,
       "detail": null
@@ -121,6 +145,16 @@
       "detail": null
     },
     {
+      "name": "second original transfer question accessible",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "second transfer starts unselected",
+      "ok": true,
+      "detail": null
+    },
+    {
       "name": "real V2 events persisted",
       "ok": true,
       "detail": {
@@ -129,10 +163,14 @@
           "question_attempt",
           "misconception_candidate",
           "review_task",
+          "question_attempt",
           "hypothesis_test",
-          "question_attempt"
+          "question_attempt",
+          "question_attempt",
+          "misconception_candidate",
+          "review_task"
         ],
-        "count": 5
+        "count": 9
       }
     },
     {
@@ -178,12 +216,15 @@
     "components": true,
     "optic": true,
     "motion": "Motion",
+    "lightweight": true,
+    "byok": true,
+    "engineInfo": "same-origin-original-learning",
     "filterCount": 2,
     "navFilter": "blur(27px) saturate(1.6)",
     "webGLSupported": true,
     "reducedMotion": false
   },
-  "endedAt": "2026-10-28T06:28:09.629Z",
-  "passed": 25,
+  "endedAt": "2026-10-28T07:30:44.095Z",
+  "passed": 30,
   "failed": 0
 }

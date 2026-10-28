@@ -41,7 +41,18 @@
       <div class="top-left"><span class="mobile-brand">∑　知序</span><span class="crumb" id="crumb">今天</span></div>
       <div class="top-right"><span class="edition-badge">Apple Edition</span><a class="edition-compare" href="./compare.html">对照 ↗</a><button class="user-button" data-view="settings" aria-label="设置"><svg aria-hidden="true"><use href="#i-gear"></use></svg></button></div>
     </header>
-    <main id="main" tabindex="-1" aria-live="off"></main>
+    <main id="main" tabindex="-1" aria-live="off"><div class="page" data-initial-shell>
+ <div class="eyebrow">继续你的探索</div><h1 class="large-title">今天，理解一个新问题。</h1>
+ <section class="reading-hero" aria-label="学习空间加载中">
+ <div class="reading-inner"><div class="eyebrow">当前课程 · 科学探究</div>
+ <h2>微小的不同，为什么会造成巨大的变化？</h2>
+ <p>先作出自己的判断，再用真实的科学计算验证。正在连接原版课程与学习记录。</p>
+ <div class="reading-actions"><a class="primary" href="https://ndshuge.github.io/zhixu-ai-academy/">使用原版开始学习 ↗</a><span class="subline">加载 Apple Edition 中…</span></div>
+ </div><div class="reading-cover" aria-hidden="true"><div class="reading-formula">xₙ₊₁ = r xₙ(1 − xₙ)</div></div></section>
+ <div class="section-head"><h2 class="section-title">你的学习空间</h2></div>
+ <div class="unified"><div class="list-row"><div class="list-copy"><strong>科学探究</strong><small>预测、真实实验、导师反馈与独立迁移</small></div></div>
+ <div class="list-row"><div class="list-copy"><strong>学习证据</strong><small>保持原版历史记录与数据结构</small></div></div></div>
+ </div></main>
   </div>
 </div>
 <lg-navbar class="mobile-dock" aria-label="主要页面" id="mobile-nav" tone="light" refraction="9" chroma="0.1">
@@ -53,9 +64,9 @@
 </lg-navbar>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div id="modal-root"></div>
-<!-- Loads the actual existing Original Pages app inside the same GitHub Pages origin.
+<!-- Loads the actual Original Pages lightweight learning runtime inside the same GitHub Pages origin.
      Browser adapter and scientific logic execute there unchanged; this Edition speaks to its fetch API.
      The iframe is never navigated to an untrusted location. -->
-<iframe id="original-engine" title="原版科学引擎（后台数据适配层）" src="/zhixu-ai-academy/" tabindex="-1" aria-hidden="true"></iframe>
+<iframe id="original-engine" title="原版科学引擎（后台数据适配层）" src="/zhixu-ai-academy/learning.html" tabindex="-1" aria-hidden="true"></iframe>
 <script type="module" src="./app.js"></script>
 </body></html>

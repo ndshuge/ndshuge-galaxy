@@ -14,10 +14,10 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const icon=(name)=>'<svg aria-hidden="true"><use href="#i-'+name+'"></use></svg>';
 const button=(label,act,cls='primary',extra='')=>'<button class="'+cls+'" data-action="'+act+'" '+extra+'>'+label+'</button>';
 const link=(label,path)=>'<a class="inline-link" href="'+esc(path)+'" target="_blank" rel="noopener noreferrer">'+esc(label)+' ↗</a>';
-let lib,store,summary,frameWin,modelState=null,ready=false,currentView='today',busy=false;
+let lib,store,summary,frameWin,modelState=null,ready=false,currentView='today',busy=false,engineReadyPromise=null;
 let pref={effect:true};
 try{const p=JSON.parse(localStorage.getItem(PREF_KEY)||'null');if(p&&typeof p.effect==='boolean')pref=p;}catch{}
-const freshLesson=()=>({exp:'sensitivity',step:0,highest:0,question:null,graded:null,prediction:'',run:null,mentor:null,transfer:null,transferGrade:null,plan:null,approvedRun:null});
+const freshLesson=()=>({exp:'sensitivity',step:0,highest:0,question:null,graded:null,prediction:'',run:null,mentor:null,transfer:null,transferGrade:null,plan:null,approvedRun:null,preQueue:[],preIndex:0,transferQueue:[],transferIndex:0,preResults:[],transferResults:[]});
 let lesson=freshLesson();
 try{const saved=JSON.parse(sessionStorage.getItem('zx-apple-lesson-v1')||'null');if(saved&&typeof saved==='object'&&['sensitivity','logistic','evo-pair'].includes(saved.exp)&&Number.isInteger(saved.step))lesson={...freshLesson(),...saved};}catch{}
 const loadSummary=()=>{if(!lib||!store)return;summary=lib.summarizeLearning(store);};
@@ -31,14 +31,31 @@ return '<div class="list-row"><span class="list-icon">'+icon(glyph)+'</span><but
 function eventDate(str){if(!str)return '时间未记录';const d=new Date(str);return Number.isNaN(+d)?'日期不可用':d.toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});}
 function protectNumber(v){return Number.isFinite(Number(v))?String(v):'—';}
 function baseFoot(){return '<p class="original-note">'+icon('check')+' 学习证据使用知序原版 V2 数据结构 · 数据仅保存在当前浏览器</p>';}
+let byokLoadPromise=null;
+function loadOriginalModelModule(w){
+ if(w.ZHIXU_PAGES_AI)return Promise.resolve(true);
+ if(!byokLoadPromise){
+   byokLoadPromise=new Promise(resolve=>{
+     const script=w.document.createElement('script');
+     script.src=ORIGINAL+'original-pages-byok.js'; // exactly the unchanged Original model module.
+     script.onload=()=>resolve(!!w.ZHIXU_PAGES_AI);
+     script.onerror=()=>resolve(false);
+     w.document.body.appendChild(script);
+   });
+ }
+ return byokLoadPromise;
+}
 async function attachOriginal(){
  const start=Date.now();
  while(Date.now()-start<16000){
   try{
    const w=frame.contentWindow;
    if(w&&w.ZHIXU_BROWSER_ADAPTER&&typeof w.fetch==='function'){
-     frameWin=w;const s=await api('/api/status');modelState=s;ready=true;
-     $('#bridge-state').textContent='科学引擎已连接 · '+(s.mentorMode==='llm-configured'?'可选模型已验证':'规则引导模式');
+     frameWin=w;
+     const modelModule=await loadOriginalModelModule(w);
+     const s=await api('/api/status');modelState=s;ready=true;
+     window.ZHIXU_APPLE_ENGINE_INFO={mode:'same-origin-original-learning',originalAdapter:!!w.ZHIXU_BROWSER_ADAPTER,originalBYOK:!!modelModule};
+     $('#bridge-state').textContent='科学引擎已连接 · '+(s.mentorMode==='llm-configured'?'可选模型已验证':'规则引导模式')+(modelModule?'':' · 模型设置暂不可用');
      return true;
    }
   }catch{}
@@ -140,15 +157,21 @@ function stepPre(){
 function questionForm(stage,q,graded){
  const opts=Array.isArray(q.options)?q.options:[];
  const title=q.prompt||q.question||q.text||'请回答当前问题';
+ const questionIndex=stage==='pre'?lesson.preIndex:lesson.transferIndex;
+ const totalQuestions=stage==='pre'?lesson.preQueue.length:lesson.transferQueue.length;
+ const moreQuestions=questionIndex+1<totalQuestions;
+ const nextAction=stage==='pre'?(moreQuestions?'next-pre':'next-prediction'):(moreQuestions?'next-transfer-question':'go-growth');
+ const nextLabel=stage==='pre'?(moreQuestions?'继续下一道前测':'继续到科学预测'):(moreQuestions?'继续下一道迁移':'查看学习证据');
+
  return '<div class="eyebrow">'+(stage==='pre'?'第一步 · 独立前测':'第四步 · 独立迁移')+'</div>'+
- '<h2>'+esc(stage==='pre'?'先作出判断':'把理解迁移到新问题')+'</h2>'+
+ '<h2>'+esc(stage==='pre'?'先作出判断':'把理解迁移到新问题')+'</h2>'+'<div class="assessment-counter" aria-live="polite">第 '+((stage==='pre'?lesson.preIndex:lesson.transferIndex)+1)+' / '+Math.max(1,(stage==='pre'?lesson.preQueue:lesson.transferQueue).length)+' 题 · 真实题库</div>'+
  '<p class="lead">'+esc(title)+'</p>'+
  '<form id="quiz-form" data-stage="'+stage+'"><fieldset style="border:0;padding:0;margin:0" '+(graded?'disabled':'')+'>'+
  '<legend class="subline" style="margin:12px 0">请选择一项；默认不选</legend>'+
  opts.map((o,i)=>'<label class="answer"><input type="radio" name="answer" value="'+i+'" required '+(graded?.studentAnswer===i?'checked':'')+'><span>'+esc(o)+'</span></label>').join('')+
  '</fieldset>'+
  (graded?(stage==='pre'?'<div class="feedback"><strong>初始判断已记录</strong><p>答案暂不揭示。先做实验，再尝试独立迁移。</p></div>':'<div class="feedback '+(graded.gradedResult==='correct'?'success':'warning')+'"><strong>'+(graded.gradedResult==='correct'?'回答正确':'这道题还需要复习')+'</strong><p>'+esc(graded.feedback||graded.explanation||'已按原版标准完成评分。')+'</p></div>')+
- '<div class="form-actions">'+button(stage==='pre'?'继续到科学预测 '+icon('arrow'):'查看学习证据 '+icon('arrow'),stage==='pre'?'next-prediction':'go-growth')+'</div>'
+ '<div class="form-actions">'+button(nextLabel+' '+icon('arrow'),nextAction)+'</div>'
  :'<div class="form-actions"><button class="primary" type="submit" disabled>提交独立答案 '+icon('arrow')+'</button></div>')+
  '</form><p class="quiet-note">原版真实题库评分，结果保存到同源 V2 学习记录。前测评分延迟反馈，避免提前透题。</p>';
 }
@@ -278,6 +301,11 @@ function settings(){
 }
 async function handleAction(el){
  const action=el.dataset.action;
+ if(['load-question','load-transfer','mentor','propose-second','approve-second','open-ai-config'].includes(action)&&!ready){
+   showToast('正在连接原版科学引擎…');
+   await engineReadyPromise;
+   if(!ready)throw Error('科学引擎连接失败，可先阅读课程或返回原版学习');
+ }
  if(action?.startsWith('go-')){setView(action.slice(3),{focus:true});return;}
  if(action==='enter-sensitivity'||action==='enter-evo'||action==='enter-logistic'){
    lesson=freshLesson();lesson.exp=action==='enter-evo'?'evo-pair':action==='enter-logistic'?'logistic':'sensitivity';
@@ -286,19 +314,36 @@ async function handleAction(el){
  if(action==='reset-lesson'){lesson=freshLesson();setView('learn',{focus:true});return;}
  if(action==='study-step'){const n=Number(el.dataset.index);if(n<=lesson.highest){lesson.step=n;renderView();}return;}
  if(action==='study-predict'){lesson.step=1;renderView();return;}
- if(action==='next-prediction'){lesson.step=1;lesson.highest=Math.max(lesson.highest,1);renderView();return;}
+ if(action==='next-pre'||action==='next-transfer-question'){
+   const pre=action==='next-pre',ids=pre?lesson.preQueue:lesson.transferQueue;
+   const index=pre?lesson.preIndex:lesson.transferIndex;
+   if(index+1>=ids.length)throw Error('没有更多原版题目');
+   const obj=await api('/api/learning/item?itemId='+encodeURIComponent(ids[index+1]));
+   if(pre){lesson.preIndex++;lesson.question=obj;lesson.graded=null;}
+   else{lesson.transferIndex++;lesson.transfer=obj;lesson.transferGrade=null;}
+   renderView();return;
+ }
+ if(action==='next-prediction'){
+   if(lesson.preQueue.length>1&&lesson.preResults.length<lesson.preQueue.length)throw Error('请先完成两道独立前测题');
+   lesson.step=1;lesson.highest=Math.max(lesson.highest,1);renderView();return;
+ }
  if(action==='next-transfer'){lesson.step=3;lesson.highest=Math.max(lesson.highest,3);renderView();return;}
  if(action==='load-question'||action==='load-transfer'){
    const stage=action==='load-question'?'pre':'transfer';
    const questions=await api('/api/learning/questions?stage='+stage+'&experiment='+encodeURIComponent(lesson.exp));
-   const q=(questions.questions||[])[0];
-   if(!q)throw Error('原版题库没有这个阶段的题目，请选择其他实验。');
-   const obj=await api('/api/learning/item?itemId='+encodeURIComponent(q.itemId||q.id));
-   if(stage==='pre')lesson.question=obj;else lesson.transfer=obj;
+   const qs=(questions.questions||[]).slice(0,2);
+   if(!qs.length)throw Error('原版题库没有这个阶段的题目，请选择其他实验。');
+   const ids=qs.map(q=>q.itemId||q.id);
+   const obj=await api('/api/learning/item?itemId='+encodeURIComponent(ids[0]));
+   if(stage==='pre'){
+     lesson.preQueue=ids;lesson.preIndex=0;lesson.preResults=[];lesson.question=obj;lesson.graded=null;
+   }else{
+     lesson.transferQueue=ids;lesson.transferIndex=0;lesson.transferResults=[];lesson.transfer=obj;lesson.transferGrade=null;
+   }
    renderView();return;
  }
  if(action==='open-ai-config'){
-   if(!ready||!frameWin)throw new Error('原版模型连接界面尚未就绪');
+   if(!ready||!frameWin||!frameWin.ZHIXU_PAGES_AI)throw new Error('原版模型连接界面尚未就绪');
    document.body.classList.add('show-original-engine');
    $('#modal-root').innerHTML='<div id="ai-config-shade" class="modal-backdrop"><button class="secondary" id="close-ai-config">完成配置并返回 Apple 版</button></div>';
    const dialog=frameWin.document.querySelector('#pages-ai-dialog');
@@ -361,12 +406,21 @@ async function handleAction(el){
 const sessionId=sessionStorage.getItem('zx-apple-session-v1')||crypto.randomUUID();
 sessionStorage.setItem('zx-apple-session-v1',sessionId);
 async function handleSubmit(form){
+ if(!ready){showToast('正在连接原版科学引擎…');await engineReadyPromise;
+   if(!ready)throw Error('原版业务引擎尚不可用，学习数据未提交');
+ }
  if(form.id==='quiz-form'){
    const chosen=new FormData(form).get('answer');
    if(chosen===null)throw Error('请先选择一个答案');
    const q=form.dataset.stage==='transfer'?lesson.transfer:lesson.question;
    const g=await api('/api/learning/grade',{attemptToken:q.attemptToken,itemId:q.itemId||q.id,answer:Number(chosen)});
-   if(form.dataset.stage==='transfer')lesson.transferGrade=g;else lesson.graded=g;
+   if(form.dataset.stage==='transfer'){
+     lesson.transferGrade=g;
+     lesson.transferResults.push({itemId:q.itemId||q.id,gradedResult:g.gradedResult});
+   }else{
+     lesson.graded=g;
+     lesson.preResults.push({itemId:q.itemId||q.id,gradedResult:g.gradedResult});
+   }
    if(lib){lib.recordQuestionAttempt(store,g,{sessionId});loadSummary();}
    renderView();return;
  }
@@ -490,6 +544,8 @@ const initMotion=async()=>{
 async function boot(){
  document.documentElement.dataset.effect=pref.effect?'on':'off';
  setView(location.hash.replace('#','')||'today',{initial:true});
+ initMotion(); // The interface should respond before the remote science engine is ready.
+ engineReadyPromise=attachOriginal();
  try{
   lib=await import(ORIGINAL+'learning-store.js');
   store=lib.loadLearning(localStorage);
@@ -499,10 +555,9 @@ async function boot(){
   console.error('[Zhixu Apple data]',error);
   showToast('原版学习数据读取失败：'+error.message);
  }
- const success=await attachOriginal();
+ const success=await engineReadyPromise;
  if(success)showToast('已连接原版科学引擎');
  else showToast('当前网络无法连接原版，可查看已保存的学习记录');
- initMotion();
 }
 frame.addEventListener('error',()=>$('#bridge-state').textContent='加载原版科学引擎失败');
 boot();
