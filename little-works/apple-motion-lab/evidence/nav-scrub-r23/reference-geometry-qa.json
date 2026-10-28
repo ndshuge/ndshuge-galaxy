@@ -1,0 +1,706 @@
+{
+  "at": "2026-10-28T07:31:51.032Z",
+  "environment": "Windows Edge CDP simulation, not true iPhone Safari",
+  "checks": [
+    {
+      "name": "320 press lifts lens beyond bar",
+      "pass": true,
+      "detail": {
+        "idle": {
+          "height": 58,
+          "lensW": 91,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 0,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 320,
+          "inner": 320
+        },
+        "press": {
+          "height": 58,
+          "lensW": 95,
+          "lensH": 71.6,
+          "lensTop": -7.799999999999997,
+          "lensBottom": 63.8,
+          "preview": 0,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 320,
+          "inner": 320
+        }
+      }
+    },
+    {
+      "name": "320 drag tracks finger and previews last tab",
+      "pass": true,
+      "detail": {
+        "half": {
+          "height": 58,
+          "lensW": 99,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 1,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 320,
+          "inner": 320
+        },
+        "drag": {
+          "height": 58,
+          "lensW": 99,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 2,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 320,
+          "inner": 320
+        }
+      }
+    },
+    {
+      "name": "320 release returns glass to resting dimensions",
+      "pass": true,
+      "detail": {
+        "released": {
+          "height": 58,
+          "lensW": 91,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 2,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 320,
+          "inner": 320
+        },
+        "idle": {
+          "height": 58,
+          "lensW": 91,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 0,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 320,
+          "inner": 320
+        }
+      }
+    },
+    {
+      "name": "320 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "scroll": 320,
+        "width": 320
+      }
+    },
+    {
+      "name": "390 press lifts lens beyond bar",
+      "pass": true,
+      "detail": {
+        "idle": {
+          "height": 58,
+          "lensW": 115,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 0,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 390,
+          "inner": 390
+        },
+        "press": {
+          "height": 58,
+          "lensW": 123,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 0,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 390,
+          "inner": 390
+        }
+      }
+    },
+    {
+      "name": "390 drag tracks finger and previews last tab",
+      "pass": true,
+      "detail": {
+        "half": {
+          "height": 58,
+          "lensW": 123,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 0,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 390,
+          "inner": 390
+        },
+        "drag": {
+          "height": 58,
+          "lensW": 123,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 2,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 390,
+          "inner": 390
+        }
+      }
+    },
+    {
+      "name": "390 release returns glass to resting dimensions",
+      "pass": true,
+      "detail": {
+        "released": {
+          "height": 58,
+          "lensW": 115,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 2,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 390,
+          "inner": 390
+        },
+        "idle": {
+          "height": 58,
+          "lensW": 115,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 0,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 390,
+          "inner": 390
+        }
+      }
+    },
+    {
+      "name": "390 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "scroll": 390,
+        "width": 390
+      }
+    },
+    {
+      "name": "768 press lifts lens beyond bar",
+      "pass": true,
+      "detail": {
+        "idle": {
+          "height": 58,
+          "lensW": 123,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 0,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 768,
+          "inner": 768
+        },
+        "press": {
+          "height": 58,
+          "lensW": 131,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 0,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 768,
+          "inner": 768
+        }
+      }
+    },
+    {
+      "name": "768 drag tracks finger and previews last tab",
+      "pass": true,
+      "detail": {
+        "half": {
+          "height": 58,
+          "lensW": 131,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 1,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 768,
+          "inner": 768
+        },
+        "drag": {
+          "height": 58,
+          "lensW": 131,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 2,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 768,
+          "inner": 768
+        }
+      }
+    },
+    {
+      "name": "768 release returns glass to resting dimensions",
+      "pass": true,
+      "detail": {
+        "released": {
+          "height": 58,
+          "lensW": 123,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 2,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 768,
+          "inner": 768
+        },
+        "idle": {
+          "height": 58,
+          "lensW": 123,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 0,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 768,
+          "inner": 768
+        }
+      }
+    },
+    {
+      "name": "768 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "scroll": 768,
+        "width": 768
+      }
+    },
+    {
+      "name": "1440 press lifts lens beyond bar",
+      "pass": true,
+      "detail": {
+        "idle": {
+          "height": 58,
+          "lensW": 123,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 0,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 1440,
+          "inner": 1440
+        },
+        "press": {
+          "height": 58,
+          "lensW": 131,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 0,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 1440,
+          "inner": 1440
+        }
+      }
+    },
+    {
+      "name": "1440 drag tracks finger and previews last tab",
+      "pass": true,
+      "detail": {
+        "half": {
+          "height": 58,
+          "lensW": 131,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 1,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 1440,
+          "inner": 1440
+        },
+        "drag": {
+          "height": 58,
+          "lensW": 131,
+          "lensH": 71.2,
+          "lensTop": -7.600000000000001,
+          "lensBottom": 63.6,
+          "preview": 2,
+          "selected": 0,
+          "lift": 20,
+          "chroma": 0.21,
+          "scroll": 1440,
+          "inner": 1440
+        }
+      }
+    },
+    {
+      "name": "1440 release returns glass to resting dimensions",
+      "pass": true,
+      "detail": {
+        "released": {
+          "height": 58,
+          "lensW": 123,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 2,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 1440,
+          "inner": 1440
+        },
+        "idle": {
+          "height": 58,
+          "lensW": 123,
+          "lensH": 52,
+          "lensTop": 2,
+          "lensBottom": 54,
+          "preview": null,
+          "selected": 0,
+          "lift": 0,
+          "chroma": 0.095,
+          "scroll": 1440,
+          "inner": 1440
+        }
+      }
+    },
+    {
+      "name": "1440 no horizontal page overflow",
+      "pass": true,
+      "detail": {
+        "scroll": 1440,
+        "width": 1440
+      }
+    },
+    {
+      "name": "No uncaught JS exceptions",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "observations": [
+    {
+      "width": 320,
+      "idle": {
+        "height": 58,
+        "lensW": 91,
+        "lensH": 52,
+        "lensTop": 2,
+        "lensBottom": 54,
+        "preview": null,
+        "selected": 0,
+        "lift": 0,
+        "chroma": 0.095,
+        "scroll": 320,
+        "inner": 320
+      },
+      "press": {
+        "height": 58,
+        "lensW": 95,
+        "lensH": 71.6,
+        "lensTop": -7.799999999999997,
+        "lensBottom": 63.8,
+        "preview": 0,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 320,
+        "inner": 320
+      },
+      "half": {
+        "height": 58,
+        "lensW": 99,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 1,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 320,
+        "inner": 320
+      },
+      "drag": {
+        "height": 58,
+        "lensW": 99,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 2,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 320,
+        "inner": 320
+      },
+      "released": {
+        "height": 58,
+        "lensW": 91,
+        "lensH": 52,
+        "lensTop": 2,
+        "lensBottom": 54,
+        "preview": null,
+        "selected": 2,
+        "lift": 0,
+        "chroma": 0.095,
+        "scroll": 320,
+        "inner": 320
+      }
+    },
+    {
+      "width": 390,
+      "idle": {
+        "height": 58,
+        "lensW": 115,
+        "lensH": 52,
+        "lensTop": 2,
+        "lensBottom": 54,
+        "preview": null,
+        "selected": 0,
+        "lift": 0,
+        "chroma": 0.095,
+        "scroll": 390,
+        "inner": 390
+      },
+      "press": {
+        "height": 58,
+        "lensW": 123,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 0,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 390,
+        "inner": 390
+      },
+      "half": {
+        "height": 58,
+        "lensW": 123,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 0,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 390,
+        "inner": 390
+      },
+      "drag": {
+        "height": 58,
+        "lensW": 123,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 2,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 390,
+        "inner": 390
+      },
+      "released": {
+        "height": 58,
+        "lensW": 115,
+        "lensH": 52,
+        "lensTop": 2,
+        "lensBottom": 54,
+        "preview": null,
+        "selected": 2,
+        "lift": 0,
+        "chroma": 0.095,
+        "scroll": 390,
+        "inner": 390
+      }
+    },
+    {
+      "width": 768,
+      "idle": {
+        "height": 58,
+        "lensW": 123,
+        "lensH": 52,
+        "lensTop": 2,
+        "lensBottom": 54,
+        "preview": null,
+        "selected": 0,
+        "lift": 0,
+        "chroma": 0.095,
+        "scroll": 768,
+        "inner": 768
+      },
+      "press": {
+        "height": 58,
+        "lensW": 131,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 0,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 768,
+        "inner": 768
+      },
+      "half": {
+        "height": 58,
+        "lensW": 131,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 1,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 768,
+        "inner": 768
+      },
+      "drag": {
+        "height": 58,
+        "lensW": 131,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 2,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 768,
+        "inner": 768
+      },
+      "released": {
+        "height": 58,
+        "lensW": 123,
+        "lensH": 52,
+        "lensTop": 2,
+        "lensBottom": 54,
+        "preview": null,
+        "selected": 2,
+        "lift": 0,
+        "chroma": 0.095,
+        "scroll": 768,
+        "inner": 768
+      }
+    },
+    {
+      "width": 1440,
+      "idle": {
+        "height": 58,
+        "lensW": 123,
+        "lensH": 52,
+        "lensTop": 2,
+        "lensBottom": 54,
+        "preview": null,
+        "selected": 0,
+        "lift": 0,
+        "chroma": 0.095,
+        "scroll": 1440,
+        "inner": 1440
+      },
+      "press": {
+        "height": 58,
+        "lensW": 131,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 0,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 1440,
+        "inner": 1440
+      },
+      "half": {
+        "height": 58,
+        "lensW": 131,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 1,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 1440,
+        "inner": 1440
+      },
+      "drag": {
+        "height": 58,
+        "lensW": 131,
+        "lensH": 71.2,
+        "lensTop": -7.600000000000001,
+        "lensBottom": 63.6,
+        "preview": 2,
+        "selected": 0,
+        "lift": 20,
+        "chroma": 0.21,
+        "scroll": 1440,
+        "inner": 1440
+      },
+      "released": {
+        "height": 58,
+        "lensW": 123,
+        "lensH": 52,
+        "lensTop": 2,
+        "lensBottom": 54,
+        "preview": null,
+        "selected": 2,
+        "lift": 0,
+        "chroma": 0.095,
+        "scroll": 1440,
+        "inner": 1440
+      }
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "passed": 17,
+    "total": 17
+  }
+}

@@ -806,7 +806,7 @@ class LgNavbar extends LgElement {
 
   attach() {
     this.surface.attach();
-    this.glass = createGlass(this.copy, { clip: true, refraction: 8, bezel: 0.6, curvature: 3, chroma: 0, specular: 0.7, specularWidth: 1.5 });
+    this.glass = createGlass(this.copy, { clip: true, refraction: 12, bezel: 0.66, curvature: 3.5, chroma: 0.095, specular: 0.68, specularWidth: 1.05 });
     this.observer = new ResizeObserver(() => this.moveTo(this.target ?? this.current, true));
     this.observer.observe(this);
     this.moveTo(this.current, true);
@@ -867,10 +867,13 @@ class LgNavbar extends LgElement {
     const scrub = this.hasAttribute('data-scrub-active');
     const stretch = scrub ? (this.scrubStretch || 0) : Math.round(Math.min(14, Math.abs(this.v) * 0.025) / 3) * 3;
     const w = this.widthAt(this.x) + stretch;
-    const h = first.offsetHeight - stretch * 0.16;
-    const left = this.x - stretch * (scrub ? (this.scrubDirection >= 0 ? 0.24 : 0.76) : 0.5);
+    const lift = Math.round((this.scrubLift || 0) / 2) * 2;
+    const h = first.offsetHeight + 8 + lift - stretch * 0.10;
+    const lead = scrub && stretch > 0 ? (this.scrubDirection >= 0 ? 0.22 : 0.78) : 0.5;
+    const left = this.x - stretch * lead;
     const top = first.offsetTop + (first.offsetHeight - h) / 2;
-    this.glass.update({ x: left, y: top, width: w, height: h, radius: h / 2 });
+    // Optical renderer uses a copy extended 16px above/below the bar.
+    this.glass.update({ x: left, y: top + 16, width: w, height: h, radius: h / 2 });
     place(this.shadow, left, top, w, h, h / 2);
   }
 }

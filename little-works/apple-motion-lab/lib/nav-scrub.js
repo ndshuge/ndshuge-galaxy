@@ -16,13 +16,14 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
   let gesture = null;
   let blockClickUntil = 0;
   let lastSelection = nav.current ?? 0;
-  let restTimer=0;
+  let restTimer=0, pressTimer=0, lowerTimer=0;
   // Optical shapes use quantized presets so the original displacement map cache is reused.
   // Actual position stays one-to-one with the finger; the edges lag through a native spring.
   const shapeSpring=createSpring(0,(value)=>{
-    const discrete=reduceMotion.matches?0:Math.round(Math.max(0,Math.min(28,value))/4)*4;
+    const discrete=reduceMotion.matches?0:Math.round(Math.max(0,Math.min(32,value))/4)*4;
     if(discrete!==nav.scrubStretch){
       nav.scrubStretch=discrete;
+      nav.style.setProperty('--scrub-energy',String(Math.min(1,discrete/32)));
       if(nav.glass)nav.render();
     }
     if(!gesture && Math.abs(value)<.01 && discrete===0){
@@ -30,6 +31,13 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
       if(nav.glass)nav.render();
     }
   },{stiffness:610,damping:40,mass:1});
+
+  // Lift the original refractive lens off the navbar's surface, like a pressed
+  // iOS 26 tab. The vertical shape is a *separate Skill spring*, never a scale.
+  const liftSpring=createSpring(0,(value)=>{
+    const snapped=reduceMotion.matches?0:Math.round(Math.max(0,Math.min(28,value))/4)*4;
+    if(nav.scrubLift!==snapped){nav.scrubLift=snapped;if(nav.glass)nav.render();}
+  },{stiffness:520,damping:39,mass:1});
 
   function centers() {
     const base = nav.getBoundingClientRect().left;
@@ -61,8 +69,8 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
     if(nav.glass)nav.render();
     clearTimeout(restTimer);
     if(!reduceMotion.matches){
-      shapeSpring.set(Math.min(28,Math.abs(gesture.velocity)*.065));
-      restTimer=setTimeout(()=>shapeSpring.set(0),90);
+      if((nav.scrubLift||0)>=16)shapeSpring.set(Math.min(32,8+Math.abs(gesture.velocity)*.052));
+      restTimer=setTimeout(()=>{if(gesture&&(nav.scrubLift||0)>=16)shapeSpring.set(8);},105);
     }
     const index=nearest(x,pts);
     if (gesture.preview!==index) {
@@ -85,6 +93,14 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
     lastSelection=nav.current;
     nav.classList.add('is-scrubbing');
     nav.setAttribute('data-scrub-active','');
+    // Optics from the bundled Skill engine: chromatic fringe intensifies on hold.
+    nav.glass?.update({chroma:0.21,refraction:16,bezel:0.74,specular:0.79});
+    clearTimeout(lowerTimer);
+    if(!reduceMotion.matches){
+      liftSpring.set(20);
+      clearTimeout(pressTimer);
+      pressTimer=setTimeout(()=>{if(gesture)shapeSpring.set(8);},120);
+    }
     nav.scrubDirection=0;
     nav.dataset.scrubPreview=String(index);
     onPressChange(index);
@@ -113,8 +129,12 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
     gesture=null;
     nav.classList.remove('is-scrubbing');
     nav.removeAttribute('data-scrub-preview');
+    nav.glass?.update({chroma:0.095,refraction:12,bezel:0.66,specular:0.68});
     clearTimeout(restTimer);
     shapeSpring.set(0);
+    clearTimeout(pressTimer);
+    clearTimeout(lowerTimer);
+    lowerTimer=setTimeout(()=>liftSpring.set(0),110);
     onPressChange(-1);
     // A click emitted after pointerup targets the pressed button, not the tab
     // under the finger. Capture it to avoid overwriting the correct selection.
@@ -149,7 +169,7 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
     state:()=>({pressed:!!gesture,preview:gesture?.preview??null,
       current:nav.current,x:nav.x,moved:gesture?.moved??false,
       target:nav.target,stretch:nav.scrubStretch||0,
-      direction:nav.scrubDirection||0}),
+      direction:nav.scrubDirection||0,lift:nav.scrubLift||0}),
     cancel:()=>{if(gesture)end({pointerId:gesture.id},true)}
   };
 }
