@@ -1,0 +1,1004 @@
+{
+  "date": "2026-10-28T06:13:59.283Z",
+  "environment": "Windows Edge CDP touch simulator, not iPhone Safari",
+  "checks": [
+    {
+      "name": "Glass width stretches elastically beyond idle width",
+      "pass": true,
+      "detail": {
+        "rest": 112,
+        "maxW": 140,
+        "maxStretch": 28
+      }
+    },
+    {
+      "name": "Moving lens remains tied to real SVG optical filter",
+      "pass": true,
+      "detail": {
+        "filter": "url(\"#lg3-v50\")"
+      }
+    },
+    {
+      "name": "Glass returns to original size on release",
+      "pass": true,
+      "detail": {
+        "rest": 112,
+        "after": 112
+      }
+    },
+    {
+      "name": "Selected icon changes during held gesture",
+      "pass": true,
+      "detail": {
+        "mid": "rgb(181, 208, 255)"
+      }
+    },
+    {
+      "name": "Displacement map uses bounded discrete presets",
+      "pass": true,
+      "detail": {
+        "initial": 3,
+        "final": 10
+      }
+    },
+    {
+      "name": "Content stays unchanged until release",
+      "pass": true,
+      "detail": {
+        "previewed": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "name": "Previously visited lens shapes are reused on second swipe",
+      "pass": true,
+      "detail": {
+        "first": 7,
+        "second": 0
+      }
+    },
+    {
+      "name": "No JavaScript errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "samples": [
+    {
+      "label": "rest",
+      "glass": {
+        "x": 6,
+        "y": 6,
+        "width": 112,
+        "height": 58,
+        "radius": 29,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": false,
+        "preview": null,
+        "current": 0,
+        "x": 6,
+        "moved": false,
+        "target": 0,
+        "stretch": 0,
+        "direction": 0
+      },
+      "copyFilter": "url(\"#lg3-v1\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 3
+    },
+    {
+      "label": "forward1",
+      "glass": {
+        "x": 24.846153259277344,
+        "y": 6,
+        "width": 112,
+        "height": 58,
+        "radius": 29,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 0,
+        "current": 0,
+        "x": 24.846153259277344,
+        "moved": true,
+        "target": 0,
+        "stretch": 0,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v3\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 3
+    },
+    {
+      "label": "forward2",
+      "glass": {
+        "x": 41.73230651855469,
+        "y": 6.32,
+        "width": 116,
+        "height": 57.36,
+        "radius": 28.68,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 0,
+        "current": 0,
+        "x": 42.69230651855469,
+        "moved": true,
+        "target": 0,
+        "stretch": 4,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v5\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 4
+    },
+    {
+      "label": "forward3",
+      "glass": {
+        "x": 58.61846740722656,
+        "y": 6.640000000000001,
+        "width": 120,
+        "height": 56.72,
+        "radius": 28.36,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 0,
+        "current": 0,
+        "x": 60.53846740722656,
+        "moved": true,
+        "target": 0,
+        "stretch": 8,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v9\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 5
+    },
+    {
+      "label": "forward4",
+      "glass": {
+        "x": 75.50461303710938,
+        "y": 6.960000000000001,
+        "width": 124,
+        "height": 56.08,
+        "radius": 28.04,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 78.38461303710938,
+        "moved": true,
+        "target": 0,
+        "stretch": 12,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v12\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 6
+    },
+    {
+      "label": "forward5",
+      "glass": {
+        "x": 92.39077392578125,
+        "y": 7.280000000000001,
+        "width": 128,
+        "height": 55.44,
+        "radius": 27.72,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 96.23077392578125,
+        "moved": true,
+        "target": 0,
+        "stretch": 16,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v13\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 6
+    },
+    {
+      "label": "forward6",
+      "glass": {
+        "x": 108.31691955566406,
+        "y": 7.920000000000002,
+        "width": 136,
+        "height": 54.16,
+        "radius": 27.08,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 114.07691955566406,
+        "moved": true,
+        "target": 0,
+        "stretch": 24,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v18\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 9
+    },
+    {
+      "label": "forward7",
+      "glass": {
+        "x": 125.20308044433594,
+        "y": 8.240000000000002,
+        "width": 140,
+        "height": 53.519999999999996,
+        "radius": 26.759999999999998,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 131.92308044433594,
+        "moved": true,
+        "target": 0,
+        "stretch": 28,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v21\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "forward8",
+      "glass": {
+        "x": 144.96922607421874,
+        "y": 7.600000000000001,
+        "width": 132,
+        "height": 54.8,
+        "radius": 27.4,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 149.76922607421875,
+        "moved": true,
+        "target": 0,
+        "stretch": 20,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v25\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "forward9",
+      "glass": {
+        "x": 162.8153869628906,
+        "y": 7.600000000000001,
+        "width": 132,
+        "height": 54.8,
+        "radius": 27.4,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 167.61538696289062,
+        "moved": true,
+        "target": 0,
+        "stretch": 20,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v26\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "forward10",
+      "glass": {
+        "x": 179.7015478515625,
+        "y": 7.920000000000002,
+        "width": 136,
+        "height": 54.16,
+        "radius": 27.08,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 2,
+        "current": 0,
+        "x": 185.4615478515625,
+        "moved": true,
+        "target": 0,
+        "stretch": 24,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v27\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "forward11",
+      "glass": {
+        "x": 196.58767822265625,
+        "y": 8.240000000000002,
+        "width": 140,
+        "height": 53.519999999999996,
+        "radius": 26.759999999999998,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 2,
+        "current": 0,
+        "x": 203.30767822265625,
+        "moved": true,
+        "target": 0,
+        "stretch": 28,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v29\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "forward12",
+      "glass": {
+        "x": 214.43383911132813,
+        "y": 8.240000000000002,
+        "width": 140,
+        "height": 53.519999999999996,
+        "radius": 26.759999999999998,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 2,
+        "current": 0,
+        "x": 221.15383911132812,
+        "moved": true,
+        "target": 0,
+        "stretch": 28,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v30\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "forward13",
+      "glass": {
+        "x": 231.28,
+        "y": 8.240000000000002,
+        "width": 140,
+        "height": 53.519999999999996,
+        "radius": 26.759999999999998,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 2,
+        "current": 0,
+        "x": 238,
+        "moved": true,
+        "target": 0,
+        "stretch": 28,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v31\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse1",
+      "glass": {
+        "x": 197.55998779296874,
+        "y": 7.920000000000002,
+        "width": 136,
+        "height": 54.16,
+        "radius": 27.08,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 2,
+        "current": 0,
+        "x": 215.79998779296875,
+        "moved": true,
+        "target": 0,
+        "stretch": 24,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v34\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse2",
+      "glass": {
+        "x": 189.56000610351563,
+        "y": 6.32,
+        "width": 116,
+        "height": 57.36,
+        "radius": 28.68,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 2,
+        "current": 0,
+        "x": 192.60000610351562,
+        "moved": true,
+        "target": 0,
+        "stretch": 4,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v36\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse3",
+      "glass": {
+        "x": 166.35999389648438,
+        "y": 6.32,
+        "width": 116,
+        "height": 57.36,
+        "radius": 28.68,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 169.39999389648438,
+        "moved": true,
+        "target": 0,
+        "stretch": 4,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v38\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse4",
+      "glass": {
+        "x": 137.07999694824218,
+        "y": 6.960000000000001,
+        "width": 124,
+        "height": 56.08,
+        "radius": 28.04,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 146.1999969482422,
+        "moved": true,
+        "target": 0,
+        "stretch": 12,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v40\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse5",
+      "glass": {
+        "x": 107.8,
+        "y": 7.600000000000001,
+        "width": 132,
+        "height": 54.8,
+        "radius": 27.4,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 123,
+        "moved": true,
+        "target": 0,
+        "stretch": 20,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v42\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse6",
+      "glass": {
+        "x": 81.5600030517578,
+        "y": 7.920000000000002,
+        "width": 136,
+        "height": 54.16,
+        "radius": 27.08,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 99.80000305175781,
+        "moved": true,
+        "target": 0,
+        "stretch": 24,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v44\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse7",
+      "glass": {
+        "x": 55.320006103515624,
+        "y": 8.240000000000002,
+        "width": 140,
+        "height": 53.519999999999996,
+        "radius": 26.759999999999998,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 1,
+        "current": 0,
+        "x": 76.60000610351562,
+        "moved": true,
+        "target": 0,
+        "stretch": 28,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v46\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse8",
+      "glass": {
+        "x": 32.120001525878905,
+        "y": 8.240000000000002,
+        "width": 140,
+        "height": 53.519999999999996,
+        "radius": 26.759999999999998,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 0,
+        "current": 0,
+        "x": 53.400001525878906,
+        "moved": true,
+        "target": 0,
+        "stretch": 28,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v47\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse9",
+      "glass": {
+        "x": 8.919996948242186,
+        "y": 8.240000000000002,
+        "width": 140,
+        "height": 53.519999999999996,
+        "radius": 26.759999999999998,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 0,
+        "current": 0,
+        "x": 30.199996948242188,
+        "moved": true,
+        "target": 0,
+        "stretch": 28,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v49\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "reverse10",
+      "glass": {
+        "x": -14.280000000000001,
+        "y": 8.240000000000002,
+        "width": 140,
+        "height": 53.519999999999996,
+        "radius": 26.759999999999998,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 0,
+        "current": 0,
+        "x": 7,
+        "moved": true,
+        "target": 0,
+        "stretch": 28,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v50\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "held",
+      "glass": {
+        "x": -14.280000000000001,
+        "y": 8.240000000000002,
+        "width": 140,
+        "height": 53.519999999999996,
+        "radius": 26.759999999999998,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": true,
+        "preview": 0,
+        "current": 0,
+        "x": 7,
+        "moved": true,
+        "target": 0,
+        "stretch": 28,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v50\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "released",
+      "glass": {
+        "x": 6,
+        "y": 6,
+        "width": 112,
+        "height": 58,
+        "radius": 29,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": false,
+        "preview": null,
+        "current": 0,
+        "x": 6,
+        "moved": false,
+        "target": 0,
+        "stretch": 0,
+        "direction": -1
+      },
+      "copyFilter": "url(\"#lg3-v143\")",
+      "selectedColor": "rgb(181, 208, 255)",
+      "mapDraws": 10
+    },
+    {
+      "label": "warm",
+      "glass": {
+        "x": 238,
+        "y": 6,
+        "width": 112,
+        "height": 58,
+        "radius": 29,
+        "refraction": 8,
+        "bezel": 0.6,
+        "curvature": 3,
+        "ior": 1.5,
+        "invert": false,
+        "chroma": 0,
+        "blur": 0,
+        "specular": 0.7,
+        "specularWidth": 1.5,
+        "lightAngle": -120,
+        "mapScale": 0
+      },
+      "position": {
+        "pressed": false,
+        "preview": null,
+        "current": 2,
+        "x": 238,
+        "moved": false,
+        "target": 2,
+        "stretch": 0,
+        "direction": 1
+      },
+      "copyFilter": "url(\"#lg3-v166\")",
+      "selectedColor": "rgb(255, 255, 255)",
+      "mapDraws": 10
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "total": 8
+  },
+  "errors": []
+}

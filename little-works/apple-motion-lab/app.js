@@ -2,6 +2,7 @@ import './lib/components.js';
 import { createGlassRenderer } from './lib/glass-webgl.js';
 import { engine as svgEngine } from './lib/liquid-glass.js';
 import { animate, motionValue } from './vendor/motion.js';
+import { installNavbarScrub } from './lib/nav-scrub.js';
 
 const $ = (id) => document.getElementById(id);
 const clamp = (x,a=0,b=1)=>Math.max(a,Math.min(b,x));
@@ -167,7 +168,7 @@ $('playMini').addEventListener('click',toggleAudio);$('playFull').addEventListen
 $('seek').addEventListener('input',e=>{currentTime=Number(e.target.value);showTrack()});
 $('volume').addEventListener('input',e=>{if(audio)gain.gain.setTargetAtTime(playing?Number(e.target.value)/100*.095:0,audio.currentTime,.03)});
 function viewChange(view){
- const pages={listen:['让声音','有形。','滑动不是切换，而是一种连续的触感。打开播放器，然后试着在动画中途改变方向。'],
+ const pages={listen:['让声音','流动。','轻触播放，向上展开。每一次拖动，都连贯如初。'],
  discover:['发现','另一面。','三段独立合成的声音风景。轻点列表中的曲目，观看共用画面怎样被唤起。'],
  library:['收藏','每一刻。','这是一个不连接帐号的本地实验。所有播放、动画与光学实验都在你的浏览器里发生。']};
  if(!pages[view])return;
@@ -176,19 +177,34 @@ function viewChange(view){
  document.querySelector('.intro-desc').textContent=c;
  document.querySelectorAll('.side-link').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
  const navbar=$('navigation');navbar?.setCurrent?.(['listen','discover','library'].indexOf(view));
+ navbar.dataset.selected=String(['listen','discover','library'].indexOf(view));
  animate(document.querySelector('.intro'),{opacity:[.78,1],y:[7,0]},{duration:.35,ease:'easeOut'});
 }
 document.querySelectorAll('[data-view]').forEach(el=>el.addEventListener('click',()=>viewChange(el.dataset.view)));
-// Skill-provided lg-navbar keeps the optical indicator and geometry; Motion handles held, reversible press.
-const tabPress = new WeakMap();
-document.querySelectorAll('#navigation > button').forEach(btn=>{
- const press=()=>{tabPress.get(btn)?.stop();tabPress.set(btn,animate(btn,{scale:.93},{type:'spring',stiffness:750,damping:48}));};
- const release=()=>{tabPress.get(btn)?.stop();tabPress.set(btn,animate(btn,{scale:1},{type:'spring',stiffness:560,damping:28}));};
- btn.addEventListener('pointerdown',press);
- for(const name of ['pointerup','pointercancel','pointerleave','lostpointercapture'])btn.addEventListener(name,release);
- btn.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')press();});
- btn.addEventListener('keyup',e=>{if(e.key==='Enter'||e.key===' ')release();});
- btn.addEventListener('blur',release);
+// R2.1 press-and-scrub uses the Skill's real refractive indicator and native spring.
+const navButtons=[...document.querySelectorAll('#navigation > button')];
+const tabPress=new WeakMap();
+function scaleTab(index){
+ navButtons.forEach((btn,i)=>{
+  tabPress.get(btn)?.stop();
+  tabPress.set(btn,animate(btn,{scale:i===index?.94:1},{
+   type:'spring',stiffness:i===index?650:560,damping:i===index?43:32
+  }));
+ });
+}
+navButtons.forEach((btn,index)=>{
+ btn.addEventListener('keydown',e=>{
+  if(e.key==='Enter'||e.key===' ')scaleTab(index);
+ });
+ btn.addEventListener('keyup',e=>{
+  if(e.key==='Enter'||e.key===' ')scaleTab(-1);
+ });
+ btn.addEventListener('blur',()=>scaleTab(-1));
+});
+$('navigation').dataset.selected='0';
+const navScrub=installNavbarScrub($('navigation'),{
+ onCommit:viewChange,
+ onPressChange:scaleTab
 });
 
 function sampleFps(now){frames++;if(now-fpsWindow>=1200){measuredFps=Math.round(frames*1000/(now-fpsWindow));frames=0;fpsWindow=now;}requestAnimationFrame(sampleFps)}requestAnimationFrame(sampleFps);
@@ -239,6 +255,6 @@ if(lowTransparency.matches||highContrast.matches){quality='lite';qualityControl.
 render(0);showTrack();updateTransport();initGraphics();
 window.__motionLab={
  progress:()=>progress.get(),settle:(p,v=0)=>settle(p,v),navigation:(n)=>viewChange(n),chooseTrack:setTrack,
- diagnostic:()=>({version:'1.0.0',svgEngine,webgl:gpuReady,quality,gpuRenders,glError,interpolatedGeometry:geometry,motionValue:typeof progress.get==='function',componentNavbar:customElements.get('lg-navbar')?.name||null,componentSegmented:customElements.get('lg-segmented')?.name||null,engineHasWebGL:typeof createGlassRenderer==='function',fps:measuredFps,layoutReads,playing,track:trackIndex,gesture:{drag:travelState.drag,start:travelState.start,last:travelState.last,gesture:travelState.gesture,velocity:travelState.velocity}}),
+ diagnostic:()=>({version:'1.0.0',svgEngine,webgl:gpuReady,quality,gpuRenders,glError,interpolatedGeometry:geometry,motionValue:typeof progress.get==='function',navScrub:navScrub.state(),componentNavbar:customElements.get('lg-navbar')?.name||null,componentSegmented:customElements.get('lg-segmented')?.name||null,engineHasWebGL:typeof createGlassRenderer==='function',fps:measuredFps,layoutReads,playing,track:trackIndex,gesture:{drag:travelState.drag,start:travelState.start,last:travelState.last,gesture:travelState.gesture,velocity:travelState.velocity}}),
  pixel:()=>{if(renderer&&quality==='auto')drawGPU();const gl=glCanvas.getContext('webgl');if(!gl)return null;const p=new Uint8Array(4);gl.readPixels(Math.max(0,Math.floor(glCanvas.width/2)),Math.max(0,Math.floor(glCanvas.height/2)),1,1,gl.RGBA,gl.UNSIGNED_BYTE,p);return [...p];}
 };
