@@ -2,7 +2,7 @@
 const {chromium}=require('playwright-core'),fs=require('fs'),path=require('path');
 const out=path.join(__dirname,'../../docs/xiaoya-apple-next-qa/ios26-v2-approval.json');
 (async()=>{
-const browser=await chromium.launch({channel:'msedge',headless:true,timeout:14000}),ctx=await browser.newContext({viewport:{width:390,height:844}}),p=await ctx.newPage();
+const browser=await chromium.launch(process.env.XIAOYA_BROWSER_CHANNEL==='chromium'?{headless:true,timeout:14000}:{channel:'msedge',headless:true,timeout:14000}),ctx=await browser.newContext({viewport:{width:390,height:844}}),p=await ctx.newPage();
 const errors=[];p.on('pageerror',e=>errors.push(e.message));
 let result={};
 try {

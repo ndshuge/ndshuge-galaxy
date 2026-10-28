@@ -7,7 +7,7 @@ const url='http://127.0.0.1:5397/little-works/xiaoya-apple/';
 const results=[],checks=[];
 function check(ok,name,extra){checks.push({ok:!!ok,name,extra});if(!ok)console.error('FAIL',name,JSON.stringify(extra));}
 async function run(kind,launch,width){
- const browser=await launch.launch(kind==='edge'?{channel:'msedge',headless:true}: {headless:true});
+ const browser=await launch.launch(kind==='edge'?(process.env.XIAOYA_BROWSER_CHANNEL==='chromium'?{headless:true}:{channel:'msedge',headless:true}):{headless:true});
  const context=await browser.newContext({viewport:{width,height:844},hasTouch:true,isMobile:kind==='webkit',reducedMotion:'no-preference'});
  const p=await context.newPage(),errors=[];
  p.on('pageerror',e=>errors.push(e.message));
