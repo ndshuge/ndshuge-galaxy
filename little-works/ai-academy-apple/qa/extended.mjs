@@ -51,6 +51,14 @@ try{
  await page.locator('#quiz-form input[type=radio]').first().check();
  check('radio selection enables submit',await page.locator('#quiz-form button[type=submit]').isEnabled());
  await page.locator('#quiz-form button[type=submit]').click();
+ await page.waitForFunction(()=>!!document.querySelector('[data-action=next-pre],[data-action=next-prediction]'),{timeout:12000});
+ if(await page.locator('[data-action=next-pre]').count()){
+   await page.locator('[data-action=next-pre]').click();
+   await page.waitForFunction(()=>document.querySelector('.assessment-counter')?.textContent?.includes('2 / 2'),{timeout:12000});
+   check('second real pre question unselected',await page.locator('#quiz-form input:checked').count()===0);
+   await page.locator('#quiz-form input[type=radio]').first().check();
+   await page.locator('#quiz-form button[type=submit]').click();
+ }
  await page.locator('[data-action=next-prediction]').waitFor({timeout:12000});
  await page.locator('[data-action=next-prediction]').click();
  await page.locator('#prediction').fill('我猜测改变随机种子后，两组实验结果可能不同，不能由一次模拟断言普遍结论。');

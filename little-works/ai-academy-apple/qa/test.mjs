@@ -23,8 +23,8 @@ try{
  const btxt=await page.locator('#bridge-state').innerText();
  check('original live iframe science bridge',btxt.includes('已连接'),btxt);
  try{await page.waitForFunction(()=>!!window.ZHIXU_APPLE_MOTION,{timeout:9000})}catch{}
- const actual=await page.evaluate(()=>({ready:!!document.querySelector('#original-engine').contentWindow?.ZHIXU_BROWSER_ADAPTER,store:!!localStorage.getItem('ai-academy-learning-v02'),components:!!customElements.get('lg-lens'),optic:!!document.querySelector('svg filter[id^="lg"]'),motion:window.ZHIXU_APPLE_MOTION?.engine||'not loaded'}));
- report.optics=actual;check('actual Original API adapter present',actual.ready);check('original learning schema imported',actual.store);check('native Skill glass web component registered',actual.components);check('Motion module',actual.motion==='Motion',actual.motion);
+ const actual=await page.evaluate(()=>({ready:!!document.querySelector('#original-engine').contentWindow?.ZHIXU_BROWSER_ADAPTER,store:!!localStorage.getItem('ai-academy-learning-v02'),components:!!customElements.get('lg-lens'),optic:!!document.querySelector('svg filter[id^="lg"]'),motion:window.ZHIXU_APPLE_MOTION?.engine||'not loaded',lightweight:document.querySelector('#original-engine')?.getAttribute('src')?.endsWith('learning.html'),byok:!!document.querySelector('#original-engine').contentWindow?.ZHIXU_PAGES_AI,engineInfo:window.ZHIXU_APPLE_ENGINE_INFO?.mode}));
+ report.optics=actual;check('actual Original API adapter present',actual.ready);check('original learning schema imported',actual.store);check('native Skill glass web component registered',actual.components);check('Motion module',actual.motion==='Motion',actual.motion);check('lean Original learning runtime with original BYOK module',actual.lightweight&&actual.byok&&actual.engineInfo==='same-origin-original-learning',actual);
  for(const width of [320,390,768,1024,1440]){
    await page.setViewportSize({width,height:width<700?844:900});
    await page.waitForTimeout(430);
@@ -47,6 +47,15 @@ try{
    await page.locator('#quiz-form button[type=submit]').click();
    await page.locator('.feedback').waitFor({timeout:12000});
    check('Original grade + recorded attempt',await page.locator('.feedback').count()>0);
+   check('both original pre questions required',await page.locator('[data-action=next-pre]').count()===1);
+   if(await page.locator('[data-action=next-pre]').count()){
+     await page.locator('[data-action=next-pre]').click();
+     await page.waitForFunction(()=>document.querySelector('.assessment-counter')?.textContent?.includes('2 / 2'),{timeout:12000});
+     check('second pre starts unselected',(await page.locator('#quiz-form input:checked').count())===0);
+     await page.locator('#quiz-form input[name=answer]').first().check();
+     await page.locator('#quiz-form button[type=submit]').click();
+     await page.locator('[data-action=next-prediction]').waitFor();
+   }
    await page.locator('[data-action=next-prediction]').click();
    await page.locator('#prediction').fill('我预测一开始的微小偏差会被相同的迭代公式逐步放大。');
    await page.locator('#prediction-form button[type=submit]').click();
@@ -63,15 +72,26 @@ try{
    const t=await page.locator('#quiz-form input[type=radio]').count();
    check('Original transfer loaded unselected',t>=2&&(await page.locator('#quiz-form input:checked').count())===0);
    if(t){await page.locator('#quiz-form input[type=radio]').last().check();await page.locator('#quiz-form button[type=submit]').click();}
+   await page.locator('.feedback').waitFor({timeout:12000});
    check('Original transfer graded',await page.locator('.feedback').count()>0);
+   check('second original transfer question accessible',await page.locator('[data-action=next-transfer-question]').count()===1);
+   if(await page.locator('[data-action=next-transfer-question]').count()){
+     await page.locator('[data-action=next-transfer-question]').click();
+     await page.waitForFunction(()=>document.querySelector('.assessment-counter')?.textContent?.includes('2 / 2'),{timeout:12000});
+     check('second transfer starts unselected',(await page.locator('#quiz-form input:checked').count())===0);
+     await page.locator('#quiz-form input[name=answer]').last().check();
+     await page.locator('#quiz-form button[type=submit]').click();
+     await page.locator('[data-action=go-growth]').waitFor();
+   }
    const data=await page.evaluate(()=>{
     const x=JSON.parse(localStorage.getItem('ai-academy-learning-v02')||'null');
     return x?{schemaVersion:x.schemaVersion,events:x.events.map(e=>e.kind),count:x.events.length}:null;
    });
-   check('real V2 events persisted',data?.schemaVersion===2&&data.events.includes('question_attempt')&&data.events.includes('hypothesis_test'),data);
+   check('real V2 events persisted',data?.schemaVersion===2&&data.events.includes('question_attempt')&&data.events.includes('hypothesis_test')&&data.events.filter(x=>x==='question_attempt').length===4,data);
    await page.reload({waitUntil:'domcontentloaded'});
    await page.waitForTimeout(650);
    await page.getByRole('button',{name:'进度',exact:true}).last().click();
+   await page.locator('#main .data-metrics').waitFor({timeout:12000});
    check('progress after reload reads V2 events',(await page.locator('.small-count').count())>=0&&(await page.getByText('独立作答').count())>=1);
  }
  await page.locator('.dock-link[data-view="library"]').click();

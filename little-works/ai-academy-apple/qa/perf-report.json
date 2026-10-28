@@ -1,34 +1,36 @@
 {
-  "date": "2026-10-28T06:22:05.435Z",
+  "date": "2026-10-28T07:29:33.967Z",
   "environment": "Windows Edge headless on local Node preview; NOT an iPhone/iPad Safari benchmark",
   "checks": {
     "390": {
       "connected": true,
-      "bridgeMs": 1092,
-      "domContentLoadedMs": 283,
-      "fcpMs": 580,
-      "jsHeapUsedMb": 3.47,
+      "bridgeMs": 1176,
+      "domContentLoadedMs": 294,
+      "fcpMs": 564,
+      "jsHeapUsedMb": 3.67,
       "svgFilters": 3,
       "components": true,
       "layoutViewport": {
         "scroll": 390,
         "inner": 390
       },
-      "navBackdrop": "blur(27px) saturate(1.6)"
+      "navBackdrop": "blur(27px) saturate(1.6)",
+      "motion": "Motion"
     },
     "1440": {
       "connected": true,
-      "bridgeMs": 769,
-      "domContentLoadedMs": 140,
-      "fcpMs": 80,
-      "jsHeapUsedMb": 4.42,
+      "bridgeMs": 636,
+      "domContentLoadedMs": 128,
+      "fcpMs": 180,
+      "jsHeapUsedMb": 3.17,
       "svgFilters": 3,
       "components": true,
       "layoutViewport": {
         "scroll": 1440,
         "inner": 1440
       },
-      "navBackdrop": "none"
+      "navBackdrop": "none",
+      "motion": "Motion"
     }
   },
   "reducedMotion": {
