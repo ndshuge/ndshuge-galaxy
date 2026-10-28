@@ -16,7 +16,7 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}, onShell
   let gesture = null;
   let blockClickUntil = 0;
   let lastSelection = nav.current ?? 0;
-  let restTimer=0, pressTimer=0, lowerTimer=0;
+  let restTimer=0, opticalTimer=0;
   // Optical shapes use quantized presets so the original displacement map cache is reused.
   // Actual position stays one-to-one with the finger; the edges lag through a native spring.
   const shapeSpring=createSpring(0,(value)=>{
@@ -26,18 +26,27 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}, onShell
       nav.style.setProperty('--scrub-energy',String(Math.min(1,discrete/32)));
       if(nav.glass)nav.render();
     }
-    if(!gesture && Math.abs(value)<.01 && discrete===0){
-      nav.removeAttribute('data-scrub-active');
-      if(nav.glass)nav.render();
-    }
-  },{stiffness:610,damping:40,mass:1});
+    if(!gesture)finishVisualRelease();
+  },{stiffness:265,damping:33,mass:1});
 
   // Lift the original refractive lens off the navbar's surface, like a pressed
   // iOS 26 tab. The vertical shape is a *separate Skill spring*, never a scale.
   const liftSpring=createSpring(0,(value)=>{
     const snapped=reduceMotion.matches?0:Math.round(Math.max(0,Math.min(28,value))/4)*4;
     if(nav.scrubLift!==snapped){nav.scrubLift=snapped;if(nav.glass)nav.render();}
-  },{stiffness:520,damping:39,mass:1});
+    if(!gesture)finishVisualRelease();
+  },{stiffness:190,damping:27.5,mass:1});
+
+  // No abrupt optics-to-original icon swap at pointer-up. Only switch
+  // once the actual geometric lift and stretch have reached rest.
+  function finishVisualRelease(){
+    if(gesture || !nav.classList.contains('is-scrubbing'))return;
+    if((nav.scrubStretch||0)!==0 || (nav.scrubLift||0)!==0)return;
+    nav.classList.remove('is-scrubbing');
+    nav.removeAttribute('data-scrub-active');
+    nav.removeAttribute('data-scrub-preview');
+    if(nav.glass)nav.render();
+  }
 
   function centers() {
     const base = nav.getBoundingClientRect().left;
@@ -92,22 +101,28 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}, onShell
       moved:false,cancelled:false,pointerType:e.pointerType,
       lastX:e.clientX,lastT:performance.now(),velocity:0};
     lastSelection=nav.current;
-    nav.classList.add('is-scrubbing');
+    // Let the existing whole-dock spring paint its first feedback frame
+    // before the expensive optical displacement maps are swapped in.
     onShell('begin',e.clientX,0);
     nav.setAttribute('data-scrub-active','');
+    clearTimeout(opticalTimer);
+    const touchId=e.pointerId;
+    opticalTimer=setTimeout(()=>{
+      if(gesture?.id===touchId)nav.classList.add('is-scrubbing');
+    },48);
     // Optics from the bundled Skill engine: chromatic fringe intensifies on hold.
-    nav.glass?.update({chroma:0.21,refraction:16,bezel:0.74,specular:0.79});
-    clearTimeout(lowerTimer);
+    // Do not rasterize a new displacement map synchronously inside pointerdown.
+    // The optical rim and whole-dock highlight follow the press spring instead.
     if(!reduceMotion.matches){
       liftSpring.set(20);
-      clearTimeout(pressTimer);
-      pressTimer=setTimeout(()=>{if(gesture)shapeSpring.set(8);},120);
+      // Shape and lift must develop together: no delayed 120ms secondary jump.
+      shapeSpring.set(8);
     }
     nav.scrubDirection=0;
     nav.dataset.scrubPreview=String(index);
     onPressChange(index);
     try { button.setPointerCapture(e.pointerId); } catch {}
-    // Don't jump the lens on pointer-down. The selection gently lifts in place.
+    // Pressure starts a restrained, continuous spring response on pointer-down.
   },true);
 
   nav.addEventListener('pointermove',e=>{
@@ -129,15 +144,20 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}, onShell
     const g=gesture;
     if(!g || e.pointerId!==g.id)return;
     gesture=null;
-    nav.classList.remove('is-scrubbing');
+    clearTimeout(opticalTimer);
+    if(!nav.classList.contains('is-scrubbing')){
+      nav.removeAttribute('data-scrub-active');
+      nav.removeAttribute('data-scrub-preview');
+    }
+    // The glass and whole dock release together; keep one refracted ink
+    // layer until their springs have visually finished settling.
     onShell('end',e.clientX||g.lastX,0);
-    nav.removeAttribute('data-scrub-preview');
-    nav.glass?.update({chroma:0.095,refraction:12,bezel:0.66,specular:0.68});
+    // Stable optics settings avoid another synchronous map rebuild on pointerup.
     clearTimeout(restTimer);
     shapeSpring.set(0);
-    clearTimeout(pressTimer);
-    clearTimeout(lowerTimer);
-    lowerTimer=setTimeout(()=>liftSpring.set(0),110);
+    // Release from the current physical state, without freezing the height
+    // for 110ms before dropping it.
+    liftSpring.set(0);
     onPressChange(-1);
     // A click emitted after pointerup targets the pressed button, not the tab
     // under the finger. Capture it to avoid overwriting the correct selection.
@@ -151,6 +171,7 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}, onShell
     }
     const released=nearest(e.clientX,g.points);
     const target=g.moved?released:g.index;
+    if(nav.classList.contains('is-scrubbing'))nav.dataset.scrubPreview=String(target);
     if(tabs[target]?.dataset.view) onCommit(tabs[target].dataset.view);
     else nav.setCurrent(lastSelection);
     nav.moveTo(target,reduceMotion.matches);

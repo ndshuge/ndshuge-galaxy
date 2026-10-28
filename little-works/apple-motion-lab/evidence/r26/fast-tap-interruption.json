@@ -1,0 +1,82 @@
+{
+  "at": "2026-10-28T12:20:51.496Z",
+  "environment": "Windows Edge CDP touch emulation, NOT iPhone Safari",
+  "checks": [
+    {
+      "name": "tap 0ms leaves clean single-ink rest",
+      "pass": true,
+      "data": {
+        "optics": false,
+        "active": false,
+        "preview": false,
+        "selected": 0,
+        "pressed": false
+      }
+    },
+    {
+      "name": "tap 20ms leaves clean single-ink rest",
+      "pass": true,
+      "data": {
+        "optics": false,
+        "active": false,
+        "preview": false,
+        "selected": 0,
+        "pressed": false
+      }
+    },
+    {
+      "name": "tap 60ms leaves clean single-ink rest",
+      "pass": true,
+      "data": {
+        "optics": false,
+        "active": false,
+        "preview": false,
+        "selected": 0,
+        "pressed": false
+      }
+    },
+    {
+      "name": "tap 140ms leaves clean single-ink rest",
+      "pass": true,
+      "data": {
+        "optics": false,
+        "active": false,
+        "preview": false,
+        "selected": 0,
+        "pressed": false
+      }
+    },
+    {
+      "name": "next touch can take over while releasing",
+      "pass": true,
+      "data": {
+        "optics": true,
+        "active": true,
+        "preview": true,
+        "selected": 2,
+        "pressed": true
+      }
+    },
+    {
+      "name": "repeated press settles without stale optical layers",
+      "pass": true,
+      "data": {
+        "optics": false,
+        "active": false,
+        "preview": false,
+        "selected": 2,
+        "pressed": false
+      }
+    },
+    {
+      "name": "no uncaught errors",
+      "pass": true,
+      "data": []
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "passed": 7,
+    "total": 7
+  }
+}

@@ -278,3 +278,23 @@ html{scroll-padding-bottom:260px}
  #navWrap{will-change:auto}
  #navigation::after{opacity:0!important}
 }
+/* R2.6 — fluid press timing. The material does not snap to a second style
+   on pointerdown: one persistent substrate and a spring-driven light response. */
+#navigation.is-scrubbing{
+  background:radial-gradient(ellipse 96px 68px at var(--dock-shell-touch) -14%,
+    rgba(225,235,255,.19),rgba(192,211,255,.04) 55%,transparent 100%),
+    rgba(30,29,43,.88)!important;
+}
+#navigation .lg-lens-shadow{
+  transition:background-color 260ms ease-out,border-color 260ms ease-out,
+    box-shadow 260ms cubic-bezier(.2,.65,.2,1);
+}
+#navigation.is-scrubbing .lg-lens-shadow{
+  background:rgba(231,237,255,.075);
+  border-color:rgba(239,242,255,.36);
+  box-shadow:inset 0 1px rgba(255,255,255,.20),
+    0 4px 12px rgba(0,0,0,.14);
+}
+@media(prefers-reduced-motion:reduce){
+ #navigation .lg-lens-shadow{transition:none}
+}

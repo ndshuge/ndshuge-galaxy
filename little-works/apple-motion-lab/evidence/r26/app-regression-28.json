@@ -1,0 +1,742 @@
+{
+  "date": "2026-10-28T12:15:47.867Z",
+  "browser": "Microsoft Edge headless (Chromium), NOT iPhone Safari",
+  "tests": [
+    {
+      "name": "desktop HTTP 200",
+      "pass": true,
+      "details": 200
+    },
+    {
+      "name": "desktop layout no horizontal overflow",
+      "pass": true,
+      "details": {
+        "scroll": 1440,
+        "viewport": 1440
+      }
+    },
+    {
+      "name": "desktop components actually registered",
+      "pass": true,
+      "details": {
+        "version": "1.0.0",
+        "svgEngine": "blink",
+        "webgl": true,
+        "quality": "auto",
+        "gpuRenders": 1,
+        "glError": "",
+        "interpolatedGeometry": {
+          "p": 0,
+          "x": 495,
+          "y": 714,
+          "w": 450,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14,
+          "controlsTop": 155.5,
+          "infoVisibility": 1,
+          "controlVisibility": 0
+        },
+        "motionValue": true,
+        "navScrub": {
+          "pressed": false,
+          "preview": null,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "componentNavbar": "LgNavbar",
+        "componentSegmented": "LgSegmented",
+        "engineHasWebGL": true,
+        "fps": 1,
+        "layoutReads": 1,
+        "playing": false,
+        "track": 0,
+        "gesture": {
+          "drag": false,
+          "start": 0,
+          "last": 0,
+          "gesture": false,
+          "velocity": 0
+        }
+      }
+    },
+    {
+      "name": "desktop GPU renderer and visible pixels",
+      "pass": true,
+      "details": {
+        "webgl": true,
+        "renders": 1,
+        "pixel": [
+          249,
+          198,
+          192,
+          255
+        ],
+        "error": ""
+      }
+    },
+    {
+      "name": "desktop open spring settled",
+      "pass": true,
+      "details": {
+        "p": 1
+      }
+    },
+    {
+      "name": "desktop mid-animation reverse interrupt",
+      "pass": true,
+      "details": {
+        "mid": 0.969421637886847,
+        "final": 1
+      }
+    },
+    {
+      "name": "desktop drag down to mini",
+      "pass": true,
+      "details": {
+        "p": 0,
+        "debug": {
+          "drag": false,
+          "start": 22,
+          "last": 457,
+          "gesture": true,
+          "velocity": -0.9299207926186526
+        }
+      }
+    },
+    {
+      "name": "desktop drag up to full",
+      "pass": true,
+      "details": {
+        "p": 1
+      }
+    },
+    {
+      "name": "desktop L1 fallback switch",
+      "pass": true,
+      "details": {
+        "quality": "lite",
+        "mode": "off"
+      }
+    },
+    {
+      "name": "desktop L2 GPU restore",
+      "pass": true,
+      "details": {
+        "quality": "auto",
+        "mode": "ok"
+      }
+    },
+    {
+      "name": "desktop navbar indicator and content switch",
+      "pass": true,
+      "details": {
+        "selected": "page",
+        "changed": "发现\n另一面。"
+      }
+    },
+    {
+      "name": "mobile HTTP 200",
+      "pass": true,
+      "details": 200
+    },
+    {
+      "name": "mobile layout no horizontal overflow",
+      "pass": true,
+      "details": {
+        "scroll": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "name": "mobile components actually registered",
+      "pass": true,
+      "details": {
+        "version": "1.0.0",
+        "svgEngine": "blink",
+        "webgl": true,
+        "quality": "auto",
+        "gpuRenders": 1,
+        "glError": "",
+        "interpolatedGeometry": {
+          "p": 0,
+          "x": 12,
+          "y": 666,
+          "w": 366,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14,
+          "controlsTop": 149.62,
+          "infoVisibility": 1,
+          "controlVisibility": 0
+        },
+        "motionValue": true,
+        "navScrub": {
+          "pressed": false,
+          "preview": null,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "componentNavbar": "LgNavbar",
+        "componentSegmented": "LgSegmented",
+        "engineHasWebGL": true,
+        "fps": 153,
+        "layoutReads": 1,
+        "playing": false,
+        "track": 0,
+        "gesture": {
+          "drag": false,
+          "start": 0,
+          "last": 0,
+          "gesture": false,
+          "velocity": 0
+        }
+      }
+    },
+    {
+      "name": "mobile GPU renderer and visible pixels",
+      "pass": true,
+      "details": {
+        "webgl": true,
+        "renders": 1,
+        "pixel": [
+          249,
+          198,
+          192,
+          255
+        ],
+        "error": ""
+      }
+    },
+    {
+      "name": "mobile open spring settled",
+      "pass": true,
+      "details": {
+        "p": 1
+      }
+    },
+    {
+      "name": "mobile mid-animation reverse interrupt",
+      "pass": true,
+      "details": {
+        "mid": 0.08475349913498277,
+        "final": 1
+      }
+    },
+    {
+      "name": "mobile drag down to mini",
+      "pass": true,
+      "details": {
+        "p": 0,
+        "debug": {
+          "drag": false,
+          "start": 22,
+          "last": 457,
+          "gesture": true,
+          "velocity": -1.0722890455651193
+        }
+      }
+    },
+    {
+      "name": "mobile drag up to full",
+      "pass": true,
+      "details": {
+        "p": 1
+      }
+    },
+    {
+      "name": "mobile L1 fallback switch",
+      "pass": true,
+      "details": {
+        "quality": "lite",
+        "mode": "off"
+      }
+    },
+    {
+      "name": "mobile L2 GPU restore",
+      "pass": true,
+      "details": {
+        "quality": "auto",
+        "mode": "ok"
+      }
+    },
+    {
+      "name": "mobile navbar indicator and content switch",
+      "pass": true,
+      "details": {
+        "selected": "page",
+        "changed": "发现\n另一面。"
+      }
+    },
+    {
+      "name": "narrow HTTP 200",
+      "pass": true,
+      "details": 200
+    },
+    {
+      "name": "narrow layout no horizontal overflow",
+      "pass": true,
+      "details": {
+        "scroll": 320,
+        "viewport": 320
+      }
+    },
+    {
+      "name": "narrow components actually registered",
+      "pass": true,
+      "details": {
+        "version": "1.0.0",
+        "svgEngine": "blink",
+        "webgl": true,
+        "quality": "auto",
+        "gpuRenders": 1,
+        "glError": "",
+        "interpolatedGeometry": {
+          "p": 0,
+          "x": 12,
+          "y": 522,
+          "w": 296,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14,
+          "controlsTop": 143,
+          "infoVisibility": 1,
+          "controlVisibility": 0
+        },
+        "motionValue": true,
+        "navScrub": {
+          "pressed": false,
+          "preview": null,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "componentNavbar": "LgNavbar",
+        "componentSegmented": "LgSegmented",
+        "engineHasWebGL": true,
+        "fps": 169,
+        "layoutReads": 1,
+        "playing": false,
+        "track": 0,
+        "gesture": {
+          "drag": false,
+          "start": 0,
+          "last": 0,
+          "gesture": false,
+          "velocity": 0
+        }
+      }
+    },
+    {
+      "name": "narrow GPU renderer and visible pixels",
+      "pass": true,
+      "details": {
+        "webgl": true,
+        "renders": 1,
+        "pixel": [
+          249,
+          198,
+          192,
+          255
+        ],
+        "error": ""
+      }
+    },
+    {
+      "name": "320px player geometry stays within viewport",
+      "pass": true,
+      "details": {
+        "p": 1,
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 700,
+        "r": 0,
+        "artX": 40.3,
+        "artY": 73.5,
+        "artSize": 239.4,
+        "infoY": 332.9,
+        "controlsTop": 394.9,
+        "infoVisibility": 1,
+        "controlVisibility": 1
+      }
+    },
+    {
+      "name": "No uncaught JS/browser console errors",
+      "pass": true,
+      "details": []
+    }
+  ],
+  "pages": {
+    "desktop": {
+      "init": {
+        "diag": {
+          "version": "1.0.0",
+          "svgEngine": "blink",
+          "webgl": true,
+          "quality": "auto",
+          "gpuRenders": 1,
+          "glError": "",
+          "interpolatedGeometry": {
+            "p": 0,
+            "x": 495,
+            "y": 714,
+            "w": 450,
+            "h": 68,
+            "r": 20,
+            "artX": 9,
+            "artY": 7,
+            "artSize": 54,
+            "infoY": 14,
+            "controlsTop": 155.5,
+            "infoVisibility": 1,
+            "controlVisibility": 0
+          },
+          "motionValue": true,
+          "navScrub": {
+            "pressed": false,
+            "preview": null,
+            "current": 0,
+            "x": 6,
+            "moved": false,
+            "target": 0,
+            "stretch": 0,
+            "direction": 0,
+            "lift": 0
+          },
+          "componentNavbar": "LgNavbar",
+          "componentSegmented": "LgSegmented",
+          "engineHasWebGL": true,
+          "fps": 1,
+          "layoutReads": 1,
+          "playing": false,
+          "track": 0,
+          "gesture": {
+            "drag": false,
+            "start": 0,
+            "last": 0,
+            "gesture": false,
+            "velocity": 0
+          }
+        },
+        "pixel": [
+          249,
+          198,
+          192,
+          255
+        ],
+        "scrollWidth": 1440,
+        "viewport": 1440,
+        "navbar": true,
+        "appTitle": "Apple Motion Lab · 原生级交互实验室"
+      },
+      "final": {
+        "version": "1.0.0",
+        "svgEngine": "blink",
+        "webgl": true,
+        "quality": "auto",
+        "gpuRenders": 9,
+        "glError": "",
+        "interpolatedGeometry": {
+          "p": 0,
+          "x": 495,
+          "y": 742,
+          "w": 450,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14,
+          "controlsTop": 155.5,
+          "infoVisibility": 1,
+          "controlVisibility": 0
+        },
+        "motionValue": true,
+        "navScrub": {
+          "pressed": false,
+          "preview": null,
+          "current": 1,
+          "x": 133.3496795802523,
+          "moved": false,
+          "target": 1,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "componentNavbar": "LgNavbar",
+        "componentSegmented": "LgSegmented",
+        "engineHasWebGL": true,
+        "fps": 59,
+        "layoutReads": 3,
+        "playing": false,
+        "track": 0,
+        "gesture": {
+          "drag": false,
+          "start": 773,
+          "last": 325,
+          "gesture": true,
+          "velocity": 1.5948521861662435
+        }
+      }
+    },
+    "mobile": {
+      "init": {
+        "diag": {
+          "version": "1.0.0",
+          "svgEngine": "blink",
+          "webgl": true,
+          "quality": "auto",
+          "gpuRenders": 1,
+          "glError": "",
+          "interpolatedGeometry": {
+            "p": 0,
+            "x": 12,
+            "y": 666,
+            "w": 366,
+            "h": 68,
+            "r": 20,
+            "artX": 9,
+            "artY": 7,
+            "artSize": 54,
+            "infoY": 14,
+            "controlsTop": 149.62,
+            "infoVisibility": 1,
+            "controlVisibility": 0
+          },
+          "motionValue": true,
+          "navScrub": {
+            "pressed": false,
+            "preview": null,
+            "current": 0,
+            "x": 6,
+            "moved": false,
+            "target": 0,
+            "stretch": 0,
+            "direction": 0,
+            "lift": 0
+          },
+          "componentNavbar": "LgNavbar",
+          "componentSegmented": "LgSegmented",
+          "engineHasWebGL": true,
+          "fps": 153,
+          "layoutReads": 1,
+          "playing": false,
+          "track": 0,
+          "gesture": {
+            "drag": false,
+            "start": 0,
+            "last": 0,
+            "gesture": false,
+            "velocity": 0
+          }
+        },
+        "pixel": [
+          249,
+          198,
+          192,
+          255
+        ],
+        "scrollWidth": 390,
+        "viewport": 390,
+        "navbar": true,
+        "appTitle": "Apple Motion Lab · 原生级交互实验室"
+      },
+      "final": {
+        "version": "1.0.0",
+        "svgEngine": "blink",
+        "webgl": true,
+        "quality": "auto",
+        "gpuRenders": 9,
+        "glError": "",
+        "interpolatedGeometry": {
+          "p": 0,
+          "x": 12,
+          "y": 690,
+          "w": 366,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14,
+          "controlsTop": 149.62,
+          "infoVisibility": 1,
+          "controlVisibility": 0
+        },
+        "motionValue": true,
+        "navScrub": {
+          "pressed": false,
+          "preview": null,
+          "current": 1,
+          "x": 126.1365578859161,
+          "moved": false,
+          "target": 1,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "componentNavbar": "LgNavbar",
+        "componentSegmented": "LgSegmented",
+        "engineHasWebGL": true,
+        "fps": 53,
+        "layoutReads": 3,
+        "playing": false,
+        "track": 0,
+        "gesture": {
+          "drag": false,
+          "start": 720,
+          "last": 272,
+          "gesture": true,
+          "velocity": 0.5575514982927708
+        }
+      }
+    },
+    "narrow": {
+      "init": {
+        "diag": {
+          "version": "1.0.0",
+          "svgEngine": "blink",
+          "webgl": true,
+          "quality": "auto",
+          "gpuRenders": 1,
+          "glError": "",
+          "interpolatedGeometry": {
+            "p": 0,
+            "x": 12,
+            "y": 522,
+            "w": 296,
+            "h": 68,
+            "r": 20,
+            "artX": 9,
+            "artY": 7,
+            "artSize": 54,
+            "infoY": 14,
+            "controlsTop": 143,
+            "infoVisibility": 1,
+            "controlVisibility": 0
+          },
+          "motionValue": true,
+          "navScrub": {
+            "pressed": false,
+            "preview": null,
+            "current": 0,
+            "x": 6,
+            "moved": false,
+            "target": 0,
+            "stretch": 0,
+            "direction": 0,
+            "lift": 0
+          },
+          "componentNavbar": "LgNavbar",
+          "componentSegmented": "LgSegmented",
+          "engineHasWebGL": true,
+          "fps": 169,
+          "layoutReads": 1,
+          "playing": false,
+          "track": 0,
+          "gesture": {
+            "drag": false,
+            "start": 0,
+            "last": 0,
+            "gesture": false,
+            "velocity": 0
+          }
+        },
+        "pixel": [
+          249,
+          198,
+          192,
+          255
+        ],
+        "scrollWidth": 320,
+        "viewport": 320,
+        "navbar": true,
+        "appTitle": "Apple Motion Lab · 原生级交互实验室"
+      },
+      "final": {
+        "version": "1.0.0",
+        "svgEngine": "blink",
+        "webgl": true,
+        "quality": "auto",
+        "gpuRenders": 3,
+        "glError": "",
+        "interpolatedGeometry": {
+          "p": 1,
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 700,
+          "r": 0,
+          "artX": 40.3,
+          "artY": 73.5,
+          "artSize": 239.4,
+          "infoY": 332.9,
+          "controlsTop": 394.9,
+          "infoVisibility": 1,
+          "controlVisibility": 1
+        },
+        "motionValue": true,
+        "navScrub": {
+          "pressed": false,
+          "preview": null,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "componentNavbar": "LgNavbar",
+        "componentSegmented": "LgSegmented",
+        "engineHasWebGL": true,
+        "fps": 140,
+        "layoutReads": 1,
+        "playing": false,
+        "track": 0,
+        "gesture": {
+          "drag": false,
+          "start": 0,
+          "last": 0,
+          "gesture": false,
+          "velocity": 0
+        }
+      }
+    }
+  },
+  "errors": [],
+  "screenshots": [
+    "qa-desktop.png",
+    "qa-desktop-full.png",
+    "qa-mobile.png",
+    "qa-mobile-full.png"
+  ],
+  "summary": {
+    "passed": 28,
+    "total": 28
+  }
+}

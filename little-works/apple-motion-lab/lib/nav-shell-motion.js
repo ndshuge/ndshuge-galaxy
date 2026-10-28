@@ -25,9 +25,9 @@ export function installNavShellMotion(wrapper,nav) {
     nav.style.setProperty('--dock-shell-touch',Math.round(lastX*100)+'%');
   }
   const pressSpring=createSpring(0,v=>{press=v;paint()},
-    {stiffness:480,damping:37,mass:1});
+    {stiffness:175,damping:27,mass:1});
   const leanSpring=createSpring(0,v=>{lean=v;paint()},
-    {stiffness:420,damping:34,mass:1});
+    {stiffness:155,damping:25,mass:1});
   // Capture geometry once on pointerdown; scrub moves never force layout reads.
   const fraction=x=>Math.max(0,Math.min(1,
     (x-touchBounds.left)/Math.max(1,touchBounds.width)));
