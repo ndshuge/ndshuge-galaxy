@@ -7,7 +7,7 @@
  */
 import { createSpring } from './liquid-glass.js';
 
-export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
+export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}, onShell=()=>{}}={}) {
   if (!nav || typeof nav.xs?.set !== 'function' || typeof nav.setCurrent !== 'function')
     throw new Error('lg-navbar Skill component is required for press-and-scrub');
   const tabs = [...nav.querySelectorAll(':scope > button[data-view]')];
@@ -63,6 +63,7 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
     const delta=x-gesture.lastX;
     const speed=delta*1000/dt;
     gesture.velocity=.6*gesture.velocity+.4*speed;
+    onShell('move',x,gesture.velocity);
     if(Math.abs(delta)>.4)nav.scrubDirection=Math.sign(delta);
     gesture.lastX=x;gesture.lastT=now;
     nav.xs.set(desiredLeft,{immediate:true});
@@ -92,6 +93,7 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
       lastX:e.clientX,lastT:performance.now(),velocity:0};
     lastSelection=nav.current;
     nav.classList.add('is-scrubbing');
+    onShell('begin',e.clientX,0);
     nav.setAttribute('data-scrub-active','');
     // Optics from the bundled Skill engine: chromatic fringe intensifies on hold.
     nav.glass?.update({chroma:0.21,refraction:16,bezel:0.74,specular:0.79});
@@ -128,6 +130,7 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
     if(!g || e.pointerId!==g.id)return;
     gesture=null;
     nav.classList.remove('is-scrubbing');
+    onShell('end',e.clientX||g.lastX,0);
     nav.removeAttribute('data-scrub-preview');
     nav.glass?.update({chroma:0.095,refraction:12,bezel:0.66,specular:0.68});
     clearTimeout(restTimer);

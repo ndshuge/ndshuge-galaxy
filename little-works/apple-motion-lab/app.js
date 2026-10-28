@@ -3,6 +3,7 @@ import { createGlassRenderer } from './lib/glass-webgl.js';
 import { engine as svgEngine } from './lib/liquid-glass.js';
 import { animate, motionValue } from './vendor/motion.js';
 import { installNavbarScrub } from './lib/nav-scrub.js';
+import {installNavShellMotion} from './lib/nav-shell-motion.js';
 
 const $ = (id) => document.getElementById(id);
 const clamp = (x,a=0,b=1)=>Math.max(a,Math.min(b,x));
@@ -202,9 +203,15 @@ navButtons.forEach((btn,index)=>{
  btn.addEventListener('blur',()=>scaleTab(-1));
 });
 $('navigation').dataset.selected='0';
+const dockShell=installNavShellMotion($('navWrap'),$('navigation'));
 const navScrub=installNavbarScrub($('navigation'),{
  onCommit:viewChange,
- onPressChange:scaleTab
+ onPressChange:scaleTab,
+ onShell:(phase,x,velocity)=>{
+  if(phase==='begin')dockShell.begin(x);
+  else if(phase==='move')dockShell.move(x,velocity);
+  else if(phase==='end')dockShell.end();
+ }
 });
 
 function sampleFps(now){frames++;if(now-fpsWindow>=1200){measuredFps=Math.round(frames*1000/(now-fpsWindow));frames=0;fpsWindow=now;}requestAnimationFrame(sampleFps)}requestAnimationFrame(sampleFps);

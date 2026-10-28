@@ -1,0 +1,1186 @@
+{
+  "date": "2026-10-28T11:38:29.660Z",
+  "environment": "Windows Edge CDP touch emulation, NOT iPhone Safari",
+  "checks": [
+    {
+      "name": "320 whole shell lifts/scales when pressed",
+      "pass": true,
+      "detail": {
+        "idle": "matrix(1, 0, 0, 1, -148, 0)",
+        "pressed": "matrix(1.0116, -0.00143012, 0.00138629, 0.980599, -149.288, -2.288)"
+      }
+    },
+    {
+      "name": "320 whole shell follows horizontal drag",
+      "pass": true,
+      "detail": {
+        "scrub": "matrix(1.0132, 0.00190984, -0.00184349, 0.977998, -146.276, -2.6)",
+        "energy": "1.000"
+      }
+    },
+    {
+      "name": "320 full dock restores at release",
+      "pass": true,
+      "detail": {
+        "idle": "matrix(1, 0, 0, 1, -148, 0)",
+        "rest": "matrix(1, 0, 0, 1, -148, 0)"
+      }
+    },
+    {
+      "name": "320 selected tab changed only on release",
+      "pass": true,
+      "detail": {
+        "press": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 16
+        },
+        "drag": {
+          "pressed": true,
+          "preview": 2,
+          "current": 0,
+          "x": 197,
+          "moved": true,
+          "target": 0,
+          "stretch": 12,
+          "direction": 1,
+          "lift": 20
+        },
+        "rest": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 197,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        }
+      }
+    },
+    {
+      "name": "320 typography hierarchy within 58px shell",
+      "pass": true,
+      "detail": {
+        "labels": [
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "610",
+            "label": "现在就听",
+            "labelSize": "10.5px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "10.5px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "资料库",
+            "labelSize": "10.5px",
+            "iconWidth": 20.5
+          }
+        ],
+        "height": 58
+      }
+    },
+    {
+      "name": "320 no overflow and single ink at rest",
+      "pass": true,
+      "detail": {
+        "overflow": 0,
+        "copy": "hidden"
+      }
+    },
+    {
+      "name": "320 square/segmented control unaffected",
+      "pass": true,
+      "detail": {
+        "initial": "none",
+        "final": "none"
+      }
+    },
+    {
+      "name": "390 whole shell lifts/scales when pressed",
+      "pass": true,
+      "detail": {
+        "idle": "matrix(1, 0, 0, 1, -183, 0)",
+        "pressed": "matrix(1.0132, -0.00187447, 0.00180953, 0.978098, -184.702, -2.592)"
+      }
+    },
+    {
+      "name": "390 whole shell follows horizontal drag",
+      "pass": true,
+      "detail": {
+        "scrub": "matrix(1.0132, 0.00192752, -0.00186055, 0.977998, -181.253, -2.6)",
+        "energy": "1.000"
+      }
+    },
+    {
+      "name": "390 full dock restores at release",
+      "pass": true,
+      "detail": {
+        "idle": "matrix(1, 0, 0, 1, -183, 0)",
+        "rest": "matrix(1, 0, 0, 1, -183, 0)"
+      }
+    },
+    {
+      "name": "390 selected tab changed only on release",
+      "pass": true,
+      "detail": {
+        "press": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 4,
+          "direction": 0,
+          "lift": 20
+        },
+        "drag": {
+          "pressed": true,
+          "preview": 2,
+          "current": 0,
+          "x": 243,
+          "moved": true,
+          "target": 0,
+          "stretch": 20,
+          "direction": 1,
+          "lift": 20
+        },
+        "rest": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 243,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        }
+      }
+    },
+    {
+      "name": "390 typography hierarchy within 58px shell",
+      "pass": true,
+      "detail": {
+        "labels": [
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "610",
+            "label": "现在就听",
+            "labelSize": "11.115px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "11.115px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "资料库",
+            "labelSize": "11.115px",
+            "iconWidth": 20.5
+          }
+        ],
+        "height": 58
+      }
+    },
+    {
+      "name": "390 no overflow and single ink at rest",
+      "pass": true,
+      "detail": {
+        "overflow": 0,
+        "copy": "hidden"
+      }
+    },
+    {
+      "name": "390 square/segmented control unaffected",
+      "pass": true,
+      "detail": {
+        "initial": "none",
+        "final": "none"
+      }
+    },
+    {
+      "name": "768 whole shell lifts/scales when pressed",
+      "pass": true,
+      "detail": {
+        "idle": "matrix(1, 0, 0, 1, -196, 0)",
+        "pressed": "matrix(1.0132, -0.00189215, 0.00182642, 0.977998, -197.717, -2.6)"
+      }
+    },
+    {
+      "name": "768 whole shell follows horizontal drag",
+      "pass": true,
+      "detail": {
+        "scrub": "matrix(1.0132, 0.00187447, -0.00180935, 0.977998, -194.312, -2.6)",
+        "energy": "1.000"
+      }
+    },
+    {
+      "name": "768 full dock restores at release",
+      "pass": true,
+      "detail": {
+        "idle": "matrix(1, 0, 0, 1, -196, 0)",
+        "rest": "matrix(1, 0, 0, 1, -196, 0)"
+      }
+    },
+    {
+      "name": "768 selected tab changed only on release",
+      "pass": true,
+      "detail": {
+        "press": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 8,
+          "direction": 0,
+          "lift": 20
+        },
+        "drag": {
+          "pressed": true,
+          "preview": 2,
+          "current": 0,
+          "x": 261,
+          "moved": true,
+          "target": 0,
+          "stretch": 16,
+          "direction": 1,
+          "lift": 20
+        },
+        "rest": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 261,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        }
+      }
+    },
+    {
+      "name": "768 typography hierarchy within 58px shell",
+      "pass": true,
+      "detail": {
+        "labels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "现在就听",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "资料库",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          }
+        ],
+        "height": 58
+      }
+    },
+    {
+      "name": "768 no overflow and single ink at rest",
+      "pass": true,
+      "detail": {
+        "overflow": 0,
+        "copy": "hidden"
+      }
+    },
+    {
+      "name": "768 square/segmented control unaffected",
+      "pass": true,
+      "detail": {
+        "initial": "none",
+        "final": "none"
+      }
+    },
+    {
+      "name": "1440 whole shell lifts/scales when pressed",
+      "pass": true,
+      "detail": {
+        "idle": "matrix(1, 0, 0, 1, -196, 0)",
+        "pressed": "matrix(1.0132, -0.00189215, 0.00182642, 0.977998, -197.716, -2.599)"
+      }
+    },
+    {
+      "name": "1440 whole shell follows horizontal drag",
+      "pass": true,
+      "detail": {
+        "scrub": "matrix(1.0132, 0.00196289, -0.00189469, 0.977998, -194.222, -2.6)",
+        "energy": "1.000"
+      }
+    },
+    {
+      "name": "1440 full dock restores at release",
+      "pass": true,
+      "detail": {
+        "idle": "matrix(1, 0, 0, 1, -196, 0)",
+        "rest": "matrix(1, 0, 0, 1, -196, 0)"
+      }
+    },
+    {
+      "name": "1440 selected tab changed only on release",
+      "pass": true,
+      "detail": {
+        "press": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 8,
+          "direction": 0,
+          "lift": 20
+        },
+        "drag": {
+          "pressed": true,
+          "preview": 2,
+          "current": 0,
+          "x": 261,
+          "moved": true,
+          "target": 0,
+          "stretch": 24,
+          "direction": 1,
+          "lift": 20
+        },
+        "rest": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 261,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        }
+      }
+    },
+    {
+      "name": "1440 typography hierarchy within 58px shell",
+      "pass": true,
+      "detail": {
+        "labels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "现在就听",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "资料库",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          }
+        ],
+        "height": 58
+      }
+    },
+    {
+      "name": "1440 no overflow and single ink at rest",
+      "pass": true,
+      "detail": {
+        "overflow": 0,
+        "copy": "hidden"
+      }
+    },
+    {
+      "name": "1440 square/segmented control unaffected",
+      "pass": true,
+      "detail": {
+        "initial": "none",
+        "final": "none"
+      }
+    },
+    {
+      "name": "No JS exceptions",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "captures": [
+    {
+      "width": 320,
+      "idle": {
+        "wrapTransform": "matrix(1, 0, 0, 1, -148, 0)",
+        "wrapState": "rest",
+        "shellEnergy": "0.000",
+        "lightPoint": "50%",
+        "navbarHeight": 58,
+        "navLabels": [
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "610",
+            "label": "现在就听",
+            "labelSize": "10.5px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "10.5px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "资料库",
+            "labelSize": "10.5px",
+            "iconWidth": 20.5
+          }
+        ],
+        "navCopy": "hidden",
+        "opticalFilter": "url(\"#lg3-v1\")",
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "pressed": {
+        "wrapTransform": "matrix(1.0116, -0.00143012, 0.00138629, 0.980599, -149.288, -2.288)",
+        "wrapState": "pressed",
+        "shellEnergy": "0.880",
+        "lightPoint": "18%",
+        "navbarHeight": 57.29803466796875,
+        "navLabels": [
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "610",
+            "label": "",
+            "labelSize": "10.5px",
+            "iconWidth": 20.757061004638672
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "10.5px",
+            "iconWidth": 20.766204833984375
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "10.5px",
+            "iconWidth": 20.766189575195312
+          }
+        ],
+        "navCopy": "visible",
+        "opticalFilter": "url(\"#lg3-v4\")",
+        "nav": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 16
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "scrub": {
+        "wrapTransform": "matrix(1.0132, 0.00190984, -0.00184349, 0.977998, -146.276, -2.6)",
+        "wrapState": "pressed",
+        "shellEnergy": "1.000",
+        "lightPoint": "82%",
+        "navbarHeight": 57.28924560546875,
+        "navLabels": [
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "610",
+            "label": "",
+            "labelSize": "10.5px",
+            "iconWidth": 20.80835723876953
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "10.5px",
+            "iconWidth": 20.808349609375
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "10.5px",
+            "iconWidth": 19.55987548828125
+          }
+        ],
+        "navCopy": "visible",
+        "opticalFilter": "url(\"#lg3-v35\")",
+        "nav": {
+          "pressed": true,
+          "preview": 2,
+          "current": 0,
+          "x": 197,
+          "moved": true,
+          "target": 0,
+          "stretch": 12,
+          "direction": 1,
+          "lift": 20
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "settled": {
+        "wrapTransform": "matrix(1, 0, 0, 1, -148, 0)",
+        "wrapState": "rest",
+        "shellEnergy": "0.000",
+        "lightPoint": "50%",
+        "navbarHeight": 58,
+        "navLabels": [
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "现在就听",
+            "labelSize": "10.5px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "10.5px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "10.5px",
+            "fontWeight": "610",
+            "label": "资料库",
+            "labelSize": "10.5px",
+            "iconWidth": 20.5
+          }
+        ],
+        "navCopy": "hidden",
+        "opticalFilter": "url(\"#lg3-v43\")",
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 197,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        },
+        "segStyle": "none",
+        "overflow": 0
+      }
+    },
+    {
+      "width": 390,
+      "idle": {
+        "wrapTransform": "matrix(1, 0, 0, 1, -183, 0)",
+        "wrapState": "rest",
+        "shellEnergy": "0.000",
+        "lightPoint": "50%",
+        "navbarHeight": 58,
+        "navLabels": [
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "610",
+            "label": "现在就听",
+            "labelSize": "11.115px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "11.115px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "资料库",
+            "labelSize": "11.115px",
+            "iconWidth": 20.5
+          }
+        ],
+        "navCopy": "hidden",
+        "opticalFilter": "url(\"#lg3-v1\")",
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "pressed": {
+        "wrapTransform": "matrix(1.0132, -0.00187447, 0.00180953, 0.978098, -184.702, -2.592)",
+        "wrapState": "pressed",
+        "shellEnergy": "0.997",
+        "lightPoint": "18%",
+        "navbarHeight": 57.415771484375,
+        "navLabels": [
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "610",
+            "label": "",
+            "labelSize": "11.115px",
+            "iconWidth": 19.559192657470703
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.115px",
+            "iconWidth": 20.807662963867188
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.115px",
+            "iconWidth": 20.80767822265625
+          }
+        ],
+        "navCopy": "visible",
+        "opticalFilter": "url(\"#lg3-v8\")",
+        "nav": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 4,
+          "direction": 0,
+          "lift": 20
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "scrub": {
+        "wrapTransform": "matrix(1.0132, 0.00192752, -0.00186055, 0.977998, -181.253, -2.6)",
+        "wrapState": "pressed",
+        "shellEnergy": "1.000",
+        "lightPoint": "82%",
+        "navbarHeight": 57.42938232421875,
+        "navLabels": [
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "610",
+            "label": "",
+            "labelSize": "11.115px",
+            "iconWidth": 20.808700561523438
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.115px",
+            "iconWidth": 20.862625122070312
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.115px",
+            "iconWidth": 19.560211181640625
+          }
+        ],
+        "navCopy": "visible",
+        "opticalFilter": "url(\"#lg3-v35\")",
+        "nav": {
+          "pressed": true,
+          "preview": 2,
+          "current": 0,
+          "x": 243,
+          "moved": true,
+          "target": 0,
+          "stretch": 20,
+          "direction": 1,
+          "lift": 20
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "settled": {
+        "wrapTransform": "matrix(1, 0, 0, 1, -183, 0)",
+        "wrapState": "rest",
+        "shellEnergy": "0.000",
+        "lightPoint": "50%",
+        "navbarHeight": 58,
+        "navLabels": [
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "现在就听",
+            "labelSize": "11.115px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "11.115px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.115px",
+            "fontWeight": "610",
+            "label": "资料库",
+            "labelSize": "11.115px",
+            "iconWidth": 20.5
+          }
+        ],
+        "navCopy": "hidden",
+        "opticalFilter": "url(\"#lg3-v47\")",
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 243,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        },
+        "segStyle": "none",
+        "overflow": 0
+      }
+    },
+    {
+      "width": 768,
+      "idle": {
+        "wrapTransform": "matrix(1, 0, 0, 1, -196, 0)",
+        "wrapState": "rest",
+        "shellEnergy": "0.000",
+        "lightPoint": "50%",
+        "navbarHeight": 58,
+        "navLabels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "现在就听",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "资料库",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          }
+        ],
+        "navCopy": "hidden",
+        "opticalFilter": "url(\"#lg3-v3\")",
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "pressed": {
+        "wrapTransform": "matrix(1.0132, -0.00189215, 0.00182642, 0.977998, -197.717, -2.6)",
+        "wrapState": "pressed",
+        "shellEnergy": "1.000",
+        "lightPoint": "18%",
+        "navbarHeight": 57.46563720703125,
+        "navLabels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 19.55950927734375
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 20.8079833984375
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 20.80804443359375
+          }
+        ],
+        "navCopy": "visible",
+        "opticalFilter": "url(\"#lg3-v10\")",
+        "nav": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 8,
+          "direction": 0,
+          "lift": 20
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "scrub": {
+        "wrapTransform": "matrix(1.0132, 0.00187447, -0.00180935, 0.977998, -194.312, -2.6)",
+        "wrapState": "pressed",
+        "shellEnergy": "1.000",
+        "lightPoint": "82%",
+        "navbarHeight": 57.45867919921875,
+        "navLabels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 20.80767822265625
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 20.80767822265625
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 19.5592041015625
+          }
+        ],
+        "navCopy": "visible",
+        "opticalFilter": "url(\"#lg3-v39\")",
+        "nav": {
+          "pressed": true,
+          "preview": 2,
+          "current": 0,
+          "x": 261,
+          "moved": true,
+          "target": 0,
+          "stretch": 16,
+          "direction": 1,
+          "lift": 20
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "settled": {
+        "wrapTransform": "matrix(1, 0, 0, 1, -196, 0)",
+        "wrapState": "rest",
+        "shellEnergy": "0.000",
+        "lightPoint": "50%",
+        "navbarHeight": 58,
+        "navLabels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "现在就听",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "资料库",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          }
+        ],
+        "navCopy": "hidden",
+        "opticalFilter": "url(\"#lg3-v51\")",
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 261,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        },
+        "segStyle": "none",
+        "overflow": 0
+      }
+    },
+    {
+      "width": 1440,
+      "idle": {
+        "wrapTransform": "matrix(1, 0, 0, 1, -196, 0)",
+        "wrapState": "rest",
+        "shellEnergy": "0.000",
+        "lightPoint": "50%",
+        "navbarHeight": 58,
+        "navLabels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "现在就听",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "资料库",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          }
+        ],
+        "navCopy": "hidden",
+        "opticalFilter": "url(\"#lg3-v1\")",
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 0,
+          "direction": 0,
+          "lift": 0
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "pressed": {
+        "wrapTransform": "matrix(1.0132, -0.00189215, 0.00182642, 0.977998, -197.716, -2.599)",
+        "wrapState": "pressed",
+        "shellEnergy": "1.000",
+        "lightPoint": "18%",
+        "navbarHeight": 57.46563720703125,
+        "navLabels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 19.55950927734375
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 20.8079833984375
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 20.80804443359375
+          }
+        ],
+        "navCopy": "visible",
+        "opticalFilter": "url(\"#lg3-v11\")",
+        "nav": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 8,
+          "direction": 0,
+          "lift": 20
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "scrub": {
+        "wrapTransform": "matrix(1.0132, 0.00196289, -0.00189469, 0.977998, -194.222, -2.6)",
+        "wrapState": "pressed",
+        "shellEnergy": "1.000",
+        "lightPoint": "82%",
+        "navbarHeight": 57.49334716796875,
+        "navLabels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 20.8094482421875
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 20.85943603515625
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "",
+            "labelSize": "11.25px",
+            "iconWidth": 19.56085205078125
+          }
+        ],
+        "navCopy": "visible",
+        "opticalFilter": "url(\"#lg3-v34\")",
+        "nav": {
+          "pressed": true,
+          "preview": 2,
+          "current": 0,
+          "x": 261,
+          "moved": true,
+          "target": 0,
+          "stretch": 24,
+          "direction": 1,
+          "lift": 20
+        },
+        "segStyle": "none",
+        "overflow": 0
+      },
+      "settled": {
+        "wrapTransform": "matrix(1, 0, 0, 1, -196, 0)",
+        "wrapState": "rest",
+        "shellEnergy": "0.000",
+        "lightPoint": "50%",
+        "navbarHeight": 58,
+        "navLabels": [
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "现在就听",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "540",
+            "label": "发现",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          },
+          {
+            "fontSize": "11.25px",
+            "fontWeight": "610",
+            "label": "资料库",
+            "labelSize": "11.25px",
+            "iconWidth": 20.5
+          }
+        ],
+        "navCopy": "hidden",
+        "opticalFilter": "url(\"#lg3-v42\")",
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 261,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        },
+        "segStyle": "none",
+        "overflow": 0
+      }
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "passed": 29,
+    "total": 29
+  }
+}
