@@ -5,6 +5,8 @@
  * Invariant: hover/drag is PREVIEW only. ARIA current + content commit on
  * pointer release. Native keyboard focus/click behavior remains available.
  */
+import { createSpring } from './liquid-glass.js';
+
 export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
   if (!nav || typeof nav.xs?.set !== 'function' || typeof nav.setCurrent !== 'function')
     throw new Error('lg-navbar Skill component is required for press-and-scrub');
@@ -14,6 +16,20 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
   let gesture = null;
   let blockClickUntil = 0;
   let lastSelection = nav.current ?? 0;
+  let restTimer=0;
+  // Optical shapes use quantized presets so the original displacement map cache is reused.
+  // Actual position stays one-to-one with the finger; the edges lag through a native spring.
+  const shapeSpring=createSpring(0,(value)=>{
+    const discrete=reduceMotion.matches?0:Math.round(Math.max(0,Math.min(28,value))/4)*4;
+    if(discrete!==nav.scrubStretch){
+      nav.scrubStretch=discrete;
+      if(nav.glass)nav.render();
+    }
+    if(!gesture && Math.abs(value)<.01 && discrete===0){
+      nav.removeAttribute('data-scrub-active');
+      if(nav.glass)nav.render();
+    }
+  },{stiffness:610,damping:40,mass:1});
 
   function centers() {
     const base = nav.getBoundingClientRect().left;
@@ -35,10 +51,23 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
     const desiredLeft=Math.max(p.left,Math.min(q.left,center-pts[0].width/2));
     // This existing Skill spring supports immediate updates for true 1:1 finger
     // following. The same spring takes over on release for a natural settle.
+    const now=performance.now(),dt=Math.max(12,now-gesture.lastT);
+    const delta=x-gesture.lastX;
+    const speed=delta*1000/dt;
+    gesture.velocity=.6*gesture.velocity+.4*speed;
+    if(Math.abs(delta)>.4)nav.scrubDirection=Math.sign(delta);
+    gesture.lastX=x;gesture.lastT=now;
     nav.xs.set(desiredLeft,{immediate:true});
+    if(nav.glass)nav.render();
+    clearTimeout(restTimer);
+    if(!reduceMotion.matches){
+      shapeSpring.set(Math.min(28,Math.abs(gesture.velocity)*.065));
+      restTimer=setTimeout(()=>shapeSpring.set(0),90);
+    }
     const index=nearest(x,pts);
     if (gesture.preview!==index) {
       gesture.preview=index;
+      nav.dataset.scrubPreview=String(index);
       onPressChange(index);
     }
   }
@@ -51,9 +80,13 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
     const points=centers(), index=tabs.indexOf(button);
     gesture={id:e.pointerId,button,index,preview:index,points,
       base:nav.getBoundingClientRect().left,startX:e.clientX,startY:e.clientY,
-      moved:false,cancelled:false,pointerType:e.pointerType};
+      moved:false,cancelled:false,pointerType:e.pointerType,
+      lastX:e.clientX,lastT:performance.now(),velocity:0};
     lastSelection=nav.current;
     nav.classList.add('is-scrubbing');
+    nav.setAttribute('data-scrub-active','');
+    nav.scrubDirection=0;
+    nav.dataset.scrubPreview=String(index);
     onPressChange(index);
     try { button.setPointerCapture(e.pointerId); } catch {}
     // Don't jump the lens on pointer-down. The selection gently lifts in place.
@@ -79,6 +112,9 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
     if(!g || e.pointerId!==g.id)return;
     gesture=null;
     nav.classList.remove('is-scrubbing');
+    nav.removeAttribute('data-scrub-preview');
+    clearTimeout(restTimer);
+    shapeSpring.set(0);
     onPressChange(-1);
     // A click emitted after pointerup targets the pressed button, not the tab
     // under the finger. Capture it to avoid overwriting the correct selection.
@@ -112,7 +148,8 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}}={}) {
   return {
     state:()=>({pressed:!!gesture,preview:gesture?.preview??null,
       current:nav.current,x:nav.x,moved:gesture?.moved??false,
-      target:nav.target}),
+      target:nav.target,stretch:nav.scrubStretch||0,
+      direction:nav.scrubDirection||0}),
     cancel:()=>{if(gesture)end({pointerId:gesture.id},true)}
   };
 }

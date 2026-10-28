@@ -862,10 +862,13 @@ class LgNavbar extends LgElement {
     const first = this.links[0];
     // Quantize velocity squish to 2 CSS px steps: unchanged shape reuses the
     // existing optical displacement map instead of rasterizing micro-deltas.
-    const stretch = Math.round(Math.min(14, Math.abs(this.v) * 0.025) / 2) * 2;
+    // R2.2: the Skill renderer accepts an optional discrete elastic scrub shape.
+    // Quantized sizes reuse the existing optical displacement-map cache.
+    const scrub = this.hasAttribute('data-scrub-active');
+    const stretch = scrub ? (this.scrubStretch || 0) : Math.round(Math.min(14, Math.abs(this.v) * 0.025) / 3) * 3;
     const w = this.widthAt(this.x) + stretch;
-    const h = first.offsetHeight - stretch * 0.2;
-    const left = this.x - stretch / 2;
+    const h = first.offsetHeight - stretch * 0.16;
+    const left = this.x - stretch * (scrub ? (this.scrubDirection >= 0 ? 0.24 : 0.76) : 0.5);
     const top = first.offsetTop + (first.offsetHeight - h) / 2;
     this.glass.update({ x: left, y: top, width: w, height: h, radius: h / 2 });
     place(this.shadow, left, top, w, h, h / 2);

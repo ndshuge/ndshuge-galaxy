@@ -168,7 +168,7 @@ $('playMini').addEventListener('click',toggleAudio);$('playFull').addEventListen
 $('seek').addEventListener('input',e=>{currentTime=Number(e.target.value);showTrack()});
 $('volume').addEventListener('input',e=>{if(audio)gain.gain.setTargetAtTime(playing?Number(e.target.value)/100*.095:0,audio.currentTime,.03)});
 function viewChange(view){
- const pages={listen:['让声音','有形。','滑动不是切换，而是一种连续的触感。打开播放器，然后试着在动画中途改变方向。'],
+ const pages={listen:['让声音','流动。','轻触播放，向上展开。每一次拖动，都连贯如初。'],
  discover:['发现','另一面。','三段独立合成的声音风景。轻点列表中的曲目，观看共用画面怎样被唤起。'],
  library:['收藏','每一刻。','这是一个不连接帐号的本地实验。所有播放、动画与光学实验都在你的浏览器里发生。']};
  if(!pages[view])return;
@@ -177,6 +177,7 @@ function viewChange(view){
  document.querySelector('.intro-desc').textContent=c;
  document.querySelectorAll('.side-link').forEach(x=>x.classList.toggle('active',x.dataset.view===view));
  const navbar=$('navigation');navbar?.setCurrent?.(['listen','discover','library'].indexOf(view));
+ navbar.dataset.selected=String(['listen','discover','library'].indexOf(view));
  animate(document.querySelector('.intro'),{opacity:[.78,1],y:[7,0]},{duration:.35,ease:'easeOut'});
 }
 document.querySelectorAll('[data-view]').forEach(el=>el.addEventListener('click',()=>viewChange(el.dataset.view)));
@@ -200,6 +201,7 @@ navButtons.forEach((btn,index)=>{
  });
  btn.addEventListener('blur',()=>scaleTab(-1));
 });
+$('navigation').dataset.selected='0';
 const navScrub=installNavbarScrub($('navigation'),{
  onCommit:viewChange,
  onPressChange:scaleTab
