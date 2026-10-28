@@ -13,6 +13,8 @@
  * No dependencies. ES module.
  */
 
+import { fluidSignedDistance } from './fluid-contour.js';
+
 const NS = 'http://www.w3.org/2000/svg';
 const XLINK = 'http://www.w3.org/1999/xlink';
 const NEUTRAL = 128;
@@ -25,6 +27,8 @@ export const DEFAULTS = Object.freeze({
   width: 120,
   height: 64,
   radius: 32,
+  fluidity: 0, // Opt-in wavy contour for navigation during an active gesture.
+  fluidDirection: 0,
   // Optics.
   refraction: 18, // maximum bend at the rim, CSS px
   bezel: 0.6, // curved rim width as a fraction of the lens half-size (min side); 1 = full dome
@@ -41,7 +45,7 @@ export const DEFAULTS = Object.freeze({
 
 // Keys that change the displacement map itself. Everything else (position, strength) is a cheap
 // attribute update on an existing filter.
-const MAP_KEYS = ['width', 'height', 'radius', 'bezel', 'curvature', 'ior', 'invert', 'specular', 'specularWidth', 'lightAngle'];
+const MAP_KEYS = ['width', 'height', 'radius', 'bezel', 'curvature', 'ior', 'invert', 'specular', 'specularWidth', 'lightAngle', 'fluidity', 'fluidDirection'];
 
 export const engine = detectEngine();
 
@@ -93,7 +97,66 @@ function profileTable(curvature, ior) {
  * Returns { canvas, width, height, scale } — usable by the SVG path (as a data URL) and by WebGL
  * (as a texture), so both renderers share one optical model.
  */
+/**
+ * R2.4 optional contour-aware renderer. The original Skill's filter graph,
+ * optical profile, image cache, specular formula and SVG plumbing are reused.
+ * Only the signed-distance surface/normal differ from its symmetric pill.
+ * This path is exclusive to fluidity > 0 during live navbar gestures.
+ */
+function renderFluidLensMap(p, scale) {
+  const w=Math.max(2,Math.round(p.width*scale));
+  const h=Math.max(2,Math.round(p.height*scale));
+  const canvas=document.createElement('canvas');
+  canvas.width=w;canvas.height=h;
+  const ctx=canvas.getContext('2d');
+  const image=ctx.createImageData(w,h),px=image.data;
+  const sx=p.width/w,sy=p.height/h,hw=p.width/2,hh=p.height/2;
+  const r=Math.max(0,Math.min(p.radius,hw,hh));
+  const bezel=Math.max(.5,p.bezel*Math.min(hw,hh));
+  const profile=profileTable(p.curvature,p.ior),N=profile.length-1;
+  const aa=Math.max(sx,sy),rimWidth=Math.max(.5,p.specularWidth);
+  const theta=p.lightAngle*Math.PI/180,lx=Math.cos(theta),ly=Math.sin(theta);
+  const invert=p.invert?-1:1;
+  const sd=(x,y)=>fluidSignedDistance(x,y,p.width,p.height,r,p.fluidity,p.fluidDirection);
+  // Compute the distance field ONCE. Reuse its neighbouring values for normals:
+  // avoids 5 signed-distance evaluations per pixel on iPhone WebKit's main thread.
+  const field=new Float32Array(w*h);
+  for(let j=0;j<h;j++){
+    const y=(j+.5)*sy-hh;
+    for(let i=0;i<w;i++)field[j*w+i]=sd((i+.5)*sx-hw,y);
+  }
+  // The original renderer mirrors four symmetric quadrants. Directional
+  // contour needs a full frame; the small glass lens is rasterized only when a
+  // quantized shape changes, never for pure translation.
+  for(let j=0;j<h;j++){
+    const y=(j+.5)*sy-hh;
+    for(let i=0;i<w;i++){
+      const x=(i+.5)*sx-hw;
+      const d=field[j*w+i];
+      const alpha=Math.max(0,Math.min(1,.5-d/aa));
+      if(alpha<=0)continue;
+      // Normal of the same contour using finite differences in the cached field.
+      const row=j*w;
+      let nx=(field[row+Math.min(w-1,i+1)]-field[row+Math.max(0,i-1)])/
+        (sx*(i===0||i===w-1?1:2));
+      let ny=(field[Math.min(h-1,j+1)*w+i]-field[Math.max(0,j-1)*w+i])/
+        (sy*(j===0||j===h-1?1:2));
+      const norm=Math.hypot(nx,ny)||1;nx/=norm;ny/=norm;
+      const inset=Math.max(0,-d),s=inset/bezel;
+      const m=s>=1?0:profile[Math.min(N,Math.round(s*N))];
+      const bx=Math.round(-127*m*nx*invert),by=Math.round(-127*m*ny*invert);
+      const crisp=Math.max(0,1-inset/rimWidth),glow=Math.max(0,1-inset/(rimWidth*5));
+      const rim=p.specular*(crisp*crisp+.3*glow*glow);
+      write(px,(j*w+i)*4,NEUTRAL+bx,NEUTRAL+by,
+        rimLight(rim,nx*lx+ny*ly),Math.round(alpha*255));
+    }
+  }
+  ctx.putImageData(image,0,0);
+  return {canvas,width:w,height:h,scale};
+}
+
 export function renderLensMap(options = {}, scale = 1) {
+  if((options.fluidity||0)>0.001)return renderFluidLensMap({...DEFAULTS,...options},scale);
   const p = { ...DEFAULTS, ...options };
   const w = Math.max(2, Math.round(p.width * scale));
   const h = Math.max(2, Math.round(p.height * scale));

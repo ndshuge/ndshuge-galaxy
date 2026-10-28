@@ -193,3 +193,26 @@ html{scroll-padding-bottom:260px}
 #navigation{background:rgba(26,25,37,.54)!important;}
 #navigation .lg-surface__tint{background:rgba(29,27,41,.15)!important;}
 @media(max-width:600px){.nav-container{bottom:calc(16px + var(--safe-bottom));}}
+
+/* R2.4: Fix two independent sources of resting ghosting.
+   1) The real accessible buttons and the refractive copy must NEVER render
+      simultaneously while idle.
+   2) The navigational substrate masks legible background text without relying
+      on extreme blur. The optical copy is revealed only during a held gesture. */
+#navigation:not(.is-scrubbing) .lg-nav__copy {visibility:hidden!important}
+#navigation.is-scrubbing .lg-nav__copy {visibility:visible!important}
+#navigation.is-scrubbing>button>svg,
+#navigation.is-scrubbing>button>span {visibility:hidden!important}
+#navigation{
+  background:rgba(30,29,43,.88)!important;
+  -webkit-backdrop-filter:blur(17px) saturate(1.13);
+  backdrop-filter:blur(17px) saturate(1.13);
+  box-shadow:0 8px 24px rgba(5,6,16,.26),inset 0 1px rgba(255,255,255,.15);
+}
+#navigation .lg-surface__tint{background:rgba(30,29,44,.13)!important}
+#navigation.is-scrubbing{background:rgba(28,28,42,.80)!important}
+#navigation:not(.is-scrubbing) .lg-lens-shadow{
+  background:rgba(231,237,255,.075);border-color:rgba(239,242,255,.24);
+  box-shadow:inset 0 1px rgba(255,255,255,.12),0 2px 7px rgba(0,0,0,.10)
+}
+#navigation.is-scrubbing .lg-lens-shadow{border-width:.75px}

@@ -13,6 +13,7 @@
  * Toast icons are from Lucide (ISC license).
  */
 import { createGlass, createSpring, engine, reducedMotion } from './liquid-glass.js';
+import { fluidClipPolygon } from './fluid-contour.js';
 
 export { createGlass, createSpring, renderLensMap, engine, DEFAULTS } from './liquid-glass.js';
 
@@ -806,7 +807,7 @@ class LgNavbar extends LgElement {
 
   attach() {
     this.surface.attach();
-    this.glass = createGlass(this.copy, { clip: true, refraction: 12, bezel: 0.66, curvature: 3.5, chroma: 0.095, specular: 0.68, specularWidth: 1.05 });
+    this.glass = createGlass(this.copy, { clip: false, refraction: 12, bezel: 0.66, curvature: 3.5, chroma: 0.095, specular: 0.68, specularWidth: 1.05 });
     this.observer = new ResizeObserver(() => this.moveTo(this.target ?? this.current, true));
     this.observer.observe(this);
     this.moveTo(this.current, true);
@@ -868,12 +869,24 @@ class LgNavbar extends LgElement {
     const stretch = scrub ? (this.scrubStretch || 0) : Math.round(Math.min(14, Math.abs(this.v) * 0.025) / 3) * 3;
     const w = this.widthAt(this.x) + stretch;
     const lift = Math.round((this.scrubLift || 0) / 2) * 2;
-    const h = first.offsetHeight + 8 + lift - stretch * 0.10;
+    // Cache geometry by 2px height increments; position stays subpixel-continuous.
+    const h = Math.round((first.offsetHeight + 8 + lift - stretch * .10)/2)*2;
     const lead = scrub && stretch > 0 ? (this.scrubDirection >= 0 ? 0.22 : 0.78) : 0.5;
     const left = this.x - stretch * lead;
     const top = first.offsetTop + (first.offsetHeight - h) / 2;
     // Optical renderer uses a copy extended 16px above/below the bar.
-    this.glass.update({ x: left, y: top + 16, width: w, height: h, radius: h / 2 });
+    const fluidity=scrub?Math.round(Math.min(1,(this.scrubStretch||0)/24)*4)/4:0;
+    const fluidDirection=scrub&&fluidity>0?(this.scrubDirection||0):0;
+    // R2.4: one lens field drives BOTH the optical displacement and shadow.
+    // Zero fluidity follows the original Skill rendering path verbatim.
+    this.glass.update({x:left,y:top+16,width:w,height:h,radius:h/2,
+      fluidity,fluidDirection});
+    const shapeKey=[w,h,fluidity,fluidDirection].join('|');
+    if(this._lastFluidShapeKey!==shapeKey){
+      this._lastFluidShapeKey=shapeKey;
+      this.shadow.style.clipPath=fluidity>0?
+        fluidClipPolygon(w,h,h/2,fluidity,fluidDirection):'';
+    }
     place(this.shadow, left, top, w, h, h / 2);
   }
 }

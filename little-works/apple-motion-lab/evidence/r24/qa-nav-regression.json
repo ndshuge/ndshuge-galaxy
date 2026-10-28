@@ -1,0 +1,373 @@
+{
+  "date": "2026-10-28T11:04:31.132Z",
+  "environment": "Windows Edge Chromium via Playwright CDP; touch emulated, not iPhone Safari",
+  "checks": [
+    {
+      "name": "320 hold enters scrub state",
+      "pass": true,
+      "detail": {
+        "nav": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 4,
+          "direction": 0,
+          "lift": 20
+        },
+        "initialTitle": "让声音\n流动。",
+        "aria": [
+          "page",
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "name": "320 indicator follows intermediate x continuously",
+      "pass": true,
+      "detail": {
+        "first": 30.9970703125,
+        "mid": 102.49609375,
+        "last": 197
+      }
+    },
+    {
+      "name": "320 finger previews tab 3 while leaving page unchanged",
+      "pass": true,
+      "detail": {
+        "preview": 2,
+        "aria": [
+          "page",
+          null,
+          null
+        ],
+        "title": "让声音\n流动。"
+      }
+    },
+    {
+      "name": "320 native SVG refraction stays attached",
+      "pass": true,
+      "detail": {
+        "filter": "url(\"#lg3-v29\")"
+      }
+    },
+    {
+      "name": "320 releasing selects last tab (not originally pressed tab)",
+      "pass": true,
+      "detail": {
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 197,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        },
+        "title": "收藏\n每一刻。",
+        "aria": [
+          null,
+          null,
+          "page"
+        ]
+      }
+    },
+    {
+      "name": "320 normal clicking remains functional",
+      "pass": true,
+      "detail": {
+        "index": 1,
+        "title": "发现\n另一面。"
+      }
+    },
+    {
+      "name": "390 hold enters scrub state",
+      "pass": true,
+      "detail": {
+        "nav": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 8,
+          "direction": 0,
+          "lift": 20
+        },
+        "initialTitle": "让声音\n流动。",
+        "aria": [
+          "page",
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "name": "390 indicator follows intermediate x continuously",
+      "pass": true,
+      "detail": {
+        "first": 36.494140625,
+        "mid": 125.4921875,
+        "last": 243
+      }
+    },
+    {
+      "name": "390 finger previews tab 3 while leaving page unchanged",
+      "pass": true,
+      "detail": {
+        "preview": 2,
+        "aria": [
+          "page",
+          null,
+          null
+        ],
+        "title": "让声音\n流动。"
+      }
+    },
+    {
+      "name": "390 native SVG refraction stays attached",
+      "pass": true,
+      "detail": {
+        "filter": "url(\"#lg3-v35\")"
+      }
+    },
+    {
+      "name": "390 releasing selects last tab (not originally pressed tab)",
+      "pass": true,
+      "detail": {
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 243,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        },
+        "title": "收藏\n每一刻。",
+        "aria": [
+          null,
+          null,
+          "page"
+        ]
+      }
+    },
+    {
+      "name": "390 normal clicking remains functional",
+      "pass": true,
+      "detail": {
+        "index": 1,
+        "title": "发现\n另一面。"
+      }
+    },
+    {
+      "name": "390 stationary long hold does not change tab",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "390 pointercancel restores previous selection",
+      "pass": true,
+      "detail": {
+        "pressed": false,
+        "preview": null,
+        "current": 1,
+        "x": 124.29796833700154,
+        "moved": false,
+        "target": 1,
+        "stretch": 0,
+        "direction": 1,
+        "lift": 0
+      }
+    },
+    {
+      "name": "390 keyboard Enter still selects first tab",
+      "pass": true,
+      "detail": {}
+    },
+    {
+      "name": "768 hold enters scrub state",
+      "pass": true,
+      "detail": {
+        "nav": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 8,
+          "direction": 0,
+          "lift": 20
+        },
+        "initialTitle": "让声音\n流动。",
+        "aria": [
+          "page",
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "name": "768 indicator follows intermediate x continuously",
+      "pass": true,
+      "detail": {
+        "first": 38.9970703125,
+        "mid": 134.49609375,
+        "last": 261
+      }
+    },
+    {
+      "name": "768 finger previews tab 3 while leaving page unchanged",
+      "pass": true,
+      "detail": {
+        "preview": 2,
+        "aria": [
+          "page",
+          null,
+          null
+        ],
+        "title": "让声音\n流动。"
+      }
+    },
+    {
+      "name": "768 native SVG refraction stays attached",
+      "pass": true,
+      "detail": {
+        "filter": "url(\"#lg3-v37\")"
+      }
+    },
+    {
+      "name": "768 releasing selects last tab (not originally pressed tab)",
+      "pass": true,
+      "detail": {
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 261,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        },
+        "title": "收藏\n每一刻。",
+        "aria": [
+          null,
+          null,
+          "page"
+        ]
+      }
+    },
+    {
+      "name": "768 normal clicking remains functional",
+      "pass": true,
+      "detail": {
+        "index": 1,
+        "title": "发现\n另一面。"
+      }
+    },
+    {
+      "name": "1440 hold enters scrub state",
+      "pass": true,
+      "detail": {
+        "nav": {
+          "pressed": true,
+          "preview": 0,
+          "current": 0,
+          "x": 6,
+          "moved": false,
+          "target": 0,
+          "stretch": 8,
+          "direction": 0,
+          "lift": 20
+        },
+        "initialTitle": "让声音\n流动。",
+        "aria": [
+          "page",
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "name": "1440 indicator follows intermediate x continuously",
+      "pass": true,
+      "detail": {
+        "first": 38.9970703125,
+        "mid": 134.49609375,
+        "last": 261
+      }
+    },
+    {
+      "name": "1440 finger previews tab 3 while leaving page unchanged",
+      "pass": true,
+      "detail": {
+        "preview": 2,
+        "aria": [
+          "page",
+          null,
+          null
+        ],
+        "title": "让声音\n流动。"
+      }
+    },
+    {
+      "name": "1440 native SVG refraction stays attached",
+      "pass": true,
+      "detail": {
+        "filter": "url(\"#lg3-v38\")"
+      }
+    },
+    {
+      "name": "1440 releasing selects last tab (not originally pressed tab)",
+      "pass": true,
+      "detail": {
+        "nav": {
+          "pressed": false,
+          "preview": null,
+          "current": 2,
+          "x": 261,
+          "moved": false,
+          "target": 2,
+          "stretch": 0,
+          "direction": 1,
+          "lift": 0
+        },
+        "title": "收藏\n每一刻。",
+        "aria": [
+          null,
+          null,
+          "page"
+        ]
+      }
+    },
+    {
+      "name": "1440 normal clicking remains functional",
+      "pass": true,
+      "detail": {
+        "index": 1,
+        "title": "发现\n另一面。"
+      }
+    },
+    {
+      "name": "No uncaught JS errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "passed": 28,
+    "total": 28
+  }
+}
