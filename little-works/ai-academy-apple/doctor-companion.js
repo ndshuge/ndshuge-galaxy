@@ -5,12 +5,12 @@ const doctorRoot = document.createElement('div');
 doctorRoot.id = 'zx-doctor-host';
 doctorRoot.innerHTML = `
  <button type="button" id="zx-doctor-open" aria-controls="zx-doctor-panel" aria-expanded="false" aria-label="和知序博士对话">
-  <img id="zx-doctor-avatar" src="./assets/zhixu-doctor/idle.webp" alt="" width="55" height="70" decoding="async">
+  <img id="zx-doctor-avatar" src="./assets/zhixu-doctor/idle.webp" alt="" width="55" height="70" loading="eager" fetchpriority="high" decoding="sync">
   <span class="zx-doctor-launch-copy"><strong>知序博士</strong><small id="zx-doctor-launch-status">AI 未连接</small><em>和博士对话 →</em></span>
  </button>
  <section id="zx-doctor-panel" role="dialog" aria-modal="false" aria-labelledby="zx-doctor-title" hidden>
   <header class="zx-doctor-header">
-    <img id="zx-doctor-face" src="./assets/zhixu-doctor/welcome.webp" alt="" width="58" height="74" decoding="async">
+    <img id="zx-doctor-face" src="./assets/zhixu-doctor/welcome.webp" alt="" width="58" height="74" loading="eager" decoding="sync">
     <div><h2 id="zx-doctor-title">知序博士</h2><p id="zx-doctor-status">正在检查 AI 连接</p></div>
     <button type="button" id="zx-doctor-close" aria-label="关闭博士对话">×</button>
   </header>
