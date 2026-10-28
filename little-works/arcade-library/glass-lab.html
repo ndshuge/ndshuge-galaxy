@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080c12"><title>Liquid Glass 实验台 · SHUGE Arcade</title>
+<link rel="stylesheet" href="./glass-lab.css">
+<script type="module" src="./glass-lab.js"></script>
+</head><body>
+<main class="layout">
+<header class="lab-header"><a class="back" href="./" aria-label="返回游戏库"><svg viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7"/></svg> 返回 Arcade</a><span class="status"><span class="status-dot"></span> Native Skill · Experimental</span></header>
+<section class="intro">
+ <div class="kicker">OPTICAL MATERIALS LAB <span class="version">01 / REFRACTION</span></div>
+ <h1>让光，<br><em>真正弯曲。</em></h1>
+ <p>不是给背景加一层模糊。使用 Skill 内置的光学引擎，观察图像像素经过弧面玻璃时的偏移与色散。</p>
+</section>
+<section class="showcase" aria-labelledby="stageHeading">
+ <div class="showcase-head"><div><span class="section-no">01 · LIVE PREVIEW</span><h2 id="stageHeading">正在渲染的玻璃</h2></div><span class="engine-label" id="engineLabel" aria-live="polite">引擎检测中…</span></div>
+ <div class="scene" id="scene" data-lg-backdrop="#stageArt">
+   <img id="stageArt" class="stage-art" src="./art/lumen-siege.svg" alt="光核围城游戏概念场景，包含光束与环形纹理">
+   <div class="scene-grain" aria-hidden="true"></div>
+   <div class="stage-top"><span>SHUGE ARCADE</span><span>GLASS ENGINE · EXPERIMENT 01</span></div>
+   <lg-panel id="lensPanel" class="lens-panel" backdrop="#stageArt" radius="32" refraction="29" bezel=".44" chroma=".15" curvature="4" specular=".72" blur="0">
+     <div class="lens-ui"><div class="lens-top"><span class="lens-spark" aria-hidden="true">✦</span><span class="lens-label">液态玻璃</span><span class="drag-icon" aria-hidden="true">⋮⋮</span></div><div class="lens-main">光会改变方向。</div><div class="lens-sub">按住这块面板，左右拖动试试。</div><div class="lens-bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div></div>
+   </lg-panel>
+   <div class="stage-caption"><span class="pill-demo">▶ LUMEN SIEGE</span><span>拖动玻璃，观察下方光环如何弯曲</span></div>
+   <div class="edge-cross" aria-hidden="true"></div>
+ </div>
+</section>
+<section class="control-area" aria-label="液态玻璃实验控制">
+ <div class="control-main">
+ <div class="control-heading"><div><span class="section-no">02 · MATERIAL</span><h2>对比三种材质</h2></div><span id="modeBadge" class="mode-badge">L2 · Optical</span></div>
+ <div class="material-choices" role="group" aria-label="选择玻璃材质"><button type="button" data-mode="l0" aria-pressed="false"><b>L0</b><span>不透明</span></button><button type="button" data-mode="l1" aria-pressed="false"><b>L1</b><span>背景模糊</span></button><button type="button" data-mode="l2" class="selected" aria-pressed="true"><b>L2</b><span>光学折射</span></button></div>
+ <p class="material-note" id="materialNote" aria-live="polite">SVG 位移映射改变玻璃下方的实际像素采样；边缘弯曲，中间保持清晰。</p>
+ <div class="slider-row"><label for="refraction">折射强度 <output id="refractionValue" for="refraction">29px</output></label><input id="refraction" type="range" min="4" max="42" step="1" value="29" aria-label="调节折射强度"></div>
+ <div class="compare-actions"><button id="resetLens" class="outline-action" type="button">重置位置</button><button id="togglePress" class="outline-action" type="button" aria-pressed="false">按压反馈</button></div>
+ </div>
+ <aside class="measure-box"><span class="section-no">03 · DIAGNOSTICS</span><h3>不是一张静态效果图。</h3><dl><div><dt>光学引擎</dt><dd id="engine">载入中</dd></div><div><dt>SVG 滤镜</dt><dd id="filterStatus">检测中</dd></div><div><dt>折射画面</dt><dd id="surfaceStatus">检测中</dd></div><div><dt>交互状态</dt><dd id="interactionStatus">准备就绪</dd></div></dl><p>WebKit / Firefox 使用已知背景的同步副本进行折射；不是依赖 Chromium 专属的 <code>backdrop-filter: url()</code>。真实 Safari 仍需设备验收。</p></aside>
+</section>
+<section class="footer-info"><div><span class="section-no">EXPERIMENT NOTES</span><h2>玻璃，必须有真实的背景。</h2><p>光学位移作用于与原始游戏画面精确对齐的副本。按钮文字处于滤镜上层，不参与折射，以保持可读性。透明度降低、减少动态效果时自动回退为可读材质。</p></div><a href="./">回到游戏库 ↗</a></section>
+</main>
+</body></html>

@@ -1,0 +1,28 @@
+# Liquid Glass Lab / SHUGE Arcade
+
+这是一个**仅在本机实验分支中的独立实验页**，不影响线上游戏库，也不会自动部署或修改主站。
+
+## 本次实装
+
+- 项目地址：`little-works/arcade-library/glass-lab.html`
+- 从用户安装的原生 `liquid-glass-web` Skill **完整复制** `assets/liquid-glass.js` 和 `assets/components.js` 至 `glasslib/`，避免重写引擎。
+- 复用现有的 `art/lumen-siege.svg` 游戏原画作背景。通过 `lg-panel backdrop="#stageArt"` 使用 **模式 C：已知背景的对齐副本**，用 SVG `feDisplacementMap` 折射其像素，而非 CSS-only blur。
+- 面板支持指针/触摸拖动、键盘方向键移动、折射强度 4–42px、按压缩放的玻璃形变、重置位置。
+- L0：实色；L1：CSS `backdrop-filter: blur()`；L2：折射 + 色散 + 高光。三个模式可立即切换，方便 A/B 对照。
+- 支持 `prefers-reduced-motion`、`prefers-reduced-transparency`、`prefers-contrast: more`，避免强制高 GPU 负载。
+- 本次没有开启整个游戏库的玻璃效果；只实现了可独立验收的玻璃组件。
+
+## 验收
+
+- Windows Chromium/Blink：17/17 项页面行为检查通过，包括 L2 SVG filter 链、已知背景副本、L0/L1/L2 状态、refraction slider、位置更改和重置、模拟按压、320/390/768/1440px 横向溢出、脚本异常检查。
+- 真实 CDP 鼠标拖动：由 (42,230) 移动到 (77,200) 并正常释放，`filter: url(#lg1-v8)` 随位置刷新，无脚本异常。
+- 模拟系统降低透明度：匹配到媒体查询时，玻璃折射层 `display:none`，不透明背景 `rgb(35,59,76)` 生效。
+- Windows 上未运行 Safari/WebKit；Skill 声称的 WebKit/Firefox 支持**未由本次独立验证**。
+- 截图保存在工作区根目录：`compare-l0-mobile.png`、`compare-l1-mobile.png`、`compare-l2-mobile.png`、`compare-l2-moved.png`、`glass-desktop.png`、`glass-mobile.png`。
+- 实验用本机 Python 静态服务器端口 `8143`，预览地址：`http://127.0.0.1:8143/little-works/arcade-library/glass-lab.html`。
+
+## 技术限制
+
+- 网页的 L2 光学折射不是 Apple 原生 `glassEffect`，尤其悬浮于未知 DOM 背景上的系统级玻璃无法保证 Safari 同等折射，可能需要退化为 L1。
+- 本实验已知背景是单张 SVG 插画，复制的是这张图像，而不是游戏画面上层的全部动态 DOM。
+- 实验页未嵌入现有游戏库导航/详情。达到视觉要求并完成真机验收后再考虑渐进接入。
