@@ -1,5 +1,19 @@
 [
   {
+    "slug": "frequency",
+    "title": "Frequency · 听见此刻",
+    "date": "2026.10.28",
+    "type": "MUSIC EXPERIENCE",
+    "description": "沉浸式 Apple 风格音乐探索界面：原创封面、真实试听、播放控制、搜索、收藏和播放队列。",
+    "url": "./frequency/",
+    "cover": "./frequency/covers/afterglow.svg",
+    "tags": [
+      "Apple 风格",
+      "音乐播放",
+      "沉浸交互"
+    ]
+  },
+  {
     "slug": "move-daily",
     "title": "动迹 · 运动打卡",
     "date": "2026.10.28",
