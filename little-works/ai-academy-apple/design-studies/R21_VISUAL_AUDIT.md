@@ -31,3 +31,10 @@ Apple Books 的 Reading Now 内容优先原则及 Notes 的正文阅读原则作
 
 ## 发布与回退
 以发布提交父节点为界，Git 提交需只涉及 `little-works/ai-academy-apple/`。上线复测 HTTP 200、真实原版桥连接、题库/科学引擎、原版网站、目录入口。保留前一版 SHA 作可回退点，禁止 force push。
+
+## 发布交接（R2.1 尚未上线）
+- R2.1 的首个本地提交：06ba4aee6a16c889110ae183a7941875c4ffcfdf；之后补充科学图形 aria-hidden 修正与本交接说明。
+- 2026-10-28 GitHub 插件只读检查远端 main 仍为 9683c05b2f20bde46c28369dd4202901ce8fb82b（R2）。R2.1 **未推送，未部署**。
+- Mice Hole HTTPS Git：默认 schannel TLS 握手失败；127.0.0.1:7897 代理使用 OpenSSL 返回 unexpected EOF；无代理直连 github.com:443 超时。未改全局代理、未关闭证书校验、未强推。
+- 补充辅助技术验证：Playwright Edge 实际识别有名称的 Logistic role=img；真实首页不再含父级 aria-hidden。该专项检查输出 PASS，但测试进程关闭阶段出现超时，故仅认定以上两个断言成立，不认定完整用例退出成功。
+- 唯一下一步：在 GitHub HTTPS 可安全连通时，fetch 最新 origin/main → 核对本分支只影响知序 Apple Edition → 若远端已前进则重新集成 → 普通 non-force push → 验证 Pages 资源和线上完整功能。不要修改 Original 或其他小东西。

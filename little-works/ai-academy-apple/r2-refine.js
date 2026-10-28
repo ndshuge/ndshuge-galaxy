@@ -21,6 +21,8 @@ function refineR21(){
  if(main.querySelector('[data-initial-shell]'))return;
  const cover=main.querySelector('.reading-hero .reading-cover');
  if(!cover)return;
+ // The computed scientific visualization is instructional content, not decorative art.
+ cover.removeAttribute('aria-hidden');
  const title=main.querySelector('.page>.large-title');
  if(title&&title.textContent!=='继续学习')title.textContent='继续学习';
  if(cover.dataset.refinedR21)return;
