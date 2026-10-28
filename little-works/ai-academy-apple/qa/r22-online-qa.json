@@ -1,0 +1,100 @@
+[
+  {
+    "name": "asset index",
+    "ok": true,
+    "details": {
+      "code": 200,
+      "ct": "text/html; charset=utf-8"
+    }
+  },
+  {
+    "name": "asset app.js",
+    "ok": true,
+    "details": {
+      "code": 200,
+      "ct": "application/javascript; charset=utf-8"
+    }
+  },
+  {
+    "name": "asset r2-present.js",
+    "ok": true,
+    "details": {
+      "code": 200,
+      "ct": "application/javascript; charset=utf-8"
+    }
+  },
+  {
+    "name": "asset nav-stability.css",
+    "ok": true,
+    "details": {
+      "code": 200,
+      "ct": "text/css; charset=utf-8"
+    }
+  },
+  {
+    "name": "asset nav-integration.js",
+    "ok": true,
+    "details": {
+      "code": 200,
+      "ct": "application/javascript; charset=utf-8"
+    }
+  },
+  {
+    "name": "asset assets/motionlab-nav-scrub.js",
+    "ok": true,
+    "details": {
+      "code": 200,
+      "ct": "application/javascript; charset=utf-8"
+    }
+  },
+  {
+    "name": "asset assets/liquid-glass.js",
+    "ok": true,
+    "details": {
+      "code": 200,
+      "ct": "application/javascript; charset=utf-8"
+    }
+  },
+  {
+    "name": "stable native first view",
+    "ok": true,
+    "details": {
+      "text": "继续学习",
+      "chart": 1,
+      "copy": "hidden",
+      "normalInk": "visible",
+      "nav": true,
+      "js": 0,
+      "css": 8
+    }
+  },
+  {
+    "name": "Original real question and answer not preselected",
+    "ok": true
+  },
+  {
+    "name": "Original grading successful",
+    "ok": true
+  },
+  {
+    "name": "return navigation remains sharp",
+    "ok": true,
+    "details": {
+      "location": "#today",
+      "nav": "today",
+      "copy": "hidden"
+    }
+  },
+  {
+    "name": "no uncaught exceptions or resource errors",
+    "ok": true,
+    "details": []
+  },
+  {
+    "name": "Original Edition unaffected",
+    "ok": true,
+    "details": {
+      "status": 200
+    }
+  }
+]

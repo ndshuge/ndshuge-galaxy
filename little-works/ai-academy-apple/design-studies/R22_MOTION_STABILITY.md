@@ -31,3 +31,8 @@ The user recording demonstrates transient superimposed page text during tab chan
 - Original Edition source, competition submission, V2 data schema, science simulation API, scoring, and AI key storage untouched.
 - Repo isolated in `E:/CHATGPT/work/zhixu-stable-nav-20261028`.
 - Publish only with fresh remote GitHub HTTPS check `E:/CHATGPT/_system/git-safe-https.ps1`, OpenSSL + live fallback 7898 when verified, scope check, ordinary non-force push. Post-deploy online QA required.
+
+## Production verification completed, 2026-10-28
+- Release commit `c11cb164a4eb4f55a3a1044cd4e0af5dc379a7be`, regular non-force push on top of Apple Motion Lab R2.5 remote `a137c67`, protecting all other work.
+- Actual GitHub Pages browser + HTTP test `qa/r22-online.mjs` **13/13 PASS**: HTML and five required new/core JS/CSS assets HTTP 200; one rendered scientific chart; cloned navigation labels hidden, crisp originals visible; Motion Lab navigation module live; Original real pretest selectable only after user input; grading works; tab return remains crisp; zero JS/HTTP exceptions; Original Edition HTTP 200.
+- Online screenshot `qa/r22-live-390.png` reviewed, no old engine-success toast blocking teaching content. This is Windows Edge headless evidence, **not** real-device iOS Safari verification.
