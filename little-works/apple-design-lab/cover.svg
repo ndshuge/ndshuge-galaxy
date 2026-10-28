@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Apple Design Lab 玻璃长按菜单实验">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ae764c"/><stop offset=".45" stop-color="#75525c"/><stop offset="1" stop-color="#152438"/></linearGradient>
+<radialGradient id="sun"><stop stop-color="#fce4b8" stop-opacity=".75"/><stop offset=".42" stop-color="#d4a08e" stop-opacity=".26"/><stop offset="1" stop-color="#ab7a6c" stop-opacity="0"/></radialGradient>
+<linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eee5e4" stop-opacity=".31"/><stop offset=".55" stop-color="#fff" stop-opacity=".11"/><stop offset="1" stop-color="#eee9ef" stop-opacity=".22"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="34"/></filter>
+<filter id="shadow"><feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#11101e" flood-opacity=".36"/></filter>
+</defs>
+<rect width="1200" height="675" fill="url(#bg)"/><ellipse cx="840" cy="226" rx="330" ry="300" fill="url(#sun)"/>
+<path d="M0 485Q200 413 388 487T782 480Q1008 392 1200 456V675H0" fill="#382e40" opacity=".57"/>
+<path d="M0 554Q350 495 590 535T1200 518V675H0" fill="#142332" opacity=".84"/>
+<g font-family="-apple-system,BlinkMacSystemFont,Arial,sans-serif" fill="#f8f0ed">
+<text x="88" y="107" font-size="25" letter-spacing="6" opacity=".78">APPLE DESIGN LAB</text>
+<text x="83" y="245" font-size="74" font-weight="700" letter-spacing="-3">会呼吸的玻璃</text>
+<text x="88" y="302" font-size="30" opacity=".84">长按 · 光学折射 · 弹性回弹</text>
+<text x="89" y="577" font-size="21" letter-spacing="4" opacity=".74">CONTEXTUAL GLASS / 0.3</text>
+</g>
+<g transform="translate(828 98)" filter="url(#shadow)">
+<rect width="285" height="457" rx="42" fill="#352a32" fill-opacity=".54" stroke="#fff" stroke-opacity=".41" stroke-width="2"/>
+<rect x="7" y="7" width="271" height="443" rx="36" fill="url(#glass)" stroke="#fffbf5" stroke-opacity=".28"/>
+<g font-family="Arial,sans-serif" fill="white" font-size="22">
+<text x="38" y="78">⊕   ☆   ↥</text>
+<path d="M28 101H257M28 179H257M28 259H257M28 340H257" stroke="#f7eded" stroke-opacity=".26"/>
+<text x="35" y="149">添加到播放列表</text><text x="35" y="230">创建电台</text>
+<text x="35" y="311">查看详情</text><text x="35" y="393">分享</text>
+</g></g>
+</svg>

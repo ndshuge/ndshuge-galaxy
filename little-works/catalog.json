@@ -1,5 +1,19 @@
 [
   {
+    "slug": "apple-design-lab",
+    "title": "Apple Design Lab · 真实液态玻璃",
+    "date": "2026.10.28",
+    "type": "INTERACTIVE DESIGN LAB",
+    "description": "基于真实 Apple 操作录屏研究长按菜单，体验原版 createGlass 光学折射、按压形变、弹性回弹与 L0/L1/L2 材质对照。",
+    "url": "./apple-design-lab/",
+    "cover": "./apple-design-lab/cover.svg",
+    "tags": [
+      "Liquid Glass",
+      "原生 Skill 引擎",
+      "长按交互"
+    ]
+  },
+  {
     "slug": "liquid-glass-lab",
     "title": "Liquid Glass｜光学玻璃实验室",
     "date": "2026.10.28",
