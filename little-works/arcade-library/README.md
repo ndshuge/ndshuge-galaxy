@@ -1,5 +1,15 @@
 # SHUGE Arcade · 小东西游戏库
 
+## Apple Games 风格 V2 · 2026-10-28
+
+- 参考 iOS 26 Apple Games / Arcade 的真实精选游戏、横向浏览、悬浮导航和暗色游戏库，全面重构页面结构，不再沿用上一版白色画廊布局。
+- 新增深色沉浸式轮播与应用式游戏图标列表，原创绘制 5 张不同场景的精选封面；保留 16 个已上线游戏的真实入口。
+- 搜索、类别、详情弹层、收藏、本地存储、最近游玩与键盘操作继续有效。
+- 使用 Mice Hole + ChatGPT 已安装的 Apple Web Design、Liquid Glass、Taste、Motion 等 Skill 直接施工，不交给其他 Agent。
+- 本机 Chromium CDP 的 20 项交互与响应式回归断言均通过，涵盖 320/390/768/1440px；已截图检查移动端、桌面端、列表和详情弹层。真实 iPhone Safari 未测。
+- 原生 SF/PingFang 字体、精选大标题、媒体主色和横向预览卡片与 Taste 的部分通用规则冲突，作为产品特定例外保留，未声称 Taste lint 全绿。
+- Web 毛玻璃为 L1（透光、模糊、高光），**不能等同于 Apple 原生 iOS L2 光学折射，也不宣称逐像素一致**。
+
 位于 `little-works/arcade-library/` 的独立静态网页作品；在 `little-works/catalog.json` 中注册。
 
 ## 功能

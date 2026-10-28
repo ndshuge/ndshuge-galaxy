@@ -18,71 +18,111 @@ const GAMES=[
 {id:'pixel-pong',name:'像素乒乓',en:'CAT vs RAT',group:'街机',tags:['街机','像素','对战'],desc:'轻松上手的像素对决，试试谁能将球稳稳送回。'},
 {id:'ww2-frontline',name:'西线前线',en:'WESTERN FRONT',group:'冒险',tags:['冒险','3D','FPS'],desc:'踏入第一人称的战场原型，在 3D 空间里完成一段充满挑战的探索。',device:'推荐使用电脑与键鼠'}
 ];
+
 const byId=Object.fromEntries(GAMES.map(g=>[g.id,g]));
-const GROUPS=['全部','动作','节奏','解谜','街机','实验','冒险'];
-const KEY_FAV='shuge-arcade-favorites-v1',KEY_RECENT='shuge-arcade-recent-v1';
-const load=(key)=>{try{let result=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(result)?result.filter(x=>typeof x==='string'&&byId[x]):[]}catch{return[]}};
-let favorites=new Set(load(KEY_FAV)),recent=load(KEY_RECENT),view='all',filter='全部',query='',lastFocus=null,openGame=null,toastTimer;
-const $=(q)=>document.querySelector(q);
-const ICON_HEART='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 8.4c0 4.1-8.2 10-8.2 10s-8.2-5.9-8.2-10a4.4 4.4 0 0 1 8.2-2.1 4.4 4.4 0 0 1 8.2 2.1Z"/></svg>';
-const ICON_PLAY='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 10 6-10 6Z" fill="currentColor" stroke="none"/></svg>';
-const persist=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch{}};
-function announce(message){const e=$('#toast');clearTimeout(toastTimer);e.textContent=message;e.classList.add('visible');toastTimer=setTimeout(()=>e.classList.remove('visible'),1900)}
-function filtered(){
-  const source=view==='favorites'?GAMES.filter(g=>favorites.has(g.id)):view==='recent'?recent.map(id=>byId[id]).filter(Boolean):GAMES;
-  const q=query.trim().toLocaleLowerCase();
-  return source.filter(g=>(filter==='全部'||g.tags.includes(filter)||g.group===filter)&&(!q||[g.name,g.en,...g.tags,g.desc].join(' ').toLocaleLowerCase().includes(q)));
+const PICKS=['lumen-siege','still','gravity-garden','vocalon-chaos','pulse-breaker'];
+const STORIES=['still','gravity-garden','vocalon-chaos','belfry','ghostslash','pulse-breaker'];
+const DISCOVER=['rewinder','echo-trail','issen','motu','lightlag','ww2-frontline'];
+const GENRES=['全部','动作','节奏','冒险','解谜','街机','实验'];
+const SAVE='shuge-arcade-favorites-v1',HISTORY='shuge-arcade-recent-v1';
+const read=(key)=>{try{const value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value.filter(id=>typeof id==='string'&&byId[id]):[]}catch{return[]}};
+const save=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value))}catch{}};
+let favorites=new Set(read(SAVE)),recent=read(HISTORY),view='home',genre='全部',query='',activeFeature=0,openGame=null,lastFocus=null,toaster,searchMode=false;
+const $=q=>document.querySelector(q);
+const heart='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8.5c0 4.1-8 9.7-8 9.7S4 12.6 4 8.5a4.2 4.2 0 0 1 8-1.8 4.2 4.2 0 0 1 8 1.8Z"/></svg>';
+const gameArt=id=>'./art/'+id+'.svg';
+function toast(msg){const t=$('#toast');clearTimeout(toaster);t.textContent=msg;t.classList.add('visible');toaster=setTimeout(()=>t.classList.remove('visible'),1900)}
+function featureAt(index){
+ const next=(index+PICKS.length)%PICKS.length,g=byId[PICKS[next]],old=activeFeature;activeFeature=next;
+ const media=$('.hero-media');if(old!==next){media.classList.add('is-changing');setTimeout(()=>{media.classList.remove('is-changing')},160)}
+ $('#heroImg').src=gameArt(g.id);$('#heroTitle').textContent=g.name;$('#heroDescription').textContent={
+ 'lumen-siege':'一束光，迎战无尽黑暗。','still':'凝住时间，改变战局。','gravity-garden':'让星球与重力自由起舞。','vocalon-chaos':'让每一次按键，都踩在节拍上。','pulse-breaker':'跟上脉冲，冲破边界。'
+ }[g.id]||g.desc;
+ $('#heroLabel').textContent=['本周精选','为你推荐','自由探索','节奏之选','动作新体验'][next];
+ $('#heroPlay').href=BASE+g.id+'/';$('#heroPlay').dataset.play=g.id;
+ $('#heroDetail').dataset.detail=g.id;$('#heroDetail').setAttribute('aria-label','查看'+g.name+'详情');
+ $('#heroDots').innerHTML=PICKS.map((id,i)=>'<button type="button" class="hero-dot '+(i===next?'active':'')+'" data-feature="'+i+'" aria-label="查看第'+(i+1)+'款精选游戏" aria-pressed="'+(i===next)+'"></button>').join('');
 }
-function renderFilters(){
-  $('#filters').innerHTML=GROUPS.map(x=>`<button type="button" class="filter-chip ${filter===x?'active':''}" aria-pressed="${filter===x}" data-filter="${x}">${x}</button>`).join('');
+function story(g){return '<button type="button" class="story-card" data-detail="'+g.id+'" aria-label="了解'+g.name+'"><img src="'+gameArt(g.id)+'" alt="" loading="lazy"><span class="story-meta"><small>'+g.tags.slice(0,2).join(' · ')+'</small><strong>'+g.name+'</strong><span>'+g.desc.slice(0,20)+'…</span></span></button>'}
+function shelf(g){return '<button type="button" class="shelf-tile" data-detail="'+g.id+'" aria-label="查看'+g.name+'"><span class="shelf-art"><img src="'+gameArt(g.id)+'" loading="lazy" alt=""></span><span class="shelf-title">'+g.name+'</span><span class="shelf-caption">'+g.group+'</span></button>'}
+function renderHome(){
+ $('#homeGenres').innerHTML=GENRES.slice(1).map(t=>'<button type="button" class="genre-chip" data-genre="'+t+'">'+t+'</button>').join('');
+ $('#featureRail').innerHTML=STORIES.map(id=>story(byId[id])).join('');
+ const front=recent.length?recent.slice(0,8):['lumen-siege','vocalon-chaos','gravity-garden','pulse-breaker','rewinder','still','belfry','pixel-pong'];
+ $('#continueHeading').textContent=recent.length?'继续游玩':'开启下一场冒险';
+ $('#appShelf').innerHTML=front.map(id=>shelf(byId[id])).join('');
+ $('#discoveryRail').innerHTML=DISCOVER.map(id=>story(byId[id])).join('');
 }
-function card(g,i){
-  const saved=favorites.has(g.id);
-  return `<article class="game-card" style="--i:${i}">
-    <div class="game-cover">
-      <button type="button" class="cover-open" data-detail="${g.id}" aria-label="查看${g.name}详情"><img src="./art/${g.id}.svg" alt="" loading="${i<4?'eager':'lazy'}"><span class="cover-subtitle">${g.en}</span><strong class="cover-title">${g.name}</strong></button>
-      <button type="button" class="fav-button ${saved?'is-fav':''}" data-fav="${g.id}" aria-pressed="${saved}" aria-label="${saved?'取消收藏':'收藏'}${g.name}">${ICON_HEART}</button>
-    </div><div class="card-caption"><div><h3>${g.name}</h3><p>${g.tags.slice(0,2).join(' · ')}</p></div><span class="card-arrow" aria-hidden="true">↗</span></div>
-  </article>`;
+function listForView(){
+ let data=view==='favorites'?GAMES.filter(g=>favorites.has(g.id)):view==='recent'?recent.map(id=>byId[id]).filter(Boolean):GAMES;
+ const word=query.trim().toLocaleLowerCase();
+ return data.filter(g=>(genre==='全部'||g.group===genre||g.tags.includes(genre))&&(!word||[g.name,g.en,g.group,...g.tags,g.desc].join(' ').toLocaleLowerCase().includes(word)));
 }
-function render(){
-  const vmeta={all:['DISCOVER','探索游戏'],favorites:['SAVED','我的收藏'],recent:['HISTORY','最近玩过']};
-  $('#viewKicker').textContent=vmeta[view][0];$('#browseTitle').textContent=vmeta[view][1];
-  document.querySelectorAll('[data-view]').forEach(btn=>{let active=btn.dataset.view===view;btn.classList.toggle('active',active);btn.classList.toggle('current',active);btn.setAttribute('aria-current',active?'page':'false')});
-  const games=filtered();$('#resultCount').textContent=`${games.length} 款游戏`;
-  $('#gameGrid').innerHTML=games.map(card).join('');
-  const no=games.length===0;$('#emptyState').hidden=!no;
-  if(no){$('#emptyTitle').textContent=query?'没有找到匹配的游戏':view==='favorites'?'你还没有收藏游戏':view==='recent'?'还没有游玩记录':'这里还没有游戏';$('#emptyText').textContent=view==='favorites'&&!query?'看到喜欢的游戏，点一下封面上的爱心就能收藏。':view==='recent'&&!query?'打开任意游戏后，它就会出现在这里。':'试试其他关键词，或清除筛选条件。'}
-  renderFilters();$('#features').hidden=view!=='all'||!!query;
+function renderList(){
+ const metas={library:['游戏库','16 个世界，随时开玩。','全部游戏'],favorites:['我的收藏','值得重返的游戏，放在这里。','收藏的游戏'],recent:['最近玩过','继续上次的冒险。','最近打开']};
+ const current=searchMode?'library':view,key=metas[current]?current:'library',m=metas[key];
+ $('#subTitle').textContent=searchMode?'搜索':m[0];$('#subEyebrow').textContent=searchMode?'找到你的下一款游戏':'SHUGE Arcade';$('#subDescription').textContent=searchMode?'按名称、类型或玩法探索。':m[1];$('#listHeading').textContent=m[2];
+ $('#tagStrip').innerHTML=GENRES.map(t=>'<button type="button" class="filter-chip '+(t===genre?'active':'')+'" aria-pressed="'+(t===genre)+'" data-filter="'+t+'">'+t+'</button>').join('');
+ const result=listForView();$('#resultCount').textContent=result.length+' 款';
+ $('#gameList').innerHTML=result.map(g=>'<article class="list-row"><button class="list-image" data-detail="'+g.id+'" aria-label="查看'+g.name+'详情"><img src="'+gameArt(g.id)+'" loading="lazy" alt=""></button><button class="list-text" data-detail="'+g.id+'"><strong>'+g.name+'</strong><small>'+g.en+' · '+g.tags.slice(0,2).join(' · ')+'</small></button><a href="'+BASE+g.id+'/" data-play="'+g.id+'" target="_blank" rel="noopener noreferrer" class="row-play" aria-label="游玩'+g.name+'">游玩</a><button type="button" class="row-favorite '+(favorites.has(g.id)?'selected':'')+'" data-fav="'+g.id+'" aria-pressed="'+favorites.has(g.id)+'" aria-label="'+(favorites.has(g.id)?'取消收藏':'收藏')+g.name+'">'+heart+'</button></article>').join('');
+ const empty=result.length===0;$('#emptyState').hidden=!empty;
+ if(empty){
+   $('#emptyTitle').textContent=query?'没有找到游戏':view==='favorites'?'暂无收藏':view==='recent'?'还没有游玩记录':'没有符合条件的游戏';
+   $('#emptyDescription').textContent=view==='favorites'&&!query?'看到喜欢的游戏，点爱心保存。':view==='recent'&&!query?'点击任意游戏的“游玩”，这里会自动记录。':'可以换个搜索词或分类。';
+ }
 }
-function selectView(v){if(!['all','favorites','recent'].includes(v))return;view=v;filter='全部';query='';$('#search').value='';document.querySelector('.search-box').classList.remove('search-open');render();requestAnimationFrame(()=>{const p=$('#browse');p.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'})})}
-function toggleFavorite(id){if(!byId[id])return;const wasKeyboardFocus=document.activeElement?.matches?.('[data-fav]');const inDetail=openGame===id;const adding=!favorites.has(id);adding?favorites.add(id):favorites.delete(id);persist(KEY_FAV,[...favorites]);render();if(inDetail)populateDetail(byId[id]);if(wasKeyboardFocus){const selector='[data-fav="'+id+'"]';const target=inDetail?$('#detailContent').querySelector(selector):$('#gameGrid').querySelector(selector);(target||document.querySelector('[data-view="'+view+'"]'))?.focus({preventScroll:true})}announce(adding?'已加入收藏':'已取消收藏')}
-function markPlayed(id){if(!byId[id])return;recent=[id,...recent.filter(x=>x!==id)].slice(0,16);persist(KEY_RECENT,recent)}
-function populateDetail(g){const saved=favorites.has(g.id);$('#detailContent').innerHTML=`
-  <div class="detail-art"><img src="./art/${g.id}.svg" alt="" loading="eager"></div>
-  <div class="detail-copy"><p class="detail-overline">${g.en} · ${g.group}</p><h2 id="detailTitle">${g.name}</h2><p>${g.desc}</p>
-  <div class="detail-tags">${g.tags.map(t=>`<span>${t}</span>`).join('')}</div>
-  <div class="detail-actions"><a href="${BASE+g.id}/" class="detail-play" data-play="${g.id}" target="_blank" rel="noopener noreferrer">${ICON_PLAY} 开始游戏 <span aria-hidden="true">↗</span></a><button type="button" class="detail-save" data-fav="${g.id}" aria-pressed="${saved}">${saved?'♥ 已收藏':'♡ 收藏'}</button></div>
-  <div class="detail-notice">${g.device||'将在新标签页中打开原创网页游戏。'} · 游玩记录仅保存在此浏览器</div></div>`;
+function updateNav(){document.querySelectorAll('[data-view]').forEach(b=>{const active=b.dataset.view===(searchMode?'search':view);b.classList.toggle('active',active);if(!['search'].includes(b.dataset.view))b.setAttribute('aria-current',active?'page':'false')})}
+function setView(next,tag='全部'){
+ const search=next==='search',valid=['home','library','favorites','recent','search'];
+ if(!valid.includes(next))return;
+ searchMode=search;view=search?'library':next;genre=tag;query='';$('#searchInput').value='';
+ $('#homeView').hidden=view!=='home';$('#browseView').hidden=view==='home';
+ updateNav();if(view==='home')renderHome();else renderList();
+ window.scrollTo({top:0,behavior:'instant'});
+ if(search)requestAnimationFrame(()=>$('#searchInput').focus({preventScroll:true}));
 }
-function showDetail(id){const g=byId[id];if(!g)return;lastFocus=document.activeElement;openGame=id;populateDetail(g);const backdrop=$('#detailBackdrop');backdrop.classList.add('open');backdrop.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';$('#closeSheet').focus({preventScroll:true})}
-function closeDetail(){const b=$('#detailBackdrop');if(!b.classList.contains('open'))return;b.classList.remove('open');b.setAttribute('aria-hidden','true');document.body.style.overflow='';openGame=null;if(lastFocus&&lastFocus.isConnected)lastFocus.focus({preventScroll:true})}
-document.addEventListener('click',(event)=>{
-  const detail=event.target.closest('[data-detail]');if(detail){showDetail(detail.dataset.detail);return}
-  const fav=event.target.closest('[data-fav]');if(fav){toggleFavorite(fav.dataset.fav);return}
-  const chip=event.target.closest('[data-filter]');if(chip){filter=chip.dataset.filter;render();return}
-  const v=event.target.closest('[data-view]');if(v){selectView(v.dataset.view);return}
-  const play=event.target.closest('[data-play]');if(play){markPlayed(play.dataset.play);if(view==='recent')render();return}
+function toggleFavorite(id){
+ if(!byId[id])return;const isAdded=!favorites.has(id),focused=document.activeElement?.matches?.('[data-fav]'),fromModal=openGame===id;
+ if(isAdded)favorites.add(id);else favorites.delete(id);
+ save(SAVE,[...favorites]);renderList();
+ if(fromModal)renderDetail(byId[id]);
+ if(focused){const selector='[data-fav="'+id+'"]';const el=fromModal?$('#modalContent').querySelector(selector):$('#gameList').querySelector(selector);(el||document.querySelector('.tab.active'))?.focus({preventScroll:true})}
+ toast(isAdded?'已加入收藏':'已取消收藏');
+}
+function markPlayed(id){if(!byId[id])return;recent=[id,...recent.filter(x=>x!==id)].slice(0,16);save(HISTORY,recent);renderHome();if(view==='recent')renderList()}
+function renderDetail(g){
+ $('#modalContent').innerHTML='<div class="modal-cover"><img src="'+gameArt(g.id)+'" alt="" fetchpriority="high"></div><div class="modal-body"><div class="modal-symbol"><img src="'+gameArt(g.id)+'" alt=""></div><p class="modal-category">SHUGE Games · '+g.group+'</p><h2 id="detailTitle">'+g.name+'</h2><p class="modal-desc">'+g.desc+'</p><div class="modal-tags">'+g.tags.map(t=>'<span>'+t+'</span>').join('')+'</div><div class="modal-actions"><a class="modal-play" href="'+BASE+g.id+'/" data-play="'+g.id+'" target="_blank" rel="noopener noreferrer">游玩 <span aria-hidden="true">↗</span></a><button class="modal-save" data-fav="'+g.id+'" aria-pressed="'+favorites.has(g.id)+'">'+(favorites.has(g.id)?'♥ 已收藏':'♡ 收藏')+'</button></div><p class="modal-note">'+(g.device||'在新标签页启动浏览器游戏。')+' · 游玩记录只保存在这台设备</p></div>';
+}
+function openDetail(id){
+ const g=byId[id];if(!g)return;lastFocus=document.activeElement;openGame=id;renderDetail(g);
+ const layer=$('#modalLayer');layer.classList.add('open');layer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';$('#modalClose').focus({preventScroll:true});
+}
+function closeDetail(){
+ const layer=$('#modalLayer');if(!layer.classList.contains('open'))return;layer.classList.remove('open');layer.setAttribute('aria-hidden','true');document.body.style.overflow='';openGame=null;if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});
+}
+document.addEventListener('click',e=>{
+ const feature=e.target.closest('[data-feature]');if(feature){featureAt(Number(feature.dataset.feature));return}
+ const nav=e.target.closest('[data-view]');if(nav){setView(nav.dataset.view);return}
+ const choose=e.target.closest('[data-genre]');if(choose){setView('library',choose.dataset.genre);return}
+ const filt=e.target.closest('[data-filter]');if(filt){genre=filt.dataset.filter;renderList();return}
+ const play=e.target.closest('[data-play]');if(play){markPlayed(play.dataset.play);return}
+ const fav=e.target.closest('[data-fav]');if(fav){toggleFavorite(fav.dataset.fav);return}
+ const details=e.target.closest('[data-detail]');if(details)openDetail(details.dataset.detail)
 });
-$('#search').addEventListener('input',e=>{query=e.target.value;render()});
-$('#mobileSearch').addEventListener('click',()=>{const s=$('.search-box');const opened=s.classList.toggle('search-open');if(opened)$('#search').focus();else{$('#search').value='';query='';render()}});
-$('#clearFilters').addEventListener('click',()=>{view='all';filter='全部';query='';$('#search').value='';render()});
-$('#closeSheet').addEventListener('click',closeDetail);
-$('#detailBackdrop').addEventListener('click',e=>{if(e.target===$('#detailBackdrop'))closeDetail()});
+$('#heroPrev').addEventListener('click',()=>featureAt(activeFeature-1));
+$('#heroNext').addEventListener('click',()=>featureAt(activeFeature+1));
+$('#searchInput').addEventListener('input',e=>{query=e.target.value;renderList()});
+$('#clearFilters').addEventListener('click',()=>setView('library'));
+$('#modalClose').addEventListener('click',closeDetail);
+$('#modalLayer').addEventListener('click',e=>{if(e.target.id==='modalLayer')closeDetail()});
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){if(openGame)closeDetail();else if($('.search-box').classList.contains('search-open')){$('.search-box').classList.remove('search-open');$('#mobileSearch').focus()}return}
-  if(e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&!openGame){e.preventDefault();$('.search-box').classList.add('search-open');$('#search').focus()}
-  if(e.key==='Tab'&&openGame){const root=$('#detailSheet'),focusable=[...root.querySelectorAll('button,a[href],input')].filter(x=>!x.disabled);const first=focusable[0],last=focusable.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}
+ if(e.key==='Escape'){if(openGame)closeDetail();else if(searchMode)setView('home');return}
+ if(e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!openGame&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();setView('search')}
+ if(e.key==='Tab'&&openGame){const targets=[...$('#modalPanel').querySelectorAll('button,a[href],input')].filter(n=>!n.disabled);if(e.shiftKey&&document.activeElement===targets[0]){e.preventDefault();targets.at(-1).focus()}else if(!e.shiftKey&&document.activeElement===targets.at(-1)){e.preventDefault();targets[0].focus()}}
 });
-window.addEventListener('storage',e=>{if(e.key===KEY_FAV){favorites=new Set(load(KEY_FAV));render()}if(e.key===KEY_RECENT){recent=load(KEY_RECENT);if(view==='recent')render()}});
-render();
+let touchStart=null;
+$('#hero').addEventListener('pointerdown',e=>{if(e.pointerType==='touch'&&!e.target.closest('button,a'))touchStart={x:e.clientX,y:e.clientY}});
+$('#hero').addEventListener('pointerup',e=>{if(!touchStart)return;const dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;touchStart=null;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.15)featureAt(activeFeature+(dx<0?1:-1))});
+$('#hero').addEventListener('pointercancel',()=>touchStart=null);
+window.addEventListener('storage',e=>{if(e.key===SAVE){favorites=new Set(read(SAVE));renderList()}if(e.key===HISTORY){recent=read(HISTORY);renderHome();if(view==='recent')renderList()}});
+featureAt(0);renderHome();renderList();updateNav();
