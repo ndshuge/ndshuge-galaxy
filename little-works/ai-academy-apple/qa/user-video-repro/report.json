@@ -1,0 +1,212 @@
+{
+  "findings": [
+    {
+      "name": "390 quick navigation 0",
+      "pass": true,
+      "detail": {
+        "hash": "#learn",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "learn",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "name": "390 quick navigation 1",
+      "pass": true,
+      "detail": {
+        "hash": "#today",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "today",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "name": "390 quick navigation 2",
+      "pass": true,
+      "detail": {
+        "hash": "#courses",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "courses",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "name": "390 quick navigation 3",
+      "pass": true,
+      "detail": {
+        "hash": "#learn",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "learn",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "name": "390 quick navigation 4",
+      "pass": true,
+      "detail": {
+        "hash": "#courses",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "courses",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "name": "390 quick navigation 5",
+      "pass": true,
+      "detail": {
+        "hash": "#today",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "today",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "name": "390 quick navigation 6",
+      "pass": true,
+      "detail": {
+        "hash": "#learn",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "learn",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    },
+    {
+      "name": "390 zero runtime errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "430 quick navigation 0",
+      "pass": true,
+      "detail": {
+        "hash": "#learn",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "learn",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 430,
+        "clientWidth": 430
+      }
+    },
+    {
+      "name": "430 quick navigation 1",
+      "pass": true,
+      "detail": {
+        "hash": "#today",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "today",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 430,
+        "clientWidth": 430
+      }
+    },
+    {
+      "name": "430 quick navigation 2",
+      "pass": true,
+      "detail": {
+        "hash": "#courses",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "courses",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 430,
+        "clientWidth": 430
+      }
+    },
+    {
+      "name": "430 quick navigation 3",
+      "pass": true,
+      "detail": {
+        "hash": "#learn",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "learn",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 430,
+        "clientWidth": 430
+      }
+    },
+    {
+      "name": "430 quick navigation 4",
+      "pass": true,
+      "detail": {
+        "hash": "#courses",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "courses",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 430,
+        "clientWidth": 430
+      }
+    },
+    {
+      "name": "430 quick navigation 5",
+      "pass": true,
+      "detail": {
+        "hash": "#today",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "today",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 430,
+        "clientWidth": 430
+      }
+    },
+    {
+      "name": "430 quick navigation 6",
+      "pass": true,
+      "detail": {
+        "hash": "#learn",
+        "mainPages": 1,
+        "copyVisibility": "hidden",
+        "active": "learn",
+        "viewTransitionAnimations": 0,
+        "isScrubbing": false,
+        "scrollWidth": 430,
+        "clientWidth": 430
+      }
+    },
+    {
+      "name": "430 zero runtime errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "passed": 16,
+  "failed": 0
+}
