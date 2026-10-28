@@ -38,3 +38,10 @@ Apple Books 的 Reading Now 内容优先原则及 Notes 的正文阅读原则作
 - Mice Hole HTTPS Git：默认 schannel TLS 握手失败；127.0.0.1:7897 代理使用 OpenSSL 返回 unexpected EOF；无代理直连 github.com:443 超时。未改全局代理、未关闭证书校验、未强推。
 - 补充辅助技术验证：Playwright Edge 实际识别有名称的 Logistic role=img；真实首页不再含父级 aria-hidden。该专项检查输出 PASS，但测试进程关闭阶段出现超时，故仅认定以上两个断言成立，不认定完整用例退出成功。
 - 唯一下一步：在 GitHub HTTPS 可安全连通时，fetch 最新 origin/main → 核对本分支只影响知序 Apple Edition → 若远端已前进则重新集成 → 普通 non-force push → 验证 Pages 资源和线上完整功能。不要修改 Original 或其他小东西。
+
+## R2.1 正式部署复核（2026-10-28，覆盖上文早期“尚未上线”状态）
+- 既有 7897 GitHub HTTPS 握手超时；经既有 7898 跨订阅故障转移端口并设置本命令 `http.sslBackend=openssl`，真实 `git ls-remote`、fetch、push 成功。
+- 跨项目安全集成：先保留并行 Motion Lab 提交 `39e3456`，再集成知序 R2.1；发布提交 `fb7e7eec26bf37b475ee330cf7c910e61f9a44d0`，仅知序 Apple Edition 的 11 个文件，非强制推送到 main。
+- 实际线上核验：Chrome/Edge 无头浏览器与资源请求，R2.1 页面和新增 JS/CSS/SVG HTTP 200、原版引擎已连接、真实题目和实验计算正常；更新后的 online-r21-smoke 检查 20/20 通过（测试脚本保留在原始 worktree 中供查验）。原版站点 HTTP 200。
+- 共享网络恢复入口：`E:\CHATGPT\_system\git-safe-https.ps1`，支持 Probe / Fetch / 带路径隔离的 Push；全局 `E:\CHATGPT\AGENTS.md` 已新增优先执行说明。未经检查不得使用 force push、关闭 sslVerify 或改全局代理。
+- 局限：未在真实 iPhone Safari 验证原生 Liquid Glass 的光学质感；浏览器功能成功不等同人眼 Apple 视觉品质验收。
