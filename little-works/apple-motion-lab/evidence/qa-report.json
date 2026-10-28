@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-28T03:59:37.502Z",
+  "date": "2026-10-28T04:12:40.605Z",
   "browser": "Microsoft Edge headless (Chromium), NOT iPhone Safari",
   "tests": [
     {
@@ -28,7 +28,7 @@
         "interpolatedGeometry": {
           "p": 0,
           "x": 495,
-          "y": 707,
+          "y": 728,
           "w": 450,
           "h": 68,
           "r": 20,
@@ -41,7 +41,7 @@
         "componentNavbar": "LgNavbar",
         "componentSegmented": "LgSegmented",
         "engineHasWebGL": true,
-        "fps": 3,
+        "fps": 2,
         "playing": false,
         "track": 0,
         "gesture": {
@@ -79,7 +79,7 @@
       "name": "desktop mid-animation reverse interrupt",
       "pass": true,
       "details": {
-        "mid": 0.02920875832053413,
+        "mid": 0.01792869803162468,
         "final": 1
       }
     },
@@ -154,7 +154,7 @@
         "interpolatedGeometry": {
           "p": 0,
           "x": 12,
-          "y": 679,
+          "y": 680,
           "w": 366,
           "h": 68,
           "r": 20,
@@ -167,7 +167,7 @@
         "componentNavbar": "LgNavbar",
         "componentSegmented": "LgSegmented",
         "engineHasWebGL": true,
-        "fps": 206,
+        "fps": 207,
         "playing": false,
         "track": 0,
         "gesture": {
@@ -205,7 +205,7 @@
       "name": "mobile mid-animation reverse interrupt",
       "pass": true,
       "details": {
-        "mid": 0.15278041361493225,
+        "mid": 0.08107667004261007,
         "final": 1
       }
     },
@@ -219,7 +219,7 @@
           "start": 22,
           "last": 457,
           "gesture": true,
-          "velocity": -2.1136927660994163
+          "velocity": -2.5444453150647637
         }
       }
     },
@@ -280,7 +280,7 @@
         "interpolatedGeometry": {
           "p": 0,
           "x": 12,
-          "y": 535,
+          "y": 536,
           "w": 296,
           "h": 68,
           "r": 20,
@@ -293,7 +293,7 @@
         "componentNavbar": "LgNavbar",
         "componentSegmented": "LgSegmented",
         "engineHasWebGL": true,
-        "fps": 219,
+        "fps": 213,
         "playing": false,
         "track": 0,
         "gesture": {
@@ -355,7 +355,7 @@
           "interpolatedGeometry": {
             "p": 0,
             "x": 495,
-            "y": 707,
+            "y": 728,
             "w": 450,
             "h": 68,
             "r": 20,
@@ -368,7 +368,7 @@
           "componentNavbar": "LgNavbar",
           "componentSegmented": "LgSegmented",
           "engineHasWebGL": true,
-          "fps": 3,
+          "fps": 2,
           "playing": false,
           "track": 0,
           "gesture": {
@@ -400,7 +400,7 @@
         "interpolatedGeometry": {
           "p": 0,
           "x": 495,
-          "y": 707,
+          "y": 728,
           "w": 450,
           "h": 68,
           "r": 20,
@@ -413,15 +413,15 @@
         "componentNavbar": "LgNavbar",
         "componentSegmented": "LgSegmented",
         "engineHasWebGL": true,
-        "fps": 180,
+        "fps": 153,
         "playing": false,
         "track": 0,
         "gesture": {
           "drag": false,
-          "start": 738,
-          "last": 290,
+          "start": 759,
+          "last": 311,
           "gesture": true,
-          "velocity": 1.212247159157329
+          "velocity": 1.197318006959725
         }
       }
     },
@@ -437,7 +437,7 @@
           "interpolatedGeometry": {
             "p": 0,
             "x": 12,
-            "y": 679,
+            "y": 680,
             "w": 366,
             "h": 68,
             "r": 20,
@@ -450,7 +450,7 @@
           "componentNavbar": "LgNavbar",
           "componentSegmented": "LgSegmented",
           "engineHasWebGL": true,
-          "fps": 206,
+          "fps": 207,
           "playing": false,
           "track": 0,
           "gesture": {
@@ -477,12 +477,12 @@
         "svgEngine": "blink",
         "webgl": true,
         "quality": "auto",
-        "gpuRenders": 42,
+        "gpuRenders": 39,
         "glError": "",
         "interpolatedGeometry": {
           "p": 0,
           "x": 12,
-          "y": 679,
+          "y": 680,
           "w": 366,
           "h": 68,
           "r": 20,
@@ -495,15 +495,15 @@
         "componentNavbar": "LgNavbar",
         "componentSegmented": "LgSegmented",
         "engineHasWebGL": true,
-        "fps": 80,
+        "fps": 108,
         "playing": false,
         "track": 0,
         "gesture": {
           "drag": false,
-          "start": 709,
-          "last": 261,
+          "start": 710,
+          "last": 262,
           "gesture": true,
-          "velocity": 1.3257415053551695
+          "velocity": 1.6456029489204846
         }
       }
     },
@@ -519,7 +519,7 @@
           "interpolatedGeometry": {
             "p": 0,
             "x": 12,
-            "y": 535,
+            "y": 536,
             "w": 296,
             "h": 68,
             "r": 20,
@@ -532,7 +532,7 @@
           "componentNavbar": "LgNavbar",
           "componentSegmented": "LgSegmented",
           "engineHasWebGL": true,
-          "fps": 219,
+          "fps": 213,
           "playing": false,
           "track": 0,
           "gesture": {
@@ -559,7 +559,7 @@
         "svgEngine": "blink",
         "webgl": true,
         "quality": "auto",
-        "gpuRenders": 13,
+        "gpuRenders": 14,
         "glError": "",
         "interpolatedGeometry": {
           "p": 1,
@@ -577,7 +577,7 @@
         "componentNavbar": "LgNavbar",
         "componentSegmented": "LgSegmented",
         "engineHasWebGL": true,
-        "fps": 163,
+        "fps": 161,
         "playing": false,
         "track": 0,
         "gesture": {

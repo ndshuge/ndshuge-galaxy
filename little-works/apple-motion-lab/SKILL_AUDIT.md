@@ -29,7 +29,7 @@ The native packages do NOT provide an Apple Music player, track selection, one-D
 - Windows Edge (Chromium) mobile emulation 390x844, 1440x900 and 320x700; Playwright real click, mouse drag and CDP touch dispatch, plus JS runtime evaluation.
 - 28/28 functional checks passed, 0 uncaught browser JS errors: evidence/qa-report.json.
 - GPU actual pixels returned [249,198,192,255]; WebGL renders >0. Tested L1 off and L2 restored. This validates a running WebGL path, NOT pixel-level equivalence to Apple native optics. No GPU refraction A/B side-by-side quantitative optical accuracy comparison yet.
-- 12 consecutive spring-target interruptions at each viewport and eventual settle to 1: evidence/performance.json. An additional repeatable independent stress script scripts/qa-stress.cjs produced evidence/stress-report.json: 12/12 passed, including **70** spring reversals, measured WebGL displacement-map uploads staying at 1 while the player moves, visual difference between L1 and L2, actual Web Audio playback, Escape close, press spring feedback, reduced-motion snap and hardware WebGL failure fallback. Headless Edge rAF sampled 201fps (390) and 240fps (1440) over ~2.3 seconds with SwiftShader; these are **unthrottled headless callback rates, not display fps** and do not indicate physical device screen refresh or energy efficiency. No actual iPhone Safari FPS measurements.
+- 12 consecutive spring-target interruptions at each viewport and eventual settle to 1: evidence/performance.json. An additional repeatable independent stress script scripts/qa-stress.cjs produced evidence/stress-report.json: 14/14 passed, including **70** spring reversals, measured WebGL displacement-map uploads staying at 1 while the player moves, visual difference between L1 and L2, actual Web Audio playback, Escape close, press spring feedback, reduced-motion snap and hardware WebGL failure fallback. Headless Edge rAF sampled 201fps (390) and 240fps (1440) over ~2.3 seconds with SwiftShader; these are **unthrottled headless callback rates, not display fps** and do not indicate physical device screen refresh or energy efficiency. No actual iPhone Safari FPS measurements.
 - Screenshots: qa-mobile.png, qa-desktop.png, qa-mobile-full.png, qa-desktop-full.png and original design-inspector output.
 
 ## Taste inspection detailed disposition
@@ -41,6 +41,12 @@ Taste's app-mode inspector did run and returned FAIL on gradient, button-fx, hea
 - The background/unknown scroll DOM in Safari/Firefox may use frosted fallback rather than L2 refraction; Safari video compositing differences are documented in Skill references but not exercised on a Mac.
 - Album art is original illustrative SVG, music is a simple synthesized ambience, not a fully-featured streaming Apple Music clone.
 - Some Taste app-style findings remain; external native-equivalent visual comparison has not been pixel-matched with reference footage. No human quality approval collected.
+
+## 2026-10-28 incremental QA / visual refinement
+- 14/14 stress checks after adding direct runtime checks for the native `lg-navbar` SVG filter and a 52% shared-element transition frame (evidence/transition-mid-390.png).
+- WebGL cached displacement map uploaded 1 time despite 70 retargets. Runtime navbar computed filter: `url("#lg3-v2")`; backdrop refraction `url("#lg2-v2")` on Edge.
+- Intentional media imagery gradients retained. Generic Taste lint still warns on gradients and floating shadows; this is **not** a claim of 0 Taste failures.
+- Removed excess primary CTA glow and raised tiny navigation/diagnostic labels to 11px. The latest test does not establish Apple/iPhone native parity.
 
 ## Publication scope
 Only add little-works/apple-motion-lab/ and one catalog entry. Release from freshest remote main with isolated integration worktree, ordinary push and live Pages smoke; no other works overwritten. Publication evidence must be appended with actual result only.

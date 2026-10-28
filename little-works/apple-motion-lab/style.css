@@ -33,3 +33,7 @@
 .side-foot{line-height:1.7}
 .cover-caption{font-size:11px}
 
+/* Visual review: remove nonessential CTA glow and keep navigation/diagnostic copy legible. */
+.hero-action{box-shadow:none}
+#navigation .lg-nav__copy>span,.nav-container lg-navbar>button{font-size:11px}
+.quality-message,.endnote{font-size:11px}

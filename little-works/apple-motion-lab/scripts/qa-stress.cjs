@@ -25,7 +25,15 @@ async function main(){
   await page.evaluate(()=>__motionLab.settle(1));await pause(780);
   let after=await page.evaluate(()=>({p:__motionLab.progress(),diag:__motionLab.diagnostic(),uploads:{...__glUploads}}));
   check('70 interruptible spring retargets settle at full',after.p>.98,{p:after.p,renderCount:after.diag.gpuRenders});
+  const material=await page.evaluate(()=>{const nav=document.querySelector('#navigation');const indicator=nav.querySelector('.lg-nav__copy');return {mode:nav.surface?.mode,hasGlass:!!nav.glass,indicatorFilter:getComputedStyle(indicator).filter,glassSurfaceBackdrop:getComputedStyle(nav.querySelector('.lg-surface__glass')).backdropFilter};});
+  check('Native navbar runs SVG lens or refractive backdrop',material.hasGlass&&(/url\(/.test(material.indicatorFilter)||/url\(/.test(material.glassSurfaceBackdrop)),material);
+  await page.evaluate(()=>__motionLab.settle(.52));await pause(750);await page.screenshot({path:path.join(evidence,'transition-mid-390.png')});
+  const midGeometry=await page.evaluate(()=>__motionLab.diagnostic().interpolatedGeometry);
+  check('Shared element interpolates size, corner radius, artwork',midGeometry.p>.48&&midGeometry.p<.56&&midGeometry.r>0&&midGeometry.r<20&&midGeometry.artSize>54,{p:midGeometry.p,r:midGeometry.r,artSize:midGeometry.artSize});
+
   check('Moving/resizing player did not rebuild lens map',after.uploads.map===initialUploads.map,{before:initialUploads,after:after.uploads});
+  // Compare at fully expanded state: a transition midpoint may temporarily clip the rendering canvas.
+  await page.evaluate(()=>__motionLab.settle(1));await pause(800);
   const canvas=await page.locator('#artGL').screenshot({path:path.join(evidence,'stress-glass-l2.png')});
   await page.locator('#quality button[value="lite"]').click({force:true});await pause(160);
   await page.locator('#artwork').screenshot({path:path.join(evidence,'stress-glass-l1.png')});
