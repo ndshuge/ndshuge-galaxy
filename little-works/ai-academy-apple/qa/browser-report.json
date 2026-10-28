@@ -1,0 +1,189 @@
+{
+  "startedAt": "2026-10-28T06:28:00.597Z",
+  "checks": [
+    {
+      "name": "first screen renders",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "original live iframe science bridge",
+      "ok": true,
+      "detail": "科学引擎已连接 · 规则引导模式"
+    },
+    {
+      "name": "actual Original API adapter present",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "original learning schema imported",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "native Skill glass web component registered",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Motion module",
+      "ok": true,
+      "detail": "Motion"
+    },
+    {
+      "name": "horizontal overflow 320",
+      "ok": true,
+      "detail": {
+        "scroll": 320,
+        "client": 320
+      }
+    },
+    {
+      "name": "horizontal overflow 390",
+      "ok": true,
+      "detail": {
+        "scroll": 390,
+        "client": 390
+      }
+    },
+    {
+      "name": "horizontal overflow 768",
+      "ok": true,
+      "detail": {
+        "scroll": 768,
+        "client": 768
+      }
+    },
+    {
+      "name": "horizontal overflow 1024",
+      "ok": true,
+      "detail": {
+        "scroll": 1024,
+        "client": 1024
+      }
+    },
+    {
+      "name": "horizontal overflow 1440",
+      "ok": true,
+      "detail": {
+        "scroll": 1440,
+        "client": 1440
+      }
+    },
+    {
+      "name": "learning page",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Original question loaded",
+      "ok": true,
+      "detail": {
+        "options": 3
+      }
+    },
+    {
+      "name": "no default selected",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Original grade + recorded attempt",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Original scientific experiment returned",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "actual measured scientific chart",
+      "ok": true,
+      "detail": {
+        "series": 2
+      }
+    },
+    {
+      "name": "rules tutor response displayed",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Original transfer loaded unselected",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "Original transfer graded",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "real V2 events persisted",
+      "ok": true,
+      "detail": {
+        "schemaVersion": 2,
+        "events": [
+          "question_attempt",
+          "misconception_candidate",
+          "review_task",
+          "hypothesis_test",
+          "question_attempt"
+        ],
+        "count": 5
+      }
+    },
+    {
+      "name": "progress after reload reads V2 events",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "glass engine SVG filter created",
+      "ok": true,
+      "detail": {
+        "filterCount": 2,
+        "navFilter": "blur(27px) saturate(1.6)",
+        "webGLSupported": true,
+        "reducedMotion": false
+      }
+    },
+    {
+      "name": "zero blocking JS exceptions",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "zero missing HTTP assets",
+      "ok": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "httpErrors": [],
+  "screenshots": [
+    "apple-home-320.png",
+    "apple-home-390.png",
+    "apple-home-768.png",
+    "apple-home-1024.png",
+    "apple-home-1440.png",
+    "apple-library-390.png",
+    "apple-courses-390.png"
+  ],
+  "optics": {
+    "ready": true,
+    "store": true,
+    "components": true,
+    "optic": true,
+    "motion": "Motion",
+    "filterCount": 2,
+    "navFilter": "blur(27px) saturate(1.6)",
+    "webGLSupported": true,
+    "reducedMotion": false
+  },
+  "endedAt": "2026-10-28T06:28:09.629Z",
+  "passed": 25,
+  "failed": 0
+}

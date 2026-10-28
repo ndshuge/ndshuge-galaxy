@@ -1,0 +1,42 @@
+{
+  "checks": [
+    {
+      "name": "EvoWorld real prequestion",
+      "ok": true,
+      "details": {
+        "count": 3
+      }
+    },
+    {
+      "name": "EvoWorld observed table",
+      "ok": true,
+      "details": {
+        "countRows": 5
+      }
+    },
+    {
+      "name": "Evo no page overflow",
+      "ok": true,
+      "details": {
+        "page": 390,
+        "screen": 390
+      }
+    },
+    {
+      "name": "EvoWorld conditions and seeds genuine",
+      "ok": true,
+      "details": "随机种子\t条件\t平均个体数\t结束时个体数\n12023\t合作开启\t30.76\t38\n12023\t合作关闭\t27.665\t33\n116752\t合作开启\t29.91\t37\n116752\t合作关闭\t26.405\t32"
+    },
+    {
+      "name": "EvoWorld event persisted in original V2",
+      "ok": true
+    },
+    {
+      "name": "Evo tutor rules present",
+      "ok": true
+    }
+  ],
+  "errors": [],
+  "pass": 6,
+  "fail": 0
+}

@@ -1,0 +1,50 @@
+{
+  "browser": "Windows Edge headless",
+  "timestamp": "2026-10-28T06:21:45.182Z",
+  "viewport": [
+    390,
+    844
+  ],
+  "measurements": {
+    "domContentLoadedMs": 301,
+    "firstUsableHeroMs": 518,
+    "originalBridgeReadyMs": 1444,
+    "mainThreadTaskDurationSec": 0.000015,
+    "layoutDurationSec": 0,
+    "scriptDurationSec": 0,
+    "jsHeapUsedBytes": 4663724,
+    "longTasks": [
+      100,
+      172,
+      128
+    ],
+    "cls": 0.000044173460493146706,
+    "interactive": "Motion",
+    "memory": 5579123,
+    "opticalMaps": 2,
+    "opticFilters": [
+      "lg1-v3",
+      "lg2-v3",
+      ""
+    ],
+    "nSurface": 2,
+    "area": {
+      "width": 390,
+      "screen": 390
+    },
+    "idleFrameP95Ms": 4.300000000000182,
+    "idleFrameMedianMs": 4.199999999999818,
+    "navigationAfterClick": {
+      "view": "#learn",
+      "lessonVisible": true
+    },
+    "reducedMotionMedia": true,
+    "reducedTransparencyNavigation": "blur(27px) saturate(1.6)"
+  },
+  "limitations": [
+    "headless Windows Edge is not iPhone Safari",
+    "no 120Hz, physical GPU or battery measurement",
+    "network latency varies",
+    "first screen embeds original same-origin app"
+  ]
+}

@@ -1,0 +1,371 @@
+{
+  "timestamp": "2026-10-28T06:20:48.394Z",
+  "counts": {
+    "passed": 53,
+    "failed": 0,
+    "exceptions": 0
+  },
+  "tests": [
+    {
+      "name": "original loaded in same origin and readable",
+      "pass": true,
+      "detail": {
+        "nav": null,
+        "fonts": "loaded",
+        "ifr": true
+      }
+    },
+    {
+      "name": "empty starting data readable",
+      "pass": true
+    },
+    {
+      "name": "overflow 320 today",
+      "pass": true,
+      "detail": {
+        "page": 320,
+        "visible": 320
+      }
+    },
+    {
+      "name": "overflow 320 learn",
+      "pass": true,
+      "detail": {
+        "page": 320,
+        "visible": 320
+      }
+    },
+    {
+      "name": "overflow 320 courses",
+      "pass": true,
+      "detail": {
+        "page": 320,
+        "visible": 320
+      }
+    },
+    {
+      "name": "overflow 320 library",
+      "pass": true,
+      "detail": {
+        "page": 320,
+        "visible": 320
+      }
+    },
+    {
+      "name": "overflow 320 growth",
+      "pass": true,
+      "detail": {
+        "page": 320,
+        "visible": 320
+      }
+    },
+    {
+      "name": "overflow 320 settings",
+      "pass": true,
+      "detail": {
+        "page": 320,
+        "visible": 320
+      }
+    },
+    {
+      "name": "overflow 390 today",
+      "pass": true,
+      "detail": {
+        "page": 390,
+        "visible": 390
+      }
+    },
+    {
+      "name": "overflow 390 learn",
+      "pass": true,
+      "detail": {
+        "page": 390,
+        "visible": 390
+      }
+    },
+    {
+      "name": "overflow 390 courses",
+      "pass": true,
+      "detail": {
+        "page": 390,
+        "visible": 390
+      }
+    },
+    {
+      "name": "overflow 390 library",
+      "pass": true,
+      "detail": {
+        "page": 390,
+        "visible": 390
+      }
+    },
+    {
+      "name": "overflow 390 growth",
+      "pass": true,
+      "detail": {
+        "page": 390,
+        "visible": 390
+      }
+    },
+    {
+      "name": "overflow 390 settings",
+      "pass": true,
+      "detail": {
+        "page": 390,
+        "visible": 390
+      }
+    },
+    {
+      "name": "overflow 768 today",
+      "pass": true,
+      "detail": {
+        "page": 768,
+        "visible": 768
+      }
+    },
+    {
+      "name": "overflow 768 learn",
+      "pass": true,
+      "detail": {
+        "page": 768,
+        "visible": 768
+      }
+    },
+    {
+      "name": "overflow 768 courses",
+      "pass": true,
+      "detail": {
+        "page": 768,
+        "visible": 768
+      }
+    },
+    {
+      "name": "overflow 768 library",
+      "pass": true,
+      "detail": {
+        "page": 768,
+        "visible": 768
+      }
+    },
+    {
+      "name": "overflow 768 growth",
+      "pass": true,
+      "detail": {
+        "page": 768,
+        "visible": 768
+      }
+    },
+    {
+      "name": "overflow 768 settings",
+      "pass": true,
+      "detail": {
+        "page": 768,
+        "visible": 768
+      }
+    },
+    {
+      "name": "overflow 1024 today",
+      "pass": true,
+      "detail": {
+        "page": 1024,
+        "visible": 1024
+      }
+    },
+    {
+      "name": "overflow 1024 learn",
+      "pass": true,
+      "detail": {
+        "page": 1024,
+        "visible": 1024
+      }
+    },
+    {
+      "name": "overflow 1024 courses",
+      "pass": true,
+      "detail": {
+        "page": 1024,
+        "visible": 1024
+      }
+    },
+    {
+      "name": "overflow 1024 library",
+      "pass": true,
+      "detail": {
+        "page": 1024,
+        "visible": 1024
+      }
+    },
+    {
+      "name": "overflow 1024 growth",
+      "pass": true,
+      "detail": {
+        "page": 1024,
+        "visible": 1024
+      }
+    },
+    {
+      "name": "overflow 1024 settings",
+      "pass": true,
+      "detail": {
+        "page": 1024,
+        "visible": 1024
+      }
+    },
+    {
+      "name": "overflow 1440 today",
+      "pass": true,
+      "detail": {
+        "page": 1440,
+        "visible": 1440
+      }
+    },
+    {
+      "name": "overflow 1440 learn",
+      "pass": true,
+      "detail": {
+        "page": 1440,
+        "visible": 1440
+      }
+    },
+    {
+      "name": "overflow 1440 courses",
+      "pass": true,
+      "detail": {
+        "page": 1440,
+        "visible": 1440
+      }
+    },
+    {
+      "name": "overflow 1440 library",
+      "pass": true,
+      "detail": {
+        "page": 1440,
+        "visible": 1440
+      }
+    },
+    {
+      "name": "overflow 1440 growth",
+      "pass": true,
+      "detail": {
+        "page": 1440,
+        "visible": 1440
+      }
+    },
+    {
+      "name": "overflow 1440 settings",
+      "pass": true,
+      "detail": {
+        "page": 1440,
+        "visible": 1440
+      }
+    },
+    {
+      "name": "question starts with zero selection",
+      "pass": true
+    },
+    {
+      "name": "question submit initially disabled",
+      "pass": true
+    },
+    {
+      "name": "radio selection enables submit",
+      "pass": true
+    },
+    {
+      "name": "pre-test withholds correctness and standard answer",
+      "pass": true,
+      "detail": "初始判断已记录\n\n答案暂不揭示。先做实验，再尝试独立迁移。"
+    },
+    {
+      "name": "science experiment step",
+      "pass": true
+    },
+    {
+      "name": "V2 local evidence recorded",
+      "pass": true
+    },
+    {
+      "name": "lesson context preserved after reload",
+      "pass": true
+    },
+    {
+      "name": "default tutor uses rules, no model sent",
+      "pass": true
+    },
+    {
+      "name": "single-variable plan needs explicit approval",
+      "pass": true
+    },
+    {
+      "name": "approved second run completed",
+      "pass": true
+    },
+    {
+      "name": "transfer answer unselected",
+      "pass": true
+    },
+    {
+      "name": "transfer uses versioned original rubric",
+      "pass": true
+    },
+    {
+      "name": "both stage attempts persisted",
+      "pass": true,
+      "detail": [
+        "question_attempt",
+        "misconception_candidate",
+        "review_task",
+        "hypothesis_test",
+        "hypothesis_test",
+        "question_attempt"
+      ]
+    },
+    {
+      "name": "Original Edition sees same learnerId and events",
+      "pass": true,
+      "detail": {
+        "original": 6,
+        "apple": 6
+      }
+    },
+    {
+      "name": "hold opens contextual modal",
+      "pass": true
+    },
+    {
+      "name": "hold modal can dismiss",
+      "pass": true
+    },
+    {
+      "name": "export available in settings",
+      "pass": true
+    },
+    {
+      "name": "original AI settings UI is reachable",
+      "pass": true
+    },
+    {
+      "name": "original AI settings can dismiss",
+      "pass": true
+    },
+    {
+      "name": "reduced motion is respected by CSS",
+      "pass": true,
+      "detail": {
+        "glass": 2,
+        "reduce": true,
+        "motion": "Motion"
+      }
+    },
+    {
+      "name": "actual skills optics loaded on reduced motion",
+      "pass": true,
+      "detail": {
+        "glass": 2,
+        "reduce": true,
+        "motion": "Motion"
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="description" content="知序 AI 学院 Apple Edition：真实科学探究、个人学习证据、分步教学与复习。">
+<title>知序 AI 学院 · Apple Edition</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="stylesheet" href="./assets/apple-tokens.css">
+<link rel="stylesheet" href="./styles.css"><link rel="stylesheet" href="./assets/accessibility.css">
+</head><body>
+<svg class="defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5C8 3 5 3 2 4v15c3-1 6-1 10 1 4-2 7-2 10-1V4c-3-1-6-1-10 1Zm0 0v15"/></symbol>
+<symbol id="i-house" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9H3zM9 20v-6h6v6"/></symbol>
+<symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 6c-2-4-7-3-8 1-3 1-2 6 0 7-1 4 3 6 6 4l2 3 2-3c3 2 7 0 6-4 2-1 3-6 0-7-1-4-6-5-8-1v12M9 9l3 3m3-3-3 3"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 21V3m0 18h18M7 16l4-5 4 3 5-8"/></symbol>
+<symbol id="i-pages" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="18" rx="2"/><path d="M9 8h7M9 12h7M9 16h4M5 6H3v14"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><path d="m10 2-.5 2.2-2 1L5.3 4 3 6.5l1.5 2-1 2.5-2.5 1 1 3 2.3.2 1.2 2-1 2.3L7 22l2-1.4 2.4.5L13 23l2.5-1 0-2.5 2-1 2.2 1 2.3-3-1.7-2 .6-2.3 2.1-1-1-3-2.5-.3-1.1-2 1-2L16.5 2 14 3.4 12 3z"/><circle cx="12" cy="12.5" r="3"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-7-7 7 7-7 7"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.8 7.2L22 12l-7.2 2.8L12 22l-2.8-7.2L2 12l7.2-2.8z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+</svg>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="知序主导航">
+    <a class="identity" href="#today" aria-label="知序 AI 学院，返回今天"><span class="identity-mark">∑</span><span>知序 <small>AI 学院</small></span></a>
+    <div class="nav-label">学习空间</div>
+    <nav class="side-items" id="side-nav">
+      <button data-view="today" class="nav-link selected"><svg><use href="#i-house"/></svg>今天</button>
+      <button data-view="learn" class="nav-link"><svg><use href="#i-book"/></svg>学习</button>
+      <button data-view="courses" class="nav-link"><svg><use href="#i-brain"/></svg>课程</button>
+      <button data-view="library" class="nav-link"><svg><use href="#i-pages"/></svg>资料与错题</button>
+      <button data-view="growth" class="nav-link"><svg><use href="#i-chart"/></svg>学习进度</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="nav-link" data-view="settings"><svg><use href="#i-gear"/></svg>设置</button>
+      <a class="original-link" href="https://ndshuge.github.io/zhixu-ai-academy/" target="_blank" rel="noopener noreferrer">Original Edition <span>↗</span></a>
+      <div class="bridge-state" id="bridge-state" role="status">正在连接原版科学引擎…</div>
+    </div>
+  </aside>
+  <div class="stage">
+    <header class="topbar">
+      <div class="top-left"><span class="mobile-brand">∑　知序</span><span class="crumb" id="crumb">今天</span></div>
+      <div class="top-right"><span class="edition-badge">Apple Edition</span><a class="edition-compare" href="./compare.html">对照 ↗</a><button class="user-button" data-view="settings" aria-label="设置"><svg aria-hidden="true"><use href="#i-gear"></use></svg></button></div>
+    </header>
+    <main id="main" tabindex="-1" aria-live="off"></main>
+  </div>
+</div>
+<lg-navbar class="mobile-dock" aria-label="主要页面" id="mobile-nav" tone="light" refraction="9" chroma="0.1">
+ <button data-view="today" class="dock-link selected"><svg><use href="#i-house"/></svg><span>今天</span></button>
+ <button data-view="learn" class="dock-link"><svg><use href="#i-book"/></svg><span>学习</span></button>
+ <button data-view="courses" class="dock-link"><svg><use href="#i-brain"/></svg><span>课程</span></button>
+ <button data-view="library" class="dock-link"><svg><use href="#i-pages"/></svg><span>资料</span></button>
+ <button data-view="growth" class="dock-link"><svg><use href="#i-chart"/></svg><span>进度</span></button>
+</lg-navbar>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="modal-root"></div>
+<!-- Loads the actual existing Original Pages app inside the same GitHub Pages origin.
+     Browser adapter and scientific logic execute there unchanged; this Edition speaks to its fetch API.
+     The iframe is never navigated to an untrusted location. -->
+<iframe id="original-engine" title="原版科学引擎（后台数据适配层）" src="/zhixu-ai-academy/" tabindex="-1" aria-hidden="true"></iframe>
+<script type="module" src="./app.js"></script>
+</body></html>

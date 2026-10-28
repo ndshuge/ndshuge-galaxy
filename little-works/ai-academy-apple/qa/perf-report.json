@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-28T06:22:05.435Z",
+  "environment": "Windows Edge headless on local Node preview; NOT an iPhone/iPad Safari benchmark",
+  "checks": {
+    "390": {
+      "connected": true,
+      "bridgeMs": 1092,
+      "domContentLoadedMs": 283,
+      "fcpMs": 580,
+      "jsHeapUsedMb": 3.47,
+      "svgFilters": 3,
+      "components": true,
+      "layoutViewport": {
+        "scroll": 390,
+        "inner": 390
+      },
+      "navBackdrop": "blur(27px) saturate(1.6)"
+    },
+    "1440": {
+      "connected": true,
+      "bridgeMs": 769,
+      "domContentLoadedMs": 140,
+      "fcpMs": 80,
+      "jsHeapUsedMb": 4.42,
+      "svgFilters": 3,
+      "components": true,
+      "layoutViewport": {
+        "scroll": 1440,
+        "inner": 1440
+      },
+      "navBackdrop": "none"
+    }
+  },
+  "reducedMotion": {
+    "media": true,
+    "style": "1e-05s"
+  }
+}

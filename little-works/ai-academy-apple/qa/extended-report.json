@@ -1,0 +1,150 @@
+{
+  "date": "2026-10-28T06:28:20.594Z",
+  "checks": [
+    {
+      "name": "mobile native header stays in viewport",
+      "pass": true,
+      "details": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 61
+      }
+    },
+    {
+      "name": "page today responsive",
+      "pass": true,
+      "details": {
+        "scroll": 390,
+        "client": 390,
+        "title": "今天，理解一个新问题。"
+      }
+    },
+    {
+      "name": "page learn responsive",
+      "pass": true,
+      "details": {
+        "scroll": 390,
+        "client": 390,
+        "title": "探索，从你的判断开始。"
+      }
+    },
+    {
+      "name": "page courses responsive",
+      "pass": true,
+      "details": {
+        "scroll": 390,
+        "client": 390,
+        "title": "从现象，走向证据。"
+      }
+    },
+    {
+      "name": "page library responsive",
+      "pass": true,
+      "details": {
+        "scroll": 390,
+        "client": 390,
+        "title": "把每一次判断留下来。"
+      }
+    },
+    {
+      "name": "page growth responsive",
+      "pass": true,
+      "details": {
+        "scroll": 390,
+        "client": 390,
+        "title": "每一次理解，都有迹可循。"
+      }
+    },
+    {
+      "name": "page settings responsive",
+      "pass": true,
+      "details": {
+        "scroll": 390,
+        "client": 390,
+        "title": "设置。"
+      }
+    },
+    {
+      "name": "real original DeepSeek configuration opened in place",
+      "pass": true,
+      "details": {
+        "modal": 1,
+        "sourceOpen": "true"
+      }
+    },
+    {
+      "name": "model setup closes without deleting state",
+      "pass": true
+    },
+    {
+      "name": "real segmented control mounted",
+      "pass": true
+    },
+    {
+      "name": "native segmented selector changes real lesson",
+      "pass": true,
+      "details": [
+        "知序私人教师 · 生命与演化",
+        "第一步 · 先独立思考"
+      ]
+    },
+    {
+      "name": "submit stays disabled before choosing",
+      "pass": true
+    },
+    {
+      "name": "radio selection enables submit",
+      "pass": true
+    },
+    {
+      "name": "actual EvoWorld browser model executed",
+      "pass": true
+    },
+    {
+      "name": "approved second experiment executed",
+      "pass": true,
+      "details": {
+        "second": 1
+      }
+    },
+    {
+      "name": "second scientific hypothesis stored",
+      "pass": true,
+      "details": {
+        "evidence": 2
+      }
+    },
+    {
+      "name": "long press opens real course action",
+      "pass": true
+    },
+    {
+      "name": "reduced-motion mode honored",
+      "pass": true
+    },
+    {
+      "name": "Original ↔ Apple comparison page exists",
+      "pass": true
+    },
+    {
+      "name": "no page JS uncaught errors",
+      "pass": true,
+      "details": []
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "extended-today-390.png",
+    "extended-learn-390.png",
+    "extended-courses-390.png",
+    "extended-library-390.png",
+    "extended-growth-390.png",
+    "extended-settings-390.png",
+    "extended-evolution-experiment-390.png",
+    "extended-reduced-motion-390.png",
+    "extended-comparison-390.png"
+  ],
+  "passed": 20,
+  "failed": 0
+}

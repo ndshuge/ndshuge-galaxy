@@ -1,0 +1,13 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';import path from 'node:path';import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../..');
+const p=path.join(root,'little-works/catalog.json');
+const present=JSON.parse(await readFile(p,'utf8'));const entry=present.find(x=>x.slug==='ai-academy-apple');
+if(!entry)throw Error('Missing new Apple entry');
+const original=execFileSync('git',['show','HEAD:little-works/catalog.json'],{cwd:root}).toString('utf8');
+if(!original.startsWith('[\n'))throw Error('Unsupported catalog formatting');
+const added=JSON.stringify(entry,null,2).split('\n').map(l=>'  '+l).join('\n');
+const next='[\n'+added+',\n'+original.slice(2);
+const parsed=JSON.parse(next),baseline=JSON.parse(original);
+if(JSON.stringify(parsed.slice(1))!==JSON.stringify(baseline))throw Error('Existing catalog changed');
+await writeFile(p,next,'utf8');console.log('preserved',baseline.length,'original entries byte-for-byte after insertion');
