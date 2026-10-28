@@ -9,6 +9,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='%23a6e6d9'/%3E%3Ccircle cx='32' cy='32' r='17' fill='%230c2431'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css">
 <link rel="stylesheet" href="./aura-redesign.css">
+<link rel="stylesheet" href="./focus-aura-v3.css">
 <script src="./app.js" defer></script>
 </head>
 <body data-scene="dawn" data-glass="l2">
@@ -47,10 +48,10 @@
         <div class="art-scene art-ocean"><i class="sea-light"></i><i class="sea-floor"></i><i class="sea-current"></i></div>
         <div class="art-scene art-night"><i class="art-moon"></i><i class="night-hill hill-far"></i><i class="night-hill hill-near"></i></div>
       </div>
-      <div class="ambient-top"><span class="ambient-overline">此刻风景</span><span class="ambient-index">01 — 03</span></div>
+
       <div class="ambient-caption">
         <span class="ambient-icon" aria-hidden="true"></span>
-        <p class="ambient-kicker">环境音景</p>
+
         <h2 class="ambient-title"><span class="label-dawn">晨光初醒</span><span class="label-ocean">海面之下</span><span class="label-night">夜色渐深</span></h2>
         <p class="ambient-subtitle"><span class="copy-dawn">留一点温柔的光，给此刻。</span><span class="copy-ocean">与世界保持刚刚好的距离。</span><span class="copy-night">静下来，就能听见自己。</span></p>
       </div>
@@ -64,7 +65,7 @@
       <button class="today-link holdable" id="stats-open"><span class="stat-icon" aria-hidden="true">↗</span><span>今日已专注 <strong id="today-count">0 分钟</strong></span><span aria-hidden="true" class="forward">⌁</span></button>
     </div>
   </main>
-  <footer class="footer"><span>专注当下，自有回响。</span><span>FOCUS AURA · 2026</span></footer>
+  <footer class="footer"><span>一段时间，只属于此刻。</span><span>Focus Aura</span></footer>
 </div>
 <div class="overlay" id="overlay" hidden><div class="overlay-backdrop" id="overlay-backdrop"></div><section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
   <div class="sheet-handle" aria-hidden="true"></div><div class="sheet-header"><div><p class="sheet-kicker" id="sheet-kicker">FOCUS AURA</p><h2 id="sheet-title">设置</h2></div><button class="icon-button holdable" id="sheet-close" aria-label="关闭面板">✕</button></div>

@@ -1,0 +1,189 @@
+/* Focus Aura · Plugin v1.1 experiment
+   Native Apple Web Design / Apple Liquid Glass / Taste / Dual Source /
+   Liquid Glass for Web / Motion / finesse / Impeccable / Prism informed.
+   Art direction: an instrument in front of a quiet landscape.
+   Optical refraction remains in app.js; CSS backdrop blur is L1 only. */
+:root{
+  --v3-text:#f6f8f6; --v3-secondary:rgba(237,246,244,.72);
+  --v3-muted:rgba(233,243,240,.56); --v3-edge:rgba(246,252,249,.14);
+  --v3-ease:cubic-bezier(.18,.8,.25,1); --v3-spring:cubic-bezier(.17,1.15,.35,1);
+}
+body{color:var(--v3-text);background:#102128}
+#world{opacity:.42;filter:saturate(.58)}
+.grain{opacity:.026}
+.app{max-width:1520px;padding-inline:clamp(24px,5.8vw,96px)}
+.topbar{height:86px;border-bottom:1px solid rgba(247,251,250,.085)}
+.brand{font-size:20px;font-weight:580;letter-spacing:-.052em}
+.brand strong{font-weight:350;color:rgba(247,250,249,.75)}
+.brand-symbol{width:25px;height:25px;box-shadow:none}
+.top-clock{letter-spacing:0;font-size:13px;color:var(--v3-muted)}
+.top-settings{border-radius:16px;width:46px;height:46px;background:rgba(234,243,240,.075);border-color:var(--v3-edge);box-shadow:none}
+.top-settings:hover{background:rgba(235,246,242,.15)}
+.main{
+  display:grid;grid-template-columns:minmax(360px,.89fr) minmax(440px,1.11fr);
+  grid-template-rows:minmax(60px,auto) minmax(400px,480px) minmax(66px,auto);
+  grid-template-areas:"intro atmosphere" "timer atmosphere" "lower atmosphere";
+  gap:0 clamp(34px,5.2vw,92px);justify-content:space-between;align-content:center;
+  align-items:center;min-height:calc(100svh - 145px);padding:30px 0 35px;
+}
+.intro{grid-area:intro;text-align:left;align-self:end;justify-self:stretch;padding:0 0 4px 10px}
+.eyebrow{position:absolute!important;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+h1{font-size:clamp(27px,2.2vw,32px);font-weight:530;letter-spacing:-.055em;line-height:1.14;margin:0;color:var(--v3-text)}
+.focus-stage{grid-area:timer;justify-self:center;align-self:center;width:min(100%,438px);aspect-ratio:1}
+.timer-ring{filter:none}
+.ring-track{stroke:rgba(244,251,249,.12);stroke-width:1.15;stroke-dasharray:1 12}
+.ring-progress{stroke-width:3;filter:none;opacity:.96;transition:stroke-dashoffset .55s linear,stroke .8s}
+.ring-glint{border-color:rgba(238,249,245,.07);box-shadow:none}
+.timer-content{padding:16% 7% 13%}
+.mode-switch{background:rgba(3,17,20,.21);border:1px solid rgba(243,251,246,.13);padding:3px;gap:0}
+.mode{font-size:13px;min-height:44px;padding:10px 19px;color:rgba(239,245,242,.8)}
+.mode.active{background:rgba(245,251,248,.18);color:white;box-shadow:inset 0 1px rgba(255,255,255,.17)}
+.time{font-size:clamp(89px,8.6vw,118px);font-weight:260;letter-spacing:-.087em;line-height:1;color:var(--v3-text);text-shadow:none}
+.time-block{margin:0}.time-block p{font-size:13px;letter-spacing:0;color:var(--v3-secondary);margin-top:17px}
+.timer-actions{width:286px;min-height:74px;padding:8px;border-radius:40px;gap:6px}
+.glass-panel{background:rgba(198,222,220,.12);border:1px solid rgba(255,255,255,.28);box-shadow:inset 0 1px rgba(255,255,255,.3),0 16px 32px rgba(2,13,18,.17);-webkit-backdrop-filter:blur(14px) saturate(1.15);backdrop-filter:blur(14px) saturate(1.15)}
+.primary-action{height:54px;background:#eef6f1;color:#1a3437;box-shadow:none;font-weight:620}
+.primary-action:hover{background:#fff}
+.secondary-action{background:rgba(240,249,246,.085);height:49px;width:49px}
+.secondary-action:hover{background:rgba(239,248,244,.18)}
+.holdable{transition:transform .34s var(--v3-spring),filter .22s,background .22s,box-shadow .22s}
+.holdable.is-held{transform:scale(.95);filter:brightness(1.085)}
+.holdable.is-held:after{animation:none;opacity:.26}
+.holdable.is-release{transform:scale(1);transition:transform .48s var(--v3-spring),filter .22s}
+.holdable:active:not(.is-held){transform:scale(.975)}
+.lower-area{grid-area:lower;justify-self:stretch;align-self:start;align-items:flex-start;gap:9px;padding:0 0 0 10px;margin:0}
+.scene-picker{gap:2px;padding:0}
+.scene-button{padding:8px 13px;min-height:44px;font-size:14px;border-radius:20px;color:var(--v3-secondary)}
+.scene-button.selected{color:white;background:rgba(244,251,246,.12);border-color:transparent;box-shadow:none}
+.scene-swatch{height:12px;width:12px;border:1px solid rgba(255,255,255,.45)}
+.today-link{font-size:13px;color:var(--v3-secondary);padding:7px 8px;min-height:44px}
+.stat-icon{background:none;width:18px;height:18px;font-size:16px}
+.forward{display:none}
+.ambient-panel{
+  grid-area:atmosphere;position:relative;align-self:center;width:100%;
+  height:min(72svh,670px);min-height:500px;border-radius:25px;
+  box-shadow:0 18px 55px rgba(1,12,17,.22);
+  background:#334b52;isolation:isolate;overflow:hidden;
+}
+.ambient-art{transform:scale(1.012)}
+.art-scene{transition:opacity 900ms var(--v3-ease)}
+/* Each environment is an illustrated landscape, not a generic app gradient. */
+.art-dawn{
+  background:
+    radial-gradient(ellipse 85% 48% at 68% 40%,rgba(253,235,196,.29),transparent 72%),
+    linear-gradient(174deg,#a3bcb7 0%,#b0c4bc 26%,#8caaa3 45%,#c1a79b 63%,#3c6c70 100%);
+}
+.art-dawn:before{
+  background:radial-gradient(ellipse 44% 33% at 58% 31%,rgba(255,246,215,.5),transparent 74%);
+}
+.art-sun{top:21%;left:43%;width:30%;opacity:.76;filter:blur(1px);background:radial-gradient(circle at 42% 37%,#fff1d3 0%,#e5d7b9 65%,rgba(233,215,178,.5) 72%,transparent 73%)}
+.ridge-far{bottom:-12%;left:-12%;height:32%;width:150%;transform:rotate(7deg);background:#7c9e9a;opacity:.88}
+.ridge-near{bottom:-20%;left:-21%;height:34%;width:158%;transform:rotate(-7deg);background:#28545c}
+.art-ocean{background:linear-gradient(177deg,#59959b 0%,#337b89 24%,#155368 48%,#0c3345 76%,#072834 100%)}
+.art-ocean:before{opacity:.6;filter:blur(31px)}
+.sea-light{left:25%;width:48%;opacity:.78}
+.sea-floor{background:#072934;bottom:-24%}
+.art-night{background:linear-gradient(173deg,#1d2d48 0%,#263c58 38%,#4b5670 71%,#1a2b42 100%)}
+.art-night:before{opacity:.55}
+.art-moon{top:24%;left:52%;width:24%;box-shadow:0 0 80px rgba(234,225,231,.17)}
+.night-hill{background:#14233a;bottom:-22%}
+.hill-far{background:#33445c}
+.ambient-art:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.12;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.39' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E")}
+.ambient-panel:after{background:linear-gradient(180deg,rgba(12,26,33,.05),transparent 42%,rgba(8,22,26,.36) 75%,rgba(5,20,26,.74))}
+.ambient-top,.ambient-kicker,.ambient-icon{display:none}
+.ambient-caption{bottom:42px;left:42px;right:32px;filter:none}
+.ambient-title{font-size:clamp(38px,4.15vw,57px);font-weight:530;letter-spacing:-.06em;line-height:1.1;margin:0 0 12px;text-shadow:none}
+.ambient-subtitle{font-size:14px;line-height:1.5;color:rgba(251,254,252,.87);letter-spacing:0}
+.footer{height:59px;border-top:1px solid rgba(247,252,249,.065);font-size:12px;letter-spacing:0;color:rgba(237,245,241,.5)}
+.sheet{background:#192d34;box-shadow:0 -17px 70px rgba(3,12,17,.48);border-color:rgba(255,255,255,.14)}
+.sheet-header h2{font-size:29px;letter-spacing:-.05em}
+.sheet-kicker{display:none}
+.settings-group{background:rgba(244,249,246,.075);border-radius:17px;border:1px solid rgba(255,255,255,.08)}
+.setting-row{min-height:62px;padding:13px 16px;font-size:15px}
+.setting-row+.setting-row{border-top:1px solid rgba(250,254,252,.1)}
+.group-label{font-size:13px;color:rgba(245,251,247,.78)}
+.input-wrap input{font-size:15px}
+.settings-note{font-size:13px;line-height:1.7;color:rgba(234,245,240,.67)}
+.stats-highlight{gap:0;border-radius:18px;overflow:hidden;background:rgba(244,250,246,.07)}
+.stats-highlight>div{background:transparent;border:0;border-radius:0;padding:20px}
+.stats-highlight>div+div{border-left:1px solid rgba(248,252,249,.11)}
+.stats-highlight strong{font-weight:420}
+@media(max-width:1120px) and (min-width:701px){
+  .main{grid-template-columns:minmax(310px,1fr) minmax(330px,1fr);gap:0 28px}
+  .focus-stage{width:min(100%,395px)}
+  .ambient-panel{min-height:430px;height:min(64svh,570px)}
+  .ambient-caption{left:28px;bottom:30px}
+}
+@media(max-width:700px){
+  .app{padding-inline:clamp(16px,5.2vw,22px)}
+  .topbar{height:69px;border-bottom:0}
+  .top-clock{font-size:12px}
+  .main{
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto auto auto auto;
+    grid-template-areas:"intro" "timer" "atmosphere" "lower";
+    min-height:auto;gap:0;justify-content:stretch;align-items:center;
+    padding:14px 0 22px;
+  }
+  .intro{grid-area:intro;padding:0;text-align:center;margin:0 0 2px}
+  h1{font-size:clamp(25px,6.6vw,30px);font-weight:560;line-height:1.18}
+  .focus-stage{grid-area:timer;width:min(94vw,348px);justify-self:center}
+  .timer-content{padding:16% 5% 12.4%}
+  .time{font-size:clamp(78px,22vw,99px)}
+  .time-block p{font-size:13px;margin-top:11px}
+  .mode{min-height:44px;padding:9px 14px;font-size:13px}
+  .timer-actions{width:min(279px,90%);min-height:68px;padding:7px}
+  .primary-action{height:52px}.secondary-action{height:46px;width:46px}
+  .ambient-panel{
+    grid-area:atmosphere;margin-top:18px;min-height:0;height:clamp(165px,46vw,218px);
+    border-radius:22px;box-shadow:0 12px 30px rgba(2,14,19,.15)
+  }
+  .ambient-caption{left:22px;right:16px;bottom:20px}
+  .ambient-title{font-size:clamp(26px,7vw,32px);margin:0 0 4px}
+  .ambient-subtitle{font-size:12px}
+  .art-sun{top:-9%;left:57%;width:40%}
+  .art-moon{top:-14%;left:67%;width:34%}
+  .lower-area{grid-area:lower;padding:0;margin:17px 0 0;justify-self:stretch;align-items:center;gap:2px}
+  .scene-picker{gap:4px}
+  .scene-button{min-height:44px;font-size:13px;padding:8px 14px}
+  .today-link{font-size:13px;min-height:44px}
+  .footer{display:none}
+}
+@media(max-width:360px){
+  .main{padding-top:7px}
+  .focus-stage{width:min(92vw,316px)}
+  h1{font-size:24px}
+  .mode{padding:8px 10px}
+  .time{font-size:78px}
+  .timer-actions{width:263px}
+  .ambient-panel{height:154px;margin-top:14px}
+  .scene-button{padding:7px 12px}
+}
+@media(max-height:740px) and (min-width:701px){
+  .main{min-height:0;grid-template-rows:minmax(45px,auto) minmax(310px,360px) auto;padding:12px 0}
+  .focus-stage{width:min(100%,350px)}
+  .ambient-panel{height:470px;min-height:0}
+  .time{font-size:94px}
+}
+@media(prefers-reduced-motion:reduce){
+ .ambient-art *,.art-scene,.holdable,.overlay .sheet{animation:none!important;transition-duration:.01ms!important}
+}
+body.reduce-motion .ambient-art *,body.reduce-motion .art-scene{animation:none!important;transition:none!important}
+body.reduce-transparency .glass-panel,body[data-glass="l0"] .glass-panel{background:#30494c!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+@media(prefers-reduced-transparency:reduce){.glass-panel{background:#30494c!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}
+/* Visual review round 2: give each scene depth without adding UI chrome. */
+.art-dawn:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background:
+   radial-gradient(ellipse 45% 5% at 27% 33%,rgba(241,244,226,.42),transparent 95%),
+   radial-gradient(ellipse 65% 6% at 71% 49%,rgba(239,225,209,.36),transparent 96%),
+   radial-gradient(ellipse 68% 4% at 36% 61%,rgba(239,244,225,.22),transparent 97%);
+  filter:blur(8px)}
+.art-ocean:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;
+  background:repeating-linear-gradient(167deg,transparent 0 75px,rgba(216,247,241,.19) 77px,transparent 81px 148px);
+  mask-image:linear-gradient(#000,transparent 66%);filter:blur(9px)}
+.art-night:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.34;
+  background:radial-gradient(ellipse 63% 9% at 56% 47%,rgba(202,206,226,.24),transparent 90%),
+  radial-gradient(ellipse 36% 5% at 37% 60%,rgba(190,197,217,.18),transparent 95%);filter:blur(6px)}
+/* Keep status legible at 200% zoom and in the accessibility fallbacks. */
+.time-block p{max-width:28ch;text-align:center}
+@media(max-width:700px){.time-block p{font-size:13px}.ambient-subtitle{font-size:13px}}
