@@ -8,6 +8,7 @@
 <title>Focus Aura｜沉浸式专注空间</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='%23a6e6d9'/%3E%3Ccircle cx='32' cy='32' r='17' fill='%230c2431'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./aura-redesign.css">
 <script src="./app.js" defer></script>
 </head>
 <body data-scene="dawn" data-glass="l2">
@@ -40,6 +41,20 @@
         </div>
       </div>
     </div>
+    <section class="ambient-panel" aria-label="环境氛围画面">
+      <div class="ambient-art" aria-hidden="true">
+        <div class="art-scene art-dawn"><i class="art-sun"></i><i class="art-ridge ridge-far"></i><i class="art-ridge ridge-near"></i></div>
+        <div class="art-scene art-ocean"><i class="sea-light"></i><i class="sea-floor"></i><i class="sea-current"></i></div>
+        <div class="art-scene art-night"><i class="art-moon"></i><i class="night-hill hill-far"></i><i class="night-hill hill-near"></i></div>
+      </div>
+      <div class="ambient-top"><span class="ambient-overline">此刻风景</span><span class="ambient-index">01 — 03</span></div>
+      <div class="ambient-caption">
+        <span class="ambient-icon" aria-hidden="true"></span>
+        <p class="ambient-kicker">环境音景</p>
+        <h2 class="ambient-title"><span class="label-dawn">晨光初醒</span><span class="label-ocean">海面之下</span><span class="label-night">夜色渐深</span></h2>
+        <p class="ambient-subtitle"><span class="copy-dawn">留一点温柔的光，给此刻。</span><span class="copy-ocean">与世界保持刚刚好的距离。</span><span class="copy-night">静下来，就能听见自己。</span></p>
+      </div>
+    </section>
     <div class="lower-area">
       <div class="scene-picker" role="group" aria-label="环境氛围">
         <button class="scene-button selected holdable" data-scene="dawn" aria-pressed="true"><span class="scene-swatch dawn"></span>晨光</button>
