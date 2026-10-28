@@ -1,0 +1,2493 @@
+{
+ "url": "http://127.0.0.1:5397/little-works/xiaoya-apple/",
+ "at": "2026-10-28T05:21:44.452Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 320,
+   "height": 200,
+   "load": "load",
+   "screens": 11,
+   "filled": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 11,
+    "css": 1,
+    "transitions": 9,
+    "scripted": 1,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 320,
+     "h": 200
+    },
+    "page": {
+     "height": 2040,
+     "screens": 10.2,
+     "words": 73,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 41,
+     "sections": 11,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "chars": 11,
+     "lines": 2,
+     "size": 26,
+     "vw": 8.1,
+     "font": "-apple-system",
+     "weight": 670,
+     "tracking": -0.04,
+     "leading": 1.17,
+     "top": 143,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "lines": 2,
+     "size": 26,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "你好，我是小芽",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 27,
+      "vw": 8.4,
+      "font": "-apple-system",
+      "weight": 720,
+      "tracking": -0.05,
+      "leading": 1.17,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.78,
+      "top": 14,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "今天， 也在慢慢成长.",
+      "words": 2,
+      "chars": 11,
+      "lines": 2,
+      "size": 26,
+      "vw": 8.1,
+      "font": "-apple-system",
+      "weight": 670,
+      "tracking": -0.035,
+      "leading": 1.17,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.6,
+      "top": 143,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "今日建议",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 22,
+      "vw": 6.9,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.26,
+      "top": 1089,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 23,
+      "vw": 7.2,
+      "font": "-apple-system",
+      "weight": 570,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.19,
+      "top": 1429,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 23,
+      "vw": 7.2,
+      "font": "-apple-system",
+      "weight": 570,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.19,
+      "top": 1429,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 23,
+      "vw": 7.2,
+      "font": "-apple-system",
+      "weight": 570,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.19,
+      "top": 1429,
+      "tag": "strong",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 6,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 3,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      20,
+      22,
+      23,
+      26,
+      27
+     ],
+     "sizeCount": 14,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 13,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.2
+     },
+     "measureChars": 44,
+     "max": {
+      "size": 27,
+      "vw": 8.4,
+      "font": "-apple-system",
+      "text": "你好，我是小芽"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.11,
+     "centerShare": 0.22,
+     "smallText": 5
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f5f3",
+     "bodyBgHsl": {
+      "h": 90,
+      "s": 0.09,
+      "l": 0.96
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f5f5f7",
+       "top": 0,
+       "hsl": {
+        "h": 240,
+        "s": 0.11,
+        "l": 0.96
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 69,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#696770",
+       "share": 0.14
+      },
+      {
+       "color": "#514e57",
+       "share": 0.09
+      },
+      {
+       "color": "#456f5e",
+       "share": 0.08
+      },
+      {
+       "color": "#617369",
+       "share": 0.07
+      },
+      {
+       "color": "#28262c",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#eceaf0",
+      "hsl": {
+       "h": 260,
+       "s": 0.17,
+       "l": 0.93
+      },
+      "fg": "#3b3940"
+     },
+     "lowContrast": [
+      {
+       "text": "把重要的事情放在心上，也给喜欢的事情留一点时间。",
+       "ratio": 4.2,
+       "need": 4.5,
+       "size": 14,
+       "fg": "#708076",
+       "bg": "#ffffff"
+      }
+     ]
+    },
+    "buttons": {
+     "count": 10,
+     "inHero": 1,
+     "radius": 16,
+     "height": 44,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "AI 未接入"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 2,
+     "shadowOverlay": 6,
+     "shadowSamples": [
+      "div#onboarding.panel.onboarding → rgba(27, 54, 42, 0.024) 0px 2px 16px 0px",
+      "details.panel.agent-evidence → rgba(27, 54, 42, 0.024) 0px 2px 16px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "header.topbar 320px",
+      "article.panel.schedule-panel 286px"
+     ],
+     "outlinedBoxes": 6,
+     "dashed": 0,
+     "blurred": 5,
+     "roundedBoxes": 8,
+     "boxRadius": 23,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 0,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 320,
+     "h": 200
+    },
+    "pageH": 2040,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 69,
+      "height": 1537,
+      "words": 49,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "今天，",
+       "size": 26,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 16,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "aside#right-rail.right-rail",
+      "tag": "aside",
+      "top": 1606,
+      "height": 200,
+      "words": 8,
+      "media": 0,
+      "middle": 55,
+      "heading": null,
+      "left": 23,
+      "right": 23,
+      "textLeft": 23,
+      "textRight": 23,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "今天， 也在慢慢成长.",
+      "size": 26,
+      "top": 143,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 54,
+      "n": 2
+     },
+     {
+      "x": 20,
+      "n": 1
+     },
+     {
+      "x": 37,
+      "n": 1
+     },
+     {
+      "x": 103,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 5,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 320,
+     "h": 200
+    },
+    "dark": false,
+    "ground": "#f4f5f3",
+    "sidebar": null,
+    "topbar": {
+     "h": 54
+    },
+    "canvas": {
+     "left": 16,
+     "right": 16
+    },
+    "hero": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "chars": 11,
+     "lines": 2,
+     "size": 26,
+     "vw": 8.1,
+     "font": "-apple-system",
+     "weight": 670,
+     "tracking": -0.04,
+     "leading": 1.17,
+     "top": 143,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 6,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 43,
+       "at": 697,
+       "panel": "临近事项"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 9,
+     "radii": [
+      [
+       23,
+       2
+      ],
+      [
+       0,
+       2
+      ],
+      [
+       22,
+       2
+      ],
+      [
+       24,
+       1
+      ],
+      [
+       36,
+       1
+      ],
+      [
+       18,
+       1
+      ]
+     ],
+     "heavyBorders": 4,
+     "borderSamples": [
+      "#2a4035 on #ffffff (11.15:1)",
+      "#2a4035 on #ffffff (11.15:1)",
+      "#2a4035 on #ffffff (11.15:1)"
+     ],
+     "heavyShadows": 1,
+     "softShadows": 2,
+     "shadowSamples": [
+      "rgba(33, 32, 42, 0.16) 0px 30px 80px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 2,
+     "hues": 2,
+     "samples": [
+      {
+       "hue": 158,
+       "size": 42,
+       "radius": "14px"
+      },
+      {
+       "hue": 120,
+       "size": 54,
+       "radius": "24px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 24,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.35,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      26,
+      27,
+      28,
+      29
+     ]
+    },
+    "title": {
+     "text": "今天，\n也在慢慢成长.",
+     "size": 26,
+     "top": 143
+    },
+    "colourShare": 0.001
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    1,
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 14,
+    "css": 1,
+    "transitions": 12,
+    "scripted": 1,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 1966,
+     "screens": 2.3,
+     "words": 73,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 41,
+     "sections": 11,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "chars": 11,
+     "lines": 2,
+     "size": 29,
+     "vw": 7.4,
+     "font": "-apple-system",
+     "weight": 670,
+     "tracking": -0.04,
+     "leading": 1.17,
+     "top": 146,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "lines": 2,
+     "size": 28.9,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "今天， 也在慢慢成长.",
+      "words": 2,
+      "chars": 11,
+      "lines": 2,
+      "size": 28.9,
+      "vw": 7.4,
+      "font": "-apple-system",
+      "weight": 670,
+      "tracking": -0.035,
+      "leading": 1.17,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.55,
+      "top": 146,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "你好，我是小芽",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 27,
+      "vw": 6.9,
+      "font": "-apple-system",
+      "weight": 720,
+      "tracking": -0.05,
+      "leading": 1.17,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.82,
+      "top": 253,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "今日建议",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.22,
+      "top": 1036,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 23,
+      "vw": 5.9,
+      "font": "-apple-system",
+      "weight": 570,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.22,
+      "top": 1356,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 23,
+      "vw": 5.9,
+      "font": "-apple-system",
+      "weight": 570,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.22,
+      "top": 1356,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 23,
+      "vw": 5.9,
+      "font": "-apple-system",
+      "weight": 570,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.22,
+      "top": 1356,
+      "tag": "strong",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 6,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 3,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      20,
+      22,
+      23,
+      27,
+      29
+     ],
+     "sizeCount": 14,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 13,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.2
+     },
+     "measureChars": 55,
+     "max": {
+      "size": 28.9,
+      "vw": 7.4,
+      "font": "-apple-system",
+      "text": "今天，"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.11,
+     "centerShare": 0.22,
+     "smallText": 5
+    },
+    "eyebrows": [
+     {
+      "text": "10月28日星期三 · 尚未设置学期",
+      "above": "今天， 也在慢慢成长.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 113
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f5f3",
+     "bodyBgHsl": {
+      "h": 90,
+      "s": 0.09,
+      "l": 0.96
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f5f5f7",
+       "top": 0,
+       "hsl": {
+        "h": 240,
+        "s": 0.11,
+        "l": 0.96
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 69,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#696770",
+       "share": 0.14
+      },
+      {
+       "color": "#514e57",
+       "share": 0.09
+      },
+      {
+       "color": "#456f5e",
+       "share": 0.08
+      },
+      {
+       "color": "#617369",
+       "share": 0.07
+      },
+      {
+       "color": "#28262c",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#eceaf0",
+      "hsl": {
+       "h": 260,
+       "s": 0.17,
+       "l": 0.93
+      },
+      "fg": "#3b3940"
+     },
+     "lowContrast": [
+      {
+       "text": "把重要的事情放在心上，也给喜欢的事情留一点时间。",
+       "ratio": 4.2,
+       "need": 4.5,
+       "size": 14,
+       "fg": "#708076",
+       "bg": "#ffffff"
+      }
+     ]
+    },
+    "buttons": {
+     "count": 10,
+     "inHero": 5,
+     "radius": 16,
+     "height": 44,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "AI 未接入",
+      "记录新事项",
+      "看看这一周",
+      "设置学期",
+      "导入课表"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 2,
+     "shadowOverlay": 6,
+     "shadowSamples": [
+      "div#onboarding.panel.onboarding → rgba(27, 54, 42, 0.024) 0px 2px 16px 0px",
+      "details.panel.agent-evidence → rgba(27, 54, 42, 0.024) 0px 2px 16px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "header.topbar 390px",
+      "article.panel.schedule-panel 356px"
+     ],
+     "outlinedBoxes": 6,
+     "dashed": 0,
+     "blurred": 5,
+     "roundedBoxes": 8,
+     "boxRadius": 23,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 0,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 1966,
+    "margins": {
+     "left": 16,
+     "right": 23
+    },
+    "sections": [
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 69,
+      "height": 1464,
+      "words": 49,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "今天，",
+       "size": 29,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 35,
+      "textLeft": 16,
+      "textRight": 36,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "aside#right-rail.right-rail",
+      "tag": "aside",
+      "top": 1533,
+      "height": 200,
+      "words": 8,
+      "media": 0,
+      "middle": 125,
+      "heading": null,
+      "left": 23,
+      "right": 23,
+      "textLeft": 23,
+      "textRight": 23,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "今天， 也在慢慢成长.",
+      "size": 29,
+      "top": 146,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 58,
+      "n": 2
+     },
+     {
+      "x": 20,
+      "n": 1
+     },
+     {
+      "x": 37,
+      "n": 1
+     },
+     {
+      "x": 103,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 5,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": false,
+    "ground": "#f4f5f3",
+    "sidebar": null,
+    "topbar": {
+     "h": 54
+    },
+    "canvas": {
+     "left": 16,
+     "right": 19
+    },
+    "hero": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "chars": 11,
+     "lines": 2,
+     "size": 29,
+     "vw": 7.4,
+     "font": "-apple-system",
+     "weight": 670,
+     "tracking": -0.04,
+     "leading": 1.17,
+     "top": 146,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 6,
+     "firstScreen": 4,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 43,
+       "at": 489,
+       "panel": "临近事项"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 9,
+     "radii": [
+      [
+       23,
+       2
+      ],
+      [
+       0,
+       2
+      ],
+      [
+       22,
+       2
+      ],
+      [
+       24,
+       1
+      ],
+      [
+       36,
+       1
+      ],
+      [
+       18,
+       1
+      ]
+     ],
+     "heavyBorders": 4,
+     "borderSamples": [
+      "#2a4035 on #ffffff (11.15:1)",
+      "#2a4035 on #ffffff (11.15:1)",
+      "#2a4035 on #ffffff (11.15:1)"
+     ],
+     "heavyShadows": 1,
+     "softShadows": 2,
+     "shadowSamples": [
+      "rgba(33, 32, 42, 0.16) 0px 30px 80px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 2,
+     "hues": 2,
+     "samples": [
+      {
+       "hue": 158,
+       "size": 42,
+       "radius": "14px"
+      },
+      {
+       "hue": 120,
+       "size": 54,
+       "radius": "24px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 24,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.35,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      27,
+      28,
+      29,
+      31
+     ]
+    },
+    "title": {
+     "text": "今天，\n也在慢慢成长.",
+     "size": 29,
+     "top": 146
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 14,
+    "css": 1,
+    "transitions": 12,
+    "scripted": 1,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1911,
+     "screens": 1.9,
+     "words": 73,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 41,
+     "sections": 11,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "chars": 11,
+     "lines": 2,
+     "size": 30,
+     "vw": 3.9,
+     "font": "-apple-system",
+     "weight": 670,
+     "tracking": -0.04,
+     "leading": 1.17,
+     "top": 146,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "今天，也在慢慢成长.",
+     "words": 1,
+     "lines": 2,
+     "size": 30,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "今天，也在慢慢成长.",
+      "words": 1,
+      "chars": 10,
+      "lines": 2,
+      "size": 30,
+      "vw": 3.9,
+      "font": "-apple-system",
+      "weight": 670,
+      "tracking": -0.035,
+      "leading": 1.17,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.29,
+      "top": 146,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "你好，我是小芽",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 29,
+      "vw": 3.8,
+      "font": "-apple-system",
+      "weight": 720,
+      "tracking": -0.05,
+      "leading": 1.17,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.31,
+      "top": 479,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "-apple-system",
+      "weight": 570,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.08,
+      "top": 1290,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "-apple-system",
+      "weight": 570,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.06,
+      "top": 1290,
+      "tag": "strong",
+      "kind": "heading"
+     },
+     {
+      "text": "0",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "-apple-system",
+      "weight": 570,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.08,
+      "top": 1290,
+      "tag": "strong",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      20,
+      22,
+      26,
+      29,
+      30
+     ],
+     "sizeCount": 14,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 13,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.2
+     },
+     "measureChars": 113,
+     "max": {
+      "size": 30,
+      "vw": 3.9,
+      "font": "-apple-system",
+      "text": "今天，"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.11,
+     "centerShare": 0.2,
+     "smallText": 6
+    },
+    "eyebrows": [
+     {
+      "text": "10月28日星期三 · 尚未设置学期",
+      "above": "今天，也在慢慢成长.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 113
+     },
+     {
+      "text": "查看分析依据与审批记录",
+      "above": "0",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 1207
+     },
+     {
+      "text": "查看分析依据与审批记录",
+      "above": "0",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 1207
+     },
+     {
+      "text": "查看分析依据与审批记录",
+      "above": "0",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 1207
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f5f3",
+     "bodyBgHsl": {
+      "h": 90,
+      "s": 0.09,
+      "l": 0.96
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f5f5f7",
+       "top": 0,
+       "hsl": {
+        "h": 240,
+        "s": 0.11,
+        "l": 0.96
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#696770",
+       "share": 0.14
+      },
+      {
+       "color": "#514e57",
+       "share": 0.09
+      },
+      {
+       "color": "#456f5e",
+       "share": 0.08
+      },
+      {
+       "color": "#617369",
+       "share": 0.07
+      },
+      {
+       "color": "#28262c",
+       "share": 0.05
+      }
+     ],
+     "button": {
+      "bg": "#eceaf0",
+      "hsl": {
+       "h": 260,
+       "s": 0.17,
+       "l": 0.93
+      },
+      "fg": "#3b3940"
+     },
+     "lowContrast": [
+      {
+       "text": "把重要的事情放在心上，也给喜欢的事情留一点时间。",
+       "ratio": 4.2,
+       "need": 4.5,
+       "size": 14,
+       "fg": "#708076",
+       "bg": "#ffffff"
+      }
+     ]
+    },
+    "buttons": {
+     "count": 10,
+     "inHero": 5,
+     "radius": 16,
+     "height": 44,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "AI 未接入",
+      "记录新事项",
+      "看看这一周",
+      "设置学期",
+      "导入课表"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 2,
+     "shadowOverlay": 6,
+     "shadowSamples": [
+      "div#onboarding.panel.onboarding → rgba(27, 54, 42, 0.024) 0px 2px 16px 0px",
+      "details.panel.agent-evidence → rgba(27, 54, 42, 0.024) 0px 2px 16px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "header.topbar 768px",
+      "article.panel.schedule-panel 734px"
+     ],
+     "outlinedBoxes": 6,
+     "dashed": 0,
+     "blurred": 5,
+     "roundedBoxes": 11,
+     "boxRadius": 23,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 0,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1911,
+    "margins": {
+     "left": 16,
+     "right": 23
+    },
+    "sections": [
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 69,
+      "height": 1409,
+      "words": 49,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "今天，",
+       "size": 30,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 35,
+      "textLeft": 16,
+      "textRight": 52,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "aside#right-rail.right-rail",
+      "tag": "aside",
+      "top": 1478,
+      "height": 200,
+      "words": 8,
+      "media": 0,
+      "middle": 503,
+      "heading": null,
+      "left": 23,
+      "right": 23,
+      "textLeft": 23,
+      "textRight": 23,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "今天，也在慢慢成长.",
+      "size": 30,
+      "top": 146,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 58,
+      "n": 2
+     },
+     {
+      "x": 20,
+      "n": 1
+     },
+     {
+      "x": 37,
+      "n": 1
+     },
+     {
+      "x": 103,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 5,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": false,
+    "ground": "#f4f5f3",
+    "sidebar": null,
+    "topbar": {
+     "h": 54
+    },
+    "canvas": {
+     "left": 16,
+     "right": 23
+    },
+    "hero": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "chars": 11,
+     "lines": 2,
+     "size": 30,
+     "vw": 3.9,
+     "font": "-apple-system",
+     "weight": 670,
+     "tracking": -0.04,
+     "leading": 1.17,
+     "top": 146,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 6,
+     "firstScreen": 4,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 43,
+       "at": 491,
+       "panel": "临近事项"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 9,
+     "radii": [
+      [
+       23,
+       2
+      ],
+      [
+       0,
+       2
+      ],
+      [
+       22,
+       2
+      ],
+      [
+       24,
+       1
+      ],
+      [
+       36,
+       1
+      ],
+      [
+       18,
+       1
+      ]
+     ],
+     "heavyBorders": 4,
+     "borderSamples": [
+      "#2a4035 on #ffffff (11.15:1)",
+      "#2a4035 on #ffffff (11.15:1)",
+      "#2a4035 on #ffffff (11.15:1)"
+     ],
+     "heavyShadows": 1,
+     "softShadows": 2,
+     "shadowSamples": [
+      "rgba(33, 32, 42, 0.16) 0px 30px 80px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 2,
+     "hues": 2,
+     "samples": [
+      {
+       "hue": 158,
+       "size": 42,
+       "radius": "14px"
+      },
+      {
+       "hue": 120,
+       "size": 54,
+       "radius": "24px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 24,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.44,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      29,
+      30,
+      36
+     ]
+    },
+    "title": {
+     "text": "今天，也在慢慢成长.",
+     "size": 30,
+     "top": 146
+    },
+    "colourShare": 0.001
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 12,
+    "css": 2,
+    "transitions": 10,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1368,
+     "screens": 1.5,
+     "words": 82,
+     "img": 2,
+     "video": 0,
+     "canvas": 0,
+     "svg": 41,
+     "sections": 11,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 32,
+     "vw": 2.2,
+     "font": "-apple-system",
+     "weight": 670,
+     "tracking": -0.04,
+     "leading": 1.17,
+     "top": 177,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "今天，也在慢慢成长.",
+     "words": 1,
+     "lines": 1,
+     "size": 32,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "今天，也在慢慢成长.",
+      "words": 1,
+      "chars": 10,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "-apple-system",
+      "weight": 670,
+      "tracking": -0.035,
+      "leading": 1.17,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.28,
+      "top": 177,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "你好，我是小芽",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 39,
+      "vw": 2.7,
+      "font": "-apple-system",
+      "weight": 720,
+      "tracking": -0.05,
+      "leading": 1.17,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.19,
+      "top": 424,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      20,
+      23,
+      26,
+      32,
+      39
+     ],
+     "sizeCount": 12,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 13,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.2
+     },
+     "measureChars": 128,
+     "max": {
+      "size": 39,
+      "vw": 2.7,
+      "font": "-apple-system",
+      "text": "你好，我是小芽"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.11,
+     "centerShare": 0.18,
+     "smallText": 4
+    },
+    "eyebrows": [
+     {
+      "text": "10月28日星期三 · 尚未设置学期",
+      "above": "今天，也在慢慢成长.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 14,
+      "top": 142
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f4f5f2",
+     "bodyBgHsl": {
+      "h": 80,
+      "s": 0.13,
+      "l": 0.95
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f5f5f7",
+       "top": 0,
+       "hsl": {
+        "h": 240,
+        "s": 0.11,
+        "l": 0.96
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#696770",
+       "share": 0.13
+      },
+      {
+       "color": "#514e57",
+       "share": 0.09
+      },
+      {
+       "color": "#456f5e",
+       "share": 0.08
+      },
+      {
+       "color": "#617369",
+       "share": 0.06
+      },
+      {
+       "color": "#28262c",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#eceaf0",
+      "hsl": {
+       "h": 260,
+       "s": 0.17,
+       "l": 0.93
+      },
+      "fg": "#3b3940"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 12,
+     "inHero": 6,
+     "radius": 16,
+     "height": 44,
+     "withShadow": 1,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "今天",
+      "AI 未接入 点击配置 ›",
+      "记录新事项",
+      "看看这一周",
+      "设置学期"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 7,
+     "shadowOverlay": 2,
+     "shadowSamples": [
+      "button#ai-global-entry.ai-global-indicator → rgba(0, 0, 0, 0.04) 0px 1px 3px 0px",
+      "div.xy-cinema → rgba(27, 54, 42, 0.024) 0px 2px 16px 0px",
+      "div.hero.xy-feature → rgba(27, 54, 42, 0.024) 0px 2px 16px 0px",
+      "article.panel.focus-panel → rgba(27, 54, 42, 0.024) 0px 2px 16px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "aside.sidebar 234px"
+     ],
+     "outlinedBoxes": 9,
+     "dashed": 0,
+     "blurred": 2,
+     "roundedBoxes": 12,
+     "boxRadius": 17,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 0,
+     "fixed": true,
+     "height": 846,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1368,
+    "margins": {
+     "left": 23,
+     "right": 55
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "今天，也在慢慢成长.",
+      "size": 32,
+      "top": 177,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 288,
+      "n": 1
+     },
+     {
+      "x": 311,
+      "n": 1
+     },
+     {
+      "x": 341,
+      "n": 1
+     },
+     {
+      "x": 369,
+      "n": 1
+     },
+     {
+      "x": 434,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 5,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.08,
+    "voidBox": {
+     "x": 1140,
+     "y": 300,
+     "w": 300,
+     "h": 360
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#f4f5f2",
+    "sidebar": {
+     "w": 234,
+     "tag": "aside",
+     "links": 6,
+     "share": 0.16
+    },
+    "topbar": {
+     "h": 80
+    },
+    "canvas": {
+     "left": 48,
+     "right": 48
+    },
+    "hero": {
+     "text": "今天， 也在慢慢成长.",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 32,
+     "vw": 2.2,
+     "font": "-apple-system",
+     "weight": 670,
+     "tracking": -0.04,
+     "leading": 1.17,
+     "top": 177,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 9,
+     "firstScreen": 8,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 12,
+     "radii": [
+      [
+       0,
+       3
+      ],
+      [
+       34,
+       2
+      ],
+      [
+       23,
+       2
+      ],
+      [
+       28,
+       1
+      ],
+      [
+       20,
+       1
+      ],
+      [
+       24,
+       1
+      ]
+     ],
+     "heavyBorders": 6,
+     "borderSamples": [
+      "#2a4035 on #ffffff (11.15:1)",
+      "#2a4035 on #ffffff (11.15:1)",
+      "#2a4035 on #ffffff (11.15:1)"
+     ],
+     "heavyShadows": 1,
+     "softShadows": 6,
+     "shadowSamples": [
+      "rgba(33, 32, 42, 0.16) 0px 30px 80px 0px"
+     ],
+     "glass": 1
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 158,
+       "size": 42,
+       "radius": "14px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 24,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.39,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      26,
+      32,
+      36,
+      39,
+      40
+     ]
+    },
+    "title": {
+     "text": "今天，也在慢慢成长.",
+     "size": 32,
+     "top": 177
+    },
+    "colourShare": 0
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "button-fx",
+   "width": 320,
+   "message": "Buttons with shadow/glow.",
+   "fix": "Flat fill, one colour.",
+   "alsoAt": [
+    390,
+    768,
+    1440
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "contrast",
+   "width": 320,
+   "message": "Low-contrast text: \"把重要的事情放在心上，也给喜欢的事情留一点时间。\" 4.2:1 needs 4.5:1",
+   "fix": "Darken or lighten the text colour.",
+   "alsoAt": [
+    390,
+    768
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "heavy-shadow",
+   "width": 320,
+   "message": "1 panel shadow(s) heavy enough to read as floating: rgba(33, 32, 42, 0.16) 0px 30px 80px 0px",
+   "fix": "Panels sit on the ground: separate them with a fill one step from the ground or a quiet 1px border. A shadow, if any, is under 8% black with a small blur. Real overlays (menus, dialogs, popovers) may float.",
+   "alsoAt": [
+    390,
+    768,
+    1440
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "heavy-borders",
+   "width": 320,
+   "message": "4 panel borders are dark against their ground: #2a4035 on #ffffff (11.15:1) | #2a4035 on #ffffff (11.15:1) | #2a4035 on #ffffff (11.15:1)",
+   "fix": "A panel border is a whisper: about 1.1–1.3:1 against its ground on a light screen (#e5e7eb–#ededed on white), and about 1.2–1.5:1 on a dark one (#1a1a1a on #000, #2e2e2e on #111). Darker lines turn the screen into a grid of boxes; keep the stronger line for controls.",
+   "alsoAt": [
+    390,
+    768,
+    1440
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "covered-text",
+   "width": 320,
+   "message": "Large text lies under another element at some scroll position: \"今天， 也在慢慢成长.\" (screen 1, 100% hidden); \"也在慢慢成长.\" (screen 1, 100% hidden)",
+   "fix": "Nothing may sit on top of a headline or statement. Move the picture, shorten the pinned run, or raise the text above it (z-index) and give it a ground.",
+   "alsoAt": [
+    390,
+    768,
+    1440
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "app-title-size",
+   "width": 390,
+   "message": "The h1 is 29px (\"今天，\n也在慢慢成长.\").",
+   "fix": "An app screen is not a landing page: the title is 18-32px (20-24px on a phone)."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "mobile",
+   "width": 320,
+   "fold": "E:\\CHATGPT\\work\\xiaoya-ios-shell-v2-20261028\\docs\\xiaoya-apple-next-qa\\ios26-v2-taste\\mobile-320-fold.jpg",
+   "pages": [
+    "E:\\CHATGPT\\work\\xiaoya-ios-shell-v2-20261028\\docs\\xiaoya-apple-next-qa\\ios26-v2-taste\\mobile-320-page-01.jpg",
+    "E:\\CHATGPT\\work\\xiaoya-ios-shell-v2-20261028\\docs\\xiaoya-apple-next-qa\\ios26-v2-taste\\mobile-320-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "E:\\CHATGPT\\work\\xiaoya-ios-shell-v2-20261028\\docs\\xiaoya-apple-next-qa\\ios26-v2-taste\\mobile-390-fold.jpg",
+   "pages": [
+    "E:\\CHATGPT\\work\\xiaoya-ios-shell-v2-20261028\\docs\\xiaoya-apple-next-qa\\ios26-v2-taste\\mobile-390-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "E:\\CHATGPT\\work\\xiaoya-ios-shell-v2-20261028\\docs\\xiaoya-apple-next-qa\\ios26-v2-taste\\tablet-fold.jpg",
+   "pages": [
+    "E:\\CHATGPT\\work\\xiaoya-ios-shell-v2-20261028\\docs\\xiaoya-apple-next-qa\\ios26-v2-taste\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "E:\\CHATGPT\\work\\xiaoya-ios-shell-v2-20261028\\docs\\xiaoya-apple-next-qa\\ios26-v2-taste\\desktop-fold.jpg",
+   "pages": [
+    "E:\\CHATGPT\\work\\xiaoya-ios-shell-v2-20261028\\docs\\xiaoya-apple-next-qa\\ios26-v2-taste\\desktop-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

@@ -1,0 +1,69 @@
+{
+  "checks": [
+    {
+      "ok": true,
+      "name": "quick-add structural disclosure exists"
+    },
+    {
+      "ok": true,
+      "name": "phone quick-add starts compact"
+    },
+    {
+      "ok": true,
+      "name": "quick-add input becomes visible"
+    },
+    {
+      "ok": true,
+      "name": "quick-add writes through original business store"
+    },
+    {
+      "ok": true,
+      "name": "AI mode disclosure is genuinely reparented"
+    },
+    {
+      "ok": true,
+      "name": "AI explanation starts compact"
+    },
+    {
+      "ok": true,
+      "name": "existing AI state intact when opened"
+    },
+    {
+      "ok": true,
+      "name": "settings save semester persisted"
+    },
+    {
+      "ok": true,
+      "name": "API key remains password field"
+    },
+    {
+      "ok": true,
+      "name": "provider selector still present"
+    },
+    {
+      "ok": true,
+      "name": "semester survived reload"
+    },
+    {
+      "ok": true,
+      "name": "quick item survived reload"
+    },
+    {
+      "ok": true,
+      "name": "440px shell fits without floating high",
+      "extra": {
+        "bottom": 8,
+        "visible": 5,
+        "overflow": 0
+      }
+    }
+  ],
+  "errors": [],
+  "nav": {
+    "bottom": 8,
+    "visible": 5,
+    "overflow": 0
+  },
+  "total": 13,
+  "failed": 0
+}

@@ -1,0 +1,930 @@
+{
+  "results": [
+    {
+      "kind": "edge",
+      "width": 320,
+      "initial": {
+        "runtime": {
+          "current": "today",
+          "condensed": false,
+          "keyboardOpen": false,
+          "navigations": 0,
+          "viewTransitions": 0,
+          "swipes": 0,
+          "swipeCancels": 0,
+          "sheetDismissals": 0,
+          "sheetCancel": 0,
+          "keyboardHidden": 0
+        },
+        "glass": "refraction",
+        "navX": 7,
+        "navY": 768,
+        "navBottom": 8,
+        "navW": 306,
+        "navH": 68,
+        "settingsTopVisible": true,
+        "visibleTabs": [
+          "today",
+          "schedule",
+          "tasks",
+          "goals",
+          "review"
+        ],
+        "overflow": 0
+      },
+      "bottom": {
+        "scrollY": 842,
+        "scrollHeight": 1686,
+        "viewBottom": 549.09375,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 224.65625,
+          "y": 488.09375,
+          "width": 61.34375,
+          "height": 30,
+          "top": 488.09375,
+          "right": 286,
+          "bottom": 518.09375,
+          "left": 224.65625
+        },
+        "condensed": true,
+        "overflow": 0
+      },
+      "errors": []
+    },
+    {
+      "kind": "edge",
+      "width": 390,
+      "initial": {
+        "runtime": {
+          "current": "today",
+          "condensed": false,
+          "keyboardOpen": false,
+          "navigations": 0,
+          "viewTransitions": 0,
+          "swipes": 0,
+          "swipeCancels": 0,
+          "sheetDismissals": 0,
+          "sheetCancel": 0,
+          "keyboardHidden": 0
+        },
+        "glass": "refraction",
+        "navX": 12,
+        "navY": 768,
+        "navBottom": 8,
+        "navW": 366,
+        "navH": 68,
+        "settingsTopVisible": true,
+        "visibleTabs": [
+          "today",
+          "schedule",
+          "tasks",
+          "goals",
+          "review"
+        ],
+        "overflow": 0
+      },
+      "bottom": {
+        "scrollY": 751,
+        "scrollHeight": 1595,
+        "viewBottom": 548.59375,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 271.328125,
+          "y": 487.59375,
+          "width": 84.65625,
+          "height": 30,
+          "top": 487.59375,
+          "right": 355.984375,
+          "bottom": 517.59375,
+          "left": 271.328125
+        },
+        "condensed": true,
+        "overflow": 0
+      },
+      "errors": []
+    },
+    {
+      "kind": "edge",
+      "width": 768,
+      "initial": {
+        "runtime": {
+          "current": "today",
+          "condensed": false,
+          "keyboardOpen": false,
+          "navigations": 0,
+          "viewTransitions": 0,
+          "swipes": 0,
+          "swipeCancels": 0,
+          "sheetDismissals": 0,
+          "sheetCancel": 0,
+          "keyboardHidden": 0
+        },
+        "glass": "refraction",
+        "navX": 124,
+        "navY": 768,
+        "navBottom": 8,
+        "navW": 520,
+        "navH": 68,
+        "settingsTopVisible": true,
+        "visibleTabs": [
+          "today",
+          "schedule",
+          "tasks",
+          "goals",
+          "review"
+        ],
+        "overflow": 0
+      },
+      "bottom": {
+        "scrollY": 702,
+        "scrollHeight": 1546,
+        "viewBottom": 548.890625,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 573.328125,
+          "y": 476.890625,
+          "width": 60,
+          "height": 35,
+          "top": 476.890625,
+          "right": 633.328125,
+          "bottom": 511.890625,
+          "left": 573.328125
+        },
+        "condensed": true,
+        "overflow": 0
+      },
+      "errors": []
+    },
+    {
+      "kind": "edge",
+      "width": 1440,
+      "initial": {
+        "runtime": {
+          "current": "today",
+          "condensed": false,
+          "keyboardOpen": false,
+          "navigations": 0,
+          "viewTransitions": 0,
+          "swipes": 0,
+          "swipeCancels": 0,
+          "sheetDismissals": 0,
+          "sheetCancel": 0,
+          "keyboardHidden": 0
+        },
+        "glass": "refraction",
+        "navX": 0,
+        "navY": 0,
+        "navBottom": 844,
+        "navW": 0,
+        "navH": 0,
+        "settingsTopVisible": true,
+        "visibleTabs": [
+          "today",
+          "schedule",
+          "tasks",
+          "goals",
+          "review",
+          "settings"
+        ],
+        "overflow": 0
+      },
+      "bottom": {
+        "scrollY": 427,
+        "scrollHeight": 1271,
+        "viewBottom": 747.5,
+        "dockTop": 0,
+        "dockBottom": 0,
+        "last": {
+          "x": 902.15625,
+          "y": 675.5,
+          "width": 60,
+          "height": 35,
+          "top": 675.5,
+          "right": 962.15625,
+          "bottom": 710.5,
+          "left": 902.15625
+        },
+        "condensed": false,
+        "overflow": 0
+      },
+      "errors": []
+    },
+    {
+      "kind": "webkit",
+      "width": 390,
+      "initial": {
+        "runtime": {
+          "current": "today",
+          "condensed": false,
+          "keyboardOpen": false,
+          "navigations": 0,
+          "viewTransitions": 0,
+          "swipes": 0,
+          "swipeCancels": 0,
+          "sheetDismissals": 0,
+          "sheetCancel": 0,
+          "keyboardHidden": 0
+        },
+        "glass": "content-refraction",
+        "navX": 12,
+        "navY": 768,
+        "navBottom": 8,
+        "navW": 366,
+        "navH": 68,
+        "settingsTopVisible": true,
+        "visibleTabs": [
+          "today",
+          "schedule",
+          "tasks",
+          "goals",
+          "review"
+        ],
+        "overflow": 0
+      },
+      "bottom": {
+        "scrollY": 749,
+        "scrollHeight": 1593,
+        "viewBottom": 548.71875,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 271.328125,
+          "y": 487.71875,
+          "width": 84.671875,
+          "height": 30,
+          "top": 487.71875,
+          "right": 356,
+          "bottom": 517.71875,
+          "left": 271.328125
+        },
+        "condensed": true,
+        "overflow": 0
+      },
+      "errors": []
+    },
+    {
+      "kind": "webkit",
+      "width": 768,
+      "initial": {
+        "runtime": {
+          "current": "today",
+          "condensed": false,
+          "keyboardOpen": false,
+          "navigations": 0,
+          "viewTransitions": 0,
+          "swipes": 0,
+          "swipeCancels": 0,
+          "sheetDismissals": 0,
+          "sheetCancel": 0,
+          "keyboardHidden": 0
+        },
+        "glass": "content-refraction",
+        "navX": 124,
+        "navY": 768,
+        "navBottom": 8,
+        "navW": 520,
+        "navH": 68,
+        "settingsTopVisible": true,
+        "visibleTabs": [
+          "today",
+          "schedule",
+          "tasks",
+          "goals",
+          "review"
+        ],
+        "overflow": 0
+      },
+      "bottom": {
+        "scrollY": 700,
+        "scrollHeight": 1544,
+        "viewBottom": 549.015625,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 573.328125,
+          "y": 477.015625,
+          "width": 60,
+          "height": 35,
+          "top": 477.015625,
+          "right": 633.328125,
+          "bottom": 512.015625,
+          "left": 573.328125
+        },
+        "condensed": true,
+        "overflow": 0
+      },
+      "errors": []
+    }
+  ],
+  "checks": [
+    {
+      "ok": true,
+      "name": "edge320 new shell initialized"
+    },
+    {
+      "ok": true,
+      "name": "edge320 no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "edge320 dock aligned to viewport bottom",
+      "extra": 8
+    },
+    {
+      "ok": true,
+      "name": "edge320 compact dock height",
+      "extra": 68
+    },
+    {
+      "ok": true,
+      "name": "edge320 five-tab navigation",
+      "extra": [
+        "today",
+        "schedule",
+        "tasks",
+        "goals",
+        "review"
+      ]
+    },
+    {
+      "ok": true,
+      "name": "edge320 settings stays accessible"
+    },
+    {
+      "ok": true,
+      "name": "edge320 nav schedule"
+    },
+    {
+      "ok": true,
+      "name": "edge320 nav tasks"
+    },
+    {
+      "ok": true,
+      "name": "edge320 nav goals"
+    },
+    {
+      "ok": true,
+      "name": "edge320 nav review"
+    },
+    {
+      "ok": true,
+      "name": "edge320 nav today"
+    },
+    {
+      "ok": true,
+      "name": "edge320 settings via top"
+    },
+    {
+      "ok": true,
+      "name": "edge320 sheet opens"
+    },
+    {
+      "ok": true,
+      "name": "edge320 creates real task"
+    },
+    {
+      "ok": true,
+      "name": "edge320 persists task across reload"
+    },
+    {
+      "ok": true,
+      "name": "edge320 content has safe scroll clearance",
+      "extra": {
+        "scrollY": 842,
+        "scrollHeight": 1686,
+        "viewBottom": 549.09375,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 224.65625,
+          "y": 488.09375,
+          "width": 61.34375,
+          "height": 30,
+          "top": 488.09375,
+          "right": 286,
+          "bottom": 518.09375,
+          "left": 224.65625
+        },
+        "condensed": true,
+        "overflow": 0
+      }
+    },
+    {
+      "ok": true,
+      "name": "edge320 scrolled page no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "edge320 zero script/console errors",
+      "extra": []
+    },
+    {
+      "ok": true,
+      "name": "edge390 new shell initialized"
+    },
+    {
+      "ok": true,
+      "name": "edge390 no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "edge390 dock aligned to viewport bottom",
+      "extra": 8
+    },
+    {
+      "ok": true,
+      "name": "edge390 compact dock height",
+      "extra": 68
+    },
+    {
+      "ok": true,
+      "name": "edge390 five-tab navigation",
+      "extra": [
+        "today",
+        "schedule",
+        "tasks",
+        "goals",
+        "review"
+      ]
+    },
+    {
+      "ok": true,
+      "name": "edge390 settings stays accessible"
+    },
+    {
+      "ok": true,
+      "name": "edge390 nav schedule"
+    },
+    {
+      "ok": true,
+      "name": "edge390 nav tasks"
+    },
+    {
+      "ok": true,
+      "name": "edge390 nav goals"
+    },
+    {
+      "ok": true,
+      "name": "edge390 nav review"
+    },
+    {
+      "ok": true,
+      "name": "edge390 nav today"
+    },
+    {
+      "ok": true,
+      "name": "edge390 settings via top"
+    },
+    {
+      "ok": true,
+      "name": "edge390 sheet opens"
+    },
+    {
+      "ok": true,
+      "name": "edge390 sheet follows touch",
+      "extra": "translate3d(0px, 55px, 0px)"
+    },
+    {
+      "ok": true,
+      "name": "edge390 short swipe cancels and stays open"
+    },
+    {
+      "ok": true,
+      "name": "edge390 long swipe dismisses sheet"
+    },
+    {
+      "ok": true,
+      "name": "edge390 dock scrub accepted as touch gesture",
+      "extra": {
+        "current": "goals",
+        "condensed": false,
+        "keyboardOpen": false,
+        "navigations": 8,
+        "viewTransitions": 0,
+        "swipes": 1,
+        "swipeCancels": 0,
+        "sheetDismissals": 1,
+        "sheetCancel": 1,
+        "keyboardHidden": 0
+      }
+    },
+    {
+      "ok": true,
+      "name": "edge390 dock scrub navigates"
+    },
+    {
+      "ok": true,
+      "name": "edge390 creates real task"
+    },
+    {
+      "ok": true,
+      "name": "edge390 persists task across reload"
+    },
+    {
+      "ok": true,
+      "name": "edge390 content has safe scroll clearance",
+      "extra": {
+        "scrollY": 751,
+        "scrollHeight": 1595,
+        "viewBottom": 548.59375,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 271.328125,
+          "y": 487.59375,
+          "width": 84.65625,
+          "height": 30,
+          "top": 487.59375,
+          "right": 355.984375,
+          "bottom": 517.59375,
+          "left": 271.328125
+        },
+        "condensed": true,
+        "overflow": 0
+      }
+    },
+    {
+      "ok": true,
+      "name": "edge390 scrolled page no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "edge390 zero script/console errors",
+      "extra": []
+    },
+    {
+      "ok": true,
+      "name": "edge768 new shell initialized"
+    },
+    {
+      "ok": true,
+      "name": "edge768 no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "edge768 dock aligned to viewport bottom",
+      "extra": 8
+    },
+    {
+      "ok": true,
+      "name": "edge768 compact dock height",
+      "extra": 68
+    },
+    {
+      "ok": true,
+      "name": "edge768 five-tab navigation",
+      "extra": [
+        "today",
+        "schedule",
+        "tasks",
+        "goals",
+        "review"
+      ]
+    },
+    {
+      "ok": true,
+      "name": "edge768 settings stays accessible"
+    },
+    {
+      "ok": true,
+      "name": "edge768 nav schedule"
+    },
+    {
+      "ok": true,
+      "name": "edge768 nav tasks"
+    },
+    {
+      "ok": true,
+      "name": "edge768 nav goals"
+    },
+    {
+      "ok": true,
+      "name": "edge768 nav review"
+    },
+    {
+      "ok": true,
+      "name": "edge768 nav today"
+    },
+    {
+      "ok": true,
+      "name": "edge768 settings via top"
+    },
+    {
+      "ok": true,
+      "name": "edge768 sheet opens"
+    },
+    {
+      "ok": true,
+      "name": "edge768 creates real task"
+    },
+    {
+      "ok": true,
+      "name": "edge768 persists task across reload"
+    },
+    {
+      "ok": true,
+      "name": "edge768 content has safe scroll clearance",
+      "extra": {
+        "scrollY": 702,
+        "scrollHeight": 1546,
+        "viewBottom": 548.890625,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 573.328125,
+          "y": 476.890625,
+          "width": 60,
+          "height": 35,
+          "top": 476.890625,
+          "right": 633.328125,
+          "bottom": 511.890625,
+          "left": 573.328125
+        },
+        "condensed": true,
+        "overflow": 0
+      }
+    },
+    {
+      "ok": true,
+      "name": "edge768 scrolled page no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "edge768 zero script/console errors",
+      "extra": []
+    },
+    {
+      "ok": true,
+      "name": "edge1440 new shell initialized"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "edge1440 nav schedule"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 nav tasks"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 nav goals"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 nav review"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 nav today"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 settings via top"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 sheet opens"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 creates real task"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 persists task across reload"
+    },
+    {
+      "ok": true,
+      "name": "edge1440 scrolled page no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "edge1440 zero script/console errors",
+      "extra": []
+    },
+    {
+      "ok": true,
+      "name": "webkit390 new shell initialized"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "webkit390 dock aligned to viewport bottom",
+      "extra": 8
+    },
+    {
+      "ok": true,
+      "name": "webkit390 compact dock height",
+      "extra": 68
+    },
+    {
+      "ok": true,
+      "name": "webkit390 five-tab navigation",
+      "extra": [
+        "today",
+        "schedule",
+        "tasks",
+        "goals",
+        "review"
+      ]
+    },
+    {
+      "ok": true,
+      "name": "webkit390 settings stays accessible"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 nav schedule"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 nav tasks"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 nav goals"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 nav review"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 nav today"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 settings via top"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 sheet opens"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 creates real task"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 persists task across reload"
+    },
+    {
+      "ok": true,
+      "name": "webkit390 content has safe scroll clearance",
+      "extra": {
+        "scrollY": 749,
+        "scrollHeight": 1593,
+        "viewBottom": 548.71875,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 271.328125,
+          "y": 487.71875,
+          "width": 84.671875,
+          "height": 30,
+          "top": 487.71875,
+          "right": 356,
+          "bottom": 517.71875,
+          "left": 271.328125
+        },
+        "condensed": true,
+        "overflow": 0
+      }
+    },
+    {
+      "ok": true,
+      "name": "webkit390 scrolled page no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "webkit390 zero script/console errors",
+      "extra": []
+    },
+    {
+      "ok": true,
+      "name": "webkit768 new shell initialized"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "webkit768 dock aligned to viewport bottom",
+      "extra": 8
+    },
+    {
+      "ok": true,
+      "name": "webkit768 compact dock height",
+      "extra": 68
+    },
+    {
+      "ok": true,
+      "name": "webkit768 five-tab navigation",
+      "extra": [
+        "today",
+        "schedule",
+        "tasks",
+        "goals",
+        "review"
+      ]
+    },
+    {
+      "ok": true,
+      "name": "webkit768 settings stays accessible"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 nav schedule"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 nav tasks"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 nav goals"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 nav review"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 nav today"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 settings via top"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 sheet opens"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 creates real task"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 persists task across reload"
+    },
+    {
+      "ok": true,
+      "name": "webkit768 content has safe scroll clearance",
+      "extra": {
+        "scrollY": 700,
+        "scrollHeight": 1544,
+        "viewBottom": 549.015625,
+        "dockTop": 862,
+        "dockBottom": 930,
+        "last": {
+          "x": 573.328125,
+          "y": 477.015625,
+          "width": 60,
+          "height": 35,
+          "top": 477.015625,
+          "right": 633.328125,
+          "bottom": 512.015625,
+          "left": 573.328125
+        },
+        "condensed": true,
+        "overflow": 0
+      }
+    },
+    {
+      "ok": true,
+      "name": "webkit768 scrolled page no horizontal overflow",
+      "extra": 0
+    },
+    {
+      "ok": true,
+      "name": "webkit768 zero script/console errors",
+      "extra": []
+    }
+  ],
+  "failed": 0,
+  "passed": 108
+}

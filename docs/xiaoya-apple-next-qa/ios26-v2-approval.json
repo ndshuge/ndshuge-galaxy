@@ -1,0 +1,36 @@
+{
+  "initial": {
+    "mode": "demo",
+    "transactions": 0,
+    "suggestions": [
+      {
+        "id": "conflict:e4d09c53",
+        "title": "给活动换一个空档",
+        "action": true
+      },
+      {
+        "id": "deadline:5252a081",
+        "title": "为重要事项留出专注时间",
+        "action": true
+      },
+      {
+        "id": "deadline:663e36a1",
+        "title": "为重要事项留出专注时间",
+        "action": true
+      },
+      {
+        "id": "deadline:83e002f4",
+        "title": "把作业拆成两个可执行步骤",
+        "action": true
+      }
+    ]
+  },
+  "modal": true,
+  "before": 0,
+  "after": 1,
+  "error": null,
+  "saved": true,
+  "undone": true,
+  "status": "PASS",
+  "errors": []
+}
