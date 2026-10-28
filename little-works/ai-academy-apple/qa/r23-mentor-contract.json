@@ -1,0 +1,70 @@
+{
+  "passed": 9,
+  "failed": 0,
+  "results": [
+    {
+      "name": "unconfigured does not submit",
+      "ok": true
+    },
+    {
+      "name": "verified model only via unchanged provider",
+      "ok": true
+    },
+    {
+      "name": "typing does not request model",
+      "ok": true
+    },
+    {
+      "name": "send explicitly invokes original provider once",
+      "ok": true,
+      "details": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "你是知序 AI 学院的知序博士。以苏格拉底式方式帮助学生理解科学原理，先引导提出猜想与证据，数学与科学结论务必准确；未经验证不得假装运行实验；避免直接替学生完成所有作业。"
+          },
+          {
+            "role": "user",
+            "content": "为什么两个相近初值最后会分开？"
+          }
+        ],
+        "limit": 430
+      }
+    },
+    {
+      "name": "actual request format includes Socratic system role",
+      "ok": true
+    },
+    {
+      "name": "test reply shown, not invented fallback",
+      "ok": true
+    },
+    {
+      "name": "second reply carries earlier conversation in memory",
+      "ok": true,
+      "details": {
+        "roles": [
+          "system",
+          "user",
+          "assistant",
+          "user"
+        ]
+      }
+    },
+    {
+      "name": "Escape closes even with response",
+      "ok": true
+    },
+    {
+      "name": "doctor button press -> release tactile motion",
+      "ok": true,
+      "details": {
+        "press": {
+          "transform": "matrix(0.967295, 0, 0, 0.967295, 0, 0)",
+          "active": true
+        },
+        "release": "none"
+      }
+    }
+  ]
+}

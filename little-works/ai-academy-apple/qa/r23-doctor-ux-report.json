@@ -1,0 +1,346 @@
+{
+  "passed": 34,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "doctor constant & initial hidden 320",
+      "pass": true,
+      "details": {
+        "screen": 320,
+        "scroll": 320,
+        "doctor": {
+          "x": 179.015625,
+          "y": 742.203125,
+          "width": 126.984375,
+          "height": 66.796875,
+          "top": 742.203125,
+          "right": 306,
+          "bottom": 809,
+          "left": 179.015625
+        },
+        "dock": {
+          "x": 14,
+          "y": 821,
+          "width": 292,
+          "height": 68,
+          "top": 821,
+          "right": 306,
+          "bottom": 889,
+          "left": 14
+        },
+        "src": "http://127.0.0.1:18889/little-works/ai-academy-apple/assets/zhixu-doctor/idle.webp",
+        "dialog": true
+      }
+    },
+    {
+      "name": "doctor not over mobile tab bar 320",
+      "pass": true,
+      "details": {
+        "screen": 320,
+        "scroll": 320,
+        "doctor": {
+          "x": 179.015625,
+          "y": 742.203125,
+          "width": 126.984375,
+          "height": 66.796875,
+          "top": 742.203125,
+          "right": 306,
+          "bottom": 809,
+          "left": 179.015625
+        },
+        "dock": {
+          "x": 14,
+          "y": 821,
+          "width": 292,
+          "height": 68,
+          "top": 821,
+          "right": 306,
+          "bottom": 889,
+          "left": 14
+        },
+        "src": "http://127.0.0.1:18889/little-works/ai-academy-apple/assets/zhixu-doctor/idle.webp",
+        "dialog": true
+      }
+    },
+    {
+      "name": "original doctor artwork loaded 320",
+      "pass": true,
+      "details": {
+        "avatar": 330
+      }
+    },
+    {
+      "name": "dialog opens with visible entry 320",
+      "pass": true
+    },
+    {
+      "name": "unverified AI cannot send 320",
+      "pass": true
+    },
+    {
+      "name": "typing does not auto-call AI 320",
+      "pass": true
+    },
+    {
+      "name": "Escape closes dialog 320",
+      "pass": true
+    },
+    {
+      "name": "real AI config reachable 320",
+      "pass": true,
+      "details": {
+        "hash": "#settings",
+        "modal": true,
+        "dialogHidden": true
+      }
+    },
+    {
+      "name": "no uncaught error or AI spend 320",
+      "pass": true,
+      "details": {
+        "errs": [],
+        "requests": []
+      }
+    },
+    {
+      "name": "doctor constant & initial hidden 390",
+      "pass": true,
+      "details": {
+        "screen": 390,
+        "scroll": 390,
+        "doctor": {
+          "x": 249.015625,
+          "y": 742.203125,
+          "width": 126.984375,
+          "height": 66.796875,
+          "top": 742.203125,
+          "right": 376,
+          "bottom": 809,
+          "left": 249.015625
+        },
+        "dock": {
+          "x": 14,
+          "y": 821,
+          "width": 362,
+          "height": 68,
+          "top": 821,
+          "right": 376,
+          "bottom": 889,
+          "left": 14
+        },
+        "src": "http://127.0.0.1:18889/little-works/ai-academy-apple/assets/zhixu-doctor/idle.webp",
+        "dialog": true
+      }
+    },
+    {
+      "name": "doctor not over mobile tab bar 390",
+      "pass": true,
+      "details": {
+        "screen": 390,
+        "scroll": 390,
+        "doctor": {
+          "x": 249.015625,
+          "y": 742.203125,
+          "width": 126.984375,
+          "height": 66.796875,
+          "top": 742.203125,
+          "right": 376,
+          "bottom": 809,
+          "left": 249.015625
+        },
+        "dock": {
+          "x": 14,
+          "y": 821,
+          "width": 362,
+          "height": 68,
+          "top": 821,
+          "right": 376,
+          "bottom": 889,
+          "left": 14
+        },
+        "src": "http://127.0.0.1:18889/little-works/ai-academy-apple/assets/zhixu-doctor/idle.webp",
+        "dialog": true
+      }
+    },
+    {
+      "name": "original doctor artwork loaded 390",
+      "pass": true,
+      "details": {
+        "avatar": 330
+      }
+    },
+    {
+      "name": "dialog opens with visible entry 390",
+      "pass": true
+    },
+    {
+      "name": "unverified AI cannot send 390",
+      "pass": true
+    },
+    {
+      "name": "typing does not auto-call AI 390",
+      "pass": true
+    },
+    {
+      "name": "Escape closes dialog 390",
+      "pass": true
+    },
+    {
+      "name": "real AI config reachable 390",
+      "pass": true,
+      "details": {
+        "hash": "#settings",
+        "modal": true,
+        "dialogHidden": true
+      }
+    },
+    {
+      "name": "no uncaught error or AI spend 390",
+      "pass": true,
+      "details": {
+        "errs": [],
+        "requests": []
+      }
+    },
+    {
+      "name": "doctor constant & initial hidden 768",
+      "pass": true,
+      "details": {
+        "screen": 768,
+        "scroll": 768,
+        "doctor": {
+          "x": 596.71875,
+          "y": 798.265625,
+          "width": 151.28125,
+          "height": 77.734375,
+          "top": 798.265625,
+          "right": 748,
+          "bottom": 876,
+          "left": 596.71875
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "src": "http://127.0.0.1:18889/little-works/ai-academy-apple/assets/zhixu-doctor/idle.webp",
+        "dialog": true
+      }
+    },
+    {
+      "name": "original doctor artwork loaded 768",
+      "pass": true,
+      "details": {
+        "avatar": 330
+      }
+    },
+    {
+      "name": "dialog opens with visible entry 768",
+      "pass": true
+    },
+    {
+      "name": "unverified AI cannot send 768",
+      "pass": true
+    },
+    {
+      "name": "typing does not auto-call AI 768",
+      "pass": true
+    },
+    {
+      "name": "Escape closes dialog 768",
+      "pass": true
+    },
+    {
+      "name": "real AI config reachable 768",
+      "pass": true,
+      "details": {
+        "hash": "#settings",
+        "modal": true,
+        "dialogHidden": true
+      }
+    },
+    {
+      "name": "no uncaught error or AI spend 768",
+      "pass": true,
+      "details": {
+        "errs": [],
+        "requests": []
+      }
+    },
+    {
+      "name": "doctor constant & initial hidden 1440",
+      "pass": true,
+      "details": {
+        "screen": 1440,
+        "scroll": 1440,
+        "doctor": {
+          "x": 1268.71875,
+          "y": 798.265625,
+          "width": 151.28125,
+          "height": 77.734375,
+          "top": 798.265625,
+          "right": 1420,
+          "bottom": 876,
+          "left": 1268.71875
+        },
+        "dock": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        },
+        "src": "http://127.0.0.1:18889/little-works/ai-academy-apple/assets/zhixu-doctor/idle.webp",
+        "dialog": true
+      }
+    },
+    {
+      "name": "original doctor artwork loaded 1440",
+      "pass": true,
+      "details": {
+        "avatar": 330
+      }
+    },
+    {
+      "name": "dialog opens with visible entry 1440",
+      "pass": true
+    },
+    {
+      "name": "unverified AI cannot send 1440",
+      "pass": true
+    },
+    {
+      "name": "typing does not auto-call AI 1440",
+      "pass": true
+    },
+    {
+      "name": "Escape closes dialog 1440",
+      "pass": true
+    },
+    {
+      "name": "real AI config reachable 1440",
+      "pass": true,
+      "details": {
+        "hash": "#settings",
+        "modal": true,
+        "dialogHidden": true
+      }
+    },
+    {
+      "name": "no uncaught error or AI spend 1440",
+      "pass": true,
+      "details": {
+        "errs": [],
+        "requests": []
+      }
+    }
+  ]
+}

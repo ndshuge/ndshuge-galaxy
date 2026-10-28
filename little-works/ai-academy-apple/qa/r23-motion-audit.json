@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Motion engine native import",
+    "pass": true,
+    "details": {
+      "engine": "Motion"
+    }
+  },
+  {
+    "name": "hero primary spring press",
+    "pass": true,
+    "details": {
+      "active": true,
+      "transform": "matrix(0.982195, 0, 0, 0.982195, 0, 0)",
+      "scale": "none"
+    }
+  },
+  {
+    "name": "course button tactile press",
+    "pass": true,
+    "details": {
+      "active": true,
+      "transform": "matrix(0.977039, 0, 0, 0.977039, 0, 0)",
+      "scale": "none"
+    }
+  },
+  {
+    "name": "learning-stage press",
+    "pass": true,
+    "details": {
+      "active": true,
+      "transform": "matrix(0.977012, 0, 0, 0.977012, 0, 0)",
+      "scale": "none"
+    }
+  },
+  {
+    "name": "segmented real selection",
+    "pass": true
+  },
+  {
+    "name": "segmented no duplicate ink",
+    "pass": true
+  }
+]
