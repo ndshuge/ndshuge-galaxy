@@ -20,7 +20,6 @@
 <link rel="stylesheet" href="./ios26-v2.css?v=20261028v2a"/>
 </head>
 <body class="design-apple">
-<nav class="comparison-nav" aria-label="小芽设计版本切换"><span class="comparison-title">小芽 · 设计对照</span><div class="comparison-links"><a href="https://ndshuge.github.io/xiaoya-lifelab/">原版</a><a href="../xiaoya-apple/" aria-current="page">Apple</a><a href="../xiaoya-studio/" >Skill 工作流</a></div><a class="comparison-back" href="../">返回小东西</a></nav>
 <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
 <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM9 21v-7h6v7"/></symbol>
 <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></symbol>
@@ -129,7 +128,12 @@
    <label class="toggle-row"><span><strong>隐藏桌宠</strong><small>只关闭可爱形象，今天的建议和功能继续可用。</small></span><input type="checkbox" id="setting-pet"/><span class="switch"></span></label>
   </div>
   <div class="panel rc-settings"><h3>低打扰的网页提醒</h3><p>网页打开时每30秒检查。关闭浏览器后不会发送系统通知；可导出到你选择的日历，实际通知由日历权限与设置决定。</p><div class="form-fields"><div class="field wide"><label for="reminder-leads">提前量（分钟，逗号分隔）</label><input id="reminder-leads" placeholder="1440,60,15"></div><div class="field"><label for="quiet-start">免打扰开始</label><input id="quiet-start" type="time"></div><div class="field"><label for="quiet-end">免打扰结束</label><input id="quiet-end" type="time"></div><div class="field"><label for="reminder-gap">最小间隔（分钟）</label><input id="reminder-gap" type="number" min="1" max="1440"></div><label class="field"><span>开启网页提醒</span><input id="reminder-enabled" type="checkbox"></label></div><div class="setting-buttons"><button class="btn btn-dark" id="reminder-settings-save">保存提醒偏好</button><button class="btn btn-soft" id="calendar-export">导出未来120天 ICS 日历</button></div><h3>已送达提醒</h3><div id="reminder-list"></div></div><div class="panel rc-settings"><h3>事务记录与撤销</h3><p class="muted">仅撤销相关实体；如果它们已经被再次编辑，将拒绝覆盖。撤销不删除审计记录。</p><div id="transactions"></div></div><div class="panel settings-data"><h3>我的数据</h3><p>本机浏览器 LocalStorage 保存，不登录账户，不向云端上传。换浏览器或清理浏览器数据前，请导出备份。</p><div class="setting-buttons"><button class="btn btn-soft" id="export-btn"><svg><use href="#i-download"/></svg> 导出 JSON</button><button class="btn btn-soft" id="import-btn"><svg><use href="#i-upload"/></svg> 导入备份</button><button class="btn btn-danger" id="clear-btn"><svg><use href="#i-trash"/></svg> 清空当前档案</button></div><button class="btn btn-plain" id="reset-demo">重置匿名合成演示</button><input id="import-file" type="file" accept=".json,application/json" hidden/><p class="small-note">“合成演示档案”和“私人空白档案”物理隔离在不同的浏览器存储键下。</p></div>
-  <div class="panel"><h3>关于小芽</h3><p>独立应用：基础管理采用本机规则，成长页可在明确授权后调用外部真实 AI 模型。所有实际执行限于用户明确批准的应用内操作；Windows 系统桌宠、后台通知、跨设备同步与教务系统登录待单独授权。</p></div>
+  <div class="panel rc-settings xy-edition-settings">
+<h3>版本与外观</h3>
+<p>当前正在使用 Apple Edition。原版仍完整保留，数据存储在同一浏览器来源下。</p>
+<div class="setting-buttons"><a class="btn btn-soft" href="/xiaoya-lifelab/original.html">打开 Original Edition ↗</a></div>
+</div>
+<div class="panel"><h3>关于小芽</h3><p>独立应用：基础管理采用本机规则，成长页可在明确授权后调用外部真实 AI 模型。所有实际执行限于用户明确批准的应用内操作；Windows 系统桌宠、后台通知、跨设备同步与教务系统登录待单独授权。</p></div>
  </section>
 </main>
 <aside class="right-rail" id="right-rail">

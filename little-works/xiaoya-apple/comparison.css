@@ -35,3 +35,6 @@ input,select,textarea{border-radius:12px!important}button:focus-visible,a:focus-
 /* Keep one truly functional six-action floating dock on mobile. */
 @media(max-width:790px){.sidebar{display:none!important}.mobile-tabs{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));padding:7px 4px;min-height:66px;border:1px solid #ffffffb8;border-radius:23px;background:#f5fbfaed;box-shadow:0 10px 34px #38515b37;backdrop-filter:blur(30px) saturate(170%);-webkit-backdrop-filter:blur(30px) saturate(170%);z-index:80}.mobile-tabs button{min-width:0;min-height:48px;font-size:10px;color:#687d84}.mobile-tabs button.active{color:#1f7164}.mobile-tabs button svg{width:18px;height:18px}}
 @media(prefers-reduced-transparency:reduce){.mobile-tabs{backdrop-filter:none;-webkit-backdrop-filter:none;background:#fff}}
+
+/* Default launch is Apple Edition; original is discoverable in Settings. */
+body.design-apple .sidebar{top:0}

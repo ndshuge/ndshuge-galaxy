@@ -305,7 +305,7 @@ function settings(){
  '<div class="setting-row"><div><strong>清除本版学习记录</strong><small>仅删除 V2 数据，保留旧版 V1 备份；不可撤销</small></div>'+button('清除…','clear-data','inline-link')+'</div></div>'+
  '<div class="section-head"><h2 class="section-title">版本</h2></div>'+
  '<div class="unified settings-group"><div class="setting-row"><div><strong>知序 · Apple Edition</strong><small>视觉与交互层独立；共用原版业务能力和同源个人学习数据</small></div><span class="pill">Apple</span></div>'+
- '<div class="setting-row"><div><strong>Original Edition</strong><small>比赛版网页完整保留，没有被替换</small></div>'+link('查看原版','https://ndshuge.github.io/zhixu-ai-academy/')+'</div></div>'+
+ '<div class="setting-row"><div><strong>Original Edition</strong><small>比赛版网页完整保留，没有被替换</small></div>'+link('查看原版','https://ndshuge.github.io/zhixu-ai-academy/original.html')+'</div></div>'+
  '<p class="quiet-note">隐私：学习记录存储在当前浏览器 localStorage。网页无法保证永久保留；请定期导出。此版本未增加服务器或用户账户。</p></div>';
 }
 async function handleAction(el){

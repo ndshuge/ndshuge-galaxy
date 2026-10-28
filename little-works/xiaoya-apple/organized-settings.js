@@ -62,6 +62,7 @@
    ['提醒','reminders',root.querySelector('#reminder-settings-save')?.closest('.xy-organized-details'),'时间、通知与日历'],
    ['数据与隐私','data',root.querySelector('.xy-data-settings'),'备份和数据管理'],
    ['操作记录','history',root.querySelector('#transactions')?.closest('.xy-organized-details'),'查看或撤销操作'],
+   ['版本与外观','edition',root.querySelector('.xy-edition-settings'),'打开保留的 Original Edition'],
    ['关于小芽','about',[...root.querySelectorAll('.xy-organized-details')].find(e=>e.textContent.includes('关于小芽')),'应用说明']
   ].filter(x=>x[2]);
   const menu=document.createElement('div');menu.className='xy-settings-menu';
