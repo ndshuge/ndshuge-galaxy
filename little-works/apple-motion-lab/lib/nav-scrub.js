@@ -16,7 +16,7 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}, onShell
   let gesture = null;
   let blockClickUntil = 0;
   let lastSelection = nav.current ?? 0;
-  let restTimer=0, opticalTimer=0;
+  let restTimer=0, opticalFrame=0;
   // Optical shapes use quantized presets so the original displacement map cache is reused.
   // Actual position stays one-to-one with the finger; the edges lag through a native spring.
   const shapeSpring=createSpring(0,(value)=>{
@@ -105,19 +105,21 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}, onShell
     // before the expensive optical displacement maps are swapped in.
     onShell('begin',e.clientX,0);
     nav.setAttribute('data-scrub-active','');
-    clearTimeout(opticalTimer);
+    cancelAnimationFrame(opticalFrame);
     const touchId=e.pointerId;
-    opticalTimer=setTimeout(()=>{
-      if(gesture?.id===touchId)nav.classList.add('is-scrubbing');
-    },48);
-    // Optics from the bundled Skill engine: chromatic fringe intensifies on hold.
-    // Do not rasterize a new displacement map synchronously inside pointerdown.
-    // The optical rim and whole-dock highlight follow the press spring instead.
-    if(!reduceMotion.matches){
-      liftSpring.set(20);
-      // Shape and lift must develop together: no delayed 120ms secondary jump.
-      shapeSpring.set(8);
-    }
+    // On a cold first touch, wall-clock 48ms could elapse before even one
+    // compositor frame is painted. Instead give the shell's own spring a frame
+    // first, then start the genuine Skill optics on the next visible frame.
+    opticalFrame=requestAnimationFrame(()=>{
+      if(gesture?.id!==touchId)return;
+      if(!reduceMotion.matches){
+        liftSpring.set(20);
+        shapeSpring.set(8);
+      }
+      opticalFrame=requestAnimationFrame(()=>{
+        if(gesture?.id===touchId)nav.classList.add('is-scrubbing');
+      });
+    });
     nav.scrubDirection=0;
     nav.dataset.scrubPreview=String(index);
     onPressChange(index);
@@ -144,7 +146,7 @@ export function installNavbarScrub(nav, {onCommit, onPressChange=()=>{}, onShell
     const g=gesture;
     if(!g || e.pointerId!==g.id)return;
     gesture=null;
-    clearTimeout(opticalTimer);
+    cancelAnimationFrame(opticalFrame);
     if(!nav.classList.contains('is-scrubbing')){
       nav.removeAttribute('data-scrub-active');
       nav.removeAttribute('data-scrub-preview');
