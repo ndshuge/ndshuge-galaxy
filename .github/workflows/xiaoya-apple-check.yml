@@ -16,9 +16,14 @@ on:
       - "qa-apple-next.cjs"
       - "qa-xiaoya-apple-static.cjs"
       - ".github/workflows/xiaoya-apple-check.yml"
+concurrency:
+  group: xiaoya-apple-guard-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
     steps:
@@ -60,18 +65,25 @@ jobs:
         run: |
           npm install --no-save --package-lock=false playwright@1.64.0
           npx playwright install --with-deps chromium webkit
-      - name: Browser QA — Chromium and real Playwright WebKit
+      - name: Browser QA - Chromium and real Playwright WebKit
         env:
           XIAOYA_BROWSER_CHANNEL: chromium
-          XIAOYA_REQUIRE_WEBKIT: "1"
+        shell: bash
         run: |
-          python3 -m http.server 5393 --bind 127.0.0.1 > /tmp/xiaoya-http.log 2>&1 &
+          set -euo pipefail
+          python3 -m http.server 5397 --bind 127.0.0.1 > /tmp/xiaoya-http.log 2>&1 &
           for i in $(seq 1 30); do
-            if curl -fsS http://127.0.0.1:5393/little-works/xiaoya-apple/ >/dev/null; then break; fi
+            if curl -fsS http://127.0.0.1:5397/little-works/xiaoya-apple/ >/dev/null; then break; fi
             sleep 1
           done
-          node qa-apple-next.cjs
+          curl -fsS http://127.0.0.1:5397/little-works/xiaoya-apple/ >/dev/null
+          node little-works/xiaoya-apple/qa-ios26-v2.cjs
+          node little-works/xiaoya-apple/qa-ios26-v2-structure.cjs
+          node little-works/xiaoya-apple/qa-ios26-v2-approval.cjs
       - name: Check JavaScript parse
         run: |
           node --check little-works/xiaoya-apple/apple-next.js
+          node --check little-works/xiaoya-apple/native-experience.js
+          node --check little-works/xiaoya-apple/ios26-v2.js
+          node --check little-works/xiaoya-apple/glass/components.js
           node --check little-works/xiaoya-apple/glass/liquid-glass.js

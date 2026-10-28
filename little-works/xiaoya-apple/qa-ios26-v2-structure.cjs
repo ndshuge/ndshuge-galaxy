@@ -1,7 +1,7 @@
 const {chromium}=require('playwright-core'),fs=require('fs'),path=require('path');
 const url='http://127.0.0.1:5397/little-works/xiaoya-apple/';
 (async()=>{
- const browser=await chromium.launch({channel:'msedge',headless:true});
+ const browser=await chromium.launch(process.env.XIAOYA_BROWSER_CHANNEL==='chromium'?{headless:true}:{channel:'msedge',headless:true});
  const ctx=await browser.newContext({viewport:{width:440,height:956},hasTouch:true}),p=await ctx.newPage();
  const report={checks:[],errors:[]};
  const check=(ok,name,x)=>{report.checks.push({ok:!!ok,name,extra:x});if(!ok)console.error('FAIL',name,x)};

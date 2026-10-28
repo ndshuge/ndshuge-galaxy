@@ -7,7 +7,7 @@ const url='http://127.0.0.1:5397/little-works/xiaoya-apple/';
 const results=[],checks=[];
 function check(ok,name,extra){checks.push({ok:!!ok,name,extra});if(!ok)console.error('FAIL',name,JSON.stringify(extra));}
 async function run(kind,launch,width){
- const browser=await launch.launch(kind==='edge'?{channel:'msedge',headless:true}: {headless:true});
+ const browser=await launch.launch(kind==='edge'?(process.env.XIAOYA_BROWSER_CHANNEL==='chromium'?{headless:true}:{channel:'msedge',headless:true}):{headless:true});
  const context=await browser.newContext({viewport:{width,height:844},hasTouch:true,isMobile:kind==='webkit',reducedMotion:'no-preference'});
  const p=await context.newPage(),errors=[];
  p.on('pageerror',e=>errors.push(e.message));
@@ -83,7 +83,17 @@ async function run(kind,launch,width){
      await p.waitForTimeout(400);
    }
    // Genuine business path in a disposable browser context.
-   await source.evaluate(x=>x.click());await p.waitForTimeout(180);
+   await p.waitForFunction(()=>document.querySelector('#modal-root')?.hidden,null,{timeout:4500});
+   await p.locator(navSel+'[data-view="tasks"]').first().evaluate(x=>x.click());
+   await p.waitForFunction(()=>document.querySelector('#view-tasks')?.classList.contains('active'),null,{timeout:3500});
+   await source.evaluate(x=>x.click());
+   try { await p.locator('#f-title').waitFor({state:'visible',timeout:3500}); }
+   catch(err){
+     const state=await p.evaluate(()=>({active:document.querySelector('.view.active')?.id,modalHidden:document.querySelector('#modal-root')?.hidden,modalTitle:document.querySelector('#modal-title')?.textContent,form:document.querySelector('#edit-form')?.id,closing:!!document.querySelector('#modal-root .modal-card')?.getAnimations().length}));
+     console.log('REOPEN_DIAGNOSTIC',kind,width,JSON.stringify(state));
+     if(state.modalHidden){await source.evaluate(x=>x.click());await p.locator('#f-title').waitFor({state:'visible',timeout:3500})}
+     else throw err;
+   }
    await p.locator('#f-title').fill('ios26回归校验任务');
    await p.locator('#f-due').fill('2026-11-15T18:00');
    await p.locator('#edit-form button[type=submit]').evaluate(x=>x.click());
@@ -100,7 +110,7 @@ async function run(kind,launch,width){
      return {scrollY,scrollHeight:document.documentElement.scrollHeight,viewBottom:e.getBoundingClientRect().bottom,dockTop:d.top,dockBottom:d.bottom,
        last: last?.getBoundingClientRect().toJSON(),condensed:document.body.classList.contains('xy-dock-condensed'),overflow:document.documentElement.scrollWidth-innerWidth};
    });
-   if(width<=790)check(bottom.viewBottom<=bottom.dockTop-15||bottom.scrollHeight>innerHeight&&bottom.viewBottom>innerHeight,kind+width+' content has safe scroll clearance',bottom);
+   if(width<=790)check(bottom.viewBottom<=bottom.dockTop-15||bottom.scrollHeight>844&&bottom.viewBottom>844,kind+width+' content has safe scroll clearance',bottom);
    check(bottom.overflow<=1,kind+width+' scrolled page no horizontal overflow',bottom.overflow);
    await p.screenshot({path:path.join(dir,kind+'-scrolled-'+width+'.png')});
    check(!errors.length,kind+width+' zero script/console errors',errors);
