@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-28",
+    "label": "10月28日",
+    "path": "./data/2026-10-28.json",
+    "title": "从世界模型到HBM长约：技术扩张究竟受什么约束？",
+    "summary": "Genie 4、Agent停止机制、HBM财报、异构算力、考古与Lynn Conway。"
+  },
+  {
     "date": "2026-10-27",
     "label": "10月27日",
     "path": "./data/2026-10-27.json",
