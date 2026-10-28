@@ -1,5 +1,19 @@
 [
   {
+    "slug": "liquid-glass-lab",
+    "title": "Liquid Glass｜光学玻璃实验室",
+    "date": "2026.10.28",
+    "type": "INTERACTIVE EXPERIMENT",
+    "description": "使用真实 SVG 光学位移引擎，还原液态玻璃的边缘折射与色散。拖动透镜，调节强度，直接对比 L0 / L1 / L2 三种材质。",
+    "url": "./arcade-library/glass-lab.html",
+    "cover": "./arcade-library/glass-lab-cover.svg",
+    "tags": [
+      "液态玻璃",
+      "光学折射",
+      "交互实验"
+    ]
+  },
+  {
     "slug": "arcade-library",
     "title": "游戏库 · SHUGE Arcade",
     "date": "2026.10.28",

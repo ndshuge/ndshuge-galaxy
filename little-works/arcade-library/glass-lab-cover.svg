@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="Liquid Glass optical refraction lab cover">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#0b2033"/><stop offset=".5" stop-color="#174d63"/><stop offset="1" stop-color="#050c19"/></linearGradient>
+<radialGradient id="orb" cx=".34" cy=".27" r=".76"><stop stop-color="#ffffff"/><stop offset=".12" stop-color="#cffcf6"/><stop offset=".4" stop-color="#6af4e6"/><stop offset=".78" stop-color="#247caa"/><stop offset="1" stop-color="#10254d"/></radialGradient>
+<linearGradient id="lens" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#edfaff" stop-opacity=".46"/><stop offset=".4" stop-color="#b6ffff" stop-opacity=".17"/><stop offset=".8" stop-color="#ffffff" stop-opacity=".08"/><stop offset="1" stop-color="#7fd8ee" stop-opacity=".38"/></linearGradient>
+<linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e0ffff" stop-opacity=".95"/><stop offset=".45" stop-color="#b4f9ff" stop-opacity=".3"/><stop offset="1" stop-color="#f2ffff" stop-opacity=".7"/></linearGradient>
+<filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="27"/></filter>
+</defs>
+<rect width="960" height="540" fill="url(#bg)"/>
+<ellipse cx="710" cy="251" rx="265" ry="252" fill="#55e9e7" opacity=".24" filter="url(#soft)"/>
+<g stroke="#8deef7" fill="none"><circle cx="708" cy="265" r="222" stroke-opacity=".36"/><circle cx="708" cy="265" r="170" stroke-opacity=".53" stroke-width="2"/><circle cx="708" cy="265" r="116" stroke-opacity=".6"/></g>
+<path d="M710 265 934 78M710 265 961 289M710 265 511 54" stroke="#53ffee" stroke-opacity=".25" stroke-width="36"/>
+<circle cx="708" cy="265" r="99" fill="url(#orb)"/>
+<path d="M486 540 596 366 666 423 742 339 822 403 928 307 960 344V540Z" fill="#06152a" opacity=".8"/>
+<g transform="translate(530 139)">
+<rect x="0" y="0" width="344" height="237" rx="47" fill="#79fbf1" opacity=".14"/>
+<rect x="0" y="0" width="344" height="237" rx="47" fill="url(#lens)" stroke="url(#edge)" stroke-width="3"/>
+<path d="M10 47C50 5 123 6 179 24" fill="none" stroke="#e1ffff" stroke-opacity=".65" stroke-width="6" stroke-linecap="round"/>
+<path d="M330 185C317 214 290 224 271 226" fill="none" stroke="#a0e5ff" stroke-opacity=".6" stroke-width="5" stroke-linecap="round"/>
+<circle cx="278" cy="64" r="15" fill="#e9fbfc" opacity=".77"/>
+<circle cx="278" cy="64" r="7" fill="#18657e"/>
+<path d="M45 90H245M45 121H180" stroke="#effbff" stroke-opacity=".64" stroke-width="8" stroke-linecap="round"/>
+<path d="M45 165H211" stroke="#cffaff" stroke-opacity=".39" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="60" y="165" fill="#bbebf1" font-size="19" font-family="Arial,Helvetica,sans-serif" font-weight="700" letter-spacing="5">OPTICAL EXPERIMENT</text>
+<text x="55" y="244" fill="white" font-size="64" font-family="Arial,Helvetica,sans-serif" font-weight="730" letter-spacing="-2">LIQUID</text>
+<text x="55" y="308" fill="white" font-size="64" font-family="Arial,Helvetica,sans-serif" font-weight="730" letter-spacing="-2">GLASS.</text>
+<rect x="59" y="357" width="155" height="38" rx="19" fill="#e2faf8"/>
+<text x="85" y="382" fill="#143849" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700">L0 · L1 · L2</text>
+<text x="59" y="449" fill="#c8e4ec" font-family="Arial,Helvetica,sans-serif" font-size="21">Real optical refraction</text>
+</svg>
