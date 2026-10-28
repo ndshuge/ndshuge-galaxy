@@ -1,0 +1,1348 @@
+{
+  "mode": "before",
+  "at": "2026-10-28T04:54:45.846Z",
+  "environment": "Windows Edge headless, viewport simulation",
+  "samples": [
+    {
+      "w": 320,
+      "h": 700,
+      "target": 0,
+      "data": {
+        "progress": 0,
+        "geometry": {
+          "p": 0,
+          "x": 12,
+          "y": 536,
+          "w": 296,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14
+        },
+        "rects": {
+          "player": {
+            "x": 12,
+            "y": 536,
+            "width": 296,
+            "height": 68
+          },
+          "artwork": {
+            "x": 21,
+            "y": 543,
+            "width": 54,
+            "height": 54
+          },
+          "songTitle": {
+            "x": 86,
+            "y": 550,
+            "width": 54,
+            "height": 21
+          },
+          "seek": {
+            "x": 37,
+            "y": 324,
+            "width": 250,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 616,
+            "width": 290,
+            "height": 72
+          },
+          "quality": {
+            "x": 145,
+            "y": 480,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 35,
+            "y": 311,
+            "width": 250,
+            "height": 253
+          }
+        },
+        "scrollWidth": 320,
+        "windowWidth": 320
+      },
+      "image": "320-000.png"
+    },
+    {
+      "w": 320,
+      "h": 700,
+      "target": 0.25,
+      "data": {
+        "progress": 0.25,
+        "geometry": {
+          "p": 0.25,
+          "x": 9,
+          "y": 402,
+          "w": 302,
+          "h": 226,
+          "r": 15,
+          "artX": 32.328125,
+          "artY": 25.025000000000002,
+          "artSize": 97.375,
+          "infoY": 46.6
+        },
+        "rects": {
+          "player": {
+            "x": 9,
+            "y": 402,
+            "width": 302,
+            "height": 226
+          },
+          "artwork": {
+            "x": 41.3,
+            "y": 427,
+            "width": 97.4,
+            "height": 97.4
+          },
+          "songTitle": {
+            "x": 90.1,
+            "y": 448.6,
+            "width": 58.3,
+            "height": 21
+          },
+          "seek": {
+            "x": 34,
+            "y": 348,
+            "width": 256,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 616,
+            "width": 290,
+            "height": 72
+          },
+          "quality": {
+            "x": 148,
+            "y": 504,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 32,
+            "y": 335,
+            "width": 256,
+            "height": 253
+          }
+        },
+        "scrollWidth": 320,
+        "windowWidth": 320
+      },
+      "image": "320-025.png"
+    },
+    {
+      "w": 320,
+      "h": 700,
+      "target": 0.5,
+      "data": {
+        "progress": 0.5,
+        "geometry": {
+          "p": 0.5,
+          "x": 6,
+          "y": 268,
+          "w": 308,
+          "h": 384,
+          "r": 10,
+          "artX": 46.3125,
+          "artY": 43.050000000000004,
+          "artSize": 140.75,
+          "infoY": 109.9
+        },
+        "rects": {
+          "player": {
+            "x": 6,
+            "y": 268,
+            "width": 308,
+            "height": 384
+          },
+          "artwork": {
+            "x": 52.3,
+            "y": 311,
+            "width": 140.8,
+            "height": 140.8
+          },
+          "songTitle": {
+            "x": 84.8,
+            "y": 377.9,
+            "width": 81.4,
+            "height": 21
+          },
+          "seek": {
+            "x": 31,
+            "y": 387,
+            "width": 262,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 616,
+            "width": 290,
+            "height": 72
+          },
+          "quality": {
+            "x": 151,
+            "y": 543,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 29,
+            "y": 374,
+            "width": 262,
+            "height": 238
+          }
+        },
+        "scrollWidth": 320,
+        "windowWidth": 320
+      },
+      "image": "320-050.png"
+    },
+    {
+      "w": 320,
+      "h": 700,
+      "target": 0.75,
+      "data": {
+        "progress": 0.75,
+        "geometry": {
+          "p": 0.75,
+          "x": 3,
+          "y": 134,
+          "w": 314,
+          "h": 542,
+          "r": 5,
+          "artX": 50.953125,
+          "artY": 61.075,
+          "artSize": 184.125,
+          "infoY": 203.89999999999998
+        },
+        "rects": {
+          "player": {
+            "x": 3,
+            "y": 134,
+            "width": 314,
+            "height": 542
+          },
+          "artwork": {
+            "x": 54,
+            "y": 195.1,
+            "width": 184.1,
+            "height": 184.1
+          },
+          "songTitle": {
+            "x": 70.2,
+            "y": 337.9,
+            "width": 111,
+            "height": 21
+          },
+          "seek": {
+            "x": 28,
+            "y": 411,
+            "width": 268,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 616,
+            "width": 290,
+            "height": 72
+          },
+          "quality": {
+            "x": 154,
+            "y": 567,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 26,
+            "y": 398,
+            "width": 268,
+            "height": 238
+          }
+        },
+        "scrollWidth": 320,
+        "windowWidth": 320
+      },
+      "image": "320-075.png"
+    },
+    {
+      "w": 320,
+      "h": 700,
+      "target": 1,
+      "data": {
+        "progress": 1,
+        "geometry": {
+          "p": 1,
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 700,
+          "r": 0,
+          "artX": 46.25,
+          "artY": 79.10000000000001,
+          "artSize": 227.5,
+          "infoY": 328.6
+        },
+        "rects": {
+          "player": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 700
+          },
+          "artwork": {
+            "x": 46.3,
+            "y": 79.1,
+            "width": 227.5,
+            "height": 227.5
+          },
+          "songTitle": {
+            "x": 46.3,
+            "y": 328.6,
+            "width": 111,
+            "height": 21
+          },
+          "seek": {
+            "x": 25,
+            "y": 435,
+            "width": 274,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 616,
+            "width": 290,
+            "height": 72
+          },
+          "quality": {
+            "x": 157,
+            "y": 591,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 23,
+            "y": 422,
+            "width": 274,
+            "height": 238
+          }
+        },
+        "scrollWidth": 320,
+        "windowWidth": 320
+      },
+      "image": "320-100.png"
+    },
+    {
+      "w": 390,
+      "h": 844,
+      "target": 0,
+      "data": {
+        "progress": 0,
+        "geometry": {
+          "p": 0,
+          "x": 12,
+          "y": 680,
+          "w": 366,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14
+        },
+        "rects": {
+          "player": {
+            "x": 12,
+            "y": 680,
+            "width": 366,
+            "height": 68
+          },
+          "artwork": {
+            "x": 21,
+            "y": 687,
+            "width": 54,
+            "height": 54
+          },
+          "songTitle": {
+            "x": 86,
+            "y": 694,
+            "width": 111,
+            "height": 21
+          },
+          "seek": {
+            "x": 37,
+            "y": 483,
+            "width": 320,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 760,
+            "width": 360,
+            "height": 72
+          },
+          "quality": {
+            "x": 215,
+            "y": 639,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 35,
+            "y": 470,
+            "width": 320,
+            "height": 238
+          }
+        },
+        "scrollWidth": 390,
+        "windowWidth": 390
+      },
+      "image": "390-000.png"
+    },
+    {
+      "w": 390,
+      "h": 844,
+      "target": 0.25,
+      "data": {
+        "progress": 0.25,
+        "geometry": {
+          "p": 0.25,
+          "x": 9,
+          "y": 510,
+          "w": 372,
+          "h": 262,
+          "r": 15,
+          "artX": 39.615625,
+          "artY": 29.093,
+          "artSize": 109.075,
+          "infoY": 50.542
+        },
+        "rects": {
+          "player": {
+            "x": 9,
+            "y": 510,
+            "width": 372,
+            "height": 262
+          },
+          "artwork": {
+            "x": 48.6,
+            "y": 539.1,
+            "width": 109.1,
+            "height": 109.1
+          },
+          "songTitle": {
+            "x": 97.4,
+            "y": 560.5,
+            "width": 111,
+            "height": 21
+          },
+          "seek": {
+            "x": 34,
+            "y": 507,
+            "width": 326,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 760,
+            "width": 360,
+            "height": 72
+          },
+          "quality": {
+            "x": 218,
+            "y": 663,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 32,
+            "y": 494,
+            "width": 326,
+            "height": 238
+          }
+        },
+        "scrollWidth": 390,
+        "windowWidth": 390
+      },
+      "image": "390-025.png"
+    },
+    {
+      "w": 390,
+      "h": 844,
+      "target": 0.5,
+      "data": {
+        "progress": 0.5,
+        "geometry": {
+          "p": 0.5,
+          "x": 6,
+          "y": 340,
+          "w": 378,
+          "h": 456,
+          "r": 10,
+          "artX": 57.9625,
+          "artY": 51.186,
+          "artSize": 164.15,
+          "infoY": 125.668
+        },
+        "rects": {
+          "player": {
+            "x": 6,
+            "y": 340,
+            "width": 378,
+            "height": 456
+          },
+          "artwork": {
+            "x": 64,
+            "y": 391.2,
+            "width": 164.1,
+            "height": 164.1
+          },
+          "songTitle": {
+            "x": 96.5,
+            "y": 465.7,
+            "width": 111,
+            "height": 21
+          },
+          "seek": {
+            "x": 31,
+            "y": 531,
+            "width": 332,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 760,
+            "width": 360,
+            "height": 72
+          },
+          "quality": {
+            "x": 221,
+            "y": 687,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 29,
+            "y": 518,
+            "width": 332,
+            "height": 238
+          }
+        },
+        "scrollWidth": 390,
+        "windowWidth": 390
+      },
+      "image": "390-050.png"
+    },
+    {
+      "w": 390,
+      "h": 844,
+      "target": 0.75,
+      "data": {
+        "progress": 0.75,
+        "geometry": {
+          "p": 0.75,
+          "x": 3,
+          "y": 170,
+          "w": 384,
+          "h": 650,
+          "r": 5,
+          "artX": 64.04062499999999,
+          "artY": 73.279,
+          "artSize": 219.22500000000002,
+          "infoY": 239.37800000000001
+        },
+        "rects": {
+          "player": {
+            "x": 3,
+            "y": 170,
+            "width": 384,
+            "height": 650
+          },
+          "artwork": {
+            "x": 67,
+            "y": 243.3,
+            "width": 219.2,
+            "height": 219.2
+          },
+          "songTitle": {
+            "x": 83.3,
+            "y": 409.4,
+            "width": 111,
+            "height": 21
+          },
+          "seek": {
+            "x": 28,
+            "y": 555,
+            "width": 338,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 760,
+            "width": 360,
+            "height": 72
+          },
+          "quality": {
+            "x": 224,
+            "y": 711,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 26,
+            "y": 542,
+            "width": 338,
+            "height": 238
+          }
+        },
+        "scrollWidth": 390,
+        "windowWidth": 390
+      },
+      "image": "390-075.png"
+    },
+    {
+      "w": 390,
+      "h": 844,
+      "target": 1,
+      "data": {
+        "progress": 1,
+        "geometry": {
+          "p": 1,
+          "x": 0,
+          "y": 0,
+          "w": 390,
+          "h": 844,
+          "r": 0,
+          "artX": 57.849999999999994,
+          "artY": 95.372,
+          "artSize": 274.3,
+          "infoY": 391.672
+        },
+        "rects": {
+          "player": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844
+          },
+          "artwork": {
+            "x": 57.8,
+            "y": 95.4,
+            "width": 274.3,
+            "height": 274.3
+          },
+          "songTitle": {
+            "x": 57.8,
+            "y": 391.7,
+            "width": 111,
+            "height": 21
+          },
+          "seek": {
+            "x": 25,
+            "y": 579,
+            "width": 344,
+            "height": 4
+          },
+          "navigation": {
+            "x": 15,
+            "y": 760,
+            "width": 360,
+            "height": 72
+          },
+          "quality": {
+            "x": 227,
+            "y": 735,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 23,
+            "y": 566,
+            "width": 344,
+            "height": 238
+          }
+        },
+        "scrollWidth": 390,
+        "windowWidth": 390
+      },
+      "image": "390-100.png"
+    },
+    {
+      "w": 768,
+      "h": 1024,
+      "target": 0,
+      "data": {
+        "progress": 0,
+        "geometry": {
+          "p": 0,
+          "x": 159,
+          "y": 860,
+          "w": 450,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14
+        },
+        "rects": {
+          "player": {
+            "x": 159,
+            "y": 860,
+            "width": 450,
+            "height": 68
+          },
+          "artwork": {
+            "x": 168,
+            "y": 867,
+            "width": 54,
+            "height": 54
+          },
+          "songTitle": {
+            "x": 233,
+            "y": 874,
+            "width": 111,
+            "height": 19
+          },
+          "seek": {
+            "x": 191,
+            "y": 638,
+            "width": 390,
+            "height": 4
+          },
+          "navigation": {
+            "x": 184,
+            "y": 940,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 439,
+            "y": 809,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 189,
+            "y": 625,
+            "width": 390,
+            "height": 253
+          }
+        },
+        "scrollWidth": 768,
+        "windowWidth": 768
+      },
+      "image": "768-000.png"
+    },
+    {
+      "w": 768,
+      "h": 1024,
+      "target": 0.25,
+      "data": {
+        "progress": 0.25,
+        "geometry": {
+          "p": 0.25,
+          "x": 119.25,
+          "y": 645,
+          "w": 529.5,
+          "h": 307,
+          "r": 15,
+          "artX": 57.475,
+          "artY": 30.75,
+          "artSize": 123.7,
+          "infoY": 54.6125
+        },
+        "rects": {
+          "player": {
+            "x": 119.3,
+            "y": 645,
+            "width": 529.5,
+            "height": 307
+          },
+          "artwork": {
+            "x": 176.7,
+            "y": 675.8,
+            "width": 123.7,
+            "height": 123.7
+          },
+          "songTitle": {
+            "x": 225.5,
+            "y": 699.6,
+            "width": 111,
+            "height": 19
+          },
+          "seek": {
+            "x": 181,
+            "y": 662,
+            "width": 410,
+            "height": 4
+          },
+          "navigation": {
+            "x": 184,
+            "y": 940,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 449,
+            "y": 833,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 179,
+            "y": 649,
+            "width": 410,
+            "height": 253
+          }
+        },
+        "scrollWidth": 768,
+        "windowWidth": 768
+      },
+      "image": "768-025.png"
+    },
+    {
+      "w": 768,
+      "h": 1024,
+      "target": 0.5,
+      "data": {
+        "progress": 0.5,
+        "geometry": {
+          "p": 0.5,
+          "x": 79.5,
+          "y": 430,
+          "w": 609,
+          "h": 546,
+          "r": 10,
+          "artX": 108.4,
+          "artY": 54.5,
+          "artSize": 193.4,
+          "infoY": 141.95
+        },
+        "rects": {
+          "player": {
+            "x": 79.5,
+            "y": 430,
+            "width": 609,
+            "height": 546
+          },
+          "artwork": {
+            "x": 187.9,
+            "y": 484.5,
+            "width": 193.4,
+            "height": 193.4
+          },
+          "songTitle": {
+            "x": 220.4,
+            "y": 571.9,
+            "width": 111,
+            "height": 19
+          },
+          "seek": {
+            "x": 181,
+            "y": 670.5,
+            "width": 410,
+            "height": 4
+          },
+          "navigation": {
+            "x": 184,
+            "y": 940,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 449,
+            "y": 841.5,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 179,
+            "y": 657.5,
+            "width": 410,
+            "height": 253
+          }
+        },
+        "scrollWidth": 768,
+        "windowWidth": 768
+      },
+      "image": "768-050.png"
+    },
+    {
+      "w": 768,
+      "h": 1024,
+      "target": 0.75,
+      "data": {
+        "progress": 0.75,
+        "geometry": {
+          "p": 0.75,
+          "x": 39.75,
+          "y": 215,
+          "w": 688.5,
+          "h": 785,
+          "r": 5,
+          "artX": 161.77499999999998,
+          "artY": 78.25,
+          "artSize": 263.1,
+          "infoY": 276.01250000000005
+        },
+        "rects": {
+          "player": {
+            "x": 39.8,
+            "y": 215,
+            "width": 688.5,
+            "height": 785
+          },
+          "artwork": {
+            "x": 201.5,
+            "y": 293.3,
+            "width": 263.1,
+            "height": 263.1
+          },
+          "songTitle": {
+            "x": 217.8,
+            "y": 491,
+            "width": 111,
+            "height": 19
+          },
+          "seek": {
+            "x": 181,
+            "y": 665.8,
+            "width": 410,
+            "height": 4
+          },
+          "navigation": {
+            "x": 184,
+            "y": 940,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 449,
+            "y": 836.8,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 179,
+            "y": 652.8,
+            "width": 410,
+            "height": 253
+          }
+        },
+        "scrollWidth": 768,
+        "windowWidth": 768
+      },
+      "image": "768-075.png"
+    },
+    {
+      "w": 768,
+      "h": 1024,
+      "target": 1,
+      "data": {
+        "progress": 1,
+        "geometry": {
+          "p": 1,
+          "x": 0,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "r": 0,
+          "artX": 217.6,
+          "artY": 102,
+          "artSize": 332.8,
+          "infoY": 456.8
+        },
+        "rects": {
+          "player": {
+            "x": 0,
+            "y": 0,
+            "width": 768,
+            "height": 1024
+          },
+          "artwork": {
+            "x": 217.6,
+            "y": 102,
+            "width": 332.8,
+            "height": 332.8
+          },
+          "songTitle": {
+            "x": 217.6,
+            "y": 456.8,
+            "width": 111,
+            "height": 19
+          },
+          "seek": {
+            "x": 181,
+            "y": 669,
+            "width": 410,
+            "height": 4
+          },
+          "navigation": {
+            "x": 184,
+            "y": 940,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 449,
+            "y": 840,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 179,
+            "y": 656,
+            "width": 410,
+            "height": 253
+          }
+        },
+        "scrollWidth": 768,
+        "windowWidth": 768
+      },
+      "image": "768-100.png"
+    },
+    {
+      "w": 1440,
+      "h": 900,
+      "target": 0,
+      "data": {
+        "progress": 0,
+        "geometry": {
+          "p": 0,
+          "x": 495,
+          "y": 728,
+          "w": 450,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14
+        },
+        "rects": {
+          "player": {
+            "x": 495,
+            "y": 728,
+            "width": 450,
+            "height": 68
+          },
+          "artwork": {
+            "x": 504,
+            "y": 735,
+            "width": 54,
+            "height": 54
+          },
+          "songTitle": {
+            "x": 569,
+            "y": 742,
+            "width": 111,
+            "height": 28
+          },
+          "seek": {
+            "x": 527,
+            "y": 506,
+            "width": 390,
+            "height": 4
+          },
+          "navigation": {
+            "x": 520,
+            "y": 808,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 775,
+            "y": 677,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 525,
+            "y": 493,
+            "width": 390,
+            "height": 253
+          }
+        },
+        "scrollWidth": 1440,
+        "windowWidth": 1440
+      },
+      "image": "1440-000.png"
+    },
+    {
+      "w": 1440,
+      "h": 900,
+      "target": 0.25,
+      "data": {
+        "progress": 0.25,
+        "geometry": {
+          "p": 0.25,
+          "x": 371.25,
+          "y": 546,
+          "w": 697.5,
+          "h": 276,
+          "r": 15,
+          "artX": 79.734375,
+          "artY": 30.675,
+          "artSize": 113.625,
+          "infoY": 52.075
+        },
+        "rects": {
+          "player": {
+            "x": 371.3,
+            "y": 546,
+            "width": 697.5,
+            "height": 276
+          },
+          "artwork": {
+            "x": 451,
+            "y": 576.7,
+            "width": 113.6,
+            "height": 113.6
+          },
+          "songTitle": {
+            "x": 499.7,
+            "y": 598.1,
+            "width": 111,
+            "height": 28
+          },
+          "seek": {
+            "x": 517,
+            "y": 532,
+            "width": 410,
+            "height": 4
+          },
+          "navigation": {
+            "x": 520,
+            "y": 808,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 785,
+            "y": 703,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 515,
+            "y": 519,
+            "width": 410,
+            "height": 253
+          }
+        },
+        "scrollWidth": 1440,
+        "windowWidth": 1440
+      },
+      "image": "1440-025.png"
+    },
+    {
+      "w": 1440,
+      "h": 900,
+      "target": 0.5,
+      "data": {
+        "progress": 0.5,
+        "geometry": {
+          "p": 0.5,
+          "x": 247.5,
+          "y": 364,
+          "w": 945,
+          "h": 484,
+          "r": 10,
+          "artX": 197.4375,
+          "artY": 54.35,
+          "artSize": 173.25,
+          "infoY": 131.8
+        },
+        "rects": {
+          "player": {
+            "x": 247.5,
+            "y": 364,
+            "width": 945,
+            "height": 484
+          },
+          "artwork": {
+            "x": 444.9,
+            "y": 418.3,
+            "width": 173.3,
+            "height": 173.3
+          },
+          "songTitle": {
+            "x": 477.4,
+            "y": 495.8,
+            "width": 111,
+            "height": 28
+          },
+          "seek": {
+            "x": 517,
+            "y": 549.9,
+            "width": 410,
+            "height": 4
+          },
+          "navigation": {
+            "x": 520,
+            "y": 808,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 785,
+            "y": 720.9,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 515,
+            "y": 536.9,
+            "width": 410,
+            "height": 253
+          }
+        },
+        "scrollWidth": 1440,
+        "windowWidth": 1440
+      },
+      "image": "1440-050.png"
+    },
+    {
+      "w": 1440,
+      "h": 900,
+      "target": 0.75,
+      "data": {
+        "progress": 0.75,
+        "geometry": {
+          "p": 0.75,
+          "x": 123.75,
+          "y": 182,
+          "w": 1192.5,
+          "h": 692,
+          "r": 5,
+          "artX": 362.109375,
+          "artY": 78.025,
+          "artSize": 232.875,
+          "infoY": 253.17499999999998
+        },
+        "rects": {
+          "player": {
+            "x": 123.8,
+            "y": 182,
+            "width": 1192.5,
+            "height": 692
+          },
+          "artwork": {
+            "x": 485.9,
+            "y": 260,
+            "width": 232.9,
+            "height": 232.9
+          },
+          "songTitle": {
+            "x": 502.1,
+            "y": 435.2,
+            "width": 111,
+            "height": 28
+          },
+          "seek": {
+            "x": 517,
+            "y": 551,
+            "width": 410,
+            "height": 4
+          },
+          "navigation": {
+            "x": 520,
+            "y": 808,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 785,
+            "y": 722,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 515,
+            "y": 538,
+            "width": 410,
+            "height": 253
+          }
+        },
+        "scrollWidth": 1440,
+        "windowWidth": 1440
+      },
+      "image": "1440-075.png"
+    },
+    {
+      "w": 1440,
+      "h": 900,
+      "target": 1,
+      "data": {
+        "progress": 1,
+        "geometry": {
+          "p": 1,
+          "x": 0,
+          "y": 0,
+          "w": 1440,
+          "h": 900,
+          "r": 0,
+          "artX": 573.75,
+          "artY": 101.7,
+          "artSize": 292.5,
+          "infoY": 416.2
+        },
+        "rects": {
+          "player": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900
+          },
+          "artwork": {
+            "x": 573.8,
+            "y": 101.7,
+            "width": 292.5,
+            "height": 292.5
+          },
+          "songTitle": {
+            "x": 573.8,
+            "y": 416.2,
+            "width": 111,
+            "height": 28
+          },
+          "seek": {
+            "x": 517,
+            "y": 552,
+            "width": 410,
+            "height": 4
+          },
+          "navigation": {
+            "x": 520,
+            "y": 808,
+            "width": 400,
+            "height": 72
+          },
+          "quality": {
+            "x": 785,
+            "y": 723,
+            "width": 140,
+            "height": 40
+          },
+          "full-controls": {
+            "x": 515,
+            "y": 539,
+            "width": 410,
+            "height": 253
+          }
+        },
+        "scrollWidth": 1440,
+        "windowWidth": 1440
+      },
+      "image": "1440-100.png"
+    }
+  ],
+  "errors": []
+}

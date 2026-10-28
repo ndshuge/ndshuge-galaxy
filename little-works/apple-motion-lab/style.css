@@ -37,3 +37,67 @@
 .hero-action{box-shadow:none}
 #navigation .lg-nav__copy>span,.nav-container lg-navbar>button{font-size:11px}
 .quality-message,.endnote{font-size:11px}
+/* R2 / Art direction: quiet, media-led material language. No new UI system. */
+:root{--r2-ink:#f7f3f8;--r2-second:#c4b7c6;--r2-bass:#11101b}
+.ambient{opacity:.24;filter:blur(12px)}
+.topbar{height:66px;border-color:#ffffff0e}
+.topmeta{display:none}
+.topactions{color:#9ba0ac;font-size:11px;opacity:.8}
+.brand{font-size:19px;letter-spacing:-.04em}
+.sidebar{padding-top:42px}
+.sidebar-explainer{font-size:12px;color:#85899a;line-height:1.65}
+.intro-label{margin-bottom:18px;color:#bcabb7;font-size:11px;letter-spacing:.11em}
+.intro h1{font-size:clamp(57px,6vw,81px);font-weight:710;line-height:1.1;letter-spacing:-.074em;margin-bottom:22px}
+.intro h1 i{color:#f4b6c4}
+.intro-desc{max-width:310px;font-size:14px;line-height:1.8;color:#b9adbd}
+.hero-action{background:#edcbd4;color:#352935;box-shadow:none;font-size:14px;padding:13px 20px;min-height:48px}
+.hero-cover{transform:none;width:min(85%,380px);border-radius:12px;box-shadow:0 24px 52px rgba(0,0,0,.35)}
+.hero-shine{opacity:.24;filter:blur(35px)}
+.hero-badge{display:none}
+.editorial{min-height:420px;gap:clamp(18px,4vw,62px)}
+.playlist{margin-top:24px}
+.section-heading span{font-size:12px;color:#8c8b9b}
+.section-heading h2{font-size:25px;font-weight:660}
+.explore-panel{margin-top:54px;border-color:#ffffff12}
+.explore-panel h2{font-size:22px;font-weight:650}
+.spec-list{font-size:11px;color:#aeabb8}
+.player{background:linear-gradient(168deg,#594154,#403347 48%,#231d33 100%);box-shadow:0 10px 30px rgba(0,0,0,.22)}
+.player-ambience{opacity:calc(var(--p,0) * .42)}
+.artwork{box-shadow:0 16px 36px rgba(23,12,25,.24)}
+.handle-pill{height:4px;width:34px;top:13px;background:#ffffff68}
+.song-copy strong{font-weight:710;letter-spacing:-.035em}
+.song-copy span{color:#f1dce5cf}
+.song-more{background:#ffffff16}
+.transport{padding-top:12px;padding-bottom:12px}
+.transport button:nth-child(2) svg{width:35px;height:35px}
+.quality-row{margin-top:14px;opacity:.75}
+.quality-message{font-size:11px;opacity:.78}
+.nav-container{width:min(388px,calc(100vw - 32px))}
+.nav-container lg-navbar{background:#221f30b8;box-shadow:0 4px 17px #0003;border-color:#ffffff23}
+#navigation{background:rgba(26,25,37,.70)!important;border-color:#ffffff26!important;--lg-tint:rgba(19,20,32,.24)}
+#navigation .lg-surface__tint{background:rgba(29,27,41,.19)!important}
+#navigation .lg-lens-shadow{background:rgba(255,255,255,.085);border:1px solid #ffffff25;box-shadow:inset 0 1px #ffffff30,0 2px 7px #0003}
+#navigation .lg-nav__copy>span{color:#fff;line-height:1.15}
+.feed{padding-bottom:max(280px,28vh);scroll-margin-bottom:240px}
+html{scroll-padding-bottom:260px}
+@media(max-width:900px){.editorial{min-height:350px}.feed{padding-top:24px;padding-bottom:270px}.sidebar{display:none}}
+@media(max-width:600px){
+ .topbar{height:60px;padding:0 22px}
+ .feed{padding:17px 22px 240px}
+ .intro{padding-top:12px}
+ .intro-label{font-size:10px;margin-bottom:13px}
+ .intro h1{font-size:clamp(52px,13.3vw,65px);line-height:1.09;margin-bottom:14px}
+ .intro-desc{font-size:13px;max-width:310px;margin-bottom:16px}
+ .hero-action{min-height:44px;padding:11px 18px}
+ .hero-art{aspect-ratio:1.85}
+ .hero-cover{width:54%;max-width:210px;right:20%;top:2%;transform:none}
+ .playlist{margin-top:12px}
+ .section-heading{margin-bottom:12px}
+ .track{min-height:80px;padding:9px 5px}
+ .explore-panel{margin-top:40px}
+ .full-controls{width:calc(100% - 52px)}
+ .volume-row{margin-top:2px}
+ .quality-row{margin-top:12px}
+ .quality-message{margin-top:9px}
+}
+@media(max-width:390px){.hero-art{aspect-ratio:1.9}.intro h1{font-size:53px}.quality-message{font-size:10px}}

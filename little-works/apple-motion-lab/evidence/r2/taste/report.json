@@ -1,0 +1,1673 @@
+{
+ "url": "http://127.0.0.1:5226/little-works/apple-motion-lab/",
+ "at": "2026-10-28T05:07:57.716Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.31,
+    0.09
+   ],
+   "motion": {
+    "elements": 3,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 3,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1557,
+     "screens": 1.7,
+     "words": 103,
+     "img": 1,
+     "video": 0,
+     "canvas": 2,
+     "svg": 18,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "让声音 流动。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 81,
+     "vw": 5.6,
+     "font": "-apple-system",
+     "weight": 710,
+     "tracking": -0.07,
+     "leading": 1.1,
+     "top": 245,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "让声音 流动。",
+     "words": 2,
+     "lines": 2,
+     "size": 81,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "让声音 流动。",
+      "words": 2,
+      "chars": 7,
+      "lines": 2,
+      "size": 81,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 710,
+      "tracking": -0.074,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 245,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.99,
+       "mono": false
+      },
+      {
+       "family": "Georgia",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      18,
+      19,
+      22,
+      25,
+      81
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 81,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "text": "让声音"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 2,
+     "microLabelShare": 0.093,
+     "microSamples": [
+      "APPLE MOTION LAB",
+      "APPLE MOTION LAB NOT AN APPLE PRODUCT"
+     ],
+     "upperShare": 0.18,
+     "centerShare": 0.1,
+     "smallText": 14
+    },
+    "eyebrows": [
+     {
+      "text": "APPLE MOTION LAB",
+      "above": "让声音 流动。",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 212
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090c17",
+     "bodyBgHsl": {
+      "h": 227,
+      "s": 0.44,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#a5aabb",
+       "share": 0.16
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.1
+      },
+      {
+       "color": "#aeabb8",
+       "share": 0.1
+      },
+      {
+       "color": "#979bac",
+       "share": 0.09
+      },
+      {
+       "color": "#9196ad",
+       "share": 0.07
+      }
+     ],
+     "button": {
+      "bg": "#edcbd4",
+      "hsl": {
+       "h": 344,
+       "s": 0.49,
+       "l": 0.86
+      },
+      "fg": "#352935"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "开始聆听"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 2,
+     "shadowOverlay": 5,
+     "shadowSamples": [
+      "div.cover-image.hero-cover → rgba(0, 0, 0, 0.35) 0px 24px 52px 0px",
+      "span.lg-lens-shadow → rgba(0, 0, 0, 0.08) 0px 1px 3px 0px"
+     ],
+     "gradients": 4,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.ambient → radial-gradient(47% 50% at 91% 28%, rgba(95, 54, 83, 0.667), rgba(0, 0, 0, 0) 72%), radial-gradient(43% 54% at",
+      "div.hero-shine → radial-gradient(at 40% 45%, rgba(223, 115, 152, 0.333), rgba(0, 0, 0, 0) 61%)",
+      "section#player.player → linear-gradient(168deg, rgb(89, 65, 84), rgb(64, 51, 71) 48%, rgb(35, 29, 51) 100%)",
+      "div.player-ambience → radial-gradient(at 50% 35%, rgba(208, 110, 143, 0.66), rgba(0, 0, 0, 0) 60%), radial-gradient(at 20% 90%, rgba"
+     ],
+     "gradientText": 0,
+     "hairlines": 7,
+     "hairlineSamples": [
+      "header.topbar 1440px",
+      "aside.sidebar 238px",
+      "button.track.selected 970px",
+      "button.track 970px",
+      "button.track 970px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 12,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "bg-image",
+      "ratio": 0.11
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 66,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1557,
+    "margins": {
+     "left": 37,
+     "right": 146
+    },
+    "sections": [
+     {
+      "sel": "div#listen-view.editorial",
+      "tag": "div",
+      "top": 122,
+      "height": 517,
+      "words": 7,
+      "media": 1,
+      "middle": 273,
+      "heading": {
+       "text": "让声音",
+       "size": 81,
+       "tag": "h1"
+      },
+      "left": 324,
+      "right": 155,
+      "textLeft": 324,
+      "textRight": 808,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.playlist",
+      "tag": "section",
+      "top": 663,
+      "height": 317,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "今日声景",
+       "size": 25,
+       "tag": "h2"
+      },
+      "left": 324,
+      "right": 146,
+      "textLeft": 324,
+      "textRight": 146,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#contextPanel.explore-panel",
+      "tag": "section",
+      "top": 1034,
+      "height": 168,
+      "words": 9,
+      "media": 0,
+      "middle": 396,
+      "heading": {
+       "text": "交互的细节",
+       "size": 22,
+       "tag": "h2"
+      },
+      "left": 324,
+      "right": 146,
+      "textLeft": 324,
+      "textRight": 146,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "让声音 流动。",
+      "size": 81,
+      "top": 245,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 324,
+      "n": 4
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.1,
+    "voidBox": {
+     "x": 660,
+     "y": 120,
+     "w": 240,
+     "h": 540
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#090c17",
+    "sidebar": {
+     "w": 238,
+     "tag": "aside",
+     "links": 4,
+     "share": 0.17
+    },
+    "topbar": {
+     "h": 66
+    },
+    "canvas": {
+     "left": 86,
+     "right": 146
+    },
+    "hero": {
+     "text": "让声音 流动。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 81,
+     "vw": 5.6,
+     "font": "-apple-system",
+     "weight": 710,
+     "tracking": -0.07,
+     "leading": 1.1,
+     "top": 245,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 2,
+     "radii": [
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 2,
+     "borderSamples": [
+      "#ffffff on #090c17 (19.51:1)",
+      "#ffffff on #090c17 (19.51:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 1,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 337,
+       "size": 54,
+       "radius": "9px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.69,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      18,
+      19,
+      22,
+      25,
+      81
+     ]
+    },
+    "title": {
+     "text": "让声音\n流动。",
+     "size": 81,
+     "top": 245
+    },
+    "colourShare": 0.03
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.36,
+    0.16
+   ],
+   "motion": {
+    "elements": 3,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 3,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1348,
+     "screens": 1.3,
+     "words": 85,
+     "img": 1,
+     "video": 0,
+     "canvas": 2,
+     "svg": 18,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "让声音 流动。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 57,
+     "vw": 7.4,
+     "font": "-apple-system",
+     "weight": 710,
+     "tracking": -0.07,
+     "leading": 1.1,
+     "top": 156,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "让声音 流动。",
+     "words": 2,
+     "lines": 2,
+     "size": 57,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "让声音 流动。",
+      "words": 2,
+      "chars": 7,
+      "lines": 2,
+      "size": 57,
+      "vw": 7.4,
+      "font": "-apple-system",
+      "weight": 710,
+      "tracking": -0.074,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 156,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.99,
+       "mono": false
+      },
+      {
+       "family": "Georgia",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      18,
+      19,
+      22,
+      25,
+      57
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 57,
+      "vw": 7.4,
+      "font": "-apple-system",
+      "text": "让声音"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 2,
+     "microLabelShare": 0.114,
+     "microSamples": [
+      "APPLE MOTION LAB",
+      "APPLE MOTION LAB NOT AN APPLE PRODUCT"
+     ],
+     "upperShare": 0.22,
+     "centerShare": 0.13,
+     "smallText": 12
+    },
+    "eyebrows": [
+     {
+      "text": "APPLE MOTION LAB",
+      "above": "让声音 流动。",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 123
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090c17",
+     "bodyBgHsl": {
+      "h": 227,
+      "s": 0.44,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#aeabb8",
+       "share": 0.12
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.11
+      },
+      {
+       "color": "#979bac",
+       "share": 0.11
+      },
+      {
+       "color": "#9196ad",
+       "share": 0.09
+      },
+      {
+       "color": "#a5aabb",
+       "share": 0.08
+      }
+     ],
+     "button": {
+      "bg": "#edcbd4",
+      "hsl": {
+       "h": 344,
+       "s": 0.49,
+       "l": 0.86
+      },
+      "fg": "#352935"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 48,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "开始聆听"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 2,
+     "shadowOverlay": 5,
+     "shadowSamples": [
+      "div.cover-image.hero-cover → rgba(0, 0, 0, 0.35) 0px 24px 52px 0px",
+      "span.lg-lens-shadow → rgba(0, 0, 0, 0.08) 0px 1px 3px 0px"
+     ],
+     "gradients": 4,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.ambient → radial-gradient(47% 50% at 91% 28%, rgba(95, 54, 83, 0.667), rgba(0, 0, 0, 0) 72%), radial-gradient(43% 54% at",
+      "div.hero-shine → radial-gradient(at 40% 45%, rgba(223, 115, 152, 0.333), rgba(0, 0, 0, 0) 61%)",
+      "section#player.player → linear-gradient(168deg, rgb(89, 65, 84), rgb(64, 51, 71) 48%, rgb(35, 29, 51) 100%)",
+      "div.player-ambience → radial-gradient(at 50% 35%, rgba(208, 110, 143, 0.66), rgba(0, 0, 0, 0) 60%), radial-gradient(at 20% 90%, rgba"
+     ],
+     "gradientText": 0,
+     "hairlines": 5,
+     "hairlineSamples": [
+      "header.topbar 768px",
+      "button.track.selected 720px",
+      "button.track 720px",
+      "button.track 720px",
+      "section#contextPanel.explore-panel 720px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 1,
+     "mediaRadius": 12,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "bg-image",
+      "ratio": 0.11
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 66,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1348,
+    "margins": {
+     "left": 24,
+     "right": 24
+    },
+    "sections": [
+     {
+      "sel": "div#listen-view.editorial",
+      "tag": "div",
+      "top": 90,
+      "height": 350,
+      "words": 7,
+      "media": 1,
+      "middle": 93,
+      "heading": {
+       "text": "让声音",
+       "size": 57,
+       "tag": "h1"
+      },
+      "left": 24,
+      "right": 50,
+      "textLeft": 24,
+      "textRight": 436,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.playlist",
+      "tag": "section",
+      "top": 464,
+      "height": 317,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "今日声景",
+       "size": 25,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#contextPanel.explore-panel",
+      "tag": "section",
+      "top": 835,
+      "height": 168,
+      "words": 9,
+      "media": 0,
+      "middle": 146,
+      "heading": {
+       "text": "交互的细节",
+       "size": 22,
+       "tag": "h2"
+      },
+      "left": 24,
+      "right": 24,
+      "textLeft": 24,
+      "textRight": 24,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "让声音 流动。",
+      "size": 57,
+      "top": 156,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 24,
+      "n": 4
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#090c17",
+    "sidebar": null,
+    "topbar": {
+     "h": 66
+    },
+    "canvas": {
+     "left": 24,
+     "right": 24
+    },
+    "hero": {
+     "text": "让声音 流动。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 57,
+     "vw": 7.4,
+     "font": "-apple-system",
+     "weight": 710,
+     "tracking": -0.07,
+     "leading": 1.1,
+     "top": 156,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 2,
+     "radii": [
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 2,
+     "borderSamples": [
+      "#ffffff on #090c17 (19.51:1)",
+      "#ffffff on #090c17 (19.51:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 1,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 337,
+       "size": 54,
+       "radius": "9px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.69,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      18,
+      19,
+      22,
+      25,
+      57
+     ]
+    },
+    "title": {
+     "text": "让声音\n流动。",
+     "size": 57,
+     "top": 156
+    },
+    "colourShare": 0.031
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.56,
+    0.33
+   ],
+   "motion": {
+    "elements": 3,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 3,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 1418,
+     "screens": 1.7,
+     "words": 85,
+     "img": 1,
+     "video": 0,
+     "canvas": 2,
+     "svg": 18,
+     "sections": 3,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "让声音 流动。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 53,
+     "vw": 13.6,
+     "font": "-apple-system",
+     "weight": 710,
+     "tracking": -0.07,
+     "leading": 1.09,
+     "top": 116,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "让声音 流动。",
+     "words": 2,
+     "lines": 2,
+     "size": 53,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "◉ MotionLab",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 25,
+      "vw": 6.4,
+      "font": "-apple-system",
+      "weight": 750,
+      "tracking": -0.03,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.31,
+      "top": 12,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "让声音 流动。",
+      "words": 2,
+      "chars": 7,
+      "lines": 2,
+      "size": 53,
+      "vw": 13.6,
+      "font": "-apple-system",
+      "weight": 710,
+      "tracking": -0.074,
+      "leading": 1.09,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 116,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "今日声景",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 25,
+      "vw": 6.4,
+      "font": "-apple-system",
+      "weight": 660,
+      "tracking": -0.055,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.24,
+      "top": 541,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "↗",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.08,
+      "top": 614,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "↗",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.08,
+      "top": 694,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "↗",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.08,
+      "top": 774,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "交互的细节",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 22,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 650,
+      "tracking": -0.055,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 900,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 7,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.99,
+       "mono": false
+      },
+      {
+       "family": "Georgia",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      22,
+      25,
+      53
+     ],
+     "sizeCount": 12,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 53,
+      "vw": 13.6,
+      "font": "-apple-system",
+      "text": "让声音"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 2,
+     "microLabelShare": 0.114,
+     "microSamples": [
+      "APPLE MOTION LAB",
+      "APPLE MOTION LAB NOT AN APPLE PRODUCT"
+     ],
+     "upperShare": 0.22,
+     "centerShare": 0.13,
+     "smallText": 12
+    },
+    "eyebrows": [
+     {
+      "text": "APPLE MOTION LAB",
+      "above": "让声音 流动。",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 10,
+      "top": 89
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#090c17",
+     "bodyBgHsl": {
+      "h": 227,
+      "s": 0.44,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#aeabb8",
+       "share": 0.12
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.11
+      },
+      {
+       "color": "#979bac",
+       "share": 0.11
+      },
+      {
+       "color": "#9196ad",
+       "share": 0.09
+      },
+      {
+       "color": "#a5aabb",
+       "share": 0.08
+      }
+     ],
+     "button": {
+      "bg": "#edcbd4",
+      "hsl": {
+       "h": 344,
+       "s": 0.49,
+       "l": 0.86
+      },
+      "fg": "#352935"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 1,
+     "inHero": 1,
+     "radius": "pill",
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "开始聆听"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 2,
+     "shadowOverlay": 5,
+     "shadowSamples": [
+      "div.cover-image.hero-cover → rgba(0, 0, 0, 0.35) 0px 24px 52px 0px",
+      "span.lg-lens-shadow → rgba(0, 0, 0, 0.08) 0px 1px 3px 0px"
+     ],
+     "gradients": 4,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.ambient → radial-gradient(47% 50% at 91% 28%, rgba(95, 54, 83, 0.667), rgba(0, 0, 0, 0) 72%), radial-gradient(43% 54% at",
+      "div.hero-shine → radial-gradient(at 40% 45%, rgba(223, 115, 152, 0.333), rgba(0, 0, 0, 0) 61%)",
+      "section#player.player → linear-gradient(168deg, rgb(89, 65, 84), rgb(64, 51, 71) 48%, rgb(35, 29, 51) 100%)",
+      "div.player-ambience → radial-gradient(at 50% 35%, rgba(208, 110, 143, 0.66), rgba(0, 0, 0, 0) 60%), radial-gradient(at 20% 90%, rgba"
+     ],
+     "gradientText": 0,
+     "hairlines": 5,
+     "hairlineSamples": [
+      "header.topbar 390px",
+      "button.track.selected 346px",
+      "button.track 346px",
+      "button.track 346px",
+      "section#contextPanel.explore-panel 346px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 1,
+     "boxRadius": 12,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "bg-image",
+      "ratio": 0.11
+     }
+    ],
+    "nav": {
+     "links": 0,
+     "fixed": false,
+     "height": 60,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 1418,
+    "margins": {
+     "left": 22,
+     "right": 22
+    },
+    "sections": [
+     {
+      "sel": "div#listen-view.editorial",
+      "tag": "div",
+      "top": 77,
+      "height": 452,
+      "words": 7,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "让声音",
+       "size": 53,
+       "tag": "h1"
+      },
+      "left": 22,
+      "right": 82,
+      "textLeft": 22,
+      "textRight": 82,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.playlist",
+      "tag": "section",
+      "top": 541,
+      "height": 288,
+      "words": 21,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "今日声景",
+       "size": 25,
+       "tag": "h2"
+      },
+      "left": 22,
+      "right": 22,
+      "textLeft": 22,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#contextPanel.explore-panel",
+      "tag": "section",
+      "top": 869,
+      "height": 234,
+      "words": 9,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "交互的细节",
+       "size": 22,
+       "tag": "h2"
+      },
+      "left": 22,
+      "right": 35,
+      "textLeft": 22,
+      "textRight": 35,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "让声音 流动。",
+      "size": 53,
+      "top": 116,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 22,
+      "n": 4
+     }
+    ],
+    "leftBlocks": 4,
+    "bodySize": 13,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#090c17",
+    "sidebar": null,
+    "topbar": {
+     "h": 60
+    },
+    "canvas": {
+     "left": 21,
+     "right": 22
+    },
+    "hero": {
+     "text": "让声音 流动。",
+     "words": 2,
+     "chars": 7,
+     "lines": 2,
+     "size": 53,
+     "vw": 13.6,
+     "font": "-apple-system",
+     "weight": 710,
+     "tracking": -0.07,
+     "leading": 1.09,
+     "top": 116,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 2,
+     "radii": [
+      [
+       0,
+       2
+      ]
+     ],
+     "heavyBorders": 2,
+     "borderSamples": [
+      "#ffffff on #090c17 (19.51:1)",
+      "#ffffff on #090c17 (19.51:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 1,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 1,
+     "hues": 1,
+     "samples": [
+      {
+       "hue": 337,
+       "size": 54,
+       "radius": "9px"
+      }
+     ]
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.69,
+     "tiny": 2,
+     "tinySamples": [
+      "APPLE MOTION LAB 10px",
+      "GPU 折射正在运行；Safari 无 WebG 10px"
+     ],
+     "sizes": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      22,
+      25,
+      53
+     ]
+    },
+    "title": {
+     "text": "让声音\n流动。",
+     "size": 53,
+     "top": 116
+    },
+    "colourShare": 0.032
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "micro-label",
+   "width": 1440,
+   "message": "2 tiny uppercase letter-spaced label(s): \"APPLE MOTION LAB\", \"APPLE MOTION LAB NOT AN APPLE PRODUCT\"",
+   "fix": "Prefer sentence case at body size.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "4 gradient fill(s): div.ambient → radial-gradient(47% 50% at 91% 28%, rgba(95, 54, 83, 0.667), rgba(0, 0, 0, 0) 72%), radial-gradient(43% 54% at | div.hero-shine → radial-gradient(at 40% 45%, rgba(223, 115, 152, 0.333), rgba(0, 0, 0, 0) 61%) | section#player.player → linear-gradient(168deg, rgb(89, 65, 84), rgb(64, 51, 71) 48%, rgb(35, 29, 51) 100%)",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "69% of the text is under 13px.",
+   "fix": "Data and labels read at 13–14px; keep 11–12px for sublines and axis ticks.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "app-title-size",
+   "width": 1440,
+   "message": "The h1 is 81px (\"让声音\n流动。\").",
+   "fix": "An app screen is not a landing page: the title is 18-32px (20-24px on a phone).",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "covered-text",
+   "width": 1440,
+   "message": "Large text lies under another element at some scroll position: \"让声音 流动。\" (screen 1, 100% hidden); \"今日声景\" (screen 2, 100% hidden)",
+   "fix": "Nothing may sit on top of a headline or statement. Move the picture, shorten the pinned run, or raise the text above it (z-index) and give it a ground.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "E:\\CHATGPT\\work\\apple-motion-lab-r2-20261028\\little-works\\apple-motion-lab\\evidence\\r2\\taste\\desktop-fold.jpg",
+   "pages": [
+    "E:\\CHATGPT\\work\\apple-motion-lab-r2-20261028\\little-works\\apple-motion-lab\\evidence\\r2\\taste\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "E:\\CHATGPT\\work\\apple-motion-lab-r2-20261028\\little-works\\apple-motion-lab\\evidence\\r2\\taste\\tablet-fold.jpg",
+   "pages": [
+    "E:\\CHATGPT\\work\\apple-motion-lab-r2-20261028\\little-works\\apple-motion-lab\\evidence\\r2\\taste\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "E:\\CHATGPT\\work\\apple-motion-lab-r2-20261028\\little-works\\apple-motion-lab\\evidence\\r2\\taste\\mobile-fold.jpg",
+   "pages": [
+    "E:\\CHATGPT\\work\\apple-motion-lab-r2-20261028\\little-works\\apple-motion-lab\\evidence\\r2\\taste\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

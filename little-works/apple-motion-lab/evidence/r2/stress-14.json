@@ -1,0 +1,226 @@
+{
+  "testedAt": "2026-10-28T05:12:33.462Z",
+  "environment": "Edge headless, Windows, simulated mobile viewport; NOT Safari/iPhone",
+  "url": "http://127.0.0.1:5226/little-works/apple-motion-lab/",
+  "tests": [
+    {
+      "name": "GPU lens map uploaded during initial render",
+      "pass": true,
+      "details": {
+        "map": 1,
+        "source": 1
+      }
+    },
+    {
+      "name": "70 interruptible spring retargets settle at full",
+      "pass": true,
+      "details": {
+        "p": 1,
+        "renderCount": 2
+      }
+    },
+    {
+      "name": "Native navbar runs SVG lens or refractive backdrop",
+      "pass": true,
+      "details": {
+        "mode": "backdrop",
+        "hasGlass": true,
+        "indicatorFilter": "url(\"#lg3-v3\")",
+        "glassSurfaceBackdrop": "url(\"#lg2-v3\")"
+      }
+    },
+    {
+      "name": "Shared element interpolates size, corner radius, artwork",
+      "pass": true,
+      "details": {
+        "p": 0.52,
+        "r": 9.6,
+        "artSize": 176.01696
+      }
+    },
+    {
+      "name": "Moving/resizing player did not rebuild lens map",
+      "pass": true,
+      "details": {
+        "before": {
+          "map": 1,
+          "source": 2
+        },
+        "after": {
+          "map": 1,
+          "source": 2
+        }
+      }
+    },
+    {
+      "name": "L2 output differs from L1 fallback",
+      "pass": true,
+      "details": {
+        "L2bytes": 89477,
+        "L1bytes": 88399
+      }
+    },
+    {
+      "name": "Web Audio playback advances time",
+      "pass": true,
+      "details": {
+        "time": "1",
+        "playing": true
+      }
+    },
+    {
+      "name": "Web Audio pause changes transport state",
+      "pass": true,
+      "details": {
+        "time": "1",
+        "playing": false
+      }
+    },
+    {
+      "name": "Escape dismisses expanded player",
+      "pass": true,
+      "details": {
+        "p": 0
+      }
+    },
+    {
+      "name": "Navigation spring maintains press feedback and releases",
+      "pass": true,
+      "details": {
+        "pressedScale": 0.93,
+        "releasedScale": 1
+      }
+    },
+    {
+      "name": "Performance samples captured",
+      "pass": true,
+      "details": {
+        "samples": 140,
+        "medianMs": 4.2,
+        "p95Ms": 5,
+        "maxMs": 6,
+        "environment": "Windows headless Edge, SwiftShader; not mobile GPU"
+      }
+    },
+    {
+      "name": "prefers-reduced-motion snaps to target",
+      "pass": true,
+      "details": {
+        "p": 1
+      }
+    },
+    {
+      "name": "WebGL unavailable keeps album art visible",
+      "pass": true,
+      "details": {
+        "diag": {
+          "version": "1.0.0",
+          "svgEngine": "blink",
+          "webgl": false,
+          "quality": "auto",
+          "gpuRenders": 0,
+          "glError": "Error: WebGL is not available",
+          "interpolatedGeometry": {
+            "p": 0,
+            "x": 12,
+            "y": 666,
+            "w": 366,
+            "h": 68,
+            "r": 20,
+            "artX": 9,
+            "artY": 7,
+            "artSize": 54,
+            "infoY": 14,
+            "controlsTop": 149.62,
+            "infoVisibility": 1,
+            "controlVisibility": 0
+          },
+          "motionValue": true,
+          "componentNavbar": "LgNavbar",
+          "componentSegmented": "LgSegmented",
+          "engineHasWebGL": true,
+          "fps": 0,
+          "layoutReads": 1,
+          "playing": false,
+          "track": 0,
+          "gesture": {
+            "drag": false,
+            "start": 0,
+            "last": 0,
+            "gesture": false,
+            "velocity": 0
+          }
+        },
+        "state": "fail",
+        "visible": "visible"
+      }
+    },
+    {
+      "name": "No JS uncaught exceptions",
+      "pass": true,
+      "details": []
+    }
+  ],
+  "perf": {
+    "frameIntervals": {
+      "samples": 140,
+      "medianMs": 4.2,
+      "p95Ms": 5,
+      "maxMs": 6,
+      "environment": "Windows headless Edge, SwiftShader; not mobile GPU"
+    },
+    "approxFps": 185
+  },
+  "enginePaths": {
+    "live": {
+      "gpu": {
+        "version": "1.0.0",
+        "svgEngine": "blink",
+        "webgl": true,
+        "quality": "auto",
+        "gpuRenders": 1,
+        "glError": "",
+        "interpolatedGeometry": {
+          "p": 0,
+          "x": 12,
+          "y": 666,
+          "w": 366,
+          "h": 68,
+          "r": 20,
+          "artX": 9,
+          "artY": 7,
+          "artSize": 54,
+          "infoY": 14,
+          "controlsTop": 149.62,
+          "infoVisibility": 1,
+          "controlVisibility": 0
+        },
+        "motionValue": true,
+        "componentNavbar": "LgNavbar",
+        "componentSegmented": "LgSegmented",
+        "engineHasWebGL": true,
+        "fps": 0,
+        "layoutReads": 1,
+        "playing": false,
+        "track": 0,
+        "gesture": {
+          "drag": false,
+          "start": 0,
+          "last": 0,
+          "gesture": false,
+          "velocity": 0
+        }
+      },
+      "uploads": {
+        "map": 1,
+        "source": 1
+      },
+      "customElements": "LgNavbar"
+    }
+  },
+  "errors": [],
+  "summary": {
+    "passed": 14,
+    "total": 14
+  }
+}

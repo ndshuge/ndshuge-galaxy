@@ -1,0 +1,147 @@
+{
+  "at": "2026-10-28T05:13:29.564Z",
+  "browser": "Windows Edge Chromium CDP touchscreen simulation, NOT iPhone Safari",
+  "checks": [
+    {
+      "name": "Optical high-contrast filter live",
+      "pass": true,
+      "detail": {
+        "nav": "url(\"#lg3-v1\")",
+        "backdrop": "url(\"#lg2-v1\")"
+      }
+    },
+    {
+      "name": "Optical colored-image filter live",
+      "pass": true,
+      "detail": {
+        "nav": "url(\"#lg3-v2\")",
+        "backdrop": "url(\"#lg2-v2\")"
+      }
+    },
+    {
+      "name": "Optical complex-texture filter live",
+      "pass": true,
+      "detail": {
+        "nav": "url(\"#lg3-v2\")",
+        "backdrop": "url(\"#lg2-v2\")"
+      }
+    },
+    {
+      "name": "Slow drag tracks finger continuously",
+      "pass": true,
+      "detail": {
+        "halfway": 0.5982671800947867,
+        "last": 0.25392476303317535,
+        "settled": 0,
+        "samples": 13
+      }
+    },
+    {
+      "name": "Hold on full handle does not unexpectedly close",
+      "pass": true,
+      "detail": {
+        "progress": 1
+      }
+    },
+    {
+      "name": "Pointer cancel springs to original endpoint",
+      "pass": true,
+      "detail": {
+        "dragmid": 0.5501332938388626,
+        "canceled": 1
+      }
+    },
+    {
+      "name": "Fast flick down to mini",
+      "pass": true,
+      "detail": {
+        "flick": 0
+      }
+    },
+    {
+      "name": "Rapid navigation changes stay in sync",
+      "pass": true,
+      "detail": {
+        "current": "page",
+        "label": "收藏\n每一刻。"
+      }
+    },
+    {
+      "name": "GPU map cached during gestures",
+      "pass": true,
+      "detail": {
+        "uploads": {
+          "lens": 1,
+          "source": 7
+        },
+        "layoutReads": 2,
+        "longCount": 8,
+        "longP95": 798,
+        "webgl": true
+      }
+    },
+    {
+      "name": "Dock layout read is cached",
+      "pass": true,
+      "detail": {
+        "uploads": {
+          "lens": 1,
+          "source": 7
+        },
+        "layoutReads": 2,
+        "longCount": 8,
+        "longP95": 798,
+        "webgl": true
+      }
+    },
+    {
+      "name": "GPU restores after full settle",
+      "pass": true,
+      "detail": {
+        "p": 1,
+        "mode": "full",
+        "visible": "1"
+      }
+    },
+    {
+      "name": "No uncaught page exceptions",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "optical": [
+    {
+      "name": "high-contrast",
+      "background": "repeating-linear-gradient(90deg,#111 0px,#111 16px,#f8f8fc 16px,#f8f8fc 32px)",
+      "filter": {
+        "nav": "url(\"#lg3-v1\")",
+        "backdrop": "url(\"#lg2-v1\")"
+      },
+      "image": "glass-high-contrast.png"
+    },
+    {
+      "name": "colored-image",
+      "background": "url('./cover.svg') center/cover fixed",
+      "filter": {
+        "nav": "url(\"#lg3-v2\")",
+        "backdrop": "url(\"#lg2-v2\")"
+      },
+      "image": "glass-colored-image.png"
+    },
+    {
+      "name": "complex-texture",
+      "background": "repeating-linear-gradient(40deg,transparent 0px,transparent 9px,#efd4ff 10px,#12101f 11px,#22304b 16px),repeating-linear-gradient(110deg,#161725 0px,#917289 8px,#192638 16px)",
+      "filter": {
+        "nav": "url(\"#lg3-v2\")",
+        "backdrop": "url(\"#lg2-v2\")"
+      },
+      "image": "glass-complex-texture.png"
+    }
+  ],
+  "errors": [],
+  "timing": [],
+  "summary": {
+    "passed": 12,
+    "total": 12
+  }
+}
