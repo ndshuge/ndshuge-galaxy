@@ -44,3 +44,4 @@ python -X utf8 build.py      # 验证所有资产和 PPTX 结构，并生成 dis
 - `ppt_os.py route` 被调用只完成工作流识别，**它没有生成 PPTX**，不能将该命令算作 PPT 引擎产出。
 - 生产页面无对第三方 npm 动效组件的运行依赖。
 - 对照与功能检查数据：`evidence/` 截图、`qa/browser-qa.json`、`qa/design-audit.md`。
+- 生产复核：`node tests/production-smoke.cjs` 在真实部署 HTTPS 地址下启动 Edge CDP，检查两种视口、光学引擎、真实 560183 字节 PPTX 下载的 `PK` 签名及 SHA-256、目录 JSON，并拍摄两端生产环境截图；结果与截图保存至 `evidence/production-*`。该测试不使用本地站点代替线上。

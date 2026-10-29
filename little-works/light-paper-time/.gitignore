@@ -2,6 +2,9 @@ dist/
 __pycache__/
 qa/*.png
 qa/cdp-art-profile/
+qa/cdp-prod-profile/
+qa/production-smoke.json
+qa/release-*.json
 assets/slide-*.png
 assets/slide-*.jpg
 *.pyc

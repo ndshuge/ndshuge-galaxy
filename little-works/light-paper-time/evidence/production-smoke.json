@@ -1,0 +1,71 @@
+{
+  "url": "https://ndshuge.github.io/ndshuge-galaxy/little-works/light-paper-time/",
+  "at": "2026-10-29T13:53:43.607Z",
+  "checks": [
+    {
+      "name": "public page 1440",
+      "value": {
+        "title": "折光档案｜Light, Paper & Time",
+        "width": 1425,
+        "viewport": 1440,
+        "sections": 4
+      }
+    },
+    {
+      "name": "WebGL optics public 1440",
+      "value": "ok"
+    },
+    {
+      "name": "public slide download binary 1440",
+      "value": {
+        "status": 200,
+        "size": 560183,
+        "magic": "PK",
+        "sha256": "6bf116791c70852b0419ca77ee1bdea5fc9c81c0c6a3a7437d331253ddd5dd9a"
+      }
+    },
+    {
+      "name": "public gallery catalog 1440",
+      "value": {
+        "status": 200,
+        "count": 34,
+        "exists": true
+      }
+    },
+    {
+      "name": "public page 390",
+      "value": {
+        "title": "折光档案｜Light, Paper & Time",
+        "width": 390,
+        "viewport": 390,
+        "sections": 4
+      }
+    },
+    {
+      "name": "WebGL optics public 390",
+      "value": "ok"
+    },
+    {
+      "name": "public slide download binary 390",
+      "value": {
+        "status": 200,
+        "size": 560183,
+        "magic": "PK",
+        "sha256": "6bf116791c70852b0419ca77ee1bdea5fc9c81c0c6a3a7437d331253ddd5dd9a"
+      }
+    },
+    {
+      "name": "public gallery catalog 390",
+      "value": {
+        "status": 200,
+        "count": 34,
+        "exists": true
+      }
+    },
+    {
+      "name": "no public JS exceptions",
+      "value": "ok"
+    }
+  ],
+  "exceptions": []
+}
