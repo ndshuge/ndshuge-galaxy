@@ -118,6 +118,17 @@ const srv=http.createServer((req,res)=>{const p=decodeURI(new URL(req.url,'http:
   await page.locator('[data-view=settings]:visible').first().click();await page.locator('[data-action=mode]').click();
   assert.ok((await page.evaluate(()=>window.__XY_NATIVE_V3.getData().tasks)).length>0);
  });
+ await check('AI suggestion only writes after explicit user authorization',async()=>{
+  const trigger=page.locator('[data-suggest]').first();
+  assert.equal(await trigger.count(),1,'expected a real suggestion in synthetic demo');
+  const before=await page.evaluate(()=>JSON.stringify(window.__XY_NATIVE_V3.getData()));
+  await trigger.click();
+  assert.equal(await page.locator('#editor').evaluate(el=>el.open),true);
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.__XY_NATIVE_V3.getData())),before,'preview must not mutate stored data');
+  await page.locator('#sheet-save').click();
+  assert.equal(await page.locator('#editor').evaluate(el=>el.open),false);
+  assert.ok(await page.evaluate(()=>window.__XY_NATIVE_V3.getData().decisions.some(x=>x.status==='executed')),'approval recorded');
+ });
  await check('no uncaught browser JavaScript errors',async()=>assert.deepEqual(errors,[]));
  await context.close();
  const corrupted=await browser.newContext({viewport:{width:390,height:844}});
