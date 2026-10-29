@@ -44,7 +44,7 @@ The user supplied three real iPhone screenshots. These revealed defects which th
 
 ### Fresh evidence
 
-- `qa/motion-fidelity.test.mjs`: 8/8 Edge tests; each new behavior had an observed failing test first. Tests cover actual optical URL filter, single navigation tree, shared lens alignment, hold/drag/cancel, quick retargeting, doctor keyboard prevention, focus-driven keyboard-safe layout, and reduced motion. Run with Playwright installed, a same-origin Original Pages preview, and `ZX_TEST_BASE` to override the default local URL.
+- `qa/motion-fidelity.test.mjs`: 9/9 Edge tests; each new behavior had an observed failing test first. Tests cover actual optical URL filter, single navigation tree, shared lens alignment, hold/drag/cancel, quick retargeting, doctor keyboard prevention, focus-driven keyboard-safe layout, reduced motion, and 16px iPhone editable controls to prevent focus zoom. Run with Playwright installed, a same-origin Original Pages preview, and `ZX_TEST_BASE` to override the default local URL.
 - Full same-origin learning regression rerun: Edge 29/29, WebKit 4/4, EvoWorld/BYOK 11/11.
 - Visual/optics sampling: 5/5 local checks with Edge and WebKit. Edge lens SVG filter observed in computed backdrop; WebKit computed `blur(22px) saturate(1.55)`. The 630ms desktop-headless sampling observed no frame gaps above 50ms, **not** proof of iPhone FPS.
 - Original Taste-Skill Inspector: 0 FAIL, 1 WARN (40px page H1). Screens at 320, 390, 768, 1024, 1440 and WebKit 390.
