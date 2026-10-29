@@ -1,5 +1,19 @@
 [
   {
+    "slug": "autumn-haiku",
+    "title": "秋栖 · 秋日摄影俳句",
+    "date": "2026.10.29",
+    "type": "PHOTO HAIKU",
+    "description": "红叶染秋光，小鸟独栖斜枝上。三页摄影诗集：看一帧秋色，读一首短诗。",
+    "url": "./autumn-haiku/",
+    "cover": "./autumn-haiku/cover.webp",
+    "tags": [
+      "中文俳句",
+      "摄影诗集",
+      "PPT 下载"
+    ]
+  },
+  {
     "slug": "squirrel",
     "title": "松鼠 · 森林里的小小冒险家",
     "date": "2026.10.29",
