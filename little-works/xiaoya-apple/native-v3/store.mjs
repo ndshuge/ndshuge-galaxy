@@ -7,8 +7,13 @@ export const KEYS=Object.freeze({
 const MODE_KEY='xiaoya-comparison:xiaoya-apple:mode';
 const TRACKED=['courses','events','tasks','goals','checkins'];
 
-export function createStore({local=globalThis.localStorage,session=globalThis.sessionStorage}={}){
- let mode=session.getItem(MODE_KEY)==='demo'?'demo':'personal';
+export function createStore({local=globalThis.localStorage,session=globalThis.sessionStorage,preferDemoOnFreshSession=false}={}){
+ const remembered=session.getItem(MODE_KEY);
+ let mode=remembered==='demo'||(!remembered&&preferDemoOnFreshSession)?'demo':'personal';
+ // Contest visitors start in an isolated synthetic archive, without writing personal data.
+ // Respect explicit mode changes when the judge refreshes the page.
+ if(mode==='demo'&&!local.getItem(KEYS.demo))local.setItem(KEYS.demo,JSON.stringify(demoData()));
+ if(!remembered&&preferDemoOnFreshSession)session.setItem(MODE_KEY,'demo');
  let snapshot=null,record=null,error='';
  function read(){
    const raw=local.getItem(KEYS[mode]);

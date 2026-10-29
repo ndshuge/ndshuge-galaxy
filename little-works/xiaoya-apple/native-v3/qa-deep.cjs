@@ -44,16 +44,23 @@ const srv=http.createServer((req,res)=>{const p=decodeURI(new URL(req.url,'http:
   await page.locator('input[name=name]').fill('实验室 B');await page.locator('#sheet-save').click();
   assert.equal(await page.evaluate(()=>window.__XY_NATIVE_V3.getData().events.find(e=>e.name==='实验室 B')!==undefined),true);
  });
- await check('calendar export generates actual ICS data',async()=>{
+ await check('calendar export generates actual ICS data for a future event',async()=>{
+  // Past events earlier today are intentionally excluded by the future-only exporter.
+  // This isolated browser test seeds tomorrow to stay independent of the time of day.
+  await page.evaluate(()=>{
+   const t=new Date();t.setDate(t.getDate()+1);
+   const date=[t.getFullYear(),String(t.getMonth()+1).padStart(2,'0'),String(t.getDate()).padStart(2,'0')].join('-');
+   window.__XY_NATIVE_V3.store.commit(d=>d.events.push({id:'qa-ics-future',name:'ICS future test',date,day:(t.getDay()+6)%7,start:'12:00',end:'13:00',place:'QA room',weekStart:1,weekEnd:54,parity:'all',exceptions:[]}));
+  });
   const pending=page.waitForEvent('download',{timeout:10000});
   await page.locator('[data-action=export-ics]').click();
   const dl=await pending;assert.match(dl.suggestedFilename(),/\.ics$/);
-  const ics=fs.readFileSync(await dl.path(),'utf8');assert.match(ics,/BEGIN:VCALENDAR/);assert.match(ics,/BEGIN:VEVENT/);
+  const ics=fs.readFileSync(await dl.path(),'utf8');assert.match(ics,/BEGIN:VCALENDAR/);assert.match(ics,/BEGIN:VEVENT/);assert.match(ics,/ICS future test/);
  });
  await check('task JSON export is a full valid backup',async()=>{
   const pending=page.waitForEvent('download',{timeout:10000});await page.locator('[data-view=settings]:visible').first().click();await page.locator('[data-action=export-json]').click();
   const dl=await pending,data=JSON.parse(fs.readFileSync(await dl.path(),'utf8'));
-  assert.equal(data.events.length,1);assert.equal(data.courses.length,1);assert.ok(Array.isArray(data.transactions));
+  assert.equal(data.events.length,2);assert.equal(data.courses.length,1);assert.ok(Array.isArray(data.transactions));
  });
  await check('JSON import correctly refuses invalid schema',async()=>{
   const before=await page.evaluate(()=>localStorage.getItem('xiaoya-comparison:xiaoya-apple:personal:v1'));
@@ -74,7 +81,7 @@ const srv=http.createServer((req,res)=>{const p=decodeURI(new URL(req.url,'http:
   await page.locator('#import-file').setInputFiles({name:'good.json',mimeType:'application/json',buffer:Buffer.from(backup,'utf8')});
   await page.waitForTimeout(140);
   assert.equal(await page.evaluate(()=>window.__XY_NATIVE_V3.getData().courses.length),2);
-  assert.equal(await page.evaluate(()=>window.__XY_NATIVE_V3.getData().events.length),1);
+  assert.equal(await page.evaluate(()=>window.__XY_NATIVE_V3.getData().events.length),2);
  });
  await check('settings use original optical switch component, not a CSS-only duplicate',async()=>{
   await page.locator('[data-view=settings]:visible').first().click();

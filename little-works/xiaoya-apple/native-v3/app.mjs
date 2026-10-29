@@ -2,7 +2,7 @@ import {DAYS,localStamp,uid,esc,emptyStore,validateStore,dueState,dueLabel,fmtDa
 import {dateKey,weekday,monday,plusDays,teachingWeek,occurrences,growth,checkSchedule,checkSemester,parseSchedule,applyImport,exportCalendar,undoTransaction,executePlan,parseExceptions} from '../domain.js';
 import {createSpring} from '../glass/liquid-glass.js';
 import '../glass/components.js'; // Original liquidglass.dev optical controls, self-hosted (MIT).
-import {createStore} from './store.mjs';
+import {createStore} from './store.mjs?v=3.1.1';
 import {buildDayTimeline} from './timeline.mjs';
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -14,7 +14,7 @@ const shortDate=(d)=>new Date(d).toLocaleDateString('zh-CN',{month:'short',day:'
 const humanDate=(d)=>d.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 const timePart=s=>s?.includes('T')?s.slice(11,16):s||'';
 let store,view='today',filter='all',query='',selectedDate=dateKey(now()),weekStart=monday(now()),modal=null,preview=null,toastTimeout=null;
-try{store=createStore()}catch(e){$('#workspace').innerHTML='<div class="page-heading"><h1>档案需要处理</h1></div><div class="group"><div class="empty-group"><strong>为了保护你的记录，小芽不会覆盖无法读取的数据</strong><p>'+esc(e.message)+'</p><a href="../index.html">打开原有完整界面以导出备份</a></div></div>';throw e}
+try{store=createStore({preferDemoOnFreshSession:new URLSearchParams(location.search).get('judge')==='1'})}catch(e){$('#workspace').innerHTML='<div class="page-heading"><h1>档案需要处理</h1></div><div class="group"><div class="empty-group"><strong>为了保护你的记录，小芽不会覆盖无法读取的数据</strong><p>'+esc(e.message)+'</p><a href="../index.html">打开原有完整界面以导出备份</a></div></div>';throw e}
 const state=()=>store.current();
 
 function notify(s){const el=$('#toast');el.textContent=s;el.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>el.classList.remove('show'),2900)}

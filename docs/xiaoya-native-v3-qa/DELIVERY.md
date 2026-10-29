@@ -32,6 +32,16 @@
 
 390px 与 1440px 截图已实际检查；本文件夹有真实合成演示数据截图 `today-390.png`、`calendar-390.png`、`settings-390.png`、`today-1440.png`、`settings-1440.png`。主要问题及处理：修复文件开头误写的 `\\n` 造成 `:root` token 丢失；修复凌晨时间轴初始滚动；补齐手机“新增课程”；修复移动端浮动加号覆盖建议标题，将新建操作整合进顶部 44px 触控工具栏，验证底部内容仍可滚动到可见范围；复用原版光学控件而非自制 SVG。
 
+## 2026-10-29｜Safari 意外放大与评委入口升级
+
+- 排查根因：`style.css` 原有设置输入字号 13px、搜索及编辑表单字号 15px，低于 iPhone Safari 聚焦控件的 16px 安全阈值。没有关闭正常的用户缩放，也没有设置 `maximum-scale=1` 或 `user-scalable=no`。
+- 修复：触屏和窄视口下所有真实输入、选择和文本域使用 16px 字号；`html { touch-action: manipulation }` 禁止快速双击导致的非预期放大，但保留滚动和主动双指缩放。
+- 评委入口：带 `?judge=1` 的首次会话展示合成演示档案；同源私人档案保持不变。评委在设置中主动切换模式后，刷新不会被强制切回演示档案。
+- 资源更新：`index.html` CSS/JS 及 `app.mjs` 对 `store.mjs` 的导入使用新的版本查询参数，避免旧缓存混用。
+- 测试：`qa-ios-focus.cjs` 16/16（320/390 px、设置、搜索、任务／目标／课程弹窗和触控策略）；`qa-judge-mode.cjs` 5/5（初次演示、私人隔离、浏览、模式切换、正常个人入口）。升级前测试曾明确出现 10 个低于 16px 的失败场景及 4 个演示模式失败场景。
+- 已知限制：WebKit 自动化环境不能等同实体 iPhone Safari；未声称真机测得物理缩放倍率恒定。真实手势缩放功能保持开放。
+- 原比赛链接 `https://ndshuge.github.io/xiaoya-lifelab/?judge=1` 会独立修改跳转目标为 `/ndshuge-galaxy/little-works/xiaoya-apple/native-v3/?judge=1`，不更改地址或二维码；原版 `original.html` 仍可访问。
+
 ## 发布与回退
 
-预览部署位置：`https://ndshuge.github.io/ndshuge-galaxy/little-works/xiaoya-apple/native-v3/`。已部署为独立 Pages 预览，并验证 Edge（390px/1440px）及 WebKit（390px）的 HTML、资源、导航、光学控件、时间轴、无横向溢出和无运行错误，共 18/18 项线上检查；**正式 Apple 根目录和比赛链接不改**，评委始终进入原稳定版。待高级功能原生迁移、真实 iPhone Safari 检验及用户视觉确认后再考虑切换默认入口。
+预览部署位置：`https://ndshuge.github.io/ndshuge-galaxy/little-works/xiaoya-apple/native-v3/`。已部署为独立 Pages 预览，并验证 Edge（390px/1440px）及 WebKit（390px）的 HTML、资源、导航、光学控件、时间轴、无横向溢出和无运行错误，共 18/18 项线上检查；正式 Apple 根目录及原版入口保留为回退；比赛入口重定向由独立的 `xiaoya-lifelab` 仓库控制，只有完成本次 V3 缩放修复、演示模式和线上验收后才允许切换。实体 iPhone Safari 仍需后续真机验收；高级 AI 实验功能仍可在完整功能版访问。

@@ -19,6 +19,18 @@
 @media(max-width:359px){.workspace-grid{padding:0 17px}.topbar{padding-left:17px;padding-right:17px}.page-heading h1{font-size:30px}.bottom-nav{left:7px;right:7px;border-radius:22px}.tab{min-width:47px}.row-time{font-size:10px}.progress-tile{padding:12px 10px}}
 /* Apple-style contextual add lives in the navigation toolbar, never over content. */
 @media(max-width:700px){.topbar .toolbar-actions{gap:5px}.topbar .glass-btn{width:44px;height:44px;min-width:44px;min-height:44px}.topbar .glass-btn.add-top{display:grid}.floating-add{display:none!important}}
+
+/* iPhone Safari: interactive fields under 16 CSS px trigger an involuntary focus zoom.
+   manipulation suppresses double-tap zoom, but preserves intentional pinch zoom and scrolling. */
+@media (max-width:900px), (hover:none) and (pointer:coarse) {
+  html {touch-action:manipulation}
+  .field input,.field textarea,.field select,
+  .searchbar input,
+  .settings-row input:not([type="checkbox"]):not([type="file"]) {
+    font-size:16px;
+  }
+}
+
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 @media(prefers-reduced-transparency:reduce),(prefers-contrast:more){.bottom-nav,.glass-btn{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none;border:1px solid #dadde0}.sheet::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}}
 
