@@ -265,8 +265,8 @@ async function activateMotion(){
    motion.animate(lens,{scaleX:1.055,scaleY:.94},{type:'spring',stiffness:500,damping:37});
    tabHoldTimer=setTimeout(()=>{
     if(tabPress===button&&!dragging)
-      motion.animate(lens,{scaleX:1.125,scaleY:.925},{type:'spring',stiffness:345,damping:30});
-   },275);
+      motion.animate(lens,{scaleX:1.12,scaleY:.93},{type:'spring',stiffness:480,damping:32,mass:.75});
+   },185);
   },{passive:true});
   document.addEventListener('pointermove',e=>{
    if(!tabPress||!dragOrigin||e.pointerId!==dragOrigin.id||reduced())return;
