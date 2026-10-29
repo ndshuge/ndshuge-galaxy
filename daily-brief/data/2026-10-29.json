@@ -1,0 +1,559 @@
+{
+  "date": "2026-10-29",
+  "weekday": "星期四",
+  "title": "从模型路由到原子层沉积：增长的真正边界是验证、供应链还是现金流？",
+  "deck": "Gemini 4 Carbon、SAP模型路由、Alphabet与Microsoft财报、ASM薄膜沉积、联电扩产、宇树机器人、火星尘埃和Margaret Hamilton揭示跨领域的验证与规模化瓶颈。",
+  "window": "截至北京时间2026年10月29日08:13；重点核验10月27—28日事件；较早研究和展览均标注日期。",
+  "topSignals": [
+    "模型能力与单位任务成本是不同竞争维度。",
+    "先进工艺与成熟制程都存在独立供应链约束。",
+    "可靠系统需要可测量的故障边界与独立恢复。"
+  ],
+  "core": [
+    {
+      "n": 1,
+      "id": "core-1",
+      "title": "Google推出Gemini 4 Carbon，强调代码与网络安全",
+      "tags": [
+        "AI",
+        "Agent安全"
+      ],
+      "summary": "10月28日Google官方公告，Reuters同日报道；Google称Carbon在Artificial Analysis Intelligence Index v5.0得分59，改善代码与漏洞评测，先向选定防御伙伴开放。",
+      "background": "长任务Agent与安全代码生成要求可靠的工具使用。",
+      "importance": "厂商基准成绩不能直接外推到所有真实部署。",
+      "impact": "为Mice Hole设计独立安全验证，而不是只看模型宣传。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://www.reuters.com/technology/google-launches-gemini-4-carbon-ai-model-with-cybersecurity-focus-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "id": "core-2",
+      "title": "SAP用任务质量门槛选择更便宜的模型",
+      "tags": [
+        "AI",
+        "企业软件"
+      ],
+      "summary": "10月28日Reuters报道SAP使用70多种模型，在满足质量要求时替换高价模型，公司预计这将帮助实现超过20亿欧元AI效率收益。",
+      "background": "企业按任务收费，模型推理成本影响单位经济性。",
+      "importance": "效率收益是公司预测，不是已实现利润。",
+      "impact": "可研究知序AI学院不同题型的成本与正确率权衡。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/china/sap-swaps-costly-ai-models-cheaper-alternatives-targets-over-2-bln-gains-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "id": "core-3",
+      "title": "Alphabet与Microsoft财报揭示AI投资的现金流差异",
+      "tags": [
+        "AI",
+        "科技产业",
+        "云计算"
+      ],
+      "summary": "10月28日两家公司公布业绩，Reuters同日报道：Alphabet季度营收1276亿美元、自由现金流负90.7亿美元；Microsoft自由现金流186亿美元，Azure收入增长48%。",
+      "background": "资本开支与收入确认不同步，财务结构影响可持续性。",
+      "importance": "公司财季和业务不同，不可仅用单季数字排名。",
+      "impact": "理解自己的Web项目维护成本与真实价值。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/business/alphabets-google-cloud-unit-beats-quarterly-revenue-estimates-steady-ai-demand-2026-10-28/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://www.reuters.com/business/retail-consumer/microsoft-beats-quarterly-cloud-revenue-estimates-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "id": "core-4",
+      "title": "ASM薄膜沉积设备需求增长，但供应链受压",
+      "tags": [
+        "半导体",
+        "ALD"
+      ],
+      "summary": "10月27日ASM公布展望，10月28日CEO向Reuters表示2027年收入有望超过57亿欧元，零部件供应可能限制增长。",
+      "background": "先进晶体管需要更多原子层沉积和高均匀性薄膜。",
+      "importance": "预测与客户路线图不等于实际量产；1.4nm节点仍存在工艺风险。",
+      "impact": "建立薄膜、缺陷、良率与晶体管结构的知识地图。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/business/asm-international-expects-exceed-2027-sales-goal-supply-chain-key-ceo-says-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "id": "core-5",
+      "title": "联电追加约32亿美元扩产，成熟制程仍有市场",
+      "tags": [
+        "半导体",
+        "成熟制程",
+        "硅光"
+      ],
+      "summary": "10月28日联电董事会批准约32亿美元追加扩产预算，Reuters同日报道；第三季度产能利用率92%，公司关注硅光与先进封装。",
+      "background": "汽车、显示和通信芯片并非全部依赖最先进节点。",
+      "importance": "批准预算不等于新增产能已经交付，未来售价属于预测。",
+      "impact": "比较22/28nm成熟工艺与先进逻辑节点的成本和用途。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/asia-pacific/taiwans-umc-approves-additional-32-billion-capacity-expansion-2026-10-28/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://www.marketscreener.com/news/taiwan-s-umc-approves-additional-3-2-billion-for-capacity-expansion-ce785cd2dd8bf624"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "id": "core-6",
+      "title": "宇树第三季度营收同比增长70%，利润受研发拖累",
+      "tags": [
+        "机器人",
+        "具身智能"
+      ],
+      "summary": "10月28日Reuters报道宇树第三季度营收6.65亿元人民币、同比增长70%，净利润1.127亿元、同比下降17.4%，研发开支超过去年同期三倍。",
+      "background": "机器人商业化需跨越感知、执行、控制、可靠性与售后。",
+      "importance": "季度财务数据和演示视频均不能证明通用机器人已成熟。",
+      "impact": "RoboCup实践应记录故障恢复、维护成本和成功率。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/asia-pacific/unitrees-q3-profit-down-174-on-year-test-chinas-robotics-sector-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "id": "core-7",
+      "title": "NVision探索有机分子薄膜量子芯片",
+      "tags": [
+        "基础科学",
+        "量子",
+        "材料"
+      ],
+      "summary": "10月28日Reuters报道德国NVision的Nature论文，研究者筛选并合成有机分子以构建可沉积量子材料层，并计划与HyperLight合作。",
+      "background": "从MRI自旋极化研究走向量子芯片材料工程。",
+      "importance": "材料实验并不等于量子纠错或大规模量产已实现。",
+      "impact": "学习区分量子理论、器件实验与系统工程。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/technology/german-startup-nvision-shows-new-path-quantum-computing-chips-nature-paper-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "id": "core-8",
+      "title": "MIT展示模块化承载折纸结构",
+      "tags": [
+        "基础工程",
+        "结构力学"
+      ],
+      "summary": "MIT于10月27日公布论文研究：独立折叠单元拼成承载结构，部分仿真比较显示刚度约3.5倍，并展示大型铝制装置。",
+      "background": "折纸单元通过几何约束降低制造与组装复杂度。",
+      "importance": "仿真与装置展示不是建筑安全认证。",
+      "impact": "结合Blender、西交3D校园和线代研究参数化结构。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.mit.edu/2026/origami-based-construction-method-yields-lightweight-load-bearing-structures-architecture-1027"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "id": "core-9",
+      "title": "UNESCO讨论AI时代大学学习评价的效度",
+      "tags": [
+        "大学",
+        "教育"
+      ],
+      "summary": "UNESCO教育信息技术研究所此前公告10月27日举办研讨会，主题涉及AI时代高等教育的学术诚信、评价效度、隐私与公平。",
+      "background": "AI能帮助完成作业，却不自动证明学生掌握知识。",
+      "importance": "会议议程不是正式政策或教学有效性实验证据。",
+      "impact": "私人教师可强化闭卷变式、口头推导和延迟后测。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://iite.unesco.org/announcements/unesco-iite-webinar-assessment-in-higher-education-in-the-era-of-ai-and-digital-technologies/"
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "id": "core-10",
+      "title": "NASA毅力号识别约100纳米火星尘埃",
+      "tags": [
+        "Wildcard",
+        "航天",
+        "材料"
+      ],
+      "summary": "10月28日Reuters报道PNAS研究，毅力号在设备和测试材料上识别约100纳米颗粒及小于2.5微米尘埃。",
+      "background": "尘埃的粒径与化学性质影响未来气闸、宇航服和居住舱设计。",
+      "importance": "发现颗粒不等于已证明宇航员暴露剂量或临床损害。",
+      "impact": "研究传感器分辨率、颗粒输运与可靠性。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/science/nasa-rover-detects-ultrafine-dust-particles-mars-2026-10-28/"
+        }
+      ]
+    }
+  ],
+  "extensions": [
+    {
+      "n": 11,
+      "id": "ext-11",
+      "title": "政治①：以色列大选计票尚未形成明确多数",
+      "tags": [
+        "政治",
+        "以色列"
+      ],
+      "summary": "10月27日投票，10月28日Reuters与AP报道部分计票；约86%计票时媒体预计内塔尼亚胡阵营53席、艾森科特阵营48席、阿拉伯政党19席，61席为多数门槛。",
+      "background": "正式计票与组阁程序不同，主要阵营对结果各有解释。",
+      "importance": "仍是计票中的媒体预测；未经证实的舞弊指控不是事实。",
+      "impact": "关注选委会正式结果及总统组阁磋商。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/middle-east/netanyahu-eisenkot-stake-rival-claims-lead-israel-after-deadlocked-vote-2026-10-28/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://apnews.com/article/52c6f5a0a720a4ffc08633229e796415"
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "id": "ext-12",
+      "title": "政治②：英国公布约100亿英镑对乌支持安排",
+      "tags": [
+        "政治",
+        "英国",
+        "乌克兰"
+      ],
+      "summary": "10月28日英国财政大臣John Healey公布安排，Reuters同日报道；政府提到三年70亿英镑经济支持、30亿英镑出口融资和5亿英镑紧急军援。",
+      "background": "贷款、担保与直接拨款的经济性质不同。",
+      "importance": "需核实军援是否包含在总额内，不能简单重复相加；承诺不等于全部到账。",
+      "impact": "关注拨付、财政条件与防空需求。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/uk/uks-healey-says-britain-will-give-extra-10-billion-support-ukraine-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "id": "ext-13",
+      "title": "艺术：东京三位少女漫画家联合展10月28日开幕",
+      "tags": [
+        "艺术",
+        "视觉叙事"
+      ],
+      "summary": "日本国立新美术馆官方日程确认《少女漫画·Infinity》10月28日开幕，展至2027年2月8日，涉及萩尾望都、山岸凉子、大和和纪。",
+      "background": "漫画分镜、留白和人物视角构成独特视觉叙事。",
+      "importance": "策展观点不等于艺术价值的客观排名。",
+      "impact": "借鉴分镜与阅读节奏优化游戏和知序AI学院。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.nact.jp/exhibition_and_event/"
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "id": "ext-14",
+      "title": "生物：APOE4可能经Wnt通路破坏神经髓鞘",
+      "tags": [
+        "生物",
+        "神经科学"
+      ],
+      "summary": "研究10月15日发表于Cell Stem Cell，MIT于10月28日介绍：APOE4影响少突胶质细胞Wnt信号，研究者在实验模型中尝试干预。",
+      "background": "髓鞘影响神经信号，APOE4是晚发性阿尔茨海默病的重要遗传风险因素。",
+      "importance": "细胞机制和实验室验证不是临床治疗结论。",
+      "impact": "学习遗传风险、细胞机制和患者结局的证据差异。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.mit.edu/2026/how-biggest-alzheimers-risk-gene-disrupts-process-insulating-neurons-1028"
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "id": "ext-15",
+      "title": "教育：AI工具与大学生认知负荷存在统计联系",
+      "tags": [
+        "教育",
+        "学习科学"
+      ],
+      "summary": "10月8日Scientific Reports论文调查孟加拉国390名高校学生，分析AI使用、认知负荷与心理健康自评之间的关联。",
+      "background": "学习便利和独立掌握知识并非同一指标。",
+      "importance": "横断面问卷不能证明因果，自评也不能替代考试成绩。",
+      "impact": "分开记录负担、独立正确率和隔日后测。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.nature.com/articles/s41598-026-74412-8"
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "id": "ext-16",
+      "title": "历史：对马博物馆以绳文器物讨论跨海交流",
+      "tags": [
+        "历史",
+        "考古"
+      ],
+      "summary": "对马博物馆官方展览于10月3日开幕，持续至12月6日，汇集越高遗址等出土器物，研究对马与朝鲜半岛交流线索。",
+      "background": "岛屿陶器、石器和渔猎工具需与地层和材料来源一起解释。",
+      "importance": "器物无法独立证明具体迁徙规模和路线。",
+      "impact": "为3D文物复原建立证据与推测的区分。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://tsushimamuseum.jp/exhibition/2432/"
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "id": "ext-17",
+      "title": "金融：美联储维持3.75%—4.00%利率区间",
+      "tags": [
+        "金融",
+        "宏观"
+      ],
+      "summary": "10月28日美联储公布利率决定，Reuters同日报道：维持联邦基金利率目标区间3.75%—4.00%，委员对通胀压力有不同判断。",
+      "background": "利率影响科技企业融资和长期基建项目的回收期。",
+      "importance": "市场对未来加息的预期不是央行承诺，不构成投资建议。",
+      "impact": "研究利率、折旧与数据中心投资的联系。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/business/fed-likely-go-into-wait-and-see-mode-rates-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "id": "ext-18",
+      "title": "生态：WMO报告2025年三大温室气体浓度新高",
+      "tags": [
+        "生态",
+        "气候"
+      ],
+      "summary": "WMO于10月27日发布第22期公报：2025年全球平均CO₂为426.8±0.2 ppm、CH₄为1948±2 ppb、N₂O为339.1±0.1 ppb。",
+      "background": "大气浓度反映长期排放与自然吸收，不是单年排放总量。",
+      "importance": "2025年观测与2026年气候预测不能混为一谈。",
+      "impact": "学习长期数据、误差范围和能源政策效果。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://wmo.int/resources/publication-series/greenhouse-gas-bulletin/no-22"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://www.jma.go.jp/jma/press/2610/27b/GHG_Bulletin_22.html"
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "label": "世界模型与共同瓶颈",
+      "text": "比较Gemini 4 Carbon安全基准、ASM的ALD供应链、宇树研发投入、MIT折纸结构和火星尘埃测量：从实验到可靠部署，各自最缺哪类证据？哪些瓶颈不能靠加钱解决？"
+    },
+    {
+      "label": "与你有关的判断",
+      "text": "结合联电成熟制程、ASM先进薄膜、UNESCO的AI评价讨论和APOE4机制研究：未来六周如何分配高数线代、电子基础、C语言和项目时间，交付一个可独立复核的学习成果？"
+    },
+    {
+      "label": "反事实与权衡",
+      "text": "假如便宜模型让知序AI学院成本下降70%却使独立正确率下降5个百分点，另一方案成本不降但证明可追溯，在课堂练习、比赛演示和真实长期使用中如何分别取舍？"
+    }
+  ],
+  "projects": [
+    {
+      "name": "TaskRoute Bench｜模型路由质量实验台",
+      "type": "软件 / AI",
+      "definition": "在同一任务集比较模型正确率、延迟与成本，按质量门槛路由。",
+      "why": "对应SAP新闻和知序AI学院。",
+      "reuse": "知序AI学院、FactGuard、Python测试。",
+      "mvp": "20道脱敏题、两组模拟模型结果与成本曲线。",
+      "difficulty": "中",
+      "learning": "模型评测、置信区间、路由。",
+      "risk": "测试集偏差和日志泄露。",
+      "next": "研究LiteLLM Router，不接入生产。",
+      "question": "低价模型平均分更高但关键题错误严重，如何制定路由规则？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/BerriAI/litellm"
+      }
+    },
+    {
+      "name": "Mars Airlock｜火星尘埃隔离游戏",
+      "type": "游戏 / 交互",
+      "definition": "模拟宇航服进出气闸时不同粒径尘埃的污染控制。",
+      "why": "把毅力号研究变成工程游戏。",
+      "reuse": "鼠哥游戏厅、Godot。",
+      "mvp": "三类颗粒、两种材料、两套气闸策略。",
+      "difficulty": "中",
+      "learning": "概率、颗粒输运、可靠性。",
+      "risk": "假设参数不能用于真实生命保障。",
+      "next": "阅读NASA尘埃研究和Godot示例。",
+      "question": "清洁时间翻倍而污染几乎不降，真正瓶颈可能是什么？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/godotengine/godot-demo-projects"
+      }
+    },
+    {
+      "name": "Spectrum Diary｜无线信号观察簿",
+      "type": "硬件 / 通信 / 电子",
+      "definition": "用GNU Radio模拟调制、噪声、频谱与滤波。",
+      "why": "联系电子科与RoboCup。",
+      "reuse": "Ubuntu、Python、ROS 2。",
+      "mvp": "AM/FM模拟信号、FFT和滤波前后对比。",
+      "difficulty": "中",
+      "learning": "傅里叶变换、采样、信噪比。",
+      "risk": "仿真不等于真实射频性能。",
+      "next": "先研究GNU Radio教程，不采购硬件。",
+      "question": "相同信噪比下为何不同调制方式误码率不同？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/gnuradio/gnuradio"
+      }
+    },
+    {
+      "name": "Origami Pavilion｜可折叠建筑实验室",
+      "type": "视觉 / 3D / 创意",
+      "definition": "交互展示折痕变为三维结构及几何约束。",
+      "why": "连接MIT折纸研究与西交3D校园。",
+      "reuse": "Three.js、Blender。",
+      "mvp": "两种折痕、折叠滑杆、自交警告。",
+      "difficulty": "中",
+      "learning": "空间几何、约束求解、材料。",
+      "risk": "动画刚性不等于真实承载能力。",
+      "next": "研究OrigamiSimulator FOLD格式。",
+      "question": "如何在同样用料下客观比较两种折叠结构强度？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/amandaghassaei/OrigamiSimulator"
+      }
+    },
+    {
+      "name": "Cashflow Atlas｜科技基建现金流沙盘",
+      "type": "Wildcard / 经济系统",
+      "definition": "模拟资本开支、折旧、利率与需求对现金流的影响。",
+      "why": "理解Alphabet与Microsoft财报。",
+      "reuse": "SHUGE DAILY、Python图表。",
+      "mvp": "三种投资情景、五个变量、回收期曲线。",
+      "difficulty": "低",
+      "learning": "贴现、现金流、敏感性分析。",
+      "risk": "财报口径不一，不能荐股。",
+      "next": "研究QuantEcon与财务定义。",
+      "question": "设备寿命缩短两年时，哪些高增长项目会失去可行性？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/QuantEcon/lecture-python-programming"
+      }
+    }
+  ],
+  "projectCompare": [
+    "TaskRoute Bench与Spectrum Diary如何区分模拟、离线基准与真实环境测量？",
+    "Mars Airlock与Origami Pavilion哪个更容易因缺乏物理参数而制造误导性真实感？",
+    "Cashflow Atlas与TaskRoute Bench如何在不牺牲教育质量的情况下连接任务成本和财务可持续性？"
+  ],
+  "person": {
+    "name": "Margaret Hamilton",
+    "subtitle": "1936—2026｜Apollo飞行软件负责人｜软件工程与容错先驱",
+    "sections": [
+      {
+        "title": "出身与早期环境",
+        "body": "1936年出生于美国印第安纳州Paoli，成长于软件工程尚未成为独立学科的时代。"
+      },
+      {
+        "title": "学生时代与第一次关键尝试",
+        "body": "曾在密歇根大学学习数学，1958年于Earlham College获得数学学士学位、辅修哲学。1959年进入MIT，为Edward Lorenz编写天气预测程序。"
+      },
+      {
+        "title": "关键转折",
+        "body": "在MIT林肯实验室参与SAGE系统后，1965年前后加入Apollo机载软件团队，后来领导载人任务软件开发。"
+      },
+      {
+        "title": "重要成功",
+        "body": "团队开发任务优先级与错误恢复机制。1969年Apollo 11降落时1202过载告警触发，软件保留关键任务，使地面能够判断继续降落。她也推动软件工程获得独立学科地位。"
+      },
+      {
+        "title": "明确失败、误判与代价",
+        "body": "女儿Lauren曾在模拟器误触飞行前程序P01导致导航数据丢失。Hamilton建议加入防护，却被上级以宇航员不会犯错为由否决；Apollo 8发生类似误操作，团队恢复数据后才补上防护。这是组织的误判而非她个人技术失误。高压工作与软件价值被低估也是现实代价。"
+      },
+      {
+        "title": "关键选择背后的约束",
+        "body": "Apollo机载计算机内存与算力有限，真实飞行不能随时重部署，必须在严格时间和安全限制下模拟测试、调度优先级并隔离故障。"
+      },
+      {
+        "title": "合作者、竞争者与时代环境",
+        "body": "MIT Instrumentation Laboratory、NASA、Draper、硬件工程师、宇航员和任务控制中心共同完成工程；她后来创办Higher Order Software与Hamilton Technologies。"
+      },
+      {
+        "title": "值得学习与不应机械模仿",
+        "body": "学习把人为误操作纳入需求、提前设计故障、独立恢复和可追溯验证；不要神化个人、极端加班或‘宇航员不会出错’式假设。"
+      }
+    ],
+    "questions": [
+      "Mice Hole哪些操作即使误触也必须由独立权限或状态机阻止？",
+      "如果模拟器的某个操作会丢失状态，你会如何设计最小反例？",
+      "资源不足时，日志、重连、备份与页面更新如何分配优先级？",
+      "Apollo 8误操作与Apollo 11过载分别体现了预防、检测、恢复的什么差异？",
+      "未来一学期怎样证明一个工程作品值得别人长期依赖？"
+    ],
+    "sources": [
+      {
+        "label": "MIT生平",
+        "url": "https://news.mit.edu/2026/margaret-hamilton-computing-pioneer-dies-1007"
+      },
+      {
+        "label": "本人访谈",
+        "url": "https://www.theguardian.com/technology/2019/jul/13/margaret-hamilton-computer-scientist-interview-software-apollo-missions-1969-moon-landing-nasa-women"
+      },
+      {
+        "label": "Smithsonian",
+        "url": "https://www.smithsonianmag.com/smithsonian-institution/margaret-hamilton-led-nasa-software-team-landed-astronauts-moon-180971575/"
+      }
+    ]
+  },
+  "finalSignals": [
+    "AI竞争从基准分数走向任务级质量—成本优化。",
+    "ALD、成熟制程、硅光与封装都可能成为芯片供应链的独立瓶颈。",
+    "机器人与航天的可靠性需要失败率、材料暴露和恢复机制等证据。",
+    "利率、现金流与资本开支相互影响，需求强不代表投资必然盈利。",
+    "大学评价与科研应区分AI辅助、自评、仿真和独立能力。"
+  ],
+  "deepDive": [
+    "从ALD到成熟制程与硅光：绘制AI硬件供应链的工艺依赖图。",
+    "从Apollo容错到Agent模型路由：设计可审计、可恢复、有质量门槛的软件系统。"
+  ]
+}
