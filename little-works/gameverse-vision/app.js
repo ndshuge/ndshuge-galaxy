@@ -55,7 +55,7 @@ function renderHero(){
  $('#heroArt').alt=g.title+' 游戏宣传画';
  $('#heroTitle').textContent=g.title;
  $('#heroDescription').textContent=g.description;
- $('#heroBadge').textContent=['✧  精选推荐','本周热门','故事世界','为你推荐','轻松时光'][state.hero];
+ $('#heroBadge').textContent=['精选推荐','本周热门','故事世界','为你推荐','轻松时光'][state.hero];
  $('#heroAction').dataset.detail=g.id;$('#heroMore').dataset.detail=g.id;
  $('#heroDots').innerHTML=FEATURED.map((id,i)=>'<button type="button" data-feature="'+i+'" aria-label="查看第 '+(i+1)+' 款精选游戏" aria-pressed="'+(i===state.hero)+'"></button>').join('');
 }
