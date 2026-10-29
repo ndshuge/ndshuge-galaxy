@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1e2c24"><meta name="description" content="秋栖：红叶、栖鸟与无声的秋风，一首五七五中文俳句和三页摄影诗集。">
+<title>秋栖 · 鼠哥星系 / 小作品</title>
+<style>
+:root{--forest:#1e2c24;--paper:#f4efe5;--ink:#28342b;--accent:#af463e;--muted:#7b8575;--line:#c8c7b9}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-width:280px;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}button{font:inherit}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.serif,h1,h2,.verse{font-family:"Noto Serif SC","Songti SC","STSong",serif;font-weight:400}
+.top{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px max(24px,calc((100% - 1160px)/2));background:var(--forest);color:#e1e6db;border-bottom:1px solid #84938755}
+.top a{text-decoration:none;font-size:13px}.top small{font:11px Georgia,serif;letter-spacing:.16em;color:#a9b9ad}
+.masthead{background:var(--forest);color:#eee7d9;padding:clamp(50px,7vw,106px) max(24px,calc((100% - 1160px)/2)) clamp(64px,9vw,120px)}
+.hero{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:clamp(30px,6vw,90px)}
+.kicker{font:11px/1.8 Georgia,serif;letter-spacing:.19em;color:#a5b6a6}
+.kicker::after{content:"";display:block;background:var(--accent);width:39px;height:3px;margin:28px 0}
+h1{font-size:clamp(76px,10vw,135px);letter-spacing:.13em;line-height:1.2;margin:0 0 30px}
+.sub{font-size:clamp(17px,2vw,22px);line-height:2;letter-spacing:.06em;color:#d3d7c8}
+.meta{border-top:1px solid #84938780;margin-top:74px;padding-top:20px;color:#abb7ab;font:11px Georgia,serif;letter-spacing:.09em}
+.hero figure{margin:0;position:relative;padding:12px;background:#e5dbc9}
+.hero img{display:block;object-fit:cover;width:100%;aspect-ratio:4/3}
+.hero figcaption{position:absolute;right:0;bottom:-28px;color:#b2c0b3;font:10px Georgia,serif;letter-spacing:.1em}
+.main{max-width:1160px;margin:auto;padding:clamp(66px,8vw,112px) 24px}
+.titleline{display:flex;align-items:end;justify-content:space-between;gap:15px;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:29px}
+h2{font-size:clamp(30px,4vw,49px);margin:6px 0 0}
+.mini{font:11px Georgia,serif;letter-spacing:.14em;color:var(--muted)}
+.viewer{background:#17241e;padding:clamp(8px,2vw,24px);box-shadow:0 28px 68px #17251e18}
+.frame{aspect-ratio:16/9;position:relative;background:#23342b;overflow:hidden}
+.frame img{width:100%;height:100%;object-fit:contain;display:block}
+.expand{position:absolute;bottom:15px;right:15px;text-decoration:none;background:#1b2e23cc;color:#eee9df;border:1px solid #ffffff65;padding:8px 12px;font-size:12px}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 2px 3px;color:#d6ded2;font-size:13px}
+.controls .right{display:flex;gap:13px;align-items:center}
+.controls button{min-width:46px;min-height:44px;background:transparent;border:1px solid #c4d5ba66;color:#eee9df;cursor:pointer}
+.controls button:hover:not(:disabled){background:#3c5143}.controls button:disabled{opacity:.34;cursor:default}
+#count{font:12px Georgia,serif;letter-spacing:.1em;white-space:nowrap}
+.helper{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:17px;font-size:12px;line-height:1.8;color:var(--muted)}
+.reading{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,8vw,100px);border-top:1px solid var(--line);padding-top:clamp(40px,6vw,78px);margin-top:clamp(56px,8vw,95px)}
+.verse{font-size:clamp(24px,3vw,36px);line-height:2.45;letter-spacing:.06em;margin:22px 0}
+.reading p:not(.verse){font-size:15px;line-height:2.4;color:#58685a;margin:0 0 13px}
+.reading strong{font-weight:500;color:var(--accent)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}
+.actions a{min-height:48px;min-width:155px;display:inline-flex;align-items:center;justify-content:center;padding:11px 18px;text-decoration:none;border:1px solid var(--forest);font-size:13px}
+.actions a:first-child{background:var(--forest);color:white}.actions a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+footer{padding:30px max(24px,calc((100% - 1160px)/2)) 44px;background:#e8e5dc;display:flex;justify-content:space-between;gap:18px;color:#607264;font-size:12px}
+@media(max-width:720px){.top{padding:14px 20px}.top small{font-size:9px}.masthead{padding:44px 22px 71px}.hero{grid-template-columns:1fr;gap:40px}h1{font-size:88px;margin:0 0 18px}.meta{margin-top:40px}.hero figure{margin-bottom:26px}.main{padding:56px 16px 70px}.titleline>span{display:none}.viewer{padding:8px}.controls{padding:12px 4px 2px}.reading{grid-template-columns:1fr;margin-top:57px;gap:16px}.verse{font-size:clamp(23px,6vw,31px)}.actions a{flex:1}footer{padding:25px 20px 40px;flex-direction:column;gap:7px}}
+@media(max-width:340px){.top small{display:none}.expand{bottom:6px;right:6px;font-size:10px;padding:4px 6px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav class="top" aria-label="站点导航"><a href="../">← 返回小作品</a><small>SHUGE / A QUIET AUTUMN</small></nav>
+<main>
+<header class="masthead"><div class="hero">
+<div><div class="kicker">PHOTOGRAPHIC HAIKU<br>2026 · AUTUMN</div><h1>秋栖</h1>
+<div class="sub">一帧秋色，三行短诗。</div><div class="meta">RED MAPLE &nbsp;/&nbsp; A RESTING BIRD</div></div>
+<figure><img src="autumn-photo.webp" alt="棕色小鸟栖在斜枝上，枝旁有鲜红枫叶" width="500" height="375" fetchpriority="high"><figcaption>AN AUTUMN MOMENT</figcaption></figure>
+</div></header>
+<section class="main" aria-labelledby="photobookTitle">
+<div class="titleline"><div><span class="mini">THE PHOTOBOOK / 01–03</span><h2 id="photobookTitle">三页，留住一瞬</h2></div><span class="mini">VIEW & READ</span></div>
+<div class="viewer">
+<div class="frame" id="frame"><img id="slide" src="page-01.webp" width="1680" height="945" alt="第一页：《秋栖》封面"><a class="expand" id="expand" href="page-01.webp" target="_blank" rel="noopener">放大查看 ↗</a></div>
+<div class="controls"><span id="pageTitle">01 / 封面</span><div class="right"><button id="prev" aria-label="上一页" disabled>←</button><span id="count" role="status" aria-live="polite">01 / 03</span><button id="next" aria-label="下一页">→</button></div></div>
+</div>
+<div class="helper"><span>原照片 · 原诗 · 3 页摄影诗集</span><span>轻扫图片，或使用左右方向键翻页。</span></div>
+<div class="reading"><div><div class="mini" style="color:var(--accent)">A CHINESE HAIKU / 5 · 7 · 5</div><h2>红叶染秋光</h2><p class="verse">红叶染秋光，<br>小鸟独栖斜枝上。<br>风过不留声。</p></div>
+<div><div class="mini" style="color:var(--accent);margin-bottom:28px">AFTER THE SHUTTER</div><p><strong>色</strong>：红叶先映入眼帘，点亮秋的温度。</p>
+<p><strong>形</strong>：小鸟独栖斜枝，仿佛时间在此停留。</p><p><strong>声</strong>：以无声作结，将余韵交给风。</p>
+<p>把一次短暂的相遇，装进三行轻声念出的秋。</p>
+<div class="actions"><a href="秋栖_三页摄影诗集.pptx" download>下载 PPTX ↓</a><a href="秋栖_三页摄影诗集.pdf" download>下载 PDF ↓</a></div></div></div>
+</section></main>
+<footer><span>© SHUGE · LITTLE WORKS / AUTUMN HAIKU</span><a href="../">返回鼠哥星系 · 小作品</a></footer>
+<script>
+(()=>{const P=[["page-01.webp","01 / 封面","第一页：《秋栖》摄影诗集封面"],["page-02.webp","02 / 俳句","第二页：秋栖三行中文俳句"],["page-03.webp","03 / 余韵","第三页：色、形、声三层意境"]];let n=0,x=null;
+const img=document.querySelector("#slide"),a=document.querySelector("#expand"),name=document.querySelector("#pageTitle"),count=document.querySelector("#count"),prev=document.querySelector("#prev"),next=document.querySelector("#next"),frame=document.querySelector("#frame");
+P.forEach(p=>{const preload=new Image();preload.src=p[0]});
+function show(v){if(v<0||v>=P.length||v===n)return;n=v;img.src=P[n][0];img.alt=P[n][2];a.href=P[n][0];name.textContent=P[n][1];count.textContent=String(n+1).padStart(2,"0")+" / 03";prev.disabled=n===0;next.disabled=n===2}
+prev.addEventListener("click",()=>show(n-1));next.addEventListener("click",()=>show(n+1));
+document.addEventListener("keydown",e=>{if(e.altKey||e.ctrlKey||e.metaKey||["INPUT","TEXTAREA","SELECT"].includes(document.activeElement?.tagName))return;if(e.key==="ArrowLeft")show(n-1);else if(e.key==="ArrowRight")show(n+1)});
+frame.addEventListener("touchstart",e=>{if(e.touches.length===1)x=e.touches[0].clientX},{passive:true});
+frame.addEventListener("touchend",e=>{if(x===null)return;const d=e.changedTouches[0].clientX-x;x=null;if(Math.abs(d)>50)show(n+(d<0?1:-1))},{passive:true});
+})();
+</script>
+</body></html>
