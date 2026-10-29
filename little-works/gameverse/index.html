@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<meta name="description" content="GameVerse · 16 个原创世界。一个有苹果原生质感、可立即游玩的浏览器游戏平台。">
+<title>GameVerse · 游戏的好时光</title>
+<link rel="icon" type="image/svg+xml" href="./icon.svg">
+<link rel="stylesheet" href="./style.css">
+<script src="./app.js" defer></script>
+<script src="./glass-motion.js" type="module"></script>
+</head>
+<body>
+<svg aria-hidden="true" class="icon-sprite" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-discover" viewBox="0 0 24 24"><path d="m12 2.5 2.8 6.7 6.7 2.8-6.7 2.8-2.8 6.7-2.8-6.7-6.7-2.8 6.7-2.8z"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.3 8.7c0 4.6-8.3 10.3-8.3 10.3S3.7 13.3 3.7 8.7A4.8 4.8 0 0 1 12 5.3a4.8 4.8 0 0 1 8.3 3.4z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6.8v5.6l3.6 2.2"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m15.8 15.8 4.7 4.7"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m8.3 5.2 11 6.8-11 6.8z" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+<symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 16.3A8.5 8.5 0 0 1 7.7 4.5 8.7 8.7 0 1 0 19.5 16.3Z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/></symbol>
+<symbol id="i-controller" viewBox="0 0 24 24"><path d="M7 8h10a4 4 0 0 1 3.8 2.9l1 4a3 3 0 0 1-4.5 3.3L15 16H9l-2.3 2.2a3 3 0 0 1-4.5-3.3l1-4A4 4 0 0 1 7 8Z"/><path d="M7.5 10.5v5M5 13h5M16.5 12h.01M19 14h.01"/></symbol>
+</svg>
+<div class="ambient ambient-a" aria-hidden="true"></div><div class="ambient ambient-b" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
+<div class="app-shell" id="appShell">
+  <aside class="sidebar glass" aria-label="主导航">
+    <a class="brand" href="./" aria-label="GameVerse 首页"><span class="brand-mark"><svg viewBox="0 0 24 24"><use href="#i-controller"/></svg></span><span><strong>GameVerse</strong><small>SHUGE PLAY STUDIO</small></span></a>
+    <div class="sidebar-label">你的游戏空间</div>
+    <nav class="side-nav" id="sideNav">
+      <button class="nav-item active" data-view="discover" aria-current="page"><svg><use href="#i-discover"/></svg><span>精选探索</span></button>
+      <button class="nav-item" data-view="library"><svg><use href="#i-grid"/></svg><span>游戏库</span><small>16</small></button>
+      <button class="nav-item" data-view="favorites"><svg><use href="#i-heart"/></svg><span>我的收藏</span></button>
+      <button class="nav-item" data-view="recent"><svg><use href="#i-clock"/></svg><span>最近游玩</span></button>
+    </nav>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">寻找灵感</div>
+    <div class="side-genres" id="sideGenres"></div>
+    <div class="sidebar-bottom">
+      <div class="mini-orb" aria-hidden="true"><span></span></div>
+      <div class="small-copy"><strong>每个世界都值得探索。</strong><span>16 款原创网页游戏 · 即点即玩</span></div>
+      <a href="../" class="back-link">← 返回小东西</a>
+    </div>
+  </aside>
+
+  <main class="main" id="main" tabindex="-1">
+    <header class="toolbar">
+      <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="mobile-title"><span class="mobile-logo">◈</span><span>GameVerse</span></div>
+      <div class="toolbar-location"><span class="breadcrumb">SHUGE / GAMES</span><span class="toolbar-separator">/</span><span id="currentSection">精选探索</span></div>
+      <div class="toolbar-actions">
+        <label class="search-field glass-lite" id="searchField"><svg><use href="#i-search"/></svg><input id="searchInput" type="search" placeholder="搜索游戏、风格或玩法…" autocomplete="off" aria-label="搜索游戏"><kbd>⌘ K</kbd></label>
+        <button class="toolbar-icon mobile-search" id="mobileSearch" aria-label="打开搜索"><svg><use href="#i-search"/></svg></button>
+        <button class="toolbar-icon" id="themeToggle" aria-label="切换深浅主题"><svg><use href="#i-sun"/></svg></button>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <section id="discoverView" class="screen">
+        <div class="greeting"><div><p class="eyebrow">WELCOME TO YOUR PLAYGROUND</p><h1>探索，好玩的世界<span class="h1-dot">.</span></h1><p class="greeting-sub">留一点时间，给真正喜欢的游戏。</p></div><span class="greeting-count">16 <em>个原创世界</em></span></div>
+        <div class="feature-hero" id="featureHero">
+          <div class="hero-art"><img id="heroImage" src="../arcade-library/art/lumen-siege.svg" alt="" fetchpriority="high"></div>
+          <div class="hero-shade"></div>
+          <div class="hero-text"><span class="hero-badge"><span class="badge-dot"></span> EDITOR'S PICK · 本周精选</span><p id="heroEnglish" class="hero-english">LUMEN SIEGE</p><h2 id="heroTitle">光核围城</h2><p id="heroDescription">一束光，迎战无尽黑暗。</p><div class="hero-buttons"><button class="primary-button" id="heroPlay"><svg><use href="#i-play"/></svg>立即游玩</button><button class="round-button" id="heroInfo" aria-label="游戏详情">···</button></div></div>
+          <div class="hero-controls"><button id="heroPrevious" class="hero-arrow" aria-label="上一个精选">‹</button><div id="heroDots" class="hero-dots"></div><button id="heroNext" class="hero-arrow" aria-label="下一个精选">›</button></div>
+        </div>
+        <div class="editor-note"><span class="pulse-dot"></span>精选 5 款，随时开始一场新的冒险 <span>·</span> <span>无需安装</span></div>
+        <div class="section-heading"><div><p class="section-eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2 id="continueTitle">开始下一场冒险</h2></div><button class="text-button" data-view="recent">查看全部 <svg><use href="#i-arrow"/></svg></button></div>
+        <div class="game-rail" id="continueRail"></div>
+        <div class="section-heading categories-header"><div><p class="section-eyebrow">FIND YOUR NEXT FAVORITE</p><h2>按照心情挑选</h2></div></div>
+        <div class="category-row" id="categoryRow"></div>
+        <div class="section-heading"><div><p class="section-eyebrow">CURATED FOR YOU</p><h2>值得一玩的作品</h2></div><button class="text-button" data-view="library">所有游戏 <svg><use href="#i-arrow"/></svg></button></div>
+        <div class="feature-grid" id="featureGrid"></div>
+      </section>
+      <section id="browseView" class="screen" hidden>
+        <div class="browse-head"><p class="eyebrow" id="browseEyebrow">YOUR LIBRARY</p><h1 id="browseTitle">全部游戏</h1><p class="greeting-sub" id="browseSubtitle">探索 16 个独立创作的游戏世界。</p></div>
+        <div class="browse-controls"><div id="filterRow" class="filter-row"></div><span id="resultCount" class="result-count" aria-live="polite">16 款作品</span></div>
+        <div id="gameGrid" class="library-grid"></div>
+        <div id="emptyState" class="empty-state" hidden><div class="empty-symbol">✧</div><h2 id="emptyTitle">还没有作品</h2><p id="emptyBody">试试其他分类，或去探索新游戏。</p><button class="secondary-button" data-view="library">查看全部游戏</button></div>
+      </section>
+      <footer class="page-footer"><span>CRAFTED WITH CARE · SHUGE GAMEVERSE</span><span>所有作品均来自现有原创游戏厅 · 游玩记录仅保存在当前浏览器</span><a href="../">返回小东西 ↗</a></footer>
+    </div>
+  </main>
+
+  <aside class="rightbar" aria-label="游戏动态与发现">
+    <div class="right-welcome glass"><div class="right-welcome-art"></div><p>YOUR PLAY SPACE</p><h3>玩得开心。</h3><span>你的小小游戏宇宙。</span><div class="right-stats"><div><strong>16</strong><span>款游戏</span></div><div><strong id="favCount">0</strong><span>已收藏</span></div><div><strong id="recentCount">0</strong><span>玩过</span></div></div></div>
+    <div class="right-section"><div class="right-section-heading"><h3>今日推荐</h3><span>JUST FOR YOU</span></div><button class="daily-pick" id="dailyPick"><img id="dailyImage" src="../arcade-library/art/gravity-garden.svg" alt=""><span><strong id="dailyTitle">重力花园</strong><small id="dailyGenre">物理 · 沙盒</small></span><svg><use href="#i-arrow"/></svg></button></div>
+    <div class="right-section"><div class="right-section-heading"><h3>小小提示</h3><span>GOOD TO KNOW</span></div><div class="tip glass-lite"><span class="tip-symbol">⌘</span><p>按 <kbd>⌘ K</kbd> 或 <kbd>/</kbd> 即可快速搜索游戏。</p></div><div class="tip glass-lite"><span class="tip-symbol">♡</span><p>收藏和游玩记录保存在本机，不需要登录。</p></div></div>
+    <div class="right-bottom"><span class="status-light"></span> ALL SYSTEMS READY <span class="status-suffix">/ WEB</span></div>
+  </aside>
+</div>
+
+<nav class="mobile-tabs glass" aria-label="移动端导航">
+  <div class="tab-lens" id="tabLens" aria-hidden="true"></div>
+  <button class="mobile-tab active" data-view="discover" aria-current="page"><svg><use href="#i-discover"/></svg><span>探索</span></button>
+  <button class="mobile-tab" data-view="library"><svg><use href="#i-grid"/></svg><span>游戏库</span></button>
+  <button class="mobile-tab" data-view="favorites"><svg><use href="#i-heart"/></svg><span>收藏</span></button>
+  <button class="mobile-tab" data-view="recent"><svg><use href="#i-clock"/></svg><span>最近</span></button>
+</nav>
+<div class="modal-backdrop" id="detailBackdrop" hidden><section class="detail-modal glass" role="dialog" aria-modal="true" aria-labelledby="detailTitle" tabindex="-1"><button class="modal-x" id="closeDetail" aria-label="关闭详情"><svg><use href="#i-close"/></svg></button><div id="detailContent"></div></section></div>
+<div class="playback" id="playback" hidden><div class="playback-header glass"><button id="closePlayback" class="playback-close">← 返回游戏平台</button><strong id="playingTitle">正在游玩</strong><div><button id="fullscreenGame" class="play-tool" aria-label="全屏游戏"><svg><use href="#i-expand"/></svg></button><a id="externalPlay" class="play-tool" target="_blank" rel="noopener noreferrer">新标签打开 ↗</a></div></div><iframe id="gameFrame" title="游戏运行区" allow="fullscreen; autoplay; gamepad" allowfullscreen></iframe><p class="play-hint">如游戏无法在内嵌模式运行，请选择「新标签打开」。部分游戏更适合键鼠。</p></div>
+<div id="toast" class="toast glass" role="status" aria-live="polite"></div>
+</body>
+</html>

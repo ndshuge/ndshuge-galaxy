@@ -1,5 +1,19 @@
 [
   {
+    "slug": "gameverse",
+    "title": "GameVerse · 苹果风格游戏平台",
+    "date": "2026.10.29",
+    "type": "APPLE-INSPIRED GAME HUB",
+    "description": "面向手机和电脑的原生质感游戏平台，16 款原创浏览器游戏，支持精选推荐、分类搜索、收藏、最近游玩与沉浸游玩。",
+    "url": "./gameverse/",
+    "cover": "./gameverse/cover.svg",
+    "tags": [
+      "Liquid Glass",
+      "16 款原创游戏",
+      "桌面与移动端"
+    ]
+  },
+  {
     "slug": "ai-academy-apple",
     "title": "知序 AI 学院 · Apple Edition",
     "date": "2026.10.28",
