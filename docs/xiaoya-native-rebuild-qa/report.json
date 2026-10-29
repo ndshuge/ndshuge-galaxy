@@ -1,0 +1,270 @@
+{
+  "cases": [
+    {
+      "ok": true,
+      "name": "new native redesign stylesheet linked",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "new native redesign behavior linked",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "redesign active at 320",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "today active at 320",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "original functionality DOM retained at 320",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "no x overflow at 320",
+      "details": "0"
+    },
+    {
+      "ok": true,
+      "name": "priority actions in first viewport at 320",
+      "details": "{\"top\":251.1875,\"height\":161.09375}"
+    },
+    {
+      "ok": true,
+      "name": "mobile dock has five primary tabs at 320",
+      "details": "5"
+    },
+    {
+      "ok": true,
+      "name": "default pet does not cover the mobile description",
+      "details": "{\"x\":259,\"y\":113,\"width\":46,\"height\":46}"
+    },
+    {
+      "ok": true,
+      "name": "no uncaught page errors at 320",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "redesign active at 390",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "today active at 390",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "original functionality DOM retained at 390",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "no x overflow at 390",
+      "details": "0"
+    },
+    {
+      "ok": true,
+      "name": "priority actions in first viewport at 390",
+      "details": "{\"top\":257.875,\"height\":162.390625}"
+    },
+    {
+      "ok": true,
+      "name": "mobile dock has five primary tabs at 390",
+      "details": "5"
+    },
+    {
+      "ok": true,
+      "name": "390 navigation schedule",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "390 navigation tasks",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "390 navigation goals",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "390 navigation review",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "390 settings reachable",
+      "details": "{\"active\":[\"view-settings\"],\"buttons\":[{\"html\":\"<button type=\\\"button\\\" id=\\\"ai-global-entry\\\" class=\\\"ai-global-indicator is-active active\\\" data-view=\\\"settings\\\" data-ai-mode=\\\"offline\\\" aria-label=\\\"AI 未配置，打开设置\\\"><span class=\\\"ai-indicator-icon\\\" aria-hidden=\\\"true\\\"><svg class=\\\"xy-inline-icon\\\" aria-hidden=\\\"t\",\"visible\":\"flex\"},{\"html\":\"<button class=\\\"icon-button is-active active\\\" data-view=\\\"settings\\\" aria-label=\\\"设置\\\" aria-current=\\\"page\\\"><svg><use href=\\\"#i-settings\\\"></use></svg></button>\",\"visible\":\"grid\"}]}"
+    },
+    {
+      "ok": true,
+      "name": "390 existing add task dialog opens",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "no uncaught page errors at 390",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "redesign active at 430",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "today active at 430",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "original functionality DOM retained at 430",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "no x overflow at 430",
+      "details": "0"
+    },
+    {
+      "ok": true,
+      "name": "priority actions in first viewport at 430",
+      "details": "{\"top\":260.5625,\"height\":162.390625}"
+    },
+    {
+      "ok": true,
+      "name": "no uncaught page errors at 430",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "redesign active at 768",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "today active at 768",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "original functionality DOM retained at 768",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "no x overflow at 768",
+      "details": "0"
+    },
+    {
+      "ok": true,
+      "name": "priority actions in first viewport at 768",
+      "details": "{\"top\":258.5625,\"height\":110.1875}"
+    },
+    {
+      "ok": true,
+      "name": "no uncaught page errors at 768",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "redesign active at 1024",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "today active at 1024",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "original functionality DOM retained at 1024",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "no x overflow at 1024",
+      "details": "0"
+    },
+    {
+      "ok": true,
+      "name": "priority actions in first viewport at 1024",
+      "details": "{\"top\":238.5,\"height\":112.1875}"
+    },
+    {
+      "ok": true,
+      "name": "no uncaught page errors at 1024",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "redesign active at 1440",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "today active at 1440",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "original functionality DOM retained at 1440",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "no x overflow at 1440",
+      "details": "0"
+    },
+    {
+      "ok": true,
+      "name": "priority actions in first viewport at 1440",
+      "details": "{\"top\":245.53125,\"height\":112.1875}"
+    },
+    {
+      "ok": true,
+      "name": "1440 navigation schedule",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "1440 navigation tasks",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "1440 navigation goals",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "1440 navigation review",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "1440 settings reachable",
+      "details": "{\"active\":[\"view-settings\"],\"buttons\":[{\"html\":\"<button type=\\\"button\\\" id=\\\"ai-global-entry\\\" class=\\\"ai-global-indicator is-active active\\\" data-view=\\\"settings\\\" data-ai-mode=\\\"offline\\\" aria-label=\\\"AI 未配置，打开设置\\\"><span class=\\\"ai-indicator-icon\\\" aria-hidden=\\\"true\\\"><svg class=\\\"xy-inline-icon\\\" aria-hidden=\\\"t\",\"visible\":\"flex\"},{\"html\":\"<button class=\\\"icon-button is-active active\\\" data-view=\\\"settings\\\" aria-label=\\\"设置\\\" aria-current=\\\"page\\\"><svg><use href=\\\"#i-settings\\\"></use></svg></button>\",\"visible\":\"grid\"}]}"
+    },
+    {
+      "ok": true,
+      "name": "1440 existing add task dialog opens",
+      "details": ""
+    },
+    {
+      "ok": true,
+      "name": "no uncaught page errors at 1440",
+      "details": ""
+    }
+  ],
+  "date": "2026-10-29T05:21:39.553Z"
+}

@@ -36,9 +36,10 @@ async function main(){
     assert(!!baseline.component,'Native Skill custom element registered '+width,baseline.component);
     assert(baseline.overflow<=1,'No initial horizontal overflow '+width,baseline.overflow);
     const navSel=width<=790?'.mobile-tabs button[data-view]':'.sidebar button[data-view]';
+    const navTarget=target=>width<=790&&target==='settings'?'.topbar .top-actions>.icon-button[data-view="settings"]':navSel+'[data-view="'+target+'"]';
     const pages=['today','schedule','tasks','goals','review','settings'];
     for(const target of pages){
-     await page.locator(navSel+'[data-view="'+target+'"]').first().click({timeout:7000});
+     await page.locator(navTarget(target)).first().click({timeout:7000});
      assert(await page.locator('#view-'+target+'.active').count()===1,'Navigation '+target+' '+width);
     }
     await page.screenshot({path:path.join(out,'settings-'+width+'.png'),fullPage:false});
@@ -83,7 +84,7 @@ async function main(){
       await page.locator(navSel+'[data-view="tasks"]').first().click();
       await page.locator('#view-tasks [data-toggle="task"]').first().click();
       assert(await page.evaluate(()=>window.OPC_TEST.getData().tasks.some(t=>t.done)),'Task completion persists in domain store');
-      await page.locator(navSel+'[data-view="settings"]').first().click();
+      await page.locator(navTarget('settings')).first().click();
       await page.locator('#view-settings .xy-settings-item').filter({hasText:'AI 模型'}).first().click();
       assert(await page.locator('#byok-key').getAttribute('type')==='password','API credential field remains password');
       assert(await page.locator('#byok-provider').count()===1,'Original BYOK provider selector remains');
