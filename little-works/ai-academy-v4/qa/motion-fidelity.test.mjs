@@ -68,6 +68,7 @@ test('explicit chat input focus switches the sheet to keyboard-safe layout',asyn
  }finally{await b.close()}
 });
 
+
 test('single nav layer and physically aligned spring lens, never duplicated labels',async()=>{
  const b=await chromium.launch({channel:'msedge',headless:true});
  try{
