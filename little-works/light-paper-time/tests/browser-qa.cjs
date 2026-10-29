@@ -57,6 +57,11 @@ async function touch(type,x,y){await send('Input.dispatchTouchEvent',{type,touch
    }
    await evalJs("document.querySelector('#time-theatre').scrollIntoView({behavior:'instant',block:'center'})");await sleep(200);
    await shot('round2-time-'+w+'.png');
+   const scrollBefore=Number(await evalJs("document.querySelector('#time-range').value"));
+   await evalJs("window.scrollBy({top:180,behavior:'instant'})");await sleep(190);
+   const scrollAfter=Number(await evalJs("document.querySelector('#time-range').value"));
+   await check('scroll-linked narrative '+w,()=>assert(scrollAfter>scrollBefore+10,'scroll before '+scrollBefore+' after '+scrollAfter));
+   await evalJs("document.querySelector('#time-theatre').scrollIntoView({behavior:'instant',block:'center'})");
    await evalJs("(()=>{const e=document.querySelector('#time-range');e.value=750;e.dispatchEvent(new Event('input',{bubbles:true}))})()");
    await check('time scrub narrative '+w,async()=>assert.equal(await evalJs("document.querySelector('.time-story-line.is-current')?.dataset.moment"),'3'));
    await check('time scrub progress '+w,async()=>assert.equal(parseFloat(await evalJs("document.querySelector('#time-fill').style.width")),75));

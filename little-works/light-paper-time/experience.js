@@ -175,5 +175,5 @@ function tick(now){
 const observer=new IntersectionObserver(items=>{items.forEach(item=>{if(item.target===frame)motion.visible=item.isIntersecting;if(item.target===theatre)story.visible=item.isIntersecting})},{rootMargin:'100px'});
 observer.observe(frame);observer.observe(theatre);
 const ro=new ResizeObserver(()=>{resizeOptics();resizeTime()});ro.observe(frame);ro.observe(theatre);
-function boot(){initOptics();resizeTime();updateScroll();updateNav();setPlay(false);paintTime();requestAnimationFrame(tick)}
+function boot(){initOptics();resizeTime();updateScroll();updateNav();setPlay(false);story.mode='scroll';paintTime();requestAnimationFrame(tick)}
 image.onload=()=>{if(motion.available){glass.width=0;resizeOptics()}};document.fonts.ready.then(boot).catch(boot);

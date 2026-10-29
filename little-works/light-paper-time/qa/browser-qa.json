@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-29T13:38:14.436Z",
+  "timestamp": "2026-10-29T13:46:32.172Z",
   "checks": [
     "asset index.html",
     "asset style.css",
@@ -21,6 +21,7 @@
     "lens reset 1440",
     "WebGL optical refraction active",
     "WebGL backing frame exposed",
+    "scroll-linked narrative 1440",
     "time scrub narrative 1440",
     "time scrub progress 1440",
     "time play advances 1440",
@@ -35,6 +36,7 @@
     "lens dragged 390",
     "press and rebound 390",
     "lens reset 390",
+    "scroll-linked narrative 390",
     "time scrub narrative 390",
     "time scrub progress 390",
     "time play advances 390",
@@ -49,28 +51,28 @@
   "perf": [
     {
       "viewport": 1440,
-      "loadMs": 23,
-      "resources": 3,
+      "loadMs": 29,
+      "resources": 5,
       "webgl": "webgl",
       "scrollWidth": 1425
     },
     {
       "viewport": 768,
-      "loadMs": 97,
+      "loadMs": 83,
       "resources": 8,
       "webgl": "webgl",
       "scrollWidth": 753
     },
     {
       "viewport": 390,
-      "loadMs": 23,
+      "loadMs": 29,
       "resources": 8,
       "webgl": "webgl",
       "scrollWidth": 390
     },
     {
       "viewport": 320,
-      "loadMs": 17,
+      "loadMs": 20,
       "resources": 8,
       "webgl": "webgl",
       "scrollWidth": 320
