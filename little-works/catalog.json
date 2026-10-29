@@ -1,5 +1,19 @@
 [
   {
+    "slug": "interactive-matter",
+    "title": "微观宇宙｜Interactive Matter",
+    "date": "2026.10.29",
+    "type": "INTERACTIVE 3D ART",
+    "description": "一台可以亲手操作的微观仪器。扰动三维粒子、旋转面心立方晶格、改变反应扩散规则，观察秩序从运动中生成。",
+    "url": "./interactive-matter/",
+    "cover": "./interactive-matter/cover.svg",
+    "tags": [
+      "真实 3D 交互",
+      "程序化物质",
+      "PPT 下载"
+    ]
+  },
+  {
     "slug": "light-paper-time",
     "title": "折光档案｜Light, Paper & Time",
     "date": "2026.10.29",
