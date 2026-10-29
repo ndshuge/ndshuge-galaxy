@@ -1,86 +1,98 @@
 [
-  {
-    "date": "2026-10-28",
-    "label": "10月28日",
-    "path": "./data/2026-10-28.json",
-    "title": "从世界模型到HBM长约：技术扩张究竟受什么约束？",
-    "summary": "Genie 4、Agent停止机制、HBM财报、异构算力、考古与Lynn Conway。"
-  },
-  {
-    "date": "2026-10-27",
-    "label": "10月27日",
-    "path": "./data/2026-10-27.json",
-    "title": "从AI科学证明到芯片封装：技术进步如何跨越验证与规模化？",
-    "summary": "AI科学证明、EDA、先进封装、微电网、Project Scout和Frances Allen。"
-  },
-  {
-    "date": "2026-10-26",
-    "label": "10月26日",
-    "path": "./data/2026-10-26.json",
-    "title": "从Agent授权到光子芯片：真正的技术边界在哪里？",
-    "summary": "Agent授权、EUV光学、光子计算、农业机器人、气候风险与Project Scout。"
-  },
-  {
-    "date": "2026-10-25",
-    "label": "10月25日",
-    "path": "./data/2026-10-25.json",
-    "title": "从模型自限到珊瑚礁临界点：系统真正需要什么样的韧性？",
-    "summary": "开放模型安全、芯片软硬协同、量子纠错、生态韧性与Project Scout。"
-  },
-  {
-    "date": "2026-10-22",
-    "label": "10月22日",
-    "path": "./data/2026-10-22.json",
-    "title": "当 AI 从软件走向现实世界，真正稀缺的是什么？",
-    "summary": "AI系统能力、半导体制造、教育与长期可靠性的交汇。"
-  },
-  {
-    "date": "2026-10-21",
-    "label": "10月21日",
-    "path": "./data/2026-10-21.json",
-    "title": "2026年10月21日｜深度晨间简报",
-    "summary": "Agent监督、芯片产业、科研与跨领域世界模型。"
-  },
-  {
-    "date": "2026-10-01",
-    "label": "10月1日",
-    "path": "./data/2026-10-01.json",
-    "title": "10月1日｜深度晨间简报",
-    "summary": "Agent监管、AI基建、机器人与先进封装。"
-  },
-  {
-    "date": "2026-09-30",
-    "label": "9月30日",
-    "path": "./data/2026-09-30.json",
-    "title": "9月30日｜深度晨间简报",
-    "summary": "Agent安全边界、光子学、AI时代大学能力与Project Scout。"
-  },
-  {
-    "date": "2026-09-29",
-    "label": "9月29日",
-    "path": "./data/2026-09-29.json",
-    "title": "9月29日｜深度晨间简报",
-    "summary": "Agent安全、EDA/封装/光子学、机器人与宏观资本开支。"
-  },
-  {
-    "date": "2026-09-28",
-    "label": "9月28日",
-    "path": "./data/2026-09-28.json",
-    "title": "9月28日｜深度晨间简报",
-    "summary": "Agent制度建设、CPO、机器人、信息设计与教育治理。"
-  },
-  {
-    "date": "2026-09-27",
-    "label": "9月27日",
-    "path": "./data/2026-09-27.json",
-    "title": "9月27日｜深度晨间简报",
-    "summary": "模型降本、先进封装、High-NA EUV、机器人与跨领域扩展。"
-  },
-  {
-    "date": "2026-09-23",
-    "label": "9月23日",
-    "path": "./data/2026-09-23.json",
-    "title": "9月23日｜晨间重点简报",
-    "summary": "最早一版5条晨间重点简报。"
-  }
+    {
+        "date":  "2026-10-29",
+        "label":  "10月29日",
+        "path":  "./data/2026-10-29.json",
+        "title":  "从模型路由到原子层沉积：增长的真正边界是验证、供应链还是现金流？",
+        "summary":  "Gemini 4 Carbon、模型路由、ALD、联电、宇树、火星尘埃与Margaret Hamilton。"
+    },
+    {
+        "value":  [
+                      {
+                          "date":  "2026-10-28",
+                          "label":  "10月28日",
+                          "path":  "./data/2026-10-28.json",
+                          "title":  "从世界模型到HBM长约：技术扩张究竟受什么约束？",
+                          "summary":  "Genie 4、Agent停止机制、HBM财报、异构算力、考古与Lynn Conway。"
+                      },
+                      {
+                          "date":  "2026-10-27",
+                          "label":  "10月27日",
+                          "path":  "./data/2026-10-27.json",
+                          "title":  "从AI科学证明到芯片封装：技术进步如何跨越验证与规模化？",
+                          "summary":  "AI科学证明、EDA、先进封装、微电网、Project Scout和Frances Allen。"
+                      },
+                      {
+                          "date":  "2026-10-26",
+                          "label":  "10月26日",
+                          "path":  "./data/2026-10-26.json",
+                          "title":  "从Agent授权到光子芯片：真正的技术边界在哪里？",
+                          "summary":  "Agent授权、EUV光学、光子计算、农业机器人、气候风险与Project Scout。"
+                      },
+                      {
+                          "date":  "2026-10-25",
+                          "label":  "10月25日",
+                          "path":  "./data/2026-10-25.json",
+                          "title":  "从模型自限到珊瑚礁临界点：系统真正需要什么样的韧性？",
+                          "summary":  "开放模型安全、芯片软硬协同、量子纠错、生态韧性与Project Scout。"
+                      },
+                      {
+                          "date":  "2026-10-22",
+                          "label":  "10月22日",
+                          "path":  "./data/2026-10-22.json",
+                          "title":  "当 AI 从软件走向现实世界，真正稀缺的是什么？",
+                          "summary":  "AI系统能力、半导体制造、教育与长期可靠性的交汇。"
+                      },
+                      {
+                          "date":  "2026-10-21",
+                          "label":  "10月21日",
+                          "path":  "./data/2026-10-21.json",
+                          "title":  "2026年10月21日｜深度晨间简报",
+                          "summary":  "Agent监督、芯片产业、科研与跨领域世界模型。"
+                      },
+                      {
+                          "date":  "2026-10-01",
+                          "label":  "10月1日",
+                          "path":  "./data/2026-10-01.json",
+                          "title":  "10月1日｜深度晨间简报",
+                          "summary":  "Agent监管、AI基建、机器人与先进封装。"
+                      },
+                      {
+                          "date":  "2026-09-30",
+                          "label":  "9月30日",
+                          "path":  "./data/2026-09-30.json",
+                          "title":  "9月30日｜深度晨间简报",
+                          "summary":  "Agent安全边界、光子学、AI时代大学能力与Project Scout。"
+                      },
+                      {
+                          "date":  "2026-09-29",
+                          "label":  "9月29日",
+                          "path":  "./data/2026-09-29.json",
+                          "title":  "9月29日｜深度晨间简报",
+                          "summary":  "Agent安全、EDA/封装/光子学、机器人与宏观资本开支。"
+                      },
+                      {
+                          "date":  "2026-09-28",
+                          "label":  "9月28日",
+                          "path":  "./data/2026-09-28.json",
+                          "title":  "9月28日｜深度晨间简报",
+                          "summary":  "Agent制度建设、CPO、机器人、信息设计与教育治理。"
+                      },
+                      {
+                          "date":  "2026-09-27",
+                          "label":  "9月27日",
+                          "path":  "./data/2026-09-27.json",
+                          "title":  "9月27日｜深度晨间简报",
+                          "summary":  "模型降本、先进封装、High-NA EUV、机器人与跨领域扩展。"
+                      },
+                      {
+                          "date":  "2026-09-23",
+                          "label":  "9月23日",
+                          "path":  "./data/2026-09-23.json",
+                          "title":  "9月23日｜晨间重点简报",
+                          "summary":  "最早一版5条晨间重点简报。"
+                      }
+                  ],
+        "Count":  12
+    }
 ]
