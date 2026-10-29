@@ -134,6 +134,7 @@ function render(){
  document.body.classList.toggle('reduce-motion',!!d.settings.reducedMotion);
  document.querySelector('.companion').hidden=!!d.settings.hidePet;
  document.querySelector('.floating-add').hidden=view==='settings';
+ document.querySelector('.glass-btn.add-top').hidden=view==='settings';
  if(view==='search'){$('#search-input')?.focus()}
 }
 function navigate(next){view=next;if(next!=='search')query='';render();window.scrollTo({top:0,behavior:'instant'})}

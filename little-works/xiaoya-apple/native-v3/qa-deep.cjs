@@ -18,7 +18,7 @@ const srv=http.createServer((req,res)=>{const p=decodeURI(new URL(req.url,'http:
  await page.goto(url,{waitUntil:'networkidle'});
  await check('create a real course with a valid date and time',async()=>{
   await page.locator('[data-view=schedule]:visible').first().click();
-  await page.locator('.floating-add').click();assert.equal(await page.locator('#sheet-title').textContent(),'新增活动');
+  await page.locator('.glass-btn.add-top:visible').click();assert.equal(await page.locator('#sheet-title').textContent(),'新增活动');
   await page.locator('input[name=name]').fill('电子实验 A');
   await page.locator('input[name=date]').fill(new Date().toLocaleDateString('en-CA'));
   await page.locator('input[name=start]').fill('09:00');
@@ -91,7 +91,7 @@ const srv=http.createServer((req,res)=>{const p=decodeURI(new URL(req.url,'http:
  });
  await check('two tabs synchronize without dropping personal data',async()=>{
   const p2=await context.newPage();await p2.goto(url,{waitUntil:'networkidle'});
-  await page.locator('[data-view=tasks]:visible').first().click();await page.locator('.floating-add').click();
+  await page.locator('[data-view=tasks]:visible').first().click();await page.locator('.glass-btn.add-top:visible').click();
   await page.locator('input[name=title]').fill('多标签同步任务');await page.locator('#sheet-save').click();
   await p2.waitForFunction(()=>window.__XY_NATIVE_V3.getData().tasks.some(t=>t.title==='多标签同步任务'),{timeout:8000});
   assert.equal((await p2.evaluate(()=>window.__XY_NATIVE_V3.getData().tasks)).length,1);await p2.close();
@@ -107,7 +107,7 @@ const srv=http.createServer((req,res)=>{const p=decodeURI(new URL(req.url,'http:
   assert.equal(await page.evaluate(()=>window.__XY_NATIVE_V3.getData().tasks.length),oldCount-1);
  });
  await check('native dialog can close with Escape and body scroll unlocks',async()=>{
-  await page.locator('.floating-add').click();assert.equal(await page.locator('#editor').evaluate(e=>e.open),true);
+  await page.locator('.glass-btn.add-top:visible').click();assert.equal(await page.locator('#editor').evaluate(e=>e.open),true);
   await page.keyboard.press('Escape');assert.equal(await page.locator('#editor').evaluate(e=>e.open),false);
   await page.waitForFunction(()=>document.body.style.overflow==='',{timeout:2500});
  });

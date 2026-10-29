@@ -30,7 +30,7 @@ if(w===390){
  await page.keyboard.press('Escape');
  await check('webkit 390 Escape closes sheet',async()=>assert.equal(await page.locator('#editor').evaluate(e=>e.open),false));
  await page.locator('[data-view=goals]:visible').first().click();
- await page.locator('.floating-add').tap();
+ await page.locator('.glass-btn.add-top:visible').tap();
  await check('webkit touch floating action opens goal editor',async()=>assert.equal(await page.locator('#sheet-title').innerText(),'新增目标'));
  await page.keyboard.press('Escape');await page.locator('[data-view=settings]:visible').first().click();
  await check('webkit optical settings switches attach without blanking controls',async()=>{
