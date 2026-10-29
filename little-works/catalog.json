@@ -1,5 +1,19 @@
 [
   {
+    "slug": "squirrel",
+    "title": "松鼠 · 森林里的小小冒险家",
+    "date": "2026.10.29",
+    "type": "APPLE / NATURE STORY",
+    "description": "以沉浸式松鼠摄影、精致 Apple 风格排版和真正接入的 Liquid Glass 光学引擎，认识灵动的树梢邻居。",
+    "url": "./squirrel/",
+    "cover": "./squirrel/assets/hero.jpg",
+    "tags": [
+      "Apple 风格",
+      "自然观察",
+      "交互科普"
+    ]
+  },
+  {
     "slug": "gameverse-vision",
     "title": "GameVerse Vision · 苹果原生视觉游戏馆",
     "date": "2026.10.29",

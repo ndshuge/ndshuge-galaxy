@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>QA · squirrel</title><style>body{font:13px system-ui}iframe{border:0;width:390px;height:844px}</style><pre id="result">RUNNING</pre><iframe id="target" src="../little-works/squirrel/"></iframe>
+<script>
+const $=s=>document.querySelector(s);
+const sleep=n=>new Promise(r=>setTimeout(r,n));
+const mark=(id,ok,extra)=>({id,ok,extra:extra??''});
+async function run(){
+ const frame=$('#target'),w=frame.contentWindow,d=frame.contentDocument;
+ for(let n=0;n<25&&!d.documentElement.dataset.glassMounted;n++)await sleep(100);
+ const results=[];
+ results.push(mark('original-liquid-glass-engine-mounted',d.documentElement.dataset.glassMounted==='true',d.documentElement.dataset.glassEngine));
+ results.push(mark('optical-filter-created',d.querySelectorAll('filter').length>=1,d.querySelectorAll('filter').length));
+ results.push(mark('site-title',d.title.includes('松鼠'),d.title));
+ results.push(mark('catalog-back-link',d.querySelector('.nav-return')?.getAttribute('href')==='../'));
+ const store=d.getElementById('tab-store');store.click();await sleep(80);
+ results.push(mark('click-updates-tab-content',d.getElementById('life-name').textContent.includes('秋天'),d.getElementById('life-name').textContent));
+ results.push(mark('tab-aria',store.getAttribute('aria-selected')==='true'&&d.getElementById('life-panel').getAttribute('aria-labelledby')==='tab-store'));
+ store.dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
+ await sleep(80);
+ results.push(mark('keyboard-right-selects-next',d.getElementById('tab-talk').getAttribute('aria-selected')==='true'));
+ for(const width of [390,320]){
+   frame.style.width=width+'px';await sleep(150);
+   const visibleWidth=d.documentElement.clientWidth,scrollWidth=d.documentElement.scrollWidth;
+   results.push(mark('no-horizontal-overflow-'+width,scrollWidth<=visibleWidth+1,visibleWidth+' / '+scrollWidth));
+ }
+ frame.style.width='390px';
+ const press=d.querySelector('.hero-cta');
+ press.dispatchEvent(new w.PointerEvent('pointerdown',{bubbles:true,pointerId:1}));
+ await sleep(250);
+ const pressed=parseFloat(press.style.getPropertyValue('--press-scale'));
+ press.dispatchEvent(new w.PointerEvent('pointerup',{bubbles:true,pointerId:1}));
+ await sleep(420);
+ const released=parseFloat(press.style.getPropertyValue('--press-scale'));
+ results.push(mark('original-spring-press-and-release',pressed<.999&&Math.abs(released-1)<.015,pressed+' -> '+released));
+ const pics=[...d.images];pics.forEach(i=>i.loading='eager');await sleep(1200);
+ results.push(mark('local-images-valid',pics.every(i=>i.naturalWidth>0),pics.map(i=>i.naturalWidth).join(',')));
+ $('#result').textContent=JSON.stringify({passed:results.filter(x=>x.ok).length,total:results.length,results},null,2);
+}
+$('#target').addEventListener('load',()=>run().catch(e=>$('#result').textContent='ERROR '+e.stack));
+</script></html>
