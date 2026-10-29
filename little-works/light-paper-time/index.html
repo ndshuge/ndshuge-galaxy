@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#e9e5db"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%238c5d46' d='M4 9 30 3l7 28-28 6z'/%3E%3Cpath fill='%23eee8dc' d='M17 11 31 7l3 21-14 5z'/%3E%3C/svg%3E"><meta name="description" content="折光档案：一场关于纸、光、时间与记忆的互动展览。">
+<title>折光档案｜Light, Paper & Time</title>
+<link rel="preload" href="./assets/glass-shadow.jpg" as="image">
+<link rel="stylesheet" href="./style.css">
+<script src="./experience.js" type="module"></script>
+</head><body>
+<a class="skip" href="#paper">跳转至展览</a>
+<header class="site-header" id="top">
+  <a class="identity" href="#top" aria-label="折光档案，返回首页"><span class="identity-mark" aria-hidden="true">◩</span><span>折光档案</span></a>
+  <nav class="top-nav" aria-label="展厅导航">
+    <a href="#paper" data-nav="paper">纸</a><a href="#light" data-nav="light">光</a><a href="#time" data-nav="time">时间</a><a href="#edition" data-nav="edition">展册</a>
+  </nav>
+  <a class="back-link" href="../" aria-label="返回小东西">返回星系 <span aria-hidden="true">↗</span></a>
+</header>
+<main>
+<section class="opening" id="opening" aria-labelledby="opening-title">
+  <div class="opening-vertical" aria-hidden="true">LIGHT, PAPER & TIME / AN INTERACTIVE EXHIBITION</div>
+  <div class="opening-copy">
+    <div class="opening-index">一份尚未装订的展览</div>
+    <h1 id="opening-title">折光<span class="title-sub">档案</span></h1>
+    <div class="opening-rule"></div>
+    <p>有些记忆，像一张被光照过的纸。<br>纹理留在表面，时间留在背面。</p>
+    <a class="explore" href="#paper">开始参观 <span aria-hidden="true">↓</span></a>
+  </div>
+  <figure class="opening-image">
+    <img src="./assets/glass-shadow.jpg" alt="阳光穿过透明玻璃，在纸白桌面留下弯曲的影子与光斑" width="900" height="1350">
+    <figcaption>光经过物体 / Photograph 01</figcaption>
+  </figure>
+  <div class="opening-footer"><span>在纸的两面，寻找时间的形状。</span><span>向下翻阅 &nbsp; ↓</span></div>
+</section>
+
+<section class="paper-section gallery-section" id="paper" aria-labelledby="paper-title">
+  <div class="chapter-head"><span class="chapter-num">第一间展厅</span><span class="chapter-roman">I. PAPER</span></div>
+  <div class="paper-header">
+    <h2 id="paper-title">纸<span class="punct">。</span></h2>
+    <div class="paper-intro"><p class="lead">所有被保存的事物，<br>都曾轻得像一张纸。</p><p>一页纸有正反两面。一面接受书写，一面把阴影收起来。我们读到的也许是文字，真正留下的却常常是折痕。</p></div>
+  </div>
+  <div class="paper-feature">
+    <figure class="paper-photo paper-photo-main">
+      <img src="./assets/paper-shadow.jpg" alt="一张白色纸卡斜置于暖棕色平面，投下深色阴影" loading="lazy" width="1000" height="1330">
+      <figcaption><span>图像 02</span><span>纸与阴影</span></figcaption>
+    </figure>
+    <div class="paper-annotation">
+      <div class="vertical-line"></div>
+      <span class="handwritten">fold / unfold</span>
+      <p>纸从来不是空白的。<br>即使没有一个字，<br>它也记得光从哪里来。</p>
+      <div class="annotation-bottom">我们把看不见的部分，<br>留给想象。</div>
+    </div>
+  </div>
+  <div class="paper-after">
+    <p class="paper-bigquote">“一张纸被折起时，<br><em>距离</em>突然变得很近。”</p>
+    <figure class="paper-photo paper-photo-small"><img src="./assets/book-light.jpg" alt="阳光照在摊开的书页和玻璃上，形成温暖的静物构图" loading="lazy" width="1100" height="760"><figcaption><span>图像 03</span><span>下午的一页</span></figcaption></figure>
+  </div>
+</section>
+
+<section class="light-section gallery-section" id="light" aria-labelledby="light-title">
+  <div class="chapter-head light-head"><span class="chapter-num">第二间展厅</span><span class="chapter-roman">II. LIGHT</span></div>
+  <div class="light-intro"><h2 id="light-title">光，不是<br><i>被看见</i>的东西。</h2><p>它让别的事物<br>改变了形状。</p></div>
+  <div class="optics-frame" id="optics-frame" aria-label="可移动的互动折光透镜">
+    <div class="optics-backdrop" id="optics-backdrop" aria-hidden="true">
+      <div class="optics-grain"></div><div class="optics-text-small">光沿着一条直线前进，<br>除非它遇见另一种介质。</div>
+      <div class="optics-text-huge">折射</div>
+      <div class="optics-streak">REFRACTION / 02</div>
+      <img src="./assets/glass-shadow.jpg" alt="" loading="lazy">
+    </div>
+    <canvas id="refraction-canvas" class="refraction-canvas" aria-hidden="true"></canvas>
+    <div class="lens-overlay" id="lens-overlay" aria-hidden="true"><div class="lens-rim"></div><div class="lens-grip">↔</div></div>
+    <div class="optics-instruction" id="optics-instruction">拖动透镜，让文字在光里弯曲 <span>· 长按，感受形变</span></div>
+    <div class="optics-status" id="optics-status" role="status" aria-live="polite">实时光学位移</div>
+    <button id="lens-reset" type="button" class="lens-reset">让光归位 ↗</button>
+  </div>
+  <div class="light-bottom"><p>在这一刻，字仍然是字。<br>改变的只是观看它的方式。</p><p>这是透过虚拟透镜的实时图像采样位移，而不是仅仅将背景模糊。低性能设备会自动进入静态版本。</p></div>
+</section>
+
+<section class="time-section gallery-section" id="time" aria-labelledby="time-title">
+  <div class="chapter-head time-head"><span class="chapter-num">第三间展厅</span><span class="chapter-roman">III. TIME</span></div>
+  <div class="time-intro"><h2 id="time-title">时间<br><span>有自己的笔迹。</span></h2><p>我们无法将一天留住。<br>但有时，可以让某一刻缓慢地经过。</p></div>
+  <div class="time-theatre" id="time-theatre">
+    <canvas id="time-canvas" aria-hidden="true"></canvas>
+    <div class="time-story" aria-live="off"><p class="time-story-line is-current" data-moment="0">最初，只是一道细微的光。</p><p class="time-story-line" data-moment="1">后来，日子有了可以触摸的纹理。</p><p class="time-story-line" data-moment="2">再后来，记忆从边缘慢慢褪色。</p><p class="time-story-line" data-moment="3">留下的，并不一定是失去的。</p></div>
+    <div class="time-progress"><span>00:00</span><div class="timeline-track"><div id="time-fill"></div></div><span>01:00</span></div>
+    <div class="time-controls">
+      <button id="time-toggle" class="round-control" type="button" aria-label="暂停时间动画" aria-pressed="true">Ⅱ</button>
+      <label for="time-range">移动时间 <span class="sr-only">拖动可改变画面与故事位置</span></label>
+      <input id="time-range" type="range" min="0" max="1000" step="1" value="0" aria-label="时间进度">
+      <button id="time-replay" class="text-control" type="button">重新开始 ↺</button>
+    </div>
+  </div>
+  <div class="time-after"><span>03 / 记忆的余温</span><p>向下滚动，故事继续；留在这里，也可以亲手掌握它流动的速度。时间不需要一个正确答案。</p></div>
+</section>
+
+<section class="edition-section gallery-section" id="edition" aria-labelledby="edition-title">
+  <div class="chapter-head"><span class="chapter-num">展览附册</span><span class="chapter-roman">THE EDITION</span></div>
+  <div class="edition-heading"><h2 id="edition-title">把展览，<br>带走一页。</h2><p>三页小小的放映稿。<br>光、纸、时间——像三张尚未寄出的明信片。</p></div>
+  <div class="slide-gallery" aria-label="三页艺术幻灯片预览">
+    <figure><img src="./assets/slide-1.webp" alt="幻灯片一：光——一束由窗口落下的光与深色排版" loading="lazy"><figcaption>01 / 光</figcaption></figure>
+    <figure><img src="./assets/slide-2.webp" alt="幻灯片二：纸——摄影、留白与中文句子" loading="lazy"><figcaption>02 / 纸</figcaption></figure>
+    <figure><img src="./assets/slide-3.webp" alt="幻灯片三：时间——层叠轨迹与最后一行文字" loading="lazy"><figcaption>03 / 时间</figcaption></figure>
+  </div>
+  <div class="download-row">
+    <div><strong>折光档案 · 艺术展册</strong><span>PowerPoint · 3 页 · 16:9 · 图片式幻灯片</span></div>
+    <a class="download-link" href="./Light-Paper-Time.pptx" download="折光档案-Light-Paper-Time.pptx" type="application/vnd.openxmlformats-officedocument.presentationml.presentation">下载展册 <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+</main>
+<footer class="site-footer"><a href="#top">折光档案 <span aria-hidden="true">↑</span></a><p>记忆并不一定需要被保存。<br>被看见的那一刻，已经足够。</p><div class="credit">影像：Jill Burrow / Pexels；其他照片来自 Pexels。<br><a href="https://www.pexels.com/photo/water-glass-shadow-on-white-table-in-bright-sunlight-6387819/" target="_blank" rel="noopener">查看摄影来源与授权</a> · © SHUGE 2026</div></footer>
+</body></html>

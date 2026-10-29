@@ -1,0 +1,7 @@
+dist/
+__pycache__/
+qa/*.png
+qa/cdp-art-profile/
+assets/slide-*.png
+assets/slide-*.jpg
+*.pyc

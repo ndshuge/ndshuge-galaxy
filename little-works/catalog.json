@@ -1,5 +1,19 @@
 [
   {
+    "slug": "light-paper-time",
+    "title": "折光档案｜Light, Paper & Time",
+    "date": "2026.10.29",
+    "type": "INTERACTIVE ART / EXHIBITION",
+    "description": "走进纸、光与时间的三间展厅。读一页摄影，拖动真正折射文字的透镜，让记忆沿时间缓缓变化，并带走三页艺术展册。",
+    "url": "./light-paper-time/",
+    "cover": "./light-paper-time/assets/cover.webp",
+    "tags": [
+      "交互艺术",
+      "光学折射",
+      "艺术展册 PPT"
+    ]
+  },
+  {
     "slug": "autumn-haiku",
     "title": "秋栖 · 秋日摄影俳句",
     "date": "2026.10.29",
@@ -167,7 +181,20 @@
       "训练趋势"
     ]
   },
-  {"slug":"interaction-lab","title":"光感 · Interaction Lab","date":"2026.10.28","type":"INTERACTIVE EXPERIENCE","description":"一间会回应你的光之实验室。拖动光球、长按收集光线，切换晨光、落日与星夜，感受流畅的 Apple 风格触控反馈。","url":"./interaction-lab/","cover":"./interaction-lab/cover.svg","tags":["Apple 交互","自然弹性","液态玻璃"]},
+  {
+    "slug": "interaction-lab",
+    "title": "光感 · Interaction Lab",
+    "date": "2026.10.28",
+    "type": "INTERACTIVE EXPERIENCE",
+    "description": "一间会回应你的光之实验室。拖动光球、长按收集光线，切换晨光、落日与星夜，感受流畅的 Apple 风格触控反馈。",
+    "url": "./interaction-lab/",
+    "cover": "./interaction-lab/cover.svg",
+    "tags": [
+      "Apple 交互",
+      "自然弹性",
+      "液态玻璃"
+    ]
+  },
   {
     "slug": "focus-aura",
     "title": "Focus Aura · 沉浸式专注空间",
@@ -182,7 +209,7 @@
       "本地记录"
     ]
   },
-{
+  {
     "slug": "luma-gallery",
     "title": "光屿 Luma · 私人照片画廊",
     "date": "2026.10.27",
@@ -197,18 +224,18 @@
     ]
   },
   {
-      "slug":  "habit-flow",
-      "title":  "Habit Flow · 习惯追踪",
-      "date":  "2026.10.27",
-      "type":  "HABIT TRACKER",
-      "description":  "轻松记录每日习惯完成情况，按周查看节奏，按月回顾足迹；本机保存、支持备份恢复。",
-      "url":  "./habit-flow/",
-      "cover":  "./habit-flow/icon.svg",
-      "tags":  [
-                   "习惯养成",
-                   "每日打卡",
-                   "周月回顾"
-               ]
+    "slug": "habit-flow",
+    "title": "Habit Flow · 习惯追踪",
+    "date": "2026.10.27",
+    "type": "HABIT TRACKER",
+    "description": "轻松记录每日习惯完成情况，按周查看节奏，按月回顾足迹；本机保存、支持备份恢复。",
+    "url": "./habit-flow/",
+    "cover": "./habit-flow/icon.svg",
+    "tags": [
+      "习惯养成",
+      "每日打卡",
+      "周月回顾"
+    ]
   },
   {
     "slug": "mood-journal",

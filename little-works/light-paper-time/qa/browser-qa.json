@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-10-29T13:38:14.436Z",
+  "checks": [
+    "asset index.html",
+    "asset style.css",
+    "asset experience.js",
+    "asset assets/glass-shadow.jpg",
+    "asset assets/paper-shadow.jpg",
+    "asset assets/book-light.jpg",
+    "asset assets/slide-1.webp",
+    "asset assets/slide-2.webp",
+    "asset assets/slide-3.webp",
+    "asset assets/cover.webp",
+    "asset Light-Paper-Time.pptx",
+    "real PowerPoint signature",
+    "no page overflow 1440",
+    "all exhibition rooms 1440",
+    "images loaded 1440",
+    "lens dragged 1440",
+    "press and rebound 1440",
+    "lens reset 1440",
+    "WebGL optical refraction active",
+    "WebGL backing frame exposed",
+    "time scrub narrative 1440",
+    "time scrub progress 1440",
+    "time play advances 1440",
+    "time pause interrupts 1440",
+    "download points to PPTX 1440",
+    "no page overflow 768",
+    "all exhibition rooms 768",
+    "images loaded 768",
+    "no page overflow 390",
+    "all exhibition rooms 390",
+    "images loaded 390",
+    "lens dragged 390",
+    "press and rebound 390",
+    "lens reset 390",
+    "time scrub narrative 390",
+    "time scrub progress 390",
+    "time play advances 390",
+    "time pause interrupts 390",
+    "download points to PPTX 390",
+    "no page overflow 320",
+    "all exhibition rooms 320",
+    "images loaded 320",
+    "reduced-motion fallback",
+    "no JavaScript exceptions"
+  ],
+  "perf": [
+    {
+      "viewport": 1440,
+      "loadMs": 23,
+      "resources": 3,
+      "webgl": "webgl",
+      "scrollWidth": 1425
+    },
+    {
+      "viewport": 768,
+      "loadMs": 97,
+      "resources": 8,
+      "webgl": "webgl",
+      "scrollWidth": 753
+    },
+    {
+      "viewport": 390,
+      "loadMs": 23,
+      "resources": 8,
+      "webgl": "webgl",
+      "scrollWidth": 390
+    },
+    {
+      "viewport": 320,
+      "loadMs": 17,
+      "resources": 8,
+      "webgl": "webgl",
+      "scrollWidth": 320
+    }
+  ],
+  "consoleErrors": [],
+  "environment": "Headless Microsoft Edge via CDP (not physical mobile Safari)"
+}
