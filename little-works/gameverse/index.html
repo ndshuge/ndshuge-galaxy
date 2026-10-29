@@ -8,7 +8,10 @@
 <title>GameVerse · 游戏的好时光</title>
 <link rel="icon" type="image/svg+xml" href="./icon.svg">
 <link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./premium.css">
+<link rel="stylesheet" href="./reference-fidelity.css">
 <script src="./app.js" defer></script>
+<script src="./polish.js" defer></script>
 <script src="./glass-motion.js" type="module"></script>
 </head>
 <body>
@@ -30,6 +33,9 @@
 <div class="app-shell" id="appShell">
   <aside class="sidebar glass" aria-label="主导航">
     <a class="brand" href="./" aria-label="GameVerse 首页"><span class="brand-mark"><svg viewBox="0 0 24 24"><use href="#i-controller"/></svg></span><span><strong>GameVerse</strong><small>SHUGE PLAY STUDIO</small></span></a>
+    <label class="desktop-search" aria-label="搜索游戏">
+      <svg><use href="#i-search"/></svg><input id="desktopSearchInput" type="search" placeholder="搜索游戏、好友或内容…" autocomplete="off" aria-label="桌面端搜索游戏"><kbd>⌘K</kbd>
+    </label>
     <div class="sidebar-label">你的游戏空间</div>
     <nav class="side-nav" id="sideNav">
       <button class="nav-item active" data-view="discover" aria-current="page"><svg><use href="#i-discover"/></svg><span>精选探索</span></button>
@@ -59,9 +65,21 @@
       </div>
     </header>
 
+    <nav class="mobile-top-nav" aria-label="快速分类">
+      <button type="button" data-view="discover" class="active" aria-current="page">⌂ 精选推荐</button>
+      <button type="button" data-view="library">▦ 游戏库</button>
+      <button type="button" data-view="favorites">♡ 收藏</button>
+      <button type="button" data-view="recent">◷ 最近</button>
+    </nav>
     <div class="main-content">
       <section id="discoverView" class="screen">
         <div class="greeting"><div><p class="eyebrow">WELCOME TO YOUR PLAYGROUND</p><h1>探索，好玩的世界<span class="h1-dot">.</span></h1><p class="greeting-sub">留一点时间，给真正喜欢的游戏。</p></div><span class="greeting-count">16 <em>个原创世界</em></span></div>
+        <nav class="quick-nav" aria-label="首页快捷导航">
+          <button data-view="discover" class="active" aria-current="page"><svg><use href="#i-discover"/></svg>精选</button>
+          <button data-view="library"><svg><use href="#i-grid"/></svg>游戏库</button>
+          <button data-view="favorites"><svg><use href="#i-heart"/></svg>收藏</button>
+          <button data-view="recent"><svg><use href="#i-clock"/></svg>最近</button>
+        </nav>
         <div class="feature-hero" id="featureHero">
           <div class="hero-art"><img id="heroImage" src="../arcade-library/art/lumen-siege.svg" alt="" fetchpriority="high"></div>
           <div class="hero-shade"></div>
@@ -71,9 +89,11 @@
         <div class="editor-note"><span class="pulse-dot"></span>精选 5 款，随时开始一场新的冒险 <span>·</span> <span>无需安装</span></div>
         <div class="section-heading"><div><p class="section-eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2 id="continueTitle">开始下一场冒险</h2></div><button class="text-button" data-view="recent">查看全部 <svg><use href="#i-arrow"/></svg></button></div>
         <div class="game-rail" id="continueRail"></div>
-        <div class="section-heading categories-header"><div><p class="section-eyebrow">FIND YOUR NEXT FAVORITE</p><h2>按照心情挑选</h2></div></div>
+        <div class="section-heading library-preview-heading"><div><h2>游戏库</h2></div><button class="text-button" data-view="library">查看全部 <svg><use href="#i-arrow"/></svg></button></div>
+        <div class="library-preview" id="libraryPreview"></div>
+        <div class="section-heading categories-header"><div><p class="section-eyebrow">FIND YOUR NEXT FAVORITE</p><h2>按类型探索</h2></div></div>
         <div class="category-row" id="categoryRow"></div>
-        <div class="section-heading"><div><p class="section-eyebrow">CURATED FOR YOU</p><h2>值得一玩的作品</h2></div><button class="text-button" data-view="library">所有游戏 <svg><use href="#i-arrow"/></svg></button></div>
+        <div class="section-heading library-heading"><div><p class="section-eyebrow">CURATED FOR YOU</p><h2>游戏库</h2></div><button class="text-button" data-view="library">所有游戏 <svg><use href="#i-arrow"/></svg></button></div>
         <div class="feature-grid" id="featureGrid"></div>
       </section>
       <section id="browseView" class="screen" hidden>
@@ -87,10 +107,36 @@
   </main>
 
   <aside class="rightbar" aria-label="游戏动态与发现">
-    <div class="right-welcome glass"><div class="right-welcome-art"></div><p>YOUR PLAY SPACE</p><h3>玩得开心。</h3><span>你的小小游戏宇宙。</span><div class="right-stats"><div><strong>16</strong><span>款游戏</span></div><div><strong id="favCount">0</strong><span>已收藏</span></div><div><strong id="recentCount">0</strong><span>玩过</span></div></div></div>
-    <div class="right-section"><div class="right-section-heading"><h3>今日推荐</h3><span>JUST FOR YOU</span></div><button class="daily-pick" id="dailyPick"><img id="dailyImage" src="../arcade-library/art/gravity-garden.svg" alt=""><span><strong id="dailyTitle">重力花园</strong><small id="dailyGenre">物理 · 沙盒</small></span><svg><use href="#i-arrow"/></svg></button></div>
-    <div class="right-section"><div class="right-section-heading"><h3>小小提示</h3><span>GOOD TO KNOW</span></div><div class="tip glass-lite"><span class="tip-symbol">⌘</span><p>按 <kbd>⌘ K</kbd> 或 <kbd>/</kbd> 即可快速搜索游戏。</p></div><div class="tip glass-lite"><span class="tip-symbol">♡</span><p>收藏和游玩记录保存在本机，不需要登录。</p></div></div>
-    <div class="right-bottom"><span class="status-light"></span> ALL SYSTEMS READY <span class="status-suffix">/ WEB</span></div>
+    <div class="right-welcome glass">
+      <div class="right-welcome-art"></div>
+      <p>Good Morning,</p><h3>欢迎来到 GameVerse</h3><span>Play games. A brighter you.</span>
+      <div class="right-stats">
+        <div><strong>16</strong><span>原创游戏</span></div>
+        <div><strong id="recentCount">0</strong><span>玩过游戏</span></div>
+        <div><strong id="favCount">0</strong><span>收藏作品</span></div>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="right-section-heading"><h3>探索中的世界</h3><span>精选游戏</span></div>
+      <button class="recommend-row" data-detail="lumen-siege"><img src="../arcade-library/art/lumen-siege.svg" alt=""><span><strong>光核围城</strong><small>动作 · 生存</small></span><svg><use href="#i-arrow"/></svg></button>
+      <button class="recommend-row" data-detail="gravity-garden"><img src="../arcade-library/art/gravity-garden.svg" alt=""><span><strong>重力花园</strong><small>物理 · 沙盒</small></span><svg><use href="#i-arrow"/></svg></button>
+      <button class="recommend-row" data-detail="vocalon-chaos"><img src="../arcade-library/art/vocalon-chaos.svg" alt=""><span><strong>VOCALON!</strong><small>音乐 · 节奏</small></span><svg><use href="#i-arrow"/></svg></button>
+      <button class="recommend-row" data-detail="still"><img src="../arcade-library/art/still.svg" alt=""><span><strong>凝时 STILL</strong><small>弹幕 · 时间</small></span><svg><use href="#i-arrow"/></svg></button>
+      <button class="recommend-row" data-detail="belfry"><img src="../arcade-library/art/belfry.svg" alt=""><span><strong>钟楼契约</strong><small>冒险 · 策略</small></span><svg><use href="#i-arrow"/></svg></button>
+    </div>
+    <div class="right-section">
+      <div class="right-section-heading"><h3>游玩足迹</h3><span>自动保存在本机</span></div>
+      <div class="progress-panel">
+        <div class="progress-orbit" id="playRing"><strong id="playPercent">0%</strong></div>
+        <div class="progress-copy"><small>已探索的游戏</small><strong id="playFraction">0 / 16</strong><small>探索越多，足迹越丰富</small></div>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="right-section-heading"><h3>快捷操作</h3><span>键盘 / 手柄</span></div>
+      <div class="tip glass-lite"><span class="tip-symbol">⌘</span><p>按 <kbd>⌘ K</kbd> / <kbd>Ctrl K</kbd> 搜索游戏。</p></div>
+      <div class="tip glass-lite"><span class="tip-symbol">↗</span><p>游戏可在新标签打开；部分作品更适合键盘。</p></div>
+    </div>
+    <div class="right-bottom"><span class="status-light"></span> 16 个原创世界已就绪</div>
   </aside>
 </div>
 
