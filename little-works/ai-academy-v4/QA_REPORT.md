@@ -63,3 +63,12 @@ The user supplied three real iPhone screenshots. These revealed defects which th
 - 390x844 Edge/WebKit intermediate screenshots at 85 to 155 milliseconds and at settled state were inspected. No ghosted whole-page snapshot or transient blank in the accepted approach.
 - **UNVERIFIED:** actual physical iPhone Safari frame timing and tactile feel after these changes. Browser chrome belongs to iOS app, not the site. No Apple certification claim.
 - **Release:** only isolated V4 candidate; R3, Original and competition judge link stay untouched.
+
+
+## Doctor toolbar portrait refinement (2026-10-29)
+
+- The original full-body 330x420 illustration was rendered at ~32x35px inside a toolbar button; it visually read as an off-center sticker, not an avatar.
+- Cropped a dedicated **320x320 WebP** head-and-shoulders rendition from the existing authorized illustration; no new character identity or generative asset.
+- Nested a clipped 50% circular media frame inside a **42px** circular toolbar button with a restrained border, matching the 42px settings control. The detached green engine dot is visually hidden; engine state in the underlying application remains unchanged.
+- This change is scoped to `index.html`, `v4-avatar.css`, `assets/doctor-avatar.webp` and `qa/doctor-avatar.test.mjs`. Science APIs, data, glass navigation and R3 competition URL remain unchanged.
+- Fresh local tests: Edge + WebKit avatar/functional 2/2, existing navigation/route 17/17, full study Edge 29/29 + WebKit 4/4, EvoWorld 11/11. Visual screenshots inspected at 390x844 and 1440x900. Physical iPhone Safari still needs a device-level review.
