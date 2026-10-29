@@ -31,3 +31,22 @@
 ## Git
 
 唯一范围：`little-works/ai-academy-v4/` 和对应 `docs/superpowers` 设计计划。测试脚本和未公开采集画面位于开发工作区，本 Markdown 记录实际测试结果与保留项。
+
+## V4 tactile revision: direct iPhone screenshot defects
+
+The user supplied three real iPhone screenshots. These revealed defects which the previous green browser checks had missed:
+
+- The inherited `lg-navbar` created a second copied icon/label tree inside its selected lens. V4's vertical mobile layout and the copied tree disagreed, causing double icons and cropped text. Replaced with **one semantic `nav`** and a single shared lens. The **original MIT createGlass()** is actually invoked on the glass backdrop; no copied tab content.
+- The former pale bar allowed strongly contrasting text to remain behind controls. The new navigation uses a restrained rim highlight, genuine Blink refraction, and a scroll-edge diffusion gradient for contrast.
+- A single fade-in of one heading was inadequate. Motion animates route content and a shared indicator with interruptible retargeting. Press, sustained hold, horizontal scrub, pointer cancel, release and rapid tab switches now have defined behavior. All motion is transform/opacity based; no optical map regeneration during dragging.
+- The unconfigured doctor opened a large blank input panel and focused the textarea, immediately summoning the iPhone keyboard. It now opens a compact status/action popover, with no unsolicited keyboard; when a model is verified the conversation form remains available. The panel also follows the visual viewport if a keyboard opens.
+- Apple WebKit/Safari **cannot refract arbitrary DOM below a fixed bar** using this backdrop SVG technique. V4 honestly uses the engine's blur fallback on WebKit (L1), rather than claiming native system Liquid Glass (L2).
+
+### Fresh evidence
+
+- `qa/motion-fidelity.test.mjs`: 8/8 Edge tests; each new behavior had an observed failing test first. Tests cover actual optical URL filter, single navigation tree, shared lens alignment, hold/drag/cancel, quick retargeting, doctor keyboard prevention, focus-driven keyboard-safe layout, and reduced motion. Run with Playwright installed, a same-origin Original Pages preview, and `ZX_TEST_BASE` to override the default local URL.
+- Full same-origin learning regression rerun: Edge 29/29, WebKit 4/4, EvoWorld/BYOK 11/11.
+- Visual/optics sampling: 5/5 local checks with Edge and WebKit. Edge lens SVG filter observed in computed backdrop; WebKit computed `blur(22px) saturate(1.55)`. The 630ms desktop-headless sampling observed no frame gaps above 50ms, **not** proof of iPhone FPS.
+- Original Taste-Skill Inspector: 0 FAIL, 1 WARN (40px page H1). Screens at 320, 390, 768, 1024, 1440 and WebKit 390.
+- User's real Safari screenshots remain baseline evidence; **fresh physical iPhone Safari validation after this revision is UNVERIFIED**. Browser chrome/status bar belong to the iOS host app, not the webpage.
+- The competition landing page, Original Edition, R3 Apple Edition, science API, learning events and user records were not modified.

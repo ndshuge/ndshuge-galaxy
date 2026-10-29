@@ -5,6 +5,7 @@
 <meta name="theme-color" content="#f6f6f8"><meta name="description" content="知序 AI 学院：从判断到实验、从证据到理解。">
 <title>知序 · 学习空间 V4</title>
 <link rel="stylesheet" href="./v4.css">
+<link rel="stylesheet" href="./v4-kinetic.css">
 <link rel="preload" href="../ai-academy-apple/assets/zhixu-doctor/idle.webp" as="image">
 </head>
 <body>
@@ -65,17 +66,20 @@
     </main>
   </div>
 </div>
-<lg-navbar class="mobile-tabbar" id="mobile-tabs" aria-label="主要页面" tone="light" refraction="8" chroma="0.08">
+<nav class="mobile-tabbar mobile-native-tabs" id="mobile-tabs" aria-label="主要页面">
+ <span class="nav-optics" aria-hidden="true"></span>
+ <span class="tab-lens" aria-hidden="true"></span>
  <button data-route="today" class="tab-item is-active"><svg><use href="#i-home"/></svg><span>今天</span></button>
  <button data-route="courses" class="tab-item"><svg><use href="#i-books"/></svg><span>课程</span></button>
  <button data-route="learn" class="tab-item"><svg><use href="#i-spark"/></svg><span>学习</span></button>
  <button data-route="library" class="tab-item"><svg><use href="#i-note"/></svg><span>资料</span></button>
  <button data-route="growth" class="tab-item"><svg><use href="#i-chart"/></svg><span>进度</span></button>
-</lg-navbar>
+</nav>
 <section id="doctor-panel" class="doctor-panel" role="dialog" aria-label="知序博士对话" hidden>
   <header><img src="../ai-academy-apple/assets/zhixu-doctor/welcome.webp" alt=""><div><strong>知序博士</strong><span id="doctor-status">规则导师已就绪</span></div><button class="icon-button" id="doctor-close" aria-label="关闭知序博士"><svg><use href="#i-close"/></svg></button></header>
   <div class="chat-log" id="doctor-log" role="log" aria-live="polite"><p class="chat-bubble">学习遇到的问题，可以在这里问我。使用真实 AI 前需要先在设置中验证 DeepSeek。</p></div>
   <form id="doctor-form"><label for="doctor-question" class="visually-hidden">向知序博士提问</label><textarea id="doctor-question" placeholder="向博士提问…" rows="2" minlength="3" maxlength="1200" required></textarea><button class="cta" type="submit" id="doctor-send">发送</button></form>
+  <button type="button" class="doctor-setup" id="doctor-setup">在设置中启用真实 AI <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
   <p class="chat-privacy">AI 未验证时不生成伪造回复；消息只在本页内存保存。</p>
 </section>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>

@@ -36,3 +36,7 @@ V4 仅在有同源 Original Pages 的环境工作；跨域单独托管不会得�
 ## 验收界限
 
 Playwright Edge 与 Windows WebKit 不等于真实 iPhone Safari/120Hz 手势设备。评委入口只有在真正通过视觉与功能终验并确认后才能切换。该项目没有获得 Apple 认证或原生 API 加持。
+
+## Interaction revision
+
+The V4 UI additionally loads `v4-kinetic.css`. The mobile five-tab control is a single-layer shared Motion spring indicator with the original MIT `createGlass()` backdrop on Blink. iOS WebKit falls back to translucent blur (true arbitrary-DOM backdrop refraction is not available to ordinary webpages). The compact doctor popover avoids auto-opening the keyboard before a verified model is available. The public competition link still points to R3 until physical iPhone review.

@@ -1,6 +1,7 @@
 /* V4 independent application entry: no import of R2/R3 pages/CSS or old DOM.
    Only original MIT component engine + Motion, and the canonical Original science adapter. */
 import '../ai-academy-apple/assets/components.js';
+import {createGlass,engine as glassEngine} from '../ai-academy-apple/assets/liquid-glass.js';
 import {ScienceBridge,newLesson} from './bridge.js';
 import {screens,outline,titles,esc} from './views.js';
 const $=q=>document.querySelector(q),$$=q=>Array.from(document.querySelectorAll(q));
@@ -11,6 +12,9 @@ const prefKey='zx-v4-preferences';
 let prefs={reduceMotion:false};try{prefs={...prefs,...JSON.parse(localStorage.getItem(prefKey)||'{}')}}catch{}
 document.documentElement.dataset.reduced=prefs.reduceMotion?'true':'false';
 const state={route:'today',lesson:newLesson(),busy:false,chat:[]};
+let navGlass=null,navResize=null,navAnimation=null,routeAnimation=null,doctorAnimation=null;
+let lastRoute='today';
+const nav=$('#mobile-tabs'),lens=nav.querySelector('.tab-lens');
 try{const saved=JSON.parse(sessionStorage.getItem('zx-v4-lesson')||'null');if(saved&&['sensitivity','logistic','evo-pair'].includes(saved.experiment)&&Number.isInteger(saved.step))state.lesson={...newLesson(saved.experiment),...saved};}catch{}
 const save=()=>{try{sessionStorage.setItem('zx-v4-lesson',JSON.stringify(state.lesson))}catch{}};
 let motion=null;
@@ -25,16 +29,46 @@ function render(){
   if(active)node.setAttribute('aria-current','page');else node.removeAttribute('aria-current');
  });
  stage.innerHTML=screens[route]({bridge,lesson:state.lesson,prefs});
- $('#mobile-tabs')?.refresh?.();
  save();
+ syncNavSelection();
 }
 function goto(route,{replace=false}={}){
  if(!titles[route])route='today';
- state.route=route;if(replace)history.replaceState(null,'','#'+route);else history.pushState(null,'','#'+route);
+ const previous=state.route,changed=previous!==route;
+ state.route=route;
+ if(replace)history.replaceState(null,'','#'+route);else history.pushState(null,'','#'+route);
  render();window.scrollTo({top:0,behavior:'instant'});
- if(!reduced()&&motion?.animate){
-   motion.animate(stage.firstElementChild||stage,{opacity:[.75,1],y:[6,0]},{duration:.26,ease:[.2,.7,.25,1]});
+ if(changed)animateScreen(previous,route);
+}
+function syncNavSelection(immediate=false){
+ const active=nav.querySelector('button[data-route="'+state.route+'"]');
+ if(!active)return;
+ const x=active.offsetLeft;
+ const w=active.offsetWidth;
+ lens.style.width=w+'px';
+ if(!motion||reduced()||immediate||!nav.offsetWidth){
+  navAnimation?.stop?.();
+  lens.style.transform='translate3d('+x+'px,0,0)';
+  return;
  }
+ navAnimation?.stop?.();
+ // Retarget from the actual current transform; Motion keeps the visual position.
+ navAnimation=motion.animate(lens,{x},{
+   type:'spring',stiffness:440,damping:39,mass:.82
+ });
+}
+function animateScreen(previous,next){
+ if(reduced()||!motion)return;
+ routeAnimation?.stop?.();
+ const order=['today','courses','learn','library','growth','settings'];
+ const direction=Math.sign(order.indexOf(next)-order.indexOf(previous))||1;
+ stage.style.willChange='transform,opacity';
+ routeAnimation=motion.animate(stage,{
+    opacity:[.82,1],x:[9*direction,0]
+ },{
+    duration:.28,ease:[.2,.68,.2,1]
+ });
+ routeAnimation.finished.then(()=>{stage.style.willChange='auto';}).catch(()=>{stage.style.willChange='auto'});
 }
 function study(experiment='sensitivity'){state.lesson=newLesson(experiment);goto('learn')}
 function setStep(n){if(n<=state.lesson.highest){state.lesson.step=n;render()}}
@@ -146,18 +180,55 @@ document.addEventListener('submit',async e=>{
  try{await submit(e.target)}catch(error){console.error('[V4 submit]',error);notify(error.message||'提交失败')}
  finally{state.busy=false}
 });
-window.addEventListener('popstate',()=>{const r=location.hash.slice(1);state.route=titles[r]?r:'today';render()});
+window.addEventListener('popstate',()=>{const previous=state.route;const r=location.hash.slice(1);state.route=titles[r]?r:'today';render();animateScreen(previous,state.route)});
 $('#outline-toggle').onclick=()=>document.documentElement.dataset.outline='collapsed';
 $('#outline-reveal').onclick=()=>document.documentElement.dataset.outline='open';
-$('#doctor-launch').onclick=()=>{
- const panel=$('#doctor-panel');panel.hidden=!panel.hidden;$('#doctor-launch').setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden){doctorStatus();$('#doctor-question').focus({preventScroll:true})}
+const panel=$('#doctor-panel'),launch=$('#doctor-launch'),question=$('#doctor-question');
+function syncVisibleViewport(){
+ const vp=window.visualViewport;
+ const h=vp?.height||innerHeight,top=vp?.offsetTop||0;
+ document.documentElement.style.setProperty('--visible-height',Math.round(h)+'px');
+ document.documentElement.style.setProperty('--visible-top',Math.round(top)+'px');
+ const showing=!panel.hidden && document.activeElement===question && innerWidth<=700;
+ document.body.classList.toggle('keyboard-visible',showing);
+}
+function closeDoctor(){
+ question.blur();
+ document.body.classList.remove('doctor-open','keyboard-visible');
+ launch.setAttribute('aria-expanded','false');
+ if(reduced()||!motion){panel.hidden=true;launch.focus({preventScroll:true});return;}
+ doctorAnimation?.stop?.();
+ doctorAnimation=motion.animate(panel,{opacity:[1,0],y:[0,10],scale:[1,.975]}, {duration:.18,ease:[.35,0,1,1]});
+ doctorAnimation.finished.then(()=>{if(launch.getAttribute('aria-expanded')==='false')panel.hidden=true;launch.focus({preventScroll:true})}).catch(()=>{panel.hidden=true});
+}
+launch.onclick=()=>{
+ if(!panel.hidden){closeDoctor();return;}
+ doctorAnimation?.stop?.();
+ panel.hidden=false;
+ document.body.classList.add('doctor-open');
+ launch.setAttribute('aria-expanded','true');
+ doctorStatus();syncVisibleViewport();
+ if(!reduced()&&motion){
+   doctorAnimation=motion.animate(panel,{opacity:[0,1],y:[12,0],scale:[.972,1]}, {type:'spring',stiffness:395,damping:35,mass:1});
+ }
+ // Do not focus textarea: that unexpectedly invokes the iOS keyboard.
+ $('#doctor-close').focus({preventScroll:true});
 };
-$('#doctor-close').onclick=()=>{$('#doctor-panel').hidden=true;$('#doctor-launch').setAttribute('aria-expanded','false');$('#doctor-launch').focus({preventScroll:true})};
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#doctor-panel').hidden)$('#doctor-close').click()});
+$('#doctor-close').onclick=closeDoctor;
+$('#doctor-setup').onclick=()=>{closeDoctor();goto('settings')};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)closeDoctor()});
+question.addEventListener('focus',syncVisibleViewport);
+question.addEventListener('blur',()=>{setTimeout(syncVisibleViewport,100)});
+window.visualViewport?.addEventListener('resize',syncVisibleViewport,{passive:true});
+window.visualViewport?.addEventListener('scroll',syncVisibleViewport,{passive:true});
+window.addEventListener('resize',syncVisibleViewport,{passive:true});
 async function doctorStatus(){
  const verified=await bridge.modelStatus();
+ panel.classList.toggle('ai-ready',verified);
  $('#doctor-status').textContent=verified?'DeepSeek 已验证 · 逐次调用':'尚未验证模型 · 仅规则导师可用';
  $('#doctor-send').disabled=!verified;
+ question.disabled=!verified;
+ question.placeholder=verified?'向博士提问…':'先在设置中验证 DeepSeek';
 }
 $('#doctor-form').addEventListener('submit',async e=>{
  e.preventDefault();const input=$('#doctor-question'),query=input.value.trim();if(query.length<3)return;
@@ -175,9 +246,67 @@ $('#doctor-form').addEventListener('submit',async e=>{
 async function activateMotion(){
  try{
   motion=await import('../ai-academy-apple/assets/motion.bundle.js');
-  window.ZHIXU_V4_ENGINES={motion:'Motion',glass:!!customElements.get('lg-navbar')};
+  window.ZHIXU_V4_ENGINES={motion:'Motion',glass:!!customElements.get('lg-navbar'),nav:'single-layer',optics:glassEngine};
+  navGlass=createGlass(nav.querySelector('.nav-optics'),{
+    mode:'backdrop',fit:true,refraction:12,bezel:.83,curvature:3.4,
+    chroma:.08,blur:1.8,specular:.66,specularWidth:1.5,
+    mapScale:1,fallback:'blur(22px) saturate(1.55)'
+  });
+  syncNavSelection(true);
+  navResize=new ResizeObserver(()=>syncNavSelection(true));
+  navResize.observe(nav);
+  let tabPress=null,dragOrigin=null,dragging=false,tabHoldTimer=null,swallowClick=false;
+  const navButtons=[...nav.querySelectorAll('button[data-route]')];
+  nav.addEventListener('pointerdown',e=>{
+   const button=e.target.closest('button[data-route]');
+   if(!button||reduced())return;
+   tabPress=button;dragOrigin={x:e.clientX,y:e.clientY,id:e.pointerId};
+   dragging=false;clearTimeout(tabHoldTimer);
+   motion.animate(lens,{scaleX:1.055,scaleY:.94},{type:'spring',stiffness:500,damping:37});
+   tabHoldTimer=setTimeout(()=>{
+    if(tabPress===button&&!dragging)
+      motion.animate(lens,{scaleX:1.125,scaleY:.925},{type:'spring',stiffness:345,damping:30});
+   },275);
+  },{passive:true});
+  document.addEventListener('pointermove',e=>{
+   if(!tabPress||!dragOrigin||e.pointerId!==dragOrigin.id||reduced())return;
+   const dx=e.clientX-dragOrigin.x,dy=e.clientY-dragOrigin.y;
+   if(!dragging&&(Math.abs(dx)<16||Math.abs(dx)<Math.abs(dy)*1.35))return;
+   dragging=true;clearTimeout(tabHoldTimer);
+   const min=navButtons[0].offsetLeft,max=navButtons[navButtons.length-1].offsetLeft;
+   const x=Math.max(min,Math.min(max,tabPress.offsetLeft+dx));
+   navAnimation?.stop?.();
+   navAnimation=motion.animate(lens,{x,scaleX:1.09,scaleY:.91},{duration:.09,ease:[.15,.8,.23,1]});
+  },{passive:true});
+  const restoreTab=e=>{
+   if(!tabPress)return;
+   clearTimeout(tabHoldTimer);
+   if(dragging&&e?.type==='pointerup'){
+    // Commit to the nearest target on release; never commit while dragging.
+    const x=e?.clientX??(dragOrigin?.x||0);
+    let nearest=navButtons[0],min=Infinity;
+    for(const button of navButtons){
+     const rect=button.getBoundingClientRect();
+     const delta=Math.abs(x-(rect.left+rect.width/2));
+     if(delta<min){nearest=button;min=delta;}
+    }
+    swallowClick=true;
+    setTimeout(()=>{swallowClick=false},180);
+    goto(nearest.dataset.route);
+   }else{
+    syncNavSelection();
+   }
+   dragging=false;tabPress=null;dragOrigin=null;
+   motion.animate(lens,{scaleX:1,scaleY:1},{type:'spring',stiffness:390,damping:28});
+  };
+  nav.addEventListener('click',e=>{
+   if(swallowClick){e.preventDefault();e.stopImmediatePropagation();swallowClick=false}
+  },true);
+  document.addEventListener('pointerup',restoreTab,{passive:true});
+  document.addEventListener('pointercancel',restoreTab,{passive:true});
+  window.addEventListener('blur',()=>restoreTab());
   const pressed=new WeakMap();let active=null,holdTimer=null;
-  const selector='.primary,.book-tile,.menu-item,.simple-row,.tab-item,.doctor-launch';
+  const selector='.primary,.book-tile,.menu-item,.simple-row,.doctor-launch';
   const settle=()=>{
    clearTimeout(holdTimer);const b=active;active=null;
    const entry=b&&pressed.get(b);
