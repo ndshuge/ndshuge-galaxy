@@ -1,0 +1,33 @@
+# V4 Native Rebuild｜QA Evidence（2026-10-29）
+
+## 本机已执行
+
+| 闸门 | 结果 | 执行与佐证 |
+| --- | --- | --- |
+| Edge + WebKit 路由/响应式/原版学习闭环 | Edge 29/29 + WebKit 4/4 PASS | `qa/v4-e2e.mjs`，本机 `qa/screens/report.json` |
+| 第二科学世界 EvoWorld + DeepSeek 原版设置进出 | 11/11 PASS | `qa/v4-evo-e2e.mjs`，本机 `qa/evo-report.json` |
+| 原版玻璃滤镜、Motion、长按、移动端点击尺寸与设置持久化 | 12/12 PASS | `qa/v4-interaction.mjs`，本机 `qa/interaction-report.json` |
+| 独立 V4 shell + 六页导航 | 1/1 PASS | `qa/v4-shell.test.mjs` |
+| 原版 Taste Inspector（本机原脚本） | 0 FAIL，1 WARN（40px 页面标题，设计判断为可接受） | 本机 `qa/taste-r3/report.json` |
+| 无 Console JS 错误/HTTP 资源故障 | Edge 0 + WebKit 0 | E2E logs |
+| 原版科学证据 | Logistic 真实 metrics 和图表、EvoWorld 独立种子实验、V2 事件  | 真实 same-origin 原版接口、浏览器本地测试存储 |
+| 照片/布局比较 | 320/390/768/1024/1440 + WebKit 390 | 本机 `qa/screens/*.png`；人工检查 |
+
+## 修复的问题
+
+1. 初版 iPhone 的博士浮动按钮遮住课程内容 → 工具栏 39px 可触控按钮。
+2. 手机课程书架第二张卡片文字被裁剪（Taste FAIL） → 仅封面露出，修正对比度，重新扫描后 0 FAIL。
+3. Motion pointercancel 离开原控件时卡在缩放态 → 统一 document/window settle，重新复测通过。
+4. Original DeepSeek iframe 阻挡 V4「关闭并返回」控件 → BYOK 退出控件单独提升 stacking context，复测真正可关闭。
+5. 真实实验原始浮点数过长，图表太密 → 科学计数法和标明截取区间的 88 步预览，原版数据不修改。
+
+## 保留与限制
+
+- **保留**：业务接口、原版评分题库与权限边界、版本 2 学习证据、AI 逐次授权、Original 入口、R3 比赛入口。
+- **未验证**：真机 iPhone Safari 60/120Hz 实际延迟与触控触觉；Apple 官方认证不存在。
+- **视觉人工验收**：当前候选可供用户评审；不得仅因自动化绿色就称为 Apple 原生认证或最终用户批准。
+- **发布范围**：仅可新增独立 V4 路径，**不切换**公共比赛 URL，遇部署连接故障原线上保持不变。
+
+## Git
+
+唯一范围：`little-works/ai-academy-v4/` 和对应 `docs/superpowers` 设计计划。测试脚本和未公开采集画面位于开发工作区，本 Markdown 记录实际测试结果与保留项。
