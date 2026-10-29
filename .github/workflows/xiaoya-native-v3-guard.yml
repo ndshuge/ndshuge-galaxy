@@ -1,0 +1,32 @@
+name: XiaoYa Native V3 Preview Guard
+
+on:
+  push:
+    paths:
+      - 'little-works/xiaoya-apple/native-v3/**'
+      - '.github/workflows/xiaoya-native-v3-guard.yml'
+  pull_request:
+    paths:
+      - 'little-works/xiaoya-apple/native-v3/**'
+      - '.github/workflows/xiaoya-native-v3-guard.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  source-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify vanilla JS syntax
+        run: |
+          node --check little-works/xiaoya-apple/native-v3/app.mjs
+          node --check little-works/xiaoya-apple/native-v3/store.mjs
+          node --check little-works/xiaoya-apple/native-v3/timeline.mjs
+      - name: Native structure and timeline
+        run: node --test little-works/xiaoya-apple/native-v3/qa-contract.cjs little-works/xiaoya-apple/native-v3/qa-timeline.mjs
