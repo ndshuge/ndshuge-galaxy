@@ -1,5 +1,19 @@
 [
   {
+    "slug": "gameverse-vision",
+    "title": "GameVerse Vision · 苹果原生视觉游戏馆",
+    "date": "2026.10.29",
+    "type": "APPLE / GAME PLATFORM",
+    "description": "全新独立 GameVerse：参考 macOS 和 iPhone 双端截图，雪山壁纸、沉浸游戏封面、好友与成就展示，并提供 16 款真实网页游戏入口。",
+    "url": "./gameverse-vision/",
+    "cover": "./gameverse-vision/assets/wukong-hero.jpg",
+    "tags": [
+      "Apple 风格",
+      "GameVerse 新版",
+      "16 款可玩游戏"
+    ]
+  },
+  {
     "slug": "gameverse",
     "title": "GameVerse · 苹果风格游戏平台",
     "date": "2026.10.29",
