@@ -5,6 +5,7 @@
 */
 import './assets/components.js';
 import { decorateZhixuR2 } from './r2-present.js';
+import { nativeLogisticPlot } from './native-proof.js';
 const ORIGINAL='/zhixu-ai-academy/';
 const $=(sel,scope=document)=>scope.querySelector(sel);
 const $$=(sel,scope=document)=>Array.from(scope.querySelectorAll(sel));
@@ -105,38 +106,68 @@ function renderView(){
  decorateZhixuR2(main);
 }
 function home(){
- const n=summary?.recommended;
  const answered=summary?.answered||0;
- return '<div class="page">'+intro('继续你的探索','今天，理解一个新问题。')+
- '<section class="reading-hero" aria-label="继续学习"><div class="reading-inner">'+
- '<div class="eyebrow">当前课程 · 科学探究</div>'+
- '<h2>微小的不同，为什么会造成巨大的变化？</h2>'+
- '<p>跟着知序博士，先作出自己的判断，再让真实的科学实验回应你的想法。这里没有提前显示的标准答案。</p>'+
- '<div class="reading-actions">'+button('开始学习 '+icon('arrow'),'enter-sensitivity')+
- '<span class="subline">初值敏感性 · 真实 Logistic 计算</span></div></div>'+
- '<div class="reading-cover" data-lg-backdrop aria-hidden="true"><div class="reading-formula">xₙ₊₁ = r xₙ(1 − xₙ)</div><lg-lens width="140" height="100" radius="45" refraction="17" chroma="0.12" specular="0.4"><div class="cover-lens-content">∿</div></lg-lens></div></section>'+
- '<div class="section-head"><h2 class="section-title">为你整理</h2><span class="subline">'+(answered?answered+' 次真实题目作答':'尚无作答记录')+'</span></div>'+
- groups([
- row('继续科学探究','预测 → 实算 → 导师追问 → 独立迁移','enter-sensitivity','brain'),
- row('查看学习证据','已记录的实验、问题和验证结果','go-growth','chart'),
- row('复习与错题',n?'有待巩固的知识点':'从实际作答生成复习建议','go-library','pages',n?'需要复习':'')
- ])+
- '<div class="section-head"><h2 class="section-title">两个真实科学世界</h2>'+button('查看课程 '+icon('arrow'),'go-courses','inline-link')+'</div>'+
- '<div class="course-grid"><article class="course-world"><div class="big-symbol">∿</div><div><h3>混沌与非线性</h3><p>在相同规则下，只改变初始条件，观察轨迹何时分离。</p></div>'+button('从这里开始 '+icon('arrow'),'enter-sensitivity','inline-link')+'</article>'+
- '<article class="course-world"><div class="big-symbol">✳</div><div><h3>生命与演化</h3><p>重复实验，区分模拟世界的观测与可以推断的结论。</p></div>'+button('进入生态实验 '+icon('arrow'),'enter-evo','inline-link')+'</article></div>'+
- baseFoot()+'</div>';
+ const recommended=summary?.recommended;
+ return `<div class="page zx-home">
+  <header class="zx-page-heading"><div class="zx-context">我的学习空间</div><h1>今天</h1><p>从自己的判断开始，发现更多可能。</p></header>
+  <section class="zx-feature" aria-labelledby="zx-feature-title">
+   <div class="zx-feature-copy"><span class="zx-kicker"><span class="zx-kicker-dot"></span> 正在学习 · 科学探究</span>
+    <h2 id="zx-feature-title">微小的不同，<br>为什么会改变结果？</h2>
+    <p>先作出预测，再用真实计算观察两条轨迹怎样分离。</p>
+    <div class="zx-feature-actions">${button('继续探索 '+icon('arrow'),'enter-sensitivity','primary')}<span>初值敏感性 · Logistic</span></div>
+   </div>
+   <div class="zx-feature-graphic">${nativeLogisticPlot()}</div>
+  </section>
+  <section class="zx-home-grid" aria-label="学习概览">
+   <div class="zx-section zx-continue">
+    <div class="zx-section-heading"><h2>接着学</h2><span>循序渐进</span></div>
+    <div class="zx-task-list">
+     <button type="button" data-action="enter-sensitivity" class="zx-task-row">
+      <span class="zx-task-icon zx-teal">${icon('brain')}</span><span class="zx-task-text"><strong>完成一次科学探究</strong><small>预测 → 实验 → 导师 → 迁移</small></span><span class="zx-chevron" aria-hidden="true">›</span>
+     </button>
+     <button type="button" data-action="go-library" class="zx-task-row">
+      <span class="zx-task-icon zx-orange">${icon('pages')}</span><span class="zx-task-text"><strong>复习与错因</strong><small>${recommended?'有待巩固的概念':'根据真实作答生成复习建议'}</small></span><span class="zx-chevron" aria-hidden="true">›</span>
+     </button>
+     <button type="button" data-action="go-growth" class="zx-task-row">
+      <span class="zx-task-icon zx-blue">${icon('chart')}</span><span class="zx-task-text"><strong>查看学习记录</strong><small>你的预测、证据与成长轨迹</small></span><span class="zx-chevron" aria-hidden="true">›</span>
+     </button>
+    </div>
+   </div>
+   <div class="zx-section zx-progress-panel">
+    <div class="zx-section-heading"><h2>学习记录</h2><span>保存在此浏览器</span></div>
+    <div class="zx-progress-summary"><strong>${answered}</strong><span>次题目作答</span></div>
+    <p>${answered?'每一次独立判断，都是理解的证据。':'从第一道预测题开始，你的学习证据会留在这里。'}</p>
+    ${button('查看我的进度 '+icon('arrow'),'go-growth','zx-quiet-link')}
+   </div>
+  </section>
+  <section class="zx-section zx-course-section">
+   <div class="zx-section-heading"><h2>探索课程</h2>${button('全部课程 '+icon('arrow'),'go-courses','zx-quiet-link')}</div>
+   <div class="zx-course-grid">
+    <button class="zx-course-card" data-action="enter-sensitivity" type="button"><span class="zx-course-art zx-chaos"><span class="zx-course-glyph">∿</span></span><span class="zx-course-info"><strong>混沌与非线性</strong><small>从微小初值到复杂变化</small></span><span class="zx-chevron">›</span></button>
+    <button class="zx-course-card" data-action="enter-evo" type="button"><span class="zx-course-art zx-evo"><span class="zx-bio-cells" aria-hidden="true"><i></i><i></i><i></i></span></span><span class="zx-course-info"><strong>生命与演化</strong><small>在独立模拟中寻找证据</small></span><span class="zx-chevron">›</span></button>
+   </div>
+  </section>${baseFoot()}</div>`;
 }
 function courses(){
  const cs=summary?.concepts||[];
- const matched=(key)=>cs.find(x=>x.id===key)?.status||'未评估';
- return '<div class="page">'+intro('科学探究课程','从现象，走向证据。','当前已实装的课程来自原版的两个科学实验世界；未上线的学科不显示为可学习课程。')+
- '<div class="course-grid">'+
- '<article class="course-world"><div class="big-symbol">∿</div><div><div class="eyebrow">课程一 · 非线性动力学</div><h3>混沌与初值敏感性</h3><p>理解 Logistic 迭代、初值扰动与独立验证。关联知识状态：'+esc(matched('chaos.sensitivity'))+'。</p></div>'+button('进入课程 '+icon('arrow'),'enter-sensitivity','primary')+'</article>'+
- '<article class="course-world"><div class="big-symbol">✳</div><div><div class="eyebrow">课程二 · 生态模拟</div><h3>生命与演化</h3><p>以真实多次模拟作对照，讨论独立样本与科学推断的边界。关联知识状态：'+esc(matched('evolution.inference'))+'。</p></div>'+button('进入课程 '+icon('arrow'),'enter-evo','primary')+'</article></div>'+
- '<div class="section-head"><h2 class="section-title">知识关系</h2><span class="subline">依据真实课程概念，非虚构掌握率</span></div>'+
- groups(cs.map(x=>'<div class="list-row"><span class="list-icon">'+icon('brain')+'</span><div class="list-copy"><strong>'+esc(conceptName(x.id))+'</strong><small>'+esc(x.status)+' · '+x.attempts+' 次题目作答</small></div></div>'))+
- '<p class="quiet-note">这里展示原版真实知识点及作答证据。完整的自动知识图谱尚未在原版实现。</p>'+
- '</div>';
+ const status=(key)=>cs.find(x=>x.id===key)?.status||'尚未评估';
+ return `<div class="page zx-courses">
+  <header class="zx-page-heading"><div class="zx-context">科学探究</div><h1>课程</h1><p>真正的理解，来自亲自验证。</p></header>
+  <section class="zx-catalog" aria-label="已开放课程">
+   <div class="zx-section-heading"><h2>开始探索</h2><span>2 个科学世界</span></div>
+   <div class="zx-catalog-grid">
+    <article class="zx-catalog-card zx-catalog-chaos"><div class="zx-catalog-art"><div class="zx-orbits" aria-hidden="true"><i></i><i></i><i></i></div><span>物理 · 动力系统</span></div>
+     <div class="zx-catalog-copy"><h3>混沌与初值敏感性</h3><p>从一次猜测开始，观察相同方程下的两条轨迹。</p>
+      <span class="zx-course-state">概念状态 · ${esc(status('chaos.sensitivity'))}</span>${button('开始这门课 '+icon('arrow'),'enter-sensitivity','primary')}</div></article>
+    <article class="zx-catalog-card zx-catalog-evo"><div class="zx-catalog-art"><div class="zx-cell-field" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span>生命 · 生态模拟</span></div>
+     <div class="zx-catalog-copy"><h3>生命与演化</h3><p>比较真实运行的模拟，理解独立重复与推断边界。</p>
+      <span class="zx-course-state">概念状态 · ${esc(status('evolution.inference'))}</span>${button('开始这门课 '+icon('arrow'),'enter-evo','primary')}</div></article>
+   </div>
+  </section>
+  <section class="zx-section zx-knowledge"><div class="zx-section-heading"><h2>知识与进度</h2><span>根据真实学习记录</span></div>
+   ${cs.length?groups(cs.map(x=>'<div class="list-row"><span class="list-icon">'+icon('brain')+'</span><div class="list-copy"><strong>'+esc(conceptName(x.id))+'</strong><small>'+esc(x.status)+' · '+x.attempts+' 次作答</small></div></div>')):infoMessage('完成第一次课程后，这里会显示真实的概念学习记录。')}
+   <p class="quiet-note">知识状态以原版作答证据为准，不是自动生成的掌握度估计。</p>
+  </section>${baseFoot()}</div>`;
 }
 function conceptName(id){
  return ({'chaos.same-rule':'相同规则下的变化','chaos.sensitivity':'初值敏感性','inquiry.control-variable':'控制变量与科学验证','evolution.independence':'独立重复','evolution.inference':'演化模拟的推断边界'})[id]||id;
@@ -147,7 +178,7 @@ function studyNav(){
 }
 function learn(){
  const top=lesson.exp==='evo-pair'?'生命与演化':'混沌与初值敏感性';
- return '<div class="page"><div class="eyebrow">知序私人教师 · '+top+'</div><h1 class="large-title">探索，从你的判断开始。</h1>'+
+ return '<div class="page zx-learning"><div class="eyebrow">知序私人教师 · '+top+'</div><h1 class="large-title">探索，从你的判断开始。</h1>'+
  '<div class="experiment-picker"><span class="subline">实验世界</span><lg-segmented id="experiment-segment" label="选择实验世界" value="'+lesson.exp+'" refraction="8" chroma="0.1"><button value="sensitivity">敏感性</button><button value="logistic">非线性</button><button value="evo-pair">生态演化</button></lg-segmented></div><div class="study-layout">'+studyNav()+
  '<article class="lesson-paper" id="lesson-paper">'+
  '<div class="inline-progress" aria-label="四阶段学习进度">'+[0,1,2,3].map(x=>'<span class="'+(x<=lesson.step?'active':'')+'"></span>').join('')+'</div>'+
@@ -262,7 +293,7 @@ function library(){
  const attempts=summary?.recentAttempts||[], tasks=(summary?.recommended?[summary.recommended]:[]),
  misconceptions=summary?.misconceptions||[];
  const due=lib?.getReviewTasks(store).filter(x=>x.status!=='dismissed')||[];
- return '<div class="page">'+intro('我的学习资料','把每一次判断留下来。','这里显示真实的学习事件与自动生成的复习计划；完整的 AI 笔记生成尚未在原版上线。')+
+ return '<div class="page zx-library">'+intro('我的学习资料','把每一次判断留下来。','这里显示真实的学习事件与自动生成的复习计划；完整的 AI 笔记生成尚未在原版上线。')+
  '<div class="section-head"><h2 class="section-title">待复习</h2><span class="subline">'+due.length+' 条真实任务</span></div>'+
  (due.length?groups(due.map((x,i)=>'<div class="list-row"><span class="list-icon">'+icon('pages')+'</span><div class="list-copy"><strong>'+esc(conceptName(x.conceptId))+'</strong><small>计划日期：'+esc(eventDate(x.dueAt))+' · '+esc(x.lastReason||x.reason)+'</small></div><button class="inline-link" data-action="review-task" data-review-index="'+i+'">开始</button></div>')):groups(['<div class="empty">还没有需要复习的题目。完成一次独立作答后，会根据真实结果给出建议。</div>']))+
  '<div class="section-head"><h2 class="section-title">最近的作答</h2><span class="subline">仅展示已评分题目</span></div>'+
@@ -274,7 +305,7 @@ function library(){
 function growth(){
  const s=summary||{explorations:0,answered:0,transfers:0,concepts:[],pendingConcepts:0};
  const events=(store?.events||[]).filter(x=>['question_attempt','hypothesis_test','review_action','lab_observation'].includes(x.kind)).slice(-12).reverse();
- return '<div class="page">'+intro('学习成长','每一次理解，都有迹可循。','所有数字来自本浏览器的实际学习事件，不是假设的掌握率、学习时长或学生效果数据。')+
+ return '<div class="page zx-growth">'+intro('学习成长','每一次理解，都有迹可循。','所有数字来自本浏览器的实际学习事件，不是假设的掌握率、学习时长或学生效果数据。')+
  '<div class="data-metrics">'+
  '<div class="metric"><span>真实科学探索</span><strong>'+s.explorations+'</strong><p>有记录的独立实验</p></div>'+
  '<div class="metric"><span>独立作答</span><strong>'+s.answered+'</strong><p>前测、迁移与复习</p></div>'+
@@ -292,7 +323,7 @@ function eventDescription(e){
  return (e.payload?.reason||'学习过程已记录').slice(0,100);
 }
 function settings(){
- return '<div class="page">'+intro('个人中心','设置。','将学习空间调整为更适合你的节奏。')+
+ return '<div class="page zx-settings">'+intro('个人中心','设置。','将学习空间调整为更适合你的节奏。')+
  '<div class="section-head"><h2 class="section-title">学习空间</h2></div>'+
  '<div class="unified settings-group">'+
  '<div class="setting-row"><div><strong>减少装饰性光学效果</strong><small>关闭封面动态光效和装饰，阅读内容保持清晰</small></div><button class="toggle" role="switch" aria-label="启用装饰性光学效果" aria-checked="'+pref.effect+'" data-action="toggle-effect"></button></div>'+
@@ -535,13 +566,13 @@ const initMotion=async()=>{
  const pressed=new WeakMap();
  document.addEventListener('pointerdown',e=>{
   if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-  const el=e.target?.closest?.('.reading-hero .primary,.lesson-paper .primary');
+  const el=e.target?.closest?.('.reading-hero .primary,.zx-feature .primary,.zx-catalog .primary,.lesson-paper .primary');
   if(!el)return;
   let state=pressed.get(el);if(!state){const v=motionValue(1);v.on('change',n=>el.style.transform='scale('+n+')');state={v};pressed.set(el,state);}
   animate(state.v,.967,{type:'spring',stiffness:510,damping:37});
  },{passive:true});
  const release=e=>{
-  const el=e.target?.closest?.('.reading-hero .primary,.lesson-paper .primary');
+  const el=e.target?.closest?.('.reading-hero .primary,.zx-feature .primary,.zx-catalog .primary,.lesson-paper .primary');
   const state=el&&pressed.get(el);if(state)animate(state.v,1,{type:'spring',stiffness:440,damping:31,velocity:state.v.getVelocity()});
  };
  document.addEventListener('pointerup',release,{passive:true});

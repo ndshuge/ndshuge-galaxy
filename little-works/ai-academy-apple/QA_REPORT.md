@@ -67,3 +67,28 @@
 ## 复验命令
 
 在仓库根目录，先运行 `node little-works/ai-academy-apple/qa/serve-dev.mjs`，再运行 `node little-works/ai-academy-apple/qa/test.mjs`、`node little-works/ai-academy-apple/qa/extended.mjs`、`node little-works/ai-academy-apple/qa/perf.mjs`。脚本通过单独测试环境中的 Playwright 在 headless Edge 运行，不是产品线上依赖。
+
+
+## 2026-10-29｜R3 Apple 学习工作台重构与验收
+
+**实施边界**：只修改鼠哥星系的 Apple Edition（`little-works/ai-academy-apple/`）；`/zhixu-ai-academy/original.html` 原版、原版科学引擎和用户数据格式保持不变。基于新建、与生产 main 隔离的 Git worktree 施工。
+
+**产品方向与对照**：使用 SHUGE Apple Design、Apple Web Design、Liquid Glass for the Web、Motion、Frontend Dual Source、Taste-Skill（app 模式）的 ChatGPT 原生 Skill 指导；查阅 Apple Human Interface Guidelines 的 Materials、Tab Bars、Sidebars；实际浏览 Designeer Components/Inspiration、Motion Primitives / Minimal Gallery 条目及 Motion Primitives 原站。Taste 原版 `draw.mjs --app --kind workspace` 抽取两种方向，采用 `editorial-greeting` 的信息优先方式，但以 Apple 系统字体替代外部英文字体，拒绝给所有卡片加玻璃或渐变。Motion Primitives React 组件未引入，因为当前应用为原生 JS；仅采用与已授权、已有代码兼容的操作原则。
+
+**实际改动**：
+- `app.js`：将「今天」「课程」重写为原生式学习工作台与真实两课程分组；学习、资料、成长、设置保留既有逻辑，统一原生分组视觉；新首屏「继续探索」进入真实原版科学探究流程，课程卡继续绑定 `enter-sensitivity` / `enter-evo`；将新 R3 主按钮纳入已有 Motion 真实弹性按压选择器。
+- `native-proof.js`：由固定 Logistic 方程本地计算、只用于视觉预览的两条曲线，绝不参与题目评分。
+- `native-r3.css`：真正改动版式与内容层级；移动端内容先于曲线、简化图标、修复 768px 侧栏挤压；iPhone 底部沿用已集成的 `<lg-navbar>` 折射 Web Component，缩小悬浮博士入口，保持可展开会话和键盘关闭。
+- `index.html`：CSS 在首帧已生效，原有旧版无 JS shell 改为与新版几何布局一致的静态后备。避免旧卡片先闪现。
+
+**已真正执行的第三方资源（不是仅阅读 Skill）**：现有 `assets/components.js`、`assets/liquid-glass.js` 与 `assets/motion.bundle.js` 被应用加载。独立 Headless Edge 运行检测：`lg-navbar` 已注册，`feDisplacementMap` 为 2 个，浏览器计算式 `filter:url(...)` 为 1 个，`window.ZHIXU_APPLE_NAV_SCRUB` 有值，Motion 引擎实际返回 `Motion`。MIT 授权随原项目保留，没有新增私有 Apple 资产。
+
+**真实命令、测试结果**：
+- `node _native_r3_test.mjs`（工作区本地测试）：24/24 PASS；0 页面异常、0 HTTP 资源错误；320/390/768/1440 不横向溢出；课程入口、五页面、底部导航、博士弹出/ESC、空 radio、同源原版桥与 BYOK 模块均核验。
+- `node _flow_probe.mjs`：原版真实第一题通过同源科学接口加载，3 个 radio 全部初始未选择；本次未调用任何付费模型或读取用户密钥。
+- `node _optics_check.mjs`：验证上述原版折射引擎与 Motion 真正执行。
+- `node _first_paint_test.mjs`：禁用 JS 与动态版的 390px 科学卡片坐标及尺寸完全一致（x=39、y=219.4375、width=312、height=495.75）；没有旧 `reading-hero`。
+- 原版 Taste Inspector `inspect.mjs --app --widths 1440,768,390`：先四项 FAIL，经两轮 look→fix→look 达到 **0 FAIL**、剩余 3 WARN（图表/边框判读、小屏 11–12px 导航/图表辅助标注比例、34px iOS 风格大标题）。这三个警告不会被宣称为自动审美认可。
+- 真实截图与 JSON 放在本机独立工作区 `E:/CHATGPT/work/zhixu-native-rebuild-20261029/evidence-native-r3/`，含首页宽度四档、五个功能页、静态首帧与 Taste 三档截图。
+
+**验收边界**：上述均为 Windows Edge/模拟视口与同源原版浏览器测试；真实 iPhone Safari 触摸帧率、GPU 折射性能及人类艺术签收未获实机证据，不得标记为已测。生产替换必须重新获取最新 main 并使用普通非强制 Git 推送，发布后再次检查公共 URL；保持 Original 版回退入口。
