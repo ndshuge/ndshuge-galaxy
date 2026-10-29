@@ -60,6 +60,7 @@ function keyShortcut(e){if(e.key==='Escape'){if(!$('#playback').hidden){closeGam
 document.addEventListener('click',e=>{const pickBtn=e.target.closest('[data-pick]');if(pickBtn){selectFeature(Number(pickBtn.dataset.pick));return}const nv=e.target.closest('[data-view]');if(nv){setView(nv.dataset.view);return}const tag=e.target.closest('[data-genre]');if(tag){setView('library',tag.dataset.genre);return}const play=e.target.closest('[data-play]');if(play){launchGame(play.dataset.play);return}const fav=e.target.closest('[data-fav]');if(fav){toggleSaved(fav.dataset.fav);return}const detail=e.target.closest('[data-detail]');if(detail){showDetails(detail.dataset.detail)}});
 document.addEventListener('keydown',keyShortcut);
 $('#themeToggle').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+$('#desktopThemeToggle').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
 $('#heroPrevious').addEventListener('click',()=>selectFeature(pick-1));
 $('#heroNext').addEventListener('click',()=>selectFeature(pick+1));
 $('#heroPlay').addEventListener('click',()=>launchGame(PICKS[pick]));
@@ -67,6 +68,7 @@ $('#heroInfo').addEventListener('click',()=>showDetails(PICKS[pick]));
 $('#searchInput').addEventListener('input',e=>{query=e.target.value;if(view==='discover'){setView('library');$('#searchInput').value=query}renderBrowse()});
 $('#desktopSearchInput').addEventListener('input',e=>{query=e.target.value;if(view==='discover'){setView('library')}$('#searchInput').value=query;renderBrowse()});
 $('#mobileSearch').addEventListener('click',()=>{const field=$('#searchField');if(field.classList.contains('mobile-open')&&!$('#searchInput').value){field.classList.remove('mobile-open')}else showSearch()});
+$('#searchDismiss').addEventListener('click',e=>{e.preventDefault();$('#searchField').classList.remove('mobile-open');$('#searchInput').blur();$('#mobileSearch').focus({preventScroll:true})});
 $('#closeDetail').addEventListener('click',()=>closeDetails());
 $('#detailBackdrop').addEventListener('click',e=>{if(e.target.id==='detailBackdrop')closeDetails()});
 $('#closePlayback').addEventListener('click',closeGame);

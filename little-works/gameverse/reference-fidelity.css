@@ -264,3 +264,12 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
 #continueRail>.rail-card{flex:0 0 calc((100% - 30px)/4)!important;min-width:0}
 #continueRail::-webkit-scrollbar{display:none}
 @media(max-width:760px){#continueRail>.rail-card{flex:0 0 46%!important;max-width:190px}}
+/* Explicit mobile search exit and persistent desktop appearance control. */
+.desktop-theme-toggle{min-height:44px;width:100%;display:flex;align-items:center;gap:11px;padding:9px 13px;margin:0 0 7px;border-radius:12px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.24);font-size:14px;text-align:left;color:#fff}
+.desktop-theme-toggle:hover{background:rgba(255,255,255,.21)}
+.search-dismiss{display:none}
+@media(max-width:760px){
+ .search-field.mobile-open .search-dismiss{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;margin-right:-5px;border:0;background:rgba(255,255,255,.12);border-radius:50%;color:#fff;font-size:25px;line-height:1}
+ .search-field.mobile-open{gap:8px}
+ .search-field.mobile-open input{min-width:0}
+}
