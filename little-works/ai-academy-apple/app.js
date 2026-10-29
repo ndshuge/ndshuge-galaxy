@@ -178,7 +178,7 @@ function studyNav(){
 }
 function learn(){
  const top=lesson.exp==='evo-pair'?'生命与演化':'混沌与初值敏感性';
- return '<div class="page zx-learning"><div class="eyebrow">知序私人教师 · '+top+'</div><h1 class="large-title">探索，从你的判断开始。</h1>'+
+ return '<div class="page zx-learning"><div class="eyebrow">知序私人教师 · '+top+'</div><h1 class="large-title">从判断开始，亲自验证</h1>'+
  '<div class="experiment-picker"><span class="subline">实验世界</span><lg-segmented id="experiment-segment" label="选择实验世界" value="'+lesson.exp+'" refraction="8" chroma="0.1"><button value="sensitivity">敏感性</button><button value="logistic">非线性</button><button value="evo-pair">生态演化</button></lg-segmented></div><div class="study-layout">'+studyNav()+
  '<article class="lesson-paper" id="lesson-paper">'+
  '<div class="inline-progress" aria-label="四阶段学习进度">'+[0,1,2,3].map(x=>'<span class="'+(x<=lesson.step?'active':'')+'"></span>').join('')+'</div>'+
@@ -293,7 +293,7 @@ function library(){
  const attempts=summary?.recentAttempts||[], tasks=(summary?.recommended?[summary.recommended]:[]),
  misconceptions=summary?.misconceptions||[];
  const due=lib?.getReviewTasks(store).filter(x=>x.status!=='dismissed')||[];
- return '<div class="page zx-library">'+intro('我的学习资料','把每一次判断留下来。','这里显示真实的学习事件与自动生成的复习计划；完整的 AI 笔记生成尚未在原版上线。')+
+ return '<div class="page zx-library">'+intro('我的学习资料','资料与错题','这里显示真实的学习事件与自动生成的复习计划；完整的 AI 笔记生成尚未在原版上线。')+
  '<div class="section-head"><h2 class="section-title">待复习</h2><span class="subline">'+due.length+' 条真实任务</span></div>'+
  (due.length?groups(due.map((x,i)=>'<div class="list-row"><span class="list-icon">'+icon('pages')+'</span><div class="list-copy"><strong>'+esc(conceptName(x.conceptId))+'</strong><small>计划日期：'+esc(eventDate(x.dueAt))+' · '+esc(x.lastReason||x.reason)+'</small></div><button class="inline-link" data-action="review-task" data-review-index="'+i+'">开始</button></div>')):groups(['<div class="empty">还没有需要复习的题目。完成一次独立作答后，会根据真实结果给出建议。</div>']))+
  '<div class="section-head"><h2 class="section-title">最近的作答</h2><span class="subline">仅展示已评分题目</span></div>'+
@@ -305,7 +305,7 @@ function library(){
 function growth(){
  const s=summary||{explorations:0,answered:0,transfers:0,concepts:[],pendingConcepts:0};
  const events=(store?.events||[]).filter(x=>['question_attempt','hypothesis_test','review_action','lab_observation'].includes(x.kind)).slice(-12).reverse();
- return '<div class="page zx-growth">'+intro('学习成长','每一次理解，都有迹可循。','所有数字来自本浏览器的实际学习事件，不是假设的掌握率、学习时长或学生效果数据。')+
+ return '<div class="page zx-growth">'+intro('学习成长','学习进度','所有数字来自本浏览器的实际学习事件，不是假设的掌握率、学习时长或学生效果数据。')+
  '<div class="data-metrics">'+
  '<div class="metric"><span>真实科学探索</span><strong>'+s.explorations+'</strong><p>有记录的独立实验</p></div>'+
  '<div class="metric"><span>独立作答</span><strong>'+s.answered+'</strong><p>前测、迁移与复习</p></div>'+
@@ -323,7 +323,7 @@ function eventDescription(e){
  return (e.payload?.reason||'学习过程已记录').slice(0,100);
 }
 function settings(){
- return '<div class="page zx-settings">'+intro('个人中心','设置。','将学习空间调整为更适合你的节奏。')+
+ return '<div class="page zx-settings">'+intro('个人中心','设置','将学习空间调整为更适合你的节奏。')+
  '<div class="section-head"><h2 class="section-title">学习空间</h2></div>'+
  '<div class="unified settings-group">'+
  '<div class="setting-row"><div><strong>减少装饰性光学效果</strong><small>关闭封面动态光效和装饰，阅读内容保持清晰</small></div><button class="toggle" role="switch" aria-label="启用装饰性光学效果" aria-checked="'+pref.effect+'" data-action="toggle-effect"></button></div>'+
