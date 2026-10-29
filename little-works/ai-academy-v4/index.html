@@ -87,5 +87,35 @@
 <div id="dialog-layer"></div>
 <!-- Independent V4 UI, unchanged Original scientific runtime (same origin) -->
 <iframe id="original-engine" title="原版科学引擎（后台）" aria-hidden="true" tabindex="-1" src="/zhixu-ai-academy/learning.html"></iframe>
+<script>
+/* Before module hydration, match the requested route rather than flashing Today.
+   Fixed, trusted strings only: URL hashes never flow into HTML directly. */
+(() => {
+ const routes={
+  courses:['科学探究','课程','选择一个科学世界，从真实问题开始。','课程正在准备'],
+  learn:['知序私人教师 · 科学探究','从判断开始，亲自验证','每次只完成一个学习阶段。真实计算，真实记录。','私人教师正在准备'],
+  library:['学习档案','资料与错题','复习计划由真实作答生成；未经核实的误解需要你确认。','学习档案正在准备'],
+  growth:['个人进度','学习进度','只统计本浏览器中有证据支持的学习行为。','进度记录正在准备'],
+  settings:['个人中心','设置','把学习空间调整为适合你自己的节奏。','设置正在准备']
+ };
+ const route=location.hash.slice(1),meta=routes[route];
+ if(!meta)return;
+ const page=document.getElementById('screen');
+ page.dataset.page=route;
+ page.innerHTML='<header class="page-intro"><div class="eyebrow">'+meta[0]+'</div><h1>'+meta[1]+'</h1><p>'+meta[2]+'</p></header><div class="section-bar first-section"><h2>'+meta[3]+'</h2></div><div class="empty-state">正在载入对应页面内容…</div>';
+ const toolbar=document.getElementById('toolbar-title');
+ if(toolbar)toolbar.textContent=route==='learn'?'私人教师':meta[1];
+ const nav=document.getElementById('mobile-tabs');
+ document.querySelectorAll('.menu-item[data-route],.tab-item[data-route]').forEach(button=>{
+  const selected=button.dataset.route===route;
+  button.classList.toggle('is-active',selected);
+  button.classList.toggle('selected',selected);
+  if(selected)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');
+ });
+ const active=nav&&nav.querySelector('button[data-route="'+route+'"]');
+ const lens=nav&&nav.querySelector('.tab-lens');
+ if(active&&lens){lens.style.width=active.offsetWidth+'px';lens.style.transform='translate3d('+active.offsetLeft+'px,0,0)';}
+})();
+</script>
 <script type="module" src="./v4.js?v=kinetic-20261029e"></script>
 </body></html>
