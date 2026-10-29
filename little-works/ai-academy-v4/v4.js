@@ -57,18 +57,22 @@ function syncNavSelection(immediate=false){
    type:'spring',stiffness:440,damping:39,mass:.82
  });
 }
+let routeRevealTimer=null;
 function animateScreen(previous,next){
- if(reduced()||!motion)return;
- routeAnimation?.stop?.();
- const order=['today','courses','learn','library','growth','settings'];
- const direction=Math.sign(order.indexOf(next)-order.indexOf(previous))||1;
- stage.style.willChange='transform,opacity';
- routeAnimation=motion.animate(stage,{
-    opacity:[.82,1],x:[9*direction,0]
- },{
-    duration:.28,ease:[.2,.68,.2,1]
- });
- routeAnimation.finished.then(()=>{stage.style.willChange='auto';}).catch(()=>{stage.style.willChange='auto'});
+ if(reduced())return;
+ // No frozen page screenshots: those cause ghost text in Blink and blank midframes in WebKit.
+ // Keep navigation physical and only stage the first few content groups with small,
+ // opacity-safe compositor transforms. Never fade the entire reading surface.
+ if(routeAnimation){routeAnimation.stop();routeAnimation=null;}
+ stage.style.willChange='auto';
+ stage.style.removeProperty('transform');
+ stage.style.removeProperty('opacity');
+ stage.style.removeProperty('translate');
+ stage.dataset.entering='true';
+ clearTimeout(routeRevealTimer);
+ routeRevealTimer=setTimeout(()=>{
+  delete stage.dataset.entering;
+ },340);
 }
 function study(experiment='sensitivity'){state.lesson=newLesson(experiment);goto('learn')}
 function setStep(n){if(n<=state.lesson.highest){state.lesson.step=n;render()}}

@@ -117,7 +117,9 @@ test('touch hold makes one connected lens breathe, and drag scrubs it into anoth
  const p=await b.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
  await p.goto(url,{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>!!window.ZHIXU_V4_DEBUG,null,{timeout:10000});
  const nav=p.locator('#mobile-tabs'),lens=p.locator('.tab-lens');
- await p.waitForTimeout(200);
+ // Dynamic import can finish after route initialization on a slow connection.
+ await p.waitForFunction(()=>window.ZHIXU_V4_ENGINES?.motion==='Motion',null,{timeout:14000});
+ await p.waitForTimeout(100);
  const normal=await lens.boundingBox();
  const btn=nav.locator('[data-route=today]');
  const from=await btn.boundingBox(),to=await nav.locator('[data-route=library]').boundingBox();

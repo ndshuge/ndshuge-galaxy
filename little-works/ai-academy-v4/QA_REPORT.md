@@ -50,3 +50,16 @@ The user supplied three real iPhone screenshots. These revealed defects which th
 - Original Taste-Skill Inspector: 0 FAIL, 1 WARN (40px page H1). Screens at 320, 390, 768, 1024, 1440 and WebKit 390.
 - User's real Safari screenshots remain baseline evidence; **fresh physical iPhone Safari validation after this revision is UNVERIFIED**. Browser chrome/status bar belong to the iOS host app, not the webpage.
 - The competition landing page, Original Edition, R3 Apple Edition, science API, learning events and user records were not modified.
+
+## V4 route motion quality gate (second real-device feedback iteration)
+
+- User's physical iPhone screenshots reported unconvincing glass and choppy transitions. Functional success alone is insufficient.
+- **Rejected experiment:** document-scoped View Transitions passed route checks, but captured intermediate frames showed double text in Chromium and a transient empty surface in WebKit. This was intentionally not shipped.
+- **Chosen:** per-block lightweight CSS reveal limited to four content groups (220ms with 12/24/36ms stagger). Heading is opacity-only to prevent fuzzy fractional-pixel text. Content always stays readable, with no copied DOM or frozen page snapshots.
+- **Physical tab control:** original MIT Liquid Glass createGlass() on Chromium with honest standard-blur fallback on Safari/WebKit. Motion controls hold, drag, spring release, cancellation, retargeting.
+- **Early interaction:** Motion bundle modulepreloaded. A test deliberately delays the download and checks navigation still operates. Deformation tests wait for the Motion engine to be ready before timing it.
+- Fresh checks: qa/route-lite.test.mjs Edge and WebKit and reduced motion 3/3, qa/early-motion.test.mjs preload plus slow asset 2/2, qa/motion-fidelity.test.mjs 9/9.
+- Science regression: Edge 29/29, WebKit 4/4, EvoWorld and BYOK 11/11, shell 1/1. No changes to science API, scoring algorithms or V2 learning events.
+- 390x844 Edge/WebKit intermediate screenshots at 85 to 155 milliseconds and at settled state were inspected. No ghosted whole-page snapshot or transient blank in the accepted approach.
+- **UNVERIFIED:** actual physical iPhone Safari frame timing and tactile feel after these changes. Browser chrome belongs to iOS app, not the site. No Apple certification claim.
+- **Release:** only isolated V4 candidate; R3, Original and competition judge link stay untouched.

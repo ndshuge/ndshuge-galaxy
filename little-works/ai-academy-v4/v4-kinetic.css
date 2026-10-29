@@ -254,3 +254,26 @@ html[data-reduced="true"] .mobile-native-tabs button.tab-item {
 @media(max-width:700px){
   body.keyboard-visible .doctor-panel.ai-ready{height:max(220px,calc(var(--visible-height,490px) - 46px))!important;max-height:calc(var(--visible-height,490px) - 46px)!important}
 }
+
+
+/* Apple-style contextual reveal instead of screenshot transitions.
+   Only four direct blocks animate; the reading surface stays fully opaque.
+   The shared glass indicator keeps its independent Motion spring. */
+@keyframes zx-v4-reveal {
+ from {opacity:.94;transform:translate3d(0,5px,0);}
+ to {opacity:1;transform:translate3d(0,0,0);}
+}
+main[data-content][data-entering="true"] > :nth-child(-n+4) {
+ animation: zx-v4-reveal 220ms cubic-bezier(.2,.72,.24,1) both;
+}
+@keyframes zx-v4-reveal-heading {from{opacity:.96}to{opacity:1}}
+main[data-content][data-entering="true"] > :first-child{animation-name:zx-v4-reveal-heading;transform:none;}
+main[data-content][data-entering="true"] > :nth-child(2){animation-delay:12ms;}
+main[data-content][data-entering="true"] > :nth-child(3){animation-delay:24ms;}
+main[data-content][data-entering="true"] > :nth-child(4){animation-delay:36ms;}
+@media (prefers-reduced-motion:reduce) {
+ main[data-content][data-entering="true"] > * {animation:none!important}
+}
+html[data-reduced="true"] main[data-content][data-entering="true"] > * {
+ animation:none!important;
+}

@@ -40,3 +40,5 @@ Playwright Edge 与 Windows WebKit 不等于真实 iPhone Safari/120Hz 手势设
 ## Interaction revision
 
 The V4 UI additionally loads `v4-kinetic.css`. The mobile five-tab control is a single-layer shared Motion spring indicator with the original MIT `createGlass()` backdrop on Blink. iOS WebKit falls back to translucent blur (true arbitrary-DOM backdrop refraction is not available to ordinary webpages). The compact doctor popover avoids auto-opening the keyboard before a verified model is available. The public competition link still points to R3 until physical iPhone review.
+
+Route transitions: lightweight, four-block CSS stagger with an opacity-only heading; no screenshot-based transitions. Original Motion bundle is modulepreloaded and liquid tab indicator remains a single physical layer. The public competition entry remains R3.
