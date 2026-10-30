@@ -1,5 +1,19 @@
 [
   {
+    "slug": "living-archive",
+    "title": "SHUGE｜仍在形成 · Living Archive",
+    "date": "2026.10.30",
+    "type": "INTERACTIVE PERSONAL WORLD",
+    "description": "走进一座可触摸的私人数字档案馆。旋转、展开光学装置，探索知序、小芽与事实核验作品，也在音乐、机器人和话剧之间发现屏幕之外的生活。",
+    "url": "./living-archive/",
+    "cover": "./living-archive/cover.webp",
+    "tags": [
+      "个人数字艺术馆",
+      "真实 WebGL 交互",
+      "响应式作品集"
+    ]
+  },
+  {
     "slug": "orbital-press",
     "title": "失重印刷所｜Orbital Press",
     "date": "2026.10.30",
