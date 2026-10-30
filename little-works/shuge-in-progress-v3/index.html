@@ -130,6 +130,8 @@ body{background:var(--paper);color:#1c1c1c}
 @media(prefers-reduced-motion:reduce){.hero-action{transition:none;transform:none!important}}
 
 </style>
+<link rel="stylesheet" href="./assets/v4-motion.css">
+<link rel="stylesheet" href="./assets/v4-polish.css">
   
 </head>
 <body>
@@ -149,7 +151,7 @@ body{background:var(--paper);color:#1c1c1c}
     <div class="hero-bottom-note"><p>写代码。做音乐。研究机器人。<br>过一种值得记下来的大学生活。</p><a href="#life">屏幕之外 <span aria-hidden="true">↘</span></a></div>
   </section>
   <section class="signal-scene" id="signal" aria-labelledby="signalHeading">
-    <div class="signal-heading"><p>电子与音乐</p><h2 id="signalHeading">不同的事物，<br>有时长着相同的波形。</h2><span>可交互的信号实验</span></div>
+    <div class="signal-heading"><p>电子与音乐</p><h2 id="signalHeading">不同的事物，<br>也有相似的波形。</h2><span>可交互的信号实验</span></div>
     <div class="hero-instrument" aria-label="可交互的原创信号波形展示">
       <div class="instrument-top"><span>可交互的信号</span><span class="live-state"><span class="live-dot"></span>实时响应</span></div>
       <canvas id="signalCanvas" width="960" height="610" aria-label="一条会随着指针位置变化的光绿色电子信号曲线"></canvas>
@@ -227,7 +229,7 @@ function openProject(key, trigger){
   $('dialogSummary').textContent=d.summary; $('dialogStory').textContent=d.story;
   const tags=$('dialogTags');tags.replaceChildren(...d.tags.map(t=>{const s=document.createElement('span');s.textContent=t;return s;}));
   dialog.showModal(); document.body.classList.add('dialog-shown');
-  if(!reducedMotion.matches){ dialog.animate([{opacity:0,transform:'translateY(16px) scale(.985)'},{opacity:1,transform:'translateY(0) scale(1)'}], {duration:460,easing:'cubic-bezier(.17,.82,.24,1)'}); }
+  /* V4 owns the dialog motion lifecycle. */
   $('dialogClose').focus();
 }
 document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>openProject(b.dataset.open,b)));
@@ -269,8 +271,11 @@ canvas.addEventListener('pointermove',e=>{if(e.pointerType==='touch'&&e.buttons)
 if('ResizeObserver' in window){resizeObserver=new ResizeObserver(resizeCanvas);resizeObserver.observe(canvas)}else window.addEventListener('resize',resizeCanvas);
 resizeCanvas();
 /* Respect no-motion preference. Content is never hidden waiting for IntersectionObserver. */
-if('IntersectionObserver' in window && !reducedMotion.matches){const io=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting){e.target.classList.add('entered');io.unobserve(e.target)}}},{threshold:.08});document.querySelectorAll('.project-item,.manifesto-grid,.life-panel,.years-main,.now-content').forEach(el=>{el.classList.add('reveal-eligible');io.observe(el)})}
+/* V4 ScrollTrigger provides direction-aware, reversible section choreography. */
 
 </script>
+<script defer src="./assets/gsap.min.js"></script>
+<script defer src="./assets/ScrollTrigger.min.js"></script>
+<script defer src="./assets/v4-motion.js"></script>
 </body>
 </html>

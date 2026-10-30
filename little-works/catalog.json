@@ -1,16 +1,16 @@
 [
   {
     "slug": "shuge-in-progress-v3",
-    "title": "SHUGE · 正在发生｜个人档案 V3",
+    "title": "SHUGE · 正在发生｜个人档案 V4",
     "date": "2026.10.30",
-    "type": "PERSONAL / INTERACTIVE PORTFOLIO",
-    "description": "一个仍在更新的个人数字档案：电子科学、AI 创作、音乐与生活。含可操作的 Canvas 信号展厅、作品故事和成长时间轴。",
+    "type": "PERSONAL / MOTION EDITORIAL",
+    "description": "个人数字档案 V4：编辑式排版、真实 GSAP 与 ScrollTrigger 动效、触控交互、作品故事和成长时间线。",
     "url": "./shuge-in-progress-v3/",
     "cover": "./shuge-in-progress-v3/cover.svg",
     "tags": [
       "个人档案",
-      "交互艺术",
-      "Canvas 信号"
+      "专业动效",
+      "移动端精修"
     ]
   },
   {
