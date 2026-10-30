@@ -1,1 +1,9 @@
-��1�Y�
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+<title id="title">SHUGE — 个人档案 V3</title><desc id="desc">炭黑底色与超大 SHUGE 文字的个人作品封面。</desc>
+<rect width="1200" height="750" fill="#1c1c1c"/>
+<text x="72" y="114" font-size="26" font-family="Arial,Helvetica,sans-serif" fill="#f1f1ef">SHUGE · IN PROGRESS</text>
+<text x="54" y="461" font-size="240" font-weight="800" letter-spacing="-16" font-family="Arial,Helvetica,sans-serif" fill="#f1f1ef">SHUGE</text>
+<rect x="72" y="543" width="1056" height="2" fill="#8fa68e"/>
+<text x="72" y="629" font-size="48" font-family="Arial,Helvetica,sans-serif" fill="#f1f1ef">正在发生</text>
+<text x="1128" y="687" text-anchor="end" font-size="27" font-family="Arial,Helvetica,sans-serif" fill="#8fa68e">2026</text>
+</svg>
