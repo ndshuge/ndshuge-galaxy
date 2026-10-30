@@ -1,5 +1,19 @@
 [
   {
+    "slug": "orbital-press",
+    "title": "失重印刷所｜Orbital Press",
+    "date": "2026.10.30",
+    "type": "INTERACTIVE ART",
+    "description": "触碰失重活字，牵引文字轨道、自由排版，再启动印刷机，把这一刻落成独一无二的数字海报。",
+    "url": "./orbital-press/",
+    "cover": "./orbital-press/cover.png",
+    "tags": [
+      "交互艺术",
+      "失重活字",
+      "可保存海报"
+    ]
+  },
+  {
     "slug": "echo-coast",
     "title": "回声岸线｜Echo Coast",
     "date": "2026.10.30",

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#e9e4d6"><meta name="description" content="失重印刷所：让文字漂浮、靠近、排列，落印成属于你的数字海报。">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg"><title>失重印刷所 · ORBITAL PRESS</title><link rel="stylesheet" href="./src/style.css">
+</head><body>
+<noscript><p style="padding:1rem;background:#ebdecb;color:#20251f;font:15px/1.7 sans-serif;text-align:center">失重印刷所需要启用 JavaScript 才能移动活字与生成海报。请开启 JavaScript 后重新载入。</p></noscript><div id="app" data-stage="attract">
+<header class="topline">
+<a class="return-link" href="../" aria-label="返回鼠哥星系小东西"><span class="return-icon" aria-hidden="true">↖</span><span>SHUGE GALAXY <i>/</i> 小东西</span></a>
+<div class="brand"><b class="brand-mark">OP<span>·</span></b><span>ORBITAL<br>PRESS</span></div>
+<button class="sound-toggle" id="motionToggle" aria-pressed="false" aria-label="开启或关闭动态">动态 / ON</button>
+</header>
+<main>
+<section class="scene scene-attract" id="scene-attract" aria-labelledby="hero-title">
+<div class="hero-paper"><p class="serial">AN EXPERIMENT IN WEIGHTLESS TYPOGRAPHY <span>№ 001—2026</span></p>
+<div class="hero-copy"><p class="overline"><span class="overline-line"></span> 在没有重力的地方</p>
+<h1 id="hero-title">失重<br><em>印刷所<span class="title-period">。</span></em></h1>
+<p class="hero-english">ORBITAL <span>///</span> PRESS</p>
+<p class="lede">让文字脱离纸张。<br>触碰、吸引、重新排列。<br>最后，为这一刻留下印痕。</p></div>
+<div class="work-caption"><span class="circle-mark">◯</span><div>活字正在漂浮。<br><strong>移动指针或触摸画面，让它们靠近。</strong></div></div>
+</div>
+<div class="machine" aria-hidden="true">
+<div class="machine-guide machine-guide-a"></div><div class="machine-guide machine-guide-b"></div>
+<div class="machine-stand"></div><div class="machine-shell"><div class="machine-groove"></div><div class="machine-core"><span>字</span><small>TYPE / ZERO·G</small></div></div>
+<div class="machine-badge">O P <span>—</span> 01</div>
+<div class="machine-serial">IMPRESSION<br>DEVICE 001</div>
+</div>
+<div id="field" aria-label="可被引力影响的漂浮活字"></div>
+<div class="attract-hint" aria-hidden="true"><span class="hint-stroke"></span> GUIDE THE LETTERS <span>↗</span></div>
+<div class="act-bottom"><div class="act-identity"><span>01 — ATTRACTION</span><small>引字 / 吸引自由的文字</small></div>
+<div class="act-buttons"><button id="gravityBtn" class="mini-button" aria-pressed="true">引力：吸附</button><button id="toCompose" class="big-cta">进入排版台 <span aria-hidden="true">↗</span></button></div>
+</div>
+</section>
+<section class="scene scene-compose" id="scene-compose" aria-label="第二幕：排版台" hidden>
+<div class="compose-heading"><span class="chapter-index">02 / COMPOSITION</span><h2>让它们找到<br><em>自己的位置。</em></h2><p>抓取字块，亲手放置它们。<br>你眼前的每次移动，都会留在最终印品上。</p></div>
+<div class="board-outer"><div class="board-registration">REGISTRATION / 02 <span>DRAG TO COMPOSE</span></div><div class="board" id="board" aria-label="可拖动的文字排版画布" tabindex="0">
+<div class="board-heading"><span>O P / 2026</span><span>FIG. 002</span></div><div class="board-orbit" aria-hidden="true"></div><div class="board-baseline" aria-hidden="true"></div>
+<div class="board-art" id="boardArt"></div><div class="board-footer"><span>NO GRAVITY / ONLY IMPRESSION.</span><span>02 — 03</span></div></div>
+<div class="board-side-label">TYPE IS NO LONGER STILL <span>↘</span></div></div>
+<div class="compose-toolbar" role="group" aria-label="排版工具">
+<div class="tool-text"><label for="wordInput">投入自己的文字 <span>ADD YOUR TYPE</span></label><div class="input-line"><input id="wordInput" type="text" maxlength="24" placeholder="写几个字，让它漂浮……" autocomplete="off"><button id="addWord" aria-label="添加文字">加入 ↗</button></div></div>
+<div class="tool-layout"><span class="tool-title">构图 / ARRANGE</span><div class="toolbar-buttons"><button data-layout="orbit" id="layoutOrbit">环形</button><button data-layout="column" id="layoutColumn">纵列</button><button data-layout="scatter" id="layoutScatter">散排</button></div></div>
+<div class="tool-size"><span class="tool-title">所选字块 / SIZE</span><div class="toolbar-buttons"><button id="smaller" aria-label="缩小所选字块">−</button><span id="sizeValue">—</span><button id="bigger" aria-label="放大所选字块">＋</button></div></div>
+<div class="compose-actions"><button class="text-link" id="backAttract">↖ 返回引字</button><button class="big-cta compose-next" id="toPrint">准备落印 <span>↗</span></button></div>
+</div>
+</section>
+<section class="scene scene-imprint" id="scene-imprint" aria-label="第三幕：落印" hidden>
+<div class="imprint-text"><p class="chapter-index">03 / IMPRESSION</p><h2>所有漂浮，<br><em>终将落印。</em></h2><p id="printStatus" role="status" aria-live="polite">印刷机已就位。按下印刷，即可封存这次编排。</p></div>
+<div class="press"><div class="press-rail"></div><div class="press-piston" id="pressPiston"><span>ORBITAL PRESS / 001</span><b>OP</b></div><div class="press-table"><div class="press-sheet"><canvas id="posterPreview" aria-label="由你的排版真正生成的艺术海报"></canvas><span id="sheetPlaceholder">YOUR PRINT<br>IS WAITING.</span></div></div><div class="press-id">PRESSURE / INK / MEMORY</div></div>
+<div class="imprint-controls"><button class="text-link print-back" id="backCompose">↖ 修改排版</button><button class="big-cta print-start" id="printBtn">启动印刷 <span>↘</span></button><button class="big-cta download-btn" id="downloadBtn" hidden>保存我的海报 PNG <span>↓</span></button><button class="text-link restart" id="restartBtn">重新创作 ↺</button></div>
+<div class="edition-mark">EVERY IMPRESSION IS AN ORIGINAL. <span>ORBITAL / 2026</span></div>
+</section>
+</main>
+<nav class="act-progress" aria-label="创作进度"><span class="progress-current" id="stepNumber">01</span><span class="progress-dash"></span><span>03</span><span class="progress-label" id="stepLabel">ATTRACTION / 引字</span></nav>
+</div><script type="module" src="./src/app.mjs"></script></body></html>
