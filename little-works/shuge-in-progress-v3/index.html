@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1c1c1c">
+  <meta name="description" content="SHUGE 的个人网站。电子科学、AI、机器人、音乐、舞台与持续发生的生活。">
+  <meta property="og:title" content="SHUGE — 正在发生">
+  <meta property="og:description" content="做点东西，也认真生活。一个仍在更新的个人档案。">
+  <title>SHUGE — 个人档案 · 2026</title>
+  
+  <style>
+:root{
+ --ink:#17201e;--muted:#586460;--paper:#f4f6f4;--white:#fff;--dark:#111817;--lime:#c9f5a5;--rule:#d7ded9;
+ --sans:Inter,"Helvetica Neue","Noto Sans CJK SC","Noto Sans SC","PingFang SC","Microsoft Yahei",Arial,sans-serif;
+ --serif:"Noto Serif CJK SC","Songti SC","Source Han Serif SC",Georgia,serif;
+ --gutter:clamp(22px,5.4vw,92px);--max:1600px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed}a{color:inherit;text-decoration:none}img,svg,canvas{display:block;max-width:100%}::selection{background:#a1c98a;color:#111817}
+:focus-visible{outline:3px solid #609442;outline-offset:4px}
+[hidden]{display:none!important}
+.skip-link{position:fixed;top:-70px;left:12px;background:#fff;color:#000;padding:12px 18px;z-index:200}
+.skip-link:focus{top:12px}
+.section-shell{padding-inline:var(--gutter);max-width:var(--max);margin-inline:auto}
+.section-caption{font-size:16px;font-weight:600;line-height:1.5;margin:0}
+.site-header{height:85px;padding-inline:var(--gutter);display:flex;align-items:center;gap:45px;position:absolute;inset:0 0 auto;z-index:20;color:#f3f6f1}
+.brand{display:flex;align-items:center;gap:11px;font-size:14px;letter-spacing:.05em;font-weight:720;white-space:nowrap}
+.brand-symbol{width:30px;height:30px;display:grid;place-content:center;background:var(--lime);color:var(--dark);border-radius:50%;font-family:Georgia,serif;font-size:23px;font-style:italic;font-weight:700;line-height:1}.brand-period{color:var(--dark)}
+.desktop-nav{margin-inline:auto;display:flex;align-items:center;gap:34px;font-size:15px;color:#cad6ce}
+.desktop-nav a{transition:color .22s}.desktop-nav a:hover,.desktop-nav a:focus-visible{color:var(--lime)}
+.header-side{font-size:13px;color:#a7b6ac;white-space:nowrap}
+.menu-button,.mobile-menu{display:none}
+.hero{min-height:730px;height:min(900px,100svh);position:relative;color:#e8f0e9;background:var(--dark);display:grid;grid-template-columns:1.18fr .82fr;column-gap:2vw;align-items:center;padding:115px var(--gutter) 98px;overflow:hidden}
+.hero-copy{position:relative;z-index:2;align-self:center;padding-top:25px}
+.hero-hello{font-size:15px;color:#d3ded7;display:flex;align-items:center;gap:12px;white-space:nowrap}.inline-dot{display:inline-block;flex:0 0 7px;width:7px;height:7px;background:var(--lime);border-radius:50%}.hello-tail{color:#84998d;margin-left:12px}
+.hero h1{margin:31px 0 25px;font-size:clamp(62px,6.3vw,116px);font-weight:640;letter-spacing:-.078em;line-height:1.15;white-space:nowrap}
+.hero h1 span{color:var(--lime)}
+.hero-lede{margin:0;color:#b8c4bb;font-size:clamp(16px,1.25vw,20px);line-height:1.88;max-width:580px}
+.hero-actions{display:flex;align-items:center;gap:31px;margin-top:42px}.button-primary{background:var(--lime);color:var(--dark);padding:17px 22px;min-height:54px;display:inline-flex;align-items:center;gap:27px;font-size:15px;font-weight:690;transition:transform .26s,background .26s}.button-primary:hover{transform:translateY(-3px);background:#e5ffc7}.button-primary:active{transform:translateY(0) scale(.98)}
+.text-link{font-size:14px;color:#d4e1d7;display:inline-flex;gap:12px;align-items:center}.text-link:hover{color:var(--lime)}
+.hero-instrument{position:relative;border:2px solid #33433a;background:#15201b;min-height:435px;height:clamp(430px,51vw,580px);align-self:center;isolation:isolate;min-width:0}
+.instrument-top,.instrument-bottom{position:absolute;z-index:3;left:24px;right:24px;display:flex;align-items:center;justify-content:space-between;font-size:13px;letter-spacing:.015em}.instrument-top{top:21px;color:#aabdb0}.instrument-bottom{bottom:45px;align-items:flex-end}.instrument-bottom p{margin:0;text-align:right;font-size:13px;color:#abbcaf;line-height:1.65}.touch-note{display:block;color:#758c7b}.instrument-number{font-size:clamp(43px,4vw,76px);font-weight:420;letter-spacing:-.075em;color:var(--lime);line-height:1}.instrument-unit{font-size:13px;color:#a6b7ab;display:block;margin-top:8px}
+.live-state{display:flex;gap:8px;align-items:center}.live-dot{width:6px;height:6px;background:var(--lime);border-radius:50%}
+#signalCanvas{width:100%;height:100%;touch-action:none;cursor:crosshair}
+.signal-range{position:absolute;bottom:16px;left:24px;right:24px;width:calc(100% - 48px);margin:0;accent-color:var(--lime);height:14px;cursor:pointer}
+.hero-bottom{position:absolute;bottom:28px;left:var(--gutter);right:var(--gutter);display:flex;align-items:center;justify-content:space-between;color:#9eb2a4;font-size:13px}
+.manifesto{padding-block:clamp(120px,14vw,235px) clamp(110px,13vw,200px)}
+.manifesto-grid{display:grid;grid-template-columns:1.52fr .48fr;gap:6vw;margin-top:38px;align-items:end}
+.manifesto h2{font-size:clamp(41px,5.3vw,91px);letter-spacing:-.075em;line-height:1.25;font-weight:600;margin:0}.manifesto h2 em{font-style:normal;font-family:var(--serif);font-weight:520;letter-spacing:-.08em}
+.manifesto-aside{max-width:360px;padding-bottom:3px}.manifesto-aside p{font-size:17px;line-height:1.95;color:#36413d;margin:0 0 21px}.signature-mark{display:flex;gap:20px;align-items:center;font-weight:680;letter-spacing:.04em;margin-top:29px;font-size:14px}.signature-mark svg{width:75px;height:27px;color:#4a7560}
+.selected-section{background:#fff;padding-top:125px;padding-bottom:118px}
+.selected-headrow{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:32px 0 81px}
+.selected-headrow h2{font-size:clamp(43px,5.2vw,89px);font-weight:620;letter-spacing:-.076em;line-height:1.16;margin:0}.selected-headrow p{max-width:260px;color:var(--muted);font-size:16px;line-height:1.9;margin:0 0 6px}
+.projects{display:flex;flex-direction:column;gap:94px}.project-item{min-width:0}.project-cover{position:relative;overflow:hidden;isolation:isolate}.project-feature .project-cover{height:clamp(420px,50vw,760px)}.project-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,3vw,48px)}.project-pair .project-cover{height:clamp(345px,38vw,560px)}.project-wide .project-cover{height:clamp(310px,37vw,490px)}
+.project-info{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-top:24px}.project-info h3{font-size:clamp(27px,2.45vw,40px);letter-spacing:-.053em;font-weight:650;line-height:1.35;margin:8px 0 8px}.project-info p{font-size:15px;line-height:1.75;color:var(--muted);margin:0}.project-type{font-size:13px;color:#50665b}.project-open{border:0;background:transparent;display:flex;align-items:center;gap:10px;padding:8px 0 8px 8px;white-space:nowrap;font-size:14px;align-self:end}.project-open-icon{width:43px;height:43px;border:2px solid #bbc8bf;display:grid;place-items:center;border-radius:50%;transition:background .26s,color .26s,transform .26s;font-size:20px}.project-open:hover .project-open-icon{background:var(--ink);color:#fff;transform:rotate(45deg)}
+/* Every artwork is domain-specific and original. These are explanatory concept illustrations, not product screenshots. */
+.cover-zhixu{background:#1b312a;color:#f1f5e9}.zhixu-top{position:absolute;top:30px;left:32px;right:32px;display:flex;align-items:center;justify-content:space-between;font-size:22px;font-weight:600}.zhixu-top span+span{font-size:13px;font-weight:500;color:#a8c5b2}.zhixu-paper{position:absolute;top:12%;left:36%;width:46%;height:92%;min-width:340px;background:#f8faf4;transform:rotate(-7deg);color:#24362d;padding:42px 9% 35px 7%;display:flex;flex-direction:column;gap:21px}.notebook-index{font-size:13px;letter-spacing:.04em;color:#668273}.zhixu-paper h3{font-family:var(--serif);font-size:clamp(45px,5.2vw,89px);letter-spacing:-.07em;font-weight:480;line-height:1.24;margin:5px 0 auto}.notebook-line{display:flex;gap:23px;border-top:0 solid #cbd6ca;padding-top:10px;font-size:14px}.notebook-line span:first-child{font-size:12px;color:#8a9e8f}.notebook-formula{font-size:25px;font-family:Georgia,serif;color:#759d82}.notebook-formula i{font-style:italic}.zhixu-bottom{position:absolute;bottom:32px;left:32px;font-size:15px;color:#b7cfc0}
+.cover-xiaoya{background:#d2e2d4;color:#254534}.xiaoya-top{position:absolute;top:24px;left:27px;font-size:24px;font-weight:690;z-index:2}.xiaoya-top span{font-size:14px;font-weight:450;margin-left:14px}.xiaoya-center{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center}.calendar{position:absolute;z-index:2;background:#fffefb;width:47%;min-width:175px;min-height:56%;left:12%;top:23%;padding:21px 20px 13px;transform:rotate(-5deg);display:flex;flex-direction:column}.calendar-day{font-size:13px;color:#617368}.calendar-num{font-size:clamp(65px,7.7vw,136px);font-weight:450;line-height:1.05;letter-spacing:-.09em;margin-bottom:auto}.calendar-event{border-top:0 solid #dce6dc;padding:8px 0;display:flex;align-items:center;gap:9px;font-size:12px;white-space:nowrap}.calendar-event b{width:8px;height:8px;border-radius:50%;background:#90ba8a;flex:0 0 auto}.little-sprout{position:absolute;width:46%;height:77%;right:4%;bottom:-12%;transform:rotate(13deg)}
+.cover-fact{background:#212b39;color:#f6f8f8}.fact-top{position:absolute;top:25px;left:27px;right:26px;display:flex;align-items:center;justify-content:space-between;font-size:22px;letter-spacing:-.045em;font-weight:730}.fact-top span{font-size:12px;color:#bcc7d0;font-weight:400;letter-spacing:0}.fact-canvas{position:absolute;top:27%;left:9%;right:9%;bottom:9%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}.fact-statement{background:#e9f1f5;color:#1c3440;padding:14px 26px;font-size:clamp(19px,2.5vw,36px);font-weight:680;white-space:nowrap;transform:rotate(-2deg)}.fact-branch{display:flex;justify-content:center;gap:14px;margin-top:13px}.fact-branch span{font-size:13px;padding:9px 15px;border:2px solid #718796;color:#d8e6e9}.fact-join{font-size:13px;color:#afc4ce}.fact-outcome{background:#99c3b0;color:#17372b;padding:12px 15px;font-size:14px;display:flex;gap:10px;align-items:center}.fact-check{font-size:22px}
+.cover-vault{background:#d9e3e1;color:#1b3436}.vault-top{position:absolute;left:35px;top:28px;right:30px;display:flex;justify-content:space-between;align-items:center;font-size:22px;font-weight:720;letter-spacing:-.04em}.vault-top span{font-size:13px;font-weight:400;letter-spacing:0;color:#557276}.vault-lockers{position:absolute;top:24%;bottom:-3%;left:20%;right:20%;display:flex;gap:17px}.vault-lockers>div{flex:1;background:#abc4c0;border:2px solid #607c78;border-radius:120px 120px 0 0;display:flex;align-items:center;flex-direction:column;justify-content:center;gap:26px;font-size:24px}.vault-lockers>div svg{width:56px;height:56px}.vault-lockers>.vault-active{background:#315b59;color:#ecf1ea;transform:translateY(-23px)}
+.extra-projects{display:flex;justify-content:space-between;gap:25px;align-items:baseline;margin-top:105px;color:#59665f}.extra-projects p{font-size:20px;line-height:1.65;margin:0;max-width:580px}.extra-projects span{font-size:13px}
+.life-section{background:#151c1a;color:#f4f8ef;padding-top:130px;padding-bottom:135px}.life-heading>div{display:flex;align-items:end;justify-content:space-between;gap:35px;margin:30px 0 70px}.life-heading h2{font-size:clamp(49px,6.2vw,100px);font-weight:620;letter-spacing:-.076em;line-height:1.15;margin:0}.life-heading div>p{font-size:17px;color:#aabcb0;max-width:330px;line-height:1.9;margin:0 0 5px}
+.life-panels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.life-panel{min-width:0}.life-art{height:clamp(240px,24vw,355px);overflow:hidden;position:relative;display:flex;justify-content:center;align-items:center}.panel-music .life-art{background:#bdcad2}.panel-robot .life-art{background:#263d40}.panel-stage .life-art{background:#e6e1d8}.panel-row .life-art{background:#b2cbd3}.life-art svg{width:100%;height:100%}.life-copy{padding:24px 2px 0}.life-copy span{font-size:13px;color:#b1c5b8}.life-copy h3{font-size:34px;margin:8px 0 9px;letter-spacing:-.06em;font-weight:600}.life-copy p{margin:0;color:#c0cbc3;font-size:15px;line-height:1.85;max-width:240px}
+.groove{width:250px;height:250px;background:#263c40;border-radius:50%;display:grid;place-items:center;transform:rotate(-20deg);border:8px solid #23343e}.record-center{width:86px;height:86px;border-radius:50%;background:#dae2dc;display:grid;place-items:center;position:relative}.record-center::after{content:'SHUGE';position:absolute;top:27px;left:20px;color:#263941;font-size:10px;font-weight:700;letter-spacing:.05em}.record-dot{width:10px;height:10px;background:#2e4549;border-radius:50%;transform:translateY(16px)}.tone-bars{position:absolute;display:flex;gap:7px;align-items:center;bottom:17px;left:18px;height:35px}.tone-bars i{display:block;width:3px;height:30%;background:#536d7b;border-radius:8px}.tone-bars i:nth-child(2n){height:80%}.tone-bars i:nth-child(3n){height:50%}.tone-bars i:nth-child(5n){height:100%}
+.stage-arc{position:absolute;width:63%;height:88%;border-radius:50% 50% 0 0;background:#c58b68;bottom:-5%;}.stage-spot{position:absolute;top:12%;left:47%;width:1px;height:60%;transform:rotate(22deg);border-left:1px solid #fff;opacity:.7}.stage-spot::before{content:'';position:absolute;left:-80px;top:40px;width:160px;height:230px;background:#f1e6c9;clip-path:polygon(50% 0,100% 100%,0 100%);opacity:.54}.stage-floor{position:absolute;bottom:0;left:0;right:0;height:25%;background:#392a2d;z-index:1}
+.life-note{font-size:13px;color:#8ca196;margin-top:48px}
+.years-section{padding-block:160px 170px}.years-main{margin-top:35px;display:grid;grid-template-columns:.95fr 1.05fr;gap:8vw}.years-main h2{font-size:clamp(43px,5.2vw,83px);letter-spacing:-.075em;line-height:1.18;margin:0 0 30px;font-weight:600}.years-main>div>p{color:#5d6862;line-height:1.85;font-size:16px;max-width:335px}.years-log{border-top:2px solid var(--ink)}.year-trigger{border:0;background:none;display:grid;grid-template-columns:1fr 1.5fr 30px;width:100%;text-align:left;align-items:center;gap:14px;padding:21px 0 24px;color:var(--ink)}.year-trigger span:first-child{font-size:clamp(45px,6vw,86px);letter-spacing:-.08em;font-weight:620;line-height:1.2}.year-trigger span:nth-child(2){font-size:15px;color:#3e5447}.year-plus{font-size:24px;justify-self:end}.year-details{border-top:0 solid #c2d0c4;padding:5px 0 22px 4px}.year-details article{display:grid;grid-template-columns:95px 1fr;gap:12px;margin-top:20px}.year-details time{color:#607467;font-size:14px}.year-details p{margin:0;line-height:1.8;font-size:15px}.years-coming{display:flex;justify-content:space-between;gap:20px;border-top:0 solid #c2d0c4;padding-top:21px;margin-top:10px;color:#6c7b73;font-size:16px}
+.now-section{background:#dbe5df;padding-block:135px 155px}.now-content{display:grid;grid-template-columns:1fr 1fr;gap:7vw}.now-head h2{font-size:clamp(48px,5.8vw,95px);line-height:1.17;letter-spacing:-.077em;font-weight:620;margin:32px 0}.now-head>p:last-child{font-size:14px;color:#52675a}.now-notes{align-self:center;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.now-tab{border:0;background:transparent;padding:15px 4px 18px;color:#6a8473;font-size:16px;text-align:center;border-bottom:2px solid #b2c5b9}.now-tab.active{color:#162e20;border-color:#1c3e2d;font-weight:680}.now-sheet{grid-column:1/-1;min-height:285px;display:flex;flex-direction:column;justify-content:space-between;background:#f9fbf7;padding:37px 36px 30px;margin-top:22px;position:relative;}.now-sheet p{font-size:clamp(22px,2.05vw,34px);letter-spacing:-.04em;line-height:1.75;max-width:520px;margin:0}.now-sheet>span{font-size:13px;color:#6e8072}.note-corner{position:absolute;right:0;top:0;width:45px;height:45px;background:#dbe5df;clip-path:polygon(0 0,100% 100%,100% 0)}
+.site-footer{background:#101715;color:#e5eae5;padding-block:90px 35px}.footer-head{display:flex;justify-content:space-between;align-items:center}.footer-head p{font-size:19px;margin:0}.footer-head a{width:48px;height:48px;border:2px solid #718278;display:grid;place-items:center;border-radius:50%;font-size:24px}.footer-head a:hover{background:var(--lime);color:var(--dark)}.footer-name{font-weight:690;letter-spacing:-.11em;font-size:clamp(120px,24vw,410px);line-height:1.12;white-space:nowrap;margin:12px 0 40px}.footer-name span{color:var(--lime)}.footer-bottom{display:flex;justify-content:space-between;gap:20px;border-top:0 solid #43514a;padding-top:28px;color:#a4b2a8;font-size:14px}.footer-bottom a{color:#f5f9f4}.footer-bottom a:hover{color:var(--lime)}
+.project-dialog{width:min(1050px,calc(100vw - 34px));max-height:min(810px,90dvh);padding:clamp(25px,5vw,70px);background:#f4f6f4;border:0;color:#15231b;overflow:auto}.project-dialog::backdrop{background:rgba(5,12,8,.72);}.dialog-shown{overflow:hidden}.dialog-close{display:flex;gap:15px;align-items:center;position:absolute;right:25px;top:20px;border:0;background:none;color:#253b2c;font-size:14px;padding:8px}.dialog-close span{font-size:24px}.dialog-grid{display:grid;grid-template-columns:1fr 1fr;gap:5vw;padding-top:35px}.dialog-left p{font-size:14px;color:#526f5e}.dialog-left h2{font-size:clamp(45px,5vw,76px);line-height:1.2;letter-spacing:-.072em;margin:30px 0}.dialog-left>span{color:#768a79}.dialog-summary{font-size:26px!important;font-weight:570;letter-spacing:-.04em;color:#15231b!important}.dialog-right p{font-size:16px;line-height:1.85;color:#405a48;margin:0 0 24px}.dialog-right .dialog-muted{font-size:13px;color:#728478}.dialog-tags{display:flex;gap:9px;flex-wrap:wrap}.dialog-tags span{padding:6px 12px;border:2px solid #b8c8bb;color:#3c5b49;font-size:13px}
+.reveal-eligible{transition:opacity .7s ease,translate .7s cubic-bezier(.22,.8,.25,1)}.reveal-eligible.entered{opacity:1;translate:0 0}
+@media (hover:hover){.project-cover{transition:filter .45s}.project-item:hover .project-cover{filter:saturate(1.1)}.life-panel:hover .groove{transform:rotate(2deg)}.groove{transition:transform .75s cubic-bezier(.2,.75,.15,1)}}
+@media(max-width:1100px){.hero{height:auto;min-height:780px;grid-template-columns:1fr 1fr}.hero h1{font-size:clamp(55px,6.7vw,82px)}.hello-tail{display:none}.manifesto-grid{grid-template-columns:1.1fr .9fr}.life-panels{grid-template-columns:1fr 1fr}.life-art{height:340px}.vault-lockers{left:13%;right:13%}.project-pair .project-cover{height:470px}}
+@media(max-width:800px){:root{--gutter:26px}.site-header{height:69px}.desktop-nav,.header-side{display:none}.site-header{justify-content:space-between}.menu-button{width:43px;height:43px;border:2px solid #52635a;background:none;color:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px}.menu-button span{height:2px;background:#e4eee5;width:19px;transition:transform .25s}.menu-button[aria-expanded=true] span:first-child{transform:translateY(3.5px) rotate(45deg)}.menu-button[aria-expanded=true] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}.mobile-menu{display:flex;position:absolute;z-index:19;left:0;right:0;top:69px;background:#15201a;color:#f3f7ef;padding:10px var(--gutter) 27px;flex-direction:column;}.mobile-menu a{font-size:19px;padding:15px 0;border-bottom:0 solid #39493f}.hero{grid-template-columns:1fr;min-height:0;padding-top:125px;padding-bottom:98px;gap:47px;height:auto}.hero-copy{padding-top:0}.hero h1{font-size:clamp(50px,9vw,82px)}.hero-instrument{height:360px;min-height:0;max-width:560px;width:100%;justify-self:center}.hero-bottom{bottom:22px}.manifesto-grid,.years-main,.now-content{grid-template-columns:1fr;gap:36px}.manifesto-aside{max-width:650px}.selected-headrow{align-items:start;flex-direction:column;margin-bottom:50px}.selected-headrow p{max-width:500px}.project-pair{grid-template-columns:1fr;gap:78px}.project-pair .project-cover{height:520px}.life-heading>div{align-items:start;flex-direction:column}.life-art{height:370px}.years-main{gap:55px}.now-content{gap:35px}.footer-name{font-size:23vw}.dialog-grid{grid-template-columns:1fr;gap:15px}.dialog-left h2{margin:10px 0}.dialog-right .dialog-summary{margin-top:0}.dialog-close{top:10px;right:15px}}
+@media(max-width:540px){:root{--gutter:20px}.hero{padding-top:113px;padding-bottom:84px;gap:35px}.hero-hello{font-size:13px;gap:8px}.hero h1{margin:25px 0 22px;font-size:clamp(43px,10.8vw,61px);letter-spacing:-.079em;line-height:1.24}.hero-lede{font-size:15px;line-height:1.88}.hero-lede br{display:none}.hero-actions{margin-top:27px;gap:16px;align-items:start;flex-direction:column}.button-primary{min-height:50px;padding:13px 18px}.text-link{padding:8px 0}.hero-instrument{height:300px;width:100%}.instrument-top,.instrument-bottom{left:17px;right:17px}.instrument-top{top:14px;font-size:11px}.instrument-bottom{bottom:40px}.instrument-bottom p,.touch-note{font-size:11px}.instrument-number{font-size:43px}.signal-range{left:17px;right:17px;width:calc(100% - 34px);bottom:12px}.hero-bottom{font-size:11px;bottom:17px}.manifesto{padding-block:100px 108px}.manifesto h2{font-size:clamp(36px,9.5vw,55px)}.manifesto-grid{margin-top:32px}.manifesto-aside p{font-size:16px}.selected-section{padding-top:95px;padding-bottom:95px}.selected-headrow h2{font-size:clamp(37px,9.5vw,59px)}.selected-headrow p{font-size:15px}.projects{gap:71px}.project-feature .project-cover{height:410px}.project-pair .project-cover{height:400px}.project-wide .project-cover{height:310px}.project-info{padding-top:18px;align-items:start}.project-info h3{font-size:29px}.project-info p{font-size:14px}.project-type{font-size:12px}.project-open{font-size:0}.project-open-icon{width:40px;height:40px;font-size:19px}.zhixu-paper{min-width:0;left:25%;width:68%;top:17%;height:88%;padding:27px 28px;gap:14px}.zhixu-paper h3{font-size:55px}.notebook-formula{font-size:19px}.zhixu-top{left:20px;right:20px;top:18px;font-size:19px}.zhixu-top span+span{font-size:11px}.zhixu-bottom{bottom:15px;left:20px;font-size:12px;max-width:130px}.calendar{top:22%;width:53%;min-width:155px;left:8%;padding:14px}.calendar-num{font-size:82px}.calendar-event{padding:6px 0;font-size:10px}.fact-statement{font-size:20px}.fact-branch{gap:7px}.fact-branch span{font-size:11px;padding:8px}.fact-top{left:19px;top:17px;font-size:20px}.fact-top span{font-size:10px}.fact-canvas{left:3%;right:3%}.vault-top{left:18px;right:18px;top:17px;font-size:20px}.vault-top span{font-size:10px}.vault-lockers{left:8%;right:8%;gap:7px;top:31%;bottom:-4%}.vault-lockers>div{font-size:15px;gap:18px}.vault-lockers>div svg{width:38px}.extra-projects{margin-top:70px;flex-direction:column}.extra-projects p{font-size:16px}.life-section{padding-top:100px;padding-bottom:90px}.life-heading h2{font-size:clamp(43px,11vw,66px)}.life-heading>div{margin-bottom:45px}.life-heading div>p{font-size:15px}.life-panels{grid-template-columns:1fr 1fr;gap:19px 14px}.life-art{height:200px}.groove{width:155px;height:155px}.record-center{width:53px;height:53px}.record-center::after{font-size:8px;top:15px;left:9px}.record-dot{transform:translateY(12px)}.life-copy{padding-top:13px}.life-copy h3{font-size:27px;margin:4px 0}.life-copy p{font-size:13px}.life-copy span{font-size:12px}.life-note{margin-top:36px;font-size:12px}.years-section{padding-block:112px 120px}.years-main h2{font-size:clamp(42px,10vw,60px)}.year-trigger{grid-template-columns:1fr 30px;gap:6px}.year-trigger span:first-child{font-size:63px}.year-trigger span:nth-child(2){grid-column:1/-1;grid-row:2}.year-plus{grid-column:2;grid-row:1}.year-details article{grid-template-columns:60px 1fr}.years-coming{font-size:14px}.now-section{padding-block:106px 120px}.now-head h2{font-size:clamp(40px,10vw,62px)}.now-tab{font-size:14px}.now-sheet{padding:29px 22px 23px;min-height:265px;}.now-sheet p{font-size:23px}.site-footer{padding-block:70px 28px}.footer-head p{font-size:15px}.footer-name{font-size:22.5vw;margin-block:40px 25px}.footer-bottom{flex-wrap:wrap;font-size:12px}.footer-bottom span:nth-child(2){display:none}.project-dialog{max-height:92dvh;padding:46px 20px 24px}.dialog-left h2{font-size:44px}}
+@media(max-width:360px){.hero h1{font-size:42px}.hero-instrument{height:270px}.zhixu-paper h3{font-size:45px}.life-art{height:164px}.groove{width:125px;height:125px}.record-center{width:48px;height:48px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* SHUGE V3 — drawn direction: type-only-statement / name-across-the-middle.
+   Real original Taste-Skill draw process selected a typographic monument, not another hero graphic.
+   Reference behaviour: editorial typography; no images on first screen; charcoal/sage palette. */
+:root{--bg:#1c1c1c;--surface:#262626;--ink:#f1f1ef;--muted:#9a9b96;--accent:#8fa68e;--accent-ink:#1c1c1c;
+--paper:#f0efeb;--dark:#1c1c1c;--lime:#8fa68e;--rule:#d6d5cf;--gutter:clamp(19px,3.5vw,58px);
+--sans:"Jost","Arimo","Noto Sans CJK SC","Microsoft Yahei",Arial,sans-serif;
+--serif:"Bodoni Moda","EB Garamond","Noto Serif CJK SC",Georgia,serif}
+body{background:var(--paper);color:#1c1c1c}
+.site-header{height:92px;padding-inline:var(--gutter);gap:35px;color:#ecece9}
+.brand{font-size:17px;letter-spacing:-.035em}.brand-symbol{display:none}
+.desktop-nav{margin-left:auto;margin-right:0;gap:31px;color:#ecece9}
+.header-side{display:none}
+.hero.hero-type{min-height:760px;height:100svh;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:0;padding:125px var(--gutter) 39px;background:#1c1c1c;color:#f1f1ef;overflow:hidden}
+.hero-top-note{position:absolute;top:137px;left:var(--gutter);max-width:410px;display:flex;flex-direction:column;align-items:start;gap:25px;z-index:1}
+.hero-top-note p,.hero-bottom-note p{font-size:clamp(15px,1.3vw,19px);line-height:1.45;margin:0;letter-spacing:-.015em}
+.hero-action{background:var(--accent);color:var(--accent-ink);min-height:50px;padding:13px 21px;display:inline-flex;align-items:center;gap:38px;font-size:15px;font-weight:650;transition:background .2s,transform .2s}
+.hero-action:hover{background:#b2c2ad;transform:translateY(-2px)}
+.hero-type h1{font-family:"Arimo","Arial Black","DejaVu Sans",Arial,sans-serif;font-weight:800;white-space:nowrap;text-align:center;font-size:clamp(100px,24.3vw,420px);line-height:.85;letter-spacing:-.108em;display:block;margin:0 0 0 -.08em;padding:0;transform:translateY(2vh);color:#f1f1ef;max-width:none}
+.hero-bottom-note{position:absolute;bottom:38px;left:var(--gutter);right:var(--gutter);display:flex;justify-content:space-between;align-items:end;gap:30px;color:#b4b4af}
+.hero-bottom-note a{font-size:15px;color:#f1f1ef;white-space:nowrap}
+.signal-scene{background:#c8c5ba;padding:145px var(--gutter) 128px;color:#1c1c1c;display:grid;grid-template-columns:minmax(280px,.76fr) minmax(500px,1.24fr);grid-template-rows:1fr auto;gap:24px 7vw;align-items:center}
+.signal-heading{align-self:center;max-width:590px}.signal-heading>p{margin:0 0 28px;color:#5b6159;font-size:17px}.signal-heading h2{font-size:clamp(45px,5.2vw,90px);letter-spacing:-.075em;line-height:1.15;font-weight:610;margin:0 0 29px}.signal-heading>span{font-size:15px}
+.signal-scene .hero-instrument{width:100%;height:min(38vw,510px);min-height:420px;align-self:center;border:0;background:#242a25;}
+.signal-caption{grid-column:2;max-width:540px;font-size:14px;color:#50564f;line-height:1.65;margin:0}
+.signal-scene .instrument-top{font-size:13px}
+.signal-scene .instrument-unit{font-size:13px}
+.manifesto{padding-top:170px;padding-bottom:170px}.manifesto h2{font-family:var(--serif);font-weight:530;letter-spacing:-.05em}
+.manifesto-grid{gap:10vw}.manifesto-aside p{font-size:19px;line-height:1.8}
+.selected-section{background:#e6e8e0;padding-top:128px;padding-bottom:175px}
+.selected-intro{padding-bottom:43px}.selected-headrow h2{font-size:clamp(56px,7vw,115px);line-height:1.08;font-weight:640}
+.work-index{padding-block:38px 104px;font-size:clamp(36px,5.6vw,86px);letter-spacing:-.062em;line-height:1.35;font-weight:640;max-width:1550px}
+.work-index button{color:#1c1c1c;background:none;border:0;padding:0;line-height:inherit;font:inherit;letter-spacing:inherit;vertical-align:baseline;transition:color .2s;position:relative}
+.work-index button:hover,.work-index button:focus-visible{color:#4a7751}.work-index .index-arrow{font-size:.33em;vertical-align:top;display:inline-block;transform:translateY(.2em);margin-left:.15em;letter-spacing:0}
+.index-separator{color:#a4aaa4}
+.projects{gap:115px}.project-pair{gap:3.5vw}.project-feature .project-cover{height:clamp(480px,56vw,760px)}
+.project-info{padding-top:20px}.project-info h3{font-size:clamp(28px,3vw,44px);font-weight:650}.project-type{font-size:14px}
+.project-item{scroll-margin-top:100px}.project-cover{border-radius:0;}
+.life-section{background:#1c1c1c}.life-heading h2{font-family:var(--serif);font-weight:500}.life-copy h3{font-weight:590}
+.year-details,.years-coming{border-top:0!important}.years-log{border-top:3px solid #1c1c1c}.year-trigger{border-bottom:0 solid #bbbdb7}.year-details{background:#e6e8e0;padding:25px 25px 42px}
+.now-section{background:#c8c5ba}.now-sheet{border:0;border-radius:0;background:#e9e7df}.now-tab{border:0;border-bottom:2px solid transparent}.now-tab[aria-pressed=true]{border-bottom-color:#252c26}
+.site-footer{background:#1c1c1c}.footer-name{letter-spacing:-.095em}.site-footer .footer-name span{display:none}
+/* Only real floating menus/dialogs may cast shadows. */
+.mobile-menu{background:#252525}
+.project-dialog{}
+@media(max-width:1100px){.hero-type h1{font-size:23.7vw}.signal-scene{grid-template-columns:1fr;gap:52px}.signal-scene .hero-instrument{max-width:800px;height:480px}.signal-caption{grid-column:1}.signal-heading h2{max-width:800px}}
+@media(max-width:800px){.site-header{height:72px}.menu-button{border:0;width:48px;height:48px}.mobile-menu{top:72px;padding-bottom:20px}.mobile-menu a{border-bottom:0}.hero.hero-type{min-height:680px;height:100svh;padding:0 var(--gutter)}.hero-top-note{top:125px}.hero-type h1{font-size:24.5vw;margin-left:-.06em;transform:none}.hero-bottom-note{bottom:45px}.signal-scene{padding:100px var(--gutter) 110px}.signal-scene .hero-instrument{height:430px;min-height:0}.work-index{padding-block:30px 75px;font-size:clamp(36px,6.6vw,68px)}.selected-section{padding-top:120px}.life-section{padding-top:130px}}
+@media(max-width:540px){.hero.hero-type{min-height:660px;padding:0 17px}.site-header{height:72px}.hero-top-note{top:126px;left:20px;right:20px;gap:19px}.hero-top-note p{font-size:16px}.hero-action{min-height:47px}.hero-type h1{font-size:24.5vw;letter-spacing:-.105em;line-height:1;margin:0;transform:translateY(8px)}.hero-bottom-note{left:20px;right:20px;bottom:42px;flex-direction:column;align-items:start;gap:23px}.hero-bottom-note p{font-size:15px}.hero-bottom-note a{font-size:15px}.signal-scene{display:block;padding:112px 20px 85px}.signal-heading>p{font-size:15px;margin-bottom:23px}.signal-heading h2{font-size:clamp(42px,10.8vw,57px);margin-bottom:29px}.signal-heading>span{font-size:14px}.signal-scene .hero-instrument{height:285px;min-height:0;max-width:100%;margin-top:54px}.signal-caption{font-size:13px;margin-top:21px}.instrument-top{font-size:11px}.manifesto{padding-block:125px}.work-index{padding-block:28px 65px;font-size:clamp(31px,9.1vw,47px)}.work-index .index-arrow{font-size:.35em}.selected-section{padding:100px 0 120px}.projects{gap:80px}.selected-headrow h2{font-size:52px}.project-info h3{font-size:29px}.year-details{padding-inline:10px}.life-section{padding-top:110px}.now-sheet{}.site-footer{padding-top:90px}}
+@media(max-width:360px){.hero-type h1{font-size:24vw}.signal-scene .hero-instrument{height:270px}.work-index{font-size:30px}}
+@media(prefers-reduced-motion:reduce){.hero-action{transition:none;transform:none!important}}
+
+</style>
+  
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+<div id="top"></div>
+<header class="site-header" id="siteHeader">
+  <a class="brand" href="#top" aria-label="SHUGE，返回首页"><span class="brand-symbol" aria-hidden="true">s<span class="brand-period">.</span></span><span>SHUGE</span></a>
+  <nav class="desktop-nav" aria-label="网站导航"><a href="#selected">作品</a><a href="#life">生活</a><a href="#years">时间</a><a href="#now">此刻</a></nav>
+  <span class="header-side">一个人的开放档案</span>
+  <button id="menuButton" class="menu-button" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="打开导航菜单"><span></span><span></span></button>
+</header>
+<nav id="mobileMenu" class="mobile-menu" hidden aria-label="手机导航"><a href="#selected">作品</a><a href="#life">生活</a><a href="#years">时间</a><a href="#now">此刻</a></nav>
+<main id="main">
+  <section class="hero hero-type" aria-labelledby="heroHeading">
+    <div class="hero-top-note"><p>西安交通大学 · 电子科学与技术<br>把好奇心变成可以运行的东西。</p><a href="#selected" class="hero-action">翻阅作品 <span aria-hidden="true">↗</span></a></div>
+    <h1 id="heroHeading">SHUGE</h1>
+    <div class="hero-bottom-note"><p>写代码。做音乐。研究机器人。<br>过一种值得记下来的大学生活。</p><a href="#life">屏幕之外 <span aria-hidden="true">↘</span></a></div>
+  </section>
+  <section class="signal-scene" id="signal" aria-labelledby="signalHeading">
+    <div class="signal-heading"><p>电子与音乐</p><h2 id="signalHeading">不同的事物，<br>有时长着相同的波形。</h2><span>可交互的信号实验</span></div>
+    <div class="hero-instrument" aria-label="可交互的原创信号波形展示">
+      <div class="instrument-top"><span>可交互的信号</span><span class="live-state"><span class="live-dot"></span>实时响应</span></div>
+      <canvas id="signalCanvas" width="960" height="610" aria-label="一条会随着指针位置变化的光绿色电子信号曲线"></canvas>
+      <div class="instrument-bottom"><div><span class="instrument-number" id="signalNumber">41.7</span><span class="instrument-unit">模拟频率参数</span></div><p>移动光标，<br>改变这条信号。<span class="touch-note">触碰也可以。</span></p></div>
+      <input id="signalRange" type="range" min="10" max="90" value="42" aria-label="调节波形频率" class="signal-range">
+    </div>
+    <p class="signal-caption">移动鼠标或滑动下方的调节条，让信号改变。它是一段原创的视觉程序，没有把模拟参数伪装成真实测量值。</p>
+  </section>
+
+  <section class="manifesto section-shell" aria-labelledby="manifestoHeading">
+    <p class="section-caption">关于我</p>
+    <div class="manifesto-grid">
+      <h2 id="manifestoHeading">我总在想：<br><em>能做出来吗？</em></h2>
+      <div class="manifesto-aside"><p>读电子科学与技术，让我对机器怎样工作产生兴趣；写代码，让一些念头有了形状。</p><p>我还在乐队、机器人社团和话剧团之间来回跑。这里存放作品，也存放构成我的那些日常。</p><div class="signature-mark">SHUGE <svg viewBox="0 0 80 30" role="img" aria-label="签名线条"><path d="M1 20c16-28 23 20 40-3 8-9 14-8 18 1 7 16 12-13 20-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+    </div>
+  </section>
+
+  <section class="selected-section" id="selected" aria-labelledby="selectedHeading">
+    <div class="section-shell selected-intro"><p class="section-caption">我做的东西</p><div class="selected-headrow"><h2 id="selectedHeading">让想法<br>长出形状。</h2><p>几件有代表性的作品。它们的方向不同，但都从一个真实的问题开始。</p></div></div>
+    <div class="work-index section-shell" aria-label="精选作品索引">
+      <button type="button" data-open="zhixu">知序 AI 学院<span class="index-arrow" aria-hidden="true">↗</span></button><span class="index-separator">，</span>
+      <button type="button" data-open="xiaoya">小芽 LifeLab<span class="index-arrow" aria-hidden="true">↗</span></button><span class="index-separator">，</span>
+      <button type="button" data-open="factguard">FactGuard<span class="index-arrow" aria-hidden="true">↗</span></button><span class="index-separator">，</span>
+      <button type="button" data-open="rolevault">RoleVault<span class="index-arrow" aria-hidden="true">↗</span></button><span class="index-separator">。</span>
+    </div>
+    <div class="projects section-shell">
+      <article class="project-feature project-item" data-kind="zhixu">
+        <div class="project-cover cover-zhixu" aria-label="知序 AI 学院的原创概念插画，不是软件截图">
+          <div class="zhixu-top"><span>知序</span><span>Learning, differently.</span></div>
+          <div class="zhixu-paper"><div class="notebook-index">从问题开始</div><h3>为什么<br>会这样？</h3><div class="notebook-line"><span aria-hidden="true">•</span><span>提出一个猜想</span></div><div class="notebook-line"><span aria-hidden="true">•</span><span>让理解自己发生</span></div><div class="notebook-formula">∫ <i>curiosity</i> dt</div></div>
+          <div class="zhixu-bottom">一份关于如何学习的实验</div>
+        </div>
+        <div class="project-info"><div><span class="project-type">AI · 学习体验</span><h3>知序 AI 学院</h3><p>希望让 AI 帮助人真正理解，而不只是更快得到答案。</p></div><button class="project-open" type="button" data-open="zhixu" aria-label="打开知序 AI 学院的项目故事"><span>了解这个项目</span><span class="project-open-icon" aria-hidden="true">↗</span></button></div>
+      </article>
+      <div class="project-pair">
+        <article class="project-item" data-kind="xiaoya"><div class="project-cover cover-xiaoya" aria-label="小芽 LifeLab 的原创植物与日历概念插画，不是软件截图"><div class="xiaoya-top">小芽 <span>LifeLab</span></div><div class="xiaoya-center"><div class="calendar"><span class="calendar-day">星期三</span><span class="calendar-num">21</span><div class="calendar-event"><b></b> 写一点代码</div><div class="calendar-event"><b></b> 去排练</div><div class="calendar-event"><b></b> 记得吃饭</div></div><svg class="little-sprout" viewBox="0 0 190 260" aria-hidden="true"><path d="M98 234c-6-50 0-102 6-151" fill="none" stroke="#345C46" stroke-width="6" stroke-linecap="round"/><path d="M103 133C48 135 25 98 34 65c54-2 78 30 69 68Z" fill="#83A88F"/><path d="M102 102c0-51 22-78 64-85 7 52-11 80-64 85Z" fill="#417459"/><path d="M101 190c30-40 50-45 79-38-4 39-33 55-79 38Z" fill="#BCD0B7"/></svg></div></div><div class="project-info"><div><span class="project-type">AI Agent · 日常生活</span><h3>小芽 LifeLab</h3><p>让大学生活的安排有一点陪伴，也有一点呼吸感。</p></div><button class="project-open" type="button" data-open="xiaoya" aria-label="打开小芽的项目故事"><span>了解这个项目</span><span class="project-open-icon" aria-hidden="true">↗</span></button></div></article>
+        <article class="project-item" data-kind="factguard"><div class="project-cover cover-fact" aria-label="FactGuard 的原创证据核验流程示意图，不是软件截图"><div class="fact-top">FACTGUARD<span>What can we actually prove?</span></div><div class="fact-canvas"><div class="fact-statement">这条信息可靠吗？</div><div class="fact-branch"><span>来源 A</span><span>来源 B</span><span>来源 C</span></div><div class="fact-join">↓ 交叉核验</div><div class="fact-outcome"><span class="fact-check" aria-hidden="true"></span> 结论与证据保持一致</div></div></div><div class="project-info"><div><span class="project-type">Agent Skill · 信息可信度</span><h3>FactGuard</h3><p>让结论有来源，让不确定性也能够被说明。</p></div><button class="project-open" type="button" data-open="factguard" aria-label="打开 FactGuard 的项目故事"><span>了解这个项目</span><span class="project-open-icon" aria-hidden="true">↗</span></button></div></article>
+      </div>
+      <article class="project-wide project-item" data-kind="rolevault"><div class="project-cover cover-vault" aria-label="RoleVault 的原创记忆隔离概念插画，不是软件截图"><div class="vault-top">ROLEVAULT <span>Memory needs boundaries.</span></div><div class="vault-lockers"><div><span>工作</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v11H5z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div><div class="vault-active"><span>生活</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v11H5z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div><div><span>学习</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v11H5z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div></div></div><div class="project-info"><div><span class="project-type">隐私 · Agent 记忆</span><h3>RoleVault</h3><p>让 AI 记住有用的，也尊重那些应该被遗忘的边界。</p></div><button class="project-open" type="button" data-open="rolevault" aria-label="打开 RoleVault 的项目故事"><span>了解这个项目</span><span class="project-open-icon" aria-hidden="true">↗</span></button></div></article>
+    </div>
+    <div class="section-shell extra-projects"><p>还有 Mice Hole、3D 校园，以及不断冒出来的小实验。它们会逐渐出现在这里。</p><span>更多作品正在整理</span></div>
+  </section>
+
+  <section class="life-section" id="life" aria-labelledby="lifeHeading"><div class="section-shell life-heading"><p class="section-caption">屏幕之外</p><div><h2 id="lifeHeading">别的时间，<br>我也很忙。</h2><p>音乐、机器人、舞台和运动。它们和写代码一样，都是生活中重要的部分。</p></div></div>
+    <div class="life-panels section-shell">
+      <article class="life-panel panel-music"><div class="life-art record-art"><div class="groove"><div class="record-center"><span class="record-dot"></span></div></div><div class="tone-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="life-copy"><h3>音乐</h3><p>乐队排练，演奏，和反复听不腻的声音。</p></div></article>
+      <article class="life-panel panel-robot"><div class="life-art robot-art"><svg viewBox="0 0 340 320" aria-hidden="true"><g fill="none" stroke="#dde6e3" stroke-width="2"><path d="M75 222 170 82l92 140z"/><path d="M75 222h187M170 82v169M75 222l115-45 72 45M170 82l20 95"/></g><g fill="#cff391"><circle cx="170" cy="82" r="13"/><circle cx="75" cy="222" r="14"/><circle cx="262" cy="222" r="14"/><circle cx="190" cy="177" r="8"/></g><g fill="#dde6e3"><circle cx="170" cy="251" r="6"/><circle cx="245" cy="126" r="6"/><circle cx="105" cy="118" r="5"/></g></svg></div><div class="life-copy"><h3>机器人</h3><p>在 RoboCup 里，把想法一点点变成能行动的系统。</p></div></article>
+      <article class="life-panel panel-stage"><div class="life-art stage-art"><div class="stage-arc"></div><div class="stage-floor"></div><div class="stage-spot"></div></div><div class="life-copy"><h3>话剧</h3><p>走进排练厅，练习用另一种方式表达。</p></div></article>
+      <article class="life-panel panel-row"><div class="life-art row-art"><svg viewBox="0 0 340 320" aria-hidden="true"><g fill="none" stroke="#314f59" stroke-width="2"><path d="M-10 201Q55 165 122 201t132 0t132 0M-10 226Q55 190 122 226t132 0t132 0M-10 251Q55 215 122 251t132 0t132 0"/></g><path d="M84 148h172L225 166H115z" fill="#234c58"/><path d="m170 148 39-80" stroke="#234c58" stroke-width="6" stroke-linecap="round"/><circle cx="169" cy="119" r="12" fill="#234c58"/></svg></div><div class="life-copy"><h3>运动</h3><p>赛艇与训练。提醒自己，屏幕以外的世界很大。</p></div></article>
+    </div><p class="life-note section-shell">这里使用的是与兴趣相关的原创概念图。真实照片和录音还没有加入。</p>
+  </section>
+
+  <section class="years-section section-shell" id="years" aria-labelledby="yearsHeading"><p class="section-caption">时间</p><div class="years-main"><div><h2 id="yearsHeading">从这里，<br>慢慢往后写。</h2><p>过去的版本不会丢失。未来也不需要提前写好。</p></div><div class="years-log"><button class="year-trigger" id="yearTrigger" type="button" aria-expanded="true" aria-controls="yearDetails"><span>2026</span><span>进入大学；很多事情从这里开始</span><span class="year-plus" aria-hidden="true">−</span></button><div id="yearDetails" class="year-details"><article><time>九月</time><p>开始在西安交通大学学习电子科学与技术。</p></article><article><time>十月</time><p>完成知序、小芽、FactGuard 与 RoleVault 的参赛提交。</p></article><article><time>这一年</time><p>尝试把技术、创作和大学生活接在一起。</p></article></div><div class="years-coming"><span>2027 →</span><span>这一页，还空着。</span></div></div></div></section>
+
+  <section class="now-section" id="now" aria-labelledby="nowHeading"><div class="section-shell now-content"><div class="now-head"><p class="section-caption">此刻</p><h2 id="nowHeading">最近，<br>又在忙什么？</h2><p>记录于 2026 年 10 月</p></div><div class="now-notes" role="group" aria-label="此刻的三张笔记"><button class="now-tab active" type="button" data-note="learning" aria-pressed="true">学些什么</button><button class="now-tab" type="button" data-note="building" aria-pressed="false">做些什么</button><button class="now-tab" type="button" data-note="living" aria-pressed="false">过些什么</button><div class="now-sheet" id="nowSheet" aria-live="polite"><div class="note-corner"></div><p id="nowText">在电子科学与技术的课堂里打基础，也在课本外寻找真正想弄明白的问题。</p><span id="nowFoot">Learning, slowly and seriously.</span></div></div></div></section>
+</main>
+<footer class="site-footer"><div class="section-shell"><div class="footer-head"><p>这本档案还没写完。</p><a href="#top" aria-label="返回顶部">↑</a></div><div class="footer-name">SHUGE<span>.</span></div><div class="footer-bottom"><span>© 2026 SHUGE</span><span>下一次打开，也许会多一点东西。</span><a href="https://github.com/ndshuge" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a></div></div></footer>
+<dialog id="projectDialog" class="project-dialog" aria-labelledby="dialogTitle"><button class="dialog-close" id="dialogClose" aria-label="关闭项目详情" type="button">关闭 <span aria-hidden="true">×</span></button><div class="dialog-grid"><div class="dialog-left"><p id="dialogCategory"></p><h2 id="dialogTitle"></h2><span id="dialogYear">2026</span></div><div class="dialog-right"><p class="dialog-summary" id="dialogSummary"></p><p id="dialogStory"></p><p class="dialog-muted">项目介绍基于已知资料整理。真实产品截图与经核实的演示链接将后续加入。</p><div class="dialog-tags" id="dialogTags"></div></div></div></dialog>
+<script>
+/* SHUGE V3: real Canvas 2D signal; native Web Animations API for short, interruptible UI states. */
+const PROJECTS = {
+  zhixu: {category:'AI / 学习体验', title:'知序 AI 学院', summary:'面向深度理解的个性化智能学伴。',story:'为什么做完一道题，仍然有可能没有真正理解？这是知序想要回答的问题。它探索如何组织知识、提供逐步引导和学习反馈，让 AI 更像能帮助理解的学伴。', tags:['AI 教育','知识组织','交互设计']},
+  xiaoya: {category:'AI AGENT / 日常生活', title:'小芽 LifeLab',summary:'面向大学生的自主式生活管理 AI Agent。',story:'大学生活从来不是一张干净的待办清单。课程、社团、身体和兴趣常常交错出现。小芽尝试把日常管理变成有陪伴感、也可持续的一件事。',tags:['生活管理','Agent','大学生活']},
+  factguard: {category:'AGENT SKILL / 可信信息',title:'FactGuard',summary:'多源事实核验 Skill。',story:'一个结论看上去可信，还不代表它真的有根据。FactGuard 关注交叉来源、忠实表达与自我审查，希望让核验过程和证据边界都能被清晰看到。',tags:['信息核验','AI 可靠性','多源证据']},
+  rolevault: {category:'AI / 记忆与隐私',title:'RoleVault',summary:'角色隔离与按需遗忘。',story:'个性化 AI 需要记忆，但记忆也需要边界。RoleVault 探索不同角色之间的信息隔离，以及用户对记住什么、何时忘记拥有怎样的控制权。',tags:['隐私','记忆边界','Agent']}
+};
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const dialog = document.getElementById('projectDialog');
+let triggerForDialog = null;
+const $ = id => document.getElementById(id);
+function openProject(key, trigger){
+  const d=PROJECTS[key]; if(!d) return;
+  triggerForDialog=trigger;
+  $('dialogCategory').textContent=d.category; $('dialogTitle').textContent=d.title;
+  $('dialogSummary').textContent=d.summary; $('dialogStory').textContent=d.story;
+  const tags=$('dialogTags');tags.replaceChildren(...d.tags.map(t=>{const s=document.createElement('span');s.textContent=t;return s;}));
+  dialog.showModal(); document.body.classList.add('dialog-shown');
+  if(!reducedMotion.matches){ dialog.animate([{opacity:0,transform:'translateY(16px) scale(.985)'},{opacity:1,transform:'translateY(0) scale(1)'}], {duration:460,easing:'cubic-bezier(.17,.82,.24,1)'}); }
+  $('dialogClose').focus();
+}
+document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>openProject(b.dataset.open,b)));
+$('dialogClose').addEventListener('click',()=>dialog.close());
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-shown');triggerForDialog?.focus();});
+const menuBtn=$('menuButton'),mobileMenu=$('mobileMenu');
+function closeMenu(){mobileMenu.hidden=true;menuBtn.setAttribute('aria-expanded','false');menuBtn.setAttribute('aria-label','打开导航菜单');document.body.classList.remove('menu-visible')}
+menuBtn.addEventListener('click',()=>{if(!mobileMenu.hidden)return closeMenu();mobileMenu.hidden=false;menuBtn.setAttribute('aria-expanded','true');menuBtn.setAttribute('aria-label','关闭导航菜单');document.body.classList.add('menu-visible')});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!mobileMenu.hidden){closeMenu();menuBtn.focus()}});
+window.addEventListener('resize',()=>{if(innerWidth>800&&!mobileMenu.hidden)closeMenu()});
+const year=$('yearTrigger'),yearDetails=$('yearDetails');
+year.addEventListener('click',()=>{const wasOpen=year.getAttribute('aria-expanded')==='true';year.setAttribute('aria-expanded',String(!wasOpen));yearDetails.hidden=wasOpen;year.querySelector('.year-plus').textContent=wasOpen?'+':'−'});
+const notes={learning:['在电子科学与技术的课堂里打基础，也在课本外寻找真正想弄明白的问题。','Learning, slowly and seriously.'],building:['最近做了几件关于学习、生活、可信信息和 AI 记忆的作品。下一件是什么？我也还不知道。','Prototypes, questions, and more prototypes.'],living:['乐队、RoboCup、话剧、运动。努力给屏幕之外的生活留下足够多的位置。','A life outside the editor.']};
+$('nowSheet').addEventListener('transitionend',()=>{});
+document.querySelectorAll('.now-tab').forEach(b=>b.addEventListener('click',()=>{if(b.getAttribute('aria-pressed')==='true')return;document.querySelectorAll('.now-tab').forEach(t=>{t.classList.toggle('active',t===b);t.setAttribute('aria-pressed',String(t===b))});const [text,foot]=notes[b.dataset.note];const sheet=$('nowSheet');if(!reducedMotion.matches){sheet.animate([{opacity:.55,transform:'translateY(7px)'},{opacity:1,transform:'translateY(0px)'}],{duration:320,easing:'ease-out'})} $('nowText').textContent=text;$('nowFoot').textContent=foot;}));
+/* A real Canvas 2D signal, built for this specific person: electronics and music share a waveform. */
+const canvas=$('signalCanvas');const range=$('signalRange');const number=$('signalNumber');
+const ctx=canvas.getContext('2d');let point=Number(range.value),shown=point,frameId=0,resizeObserver;
+function resizeCanvas(){const rect=canvas.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);if(!rect.width||!rect.height)return;canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);drawSignal();}
+function drawSignal(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;ctx.clearRect(0,0,w,h);const g=ctx;
+  g.lineWidth=1;g.strokeStyle='rgba(211,244,213,.10)';
+  for(let i=1;i<9;i++){g.beginPath();g.moveTo(w*i/9,0);g.lineTo(w*i/9,h);g.stroke()}
+  for(let i=1;i<6;i++){g.beginPath();g.moveTo(0,h*i/6);g.lineTo(w,h*i/6);g.stroke()}
+  const mid=h*.51;g.beginPath();g.strokeStyle='rgba(212,244,215,.32)';g.moveTo(0,mid);g.lineTo(w,mid);g.stroke();
+  g.beginPath();g.strokeStyle='#c9f5a5';g.lineWidth=Math.max(2,Math.min(4,w/200));g.lineJoin='round';g.lineCap='round';
+  const amp=h*.19+(shown/90)*h*.095,cycles=1.4+(shown/90)*3.9;
+  for(let x=0;x<=w;x+=2){const p=x/w;const envelope=Math.pow(Math.sin(Math.PI*p),.74);const y=mid+amp*envelope*(Math.sin(p*Math.PI*2*cycles)*.75+Math.sin(p*Math.PI*2*cycles*2.2+.5)*.16);if(x===0)g.moveTo(x,y);else g.lineTo(x,y)}g.stroke();
+  const p=.78,px=w*p,py=mid+amp*Math.pow(Math.sin(Math.PI*p),.74)*(Math.sin(p*Math.PI*2*cycles)*.75+Math.sin(p*Math.PI*2*cycles*2.2+.5)*.16);
+  g.beginPath();g.arc(px,py,5,0,Math.PI*2);g.fillStyle='#c9f5a5';g.fill();g.beginPath();g.arc(px,py,12,0,Math.PI*2);g.strokeStyle='rgba(201,245,165,.45)';g.lineWidth=1;g.stroke();
+}
+function updateWave(){shown+=(point-shown)*.18;drawSignal();number.textContent=(shown).toFixed(1);if(Math.abs(shown-point)>.07&&!reducedMotion.matches){frameId=requestAnimationFrame(updateWave)}else {shown=point;drawSignal();number.textContent=(shown).toFixed(1)}}
+function setWave(v){point=Math.max(10,Math.min(90,Number(v)));range.value=String(Math.round(point));cancelAnimationFrame(frameId);if(reducedMotion.matches){shown=point;number.textContent=shown.toFixed(1);drawSignal()}else{frameId=requestAnimationFrame(updateWave)}}
+range.addEventListener('input',e=>setWave(e.target.value));
+canvas.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'||e.buttons){const rect=canvas.getBoundingClientRect();setWave(10+(e.clientX-rect.left)/rect.width*80)}});
+canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'||e.pointerType==='pen'){canvas.setPointerCapture(e.pointerId);const r=canvas.getBoundingClientRect();setWave(10+(e.clientX-r.left)/r.width*80)}});
+canvas.addEventListener('pointermove',e=>{if(e.pointerType==='touch'&&e.buttons){const r=canvas.getBoundingClientRect();setWave(10+(e.clientX-r.left)/r.width*80)}});
+if('ResizeObserver' in window){resizeObserver=new ResizeObserver(resizeCanvas);resizeObserver.observe(canvas)}else window.addEventListener('resize',resizeCanvas);
+resizeCanvas();
+/* Respect no-motion preference. Content is never hidden waiting for IntersectionObserver. */
+if('IntersectionObserver' in window && !reducedMotion.matches){const io=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting){e.target.classList.add('entered');io.unobserve(e.target)}}},{threshold:.08});document.querySelectorAll('.project-item,.manifesto-grid,.life-panel,.years-main,.now-content').forEach(el=>{el.classList.add('reveal-eligible');io.observe(el)})}
+
+</script>
+</body>
+</html>
