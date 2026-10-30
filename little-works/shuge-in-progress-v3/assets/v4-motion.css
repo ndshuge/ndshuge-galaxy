@@ -18,7 +18,7 @@ button,a{outline-offset:5px}
 .menu-button[aria-expanded="true"]{color:var(--v4-sage)}
 .mobile-menu{transform-origin:top center;box-shadow:none;z-index:30}
 .project-dialog{transform-origin:center center;will-change:transform,opacity}
-.project-dialog::backdrop{background:rgba(13,16,14,.70);backdrop-filter:none}
+.project-dialog::backdrop{background:rgba(13,16,14,.70)}
 .project-dialog[open]{overscroll-behavior:contain}
 .dialog-close{min-height:48px;min-width:48px;display:flex;align-items:center;gap:10px;justify-content:center}
 .project-open{min-height:48px}
@@ -32,7 +32,7 @@ button,a{outline-offset:5px}
 .life-art{transform-origin:center center;will-change:transform}
 @media (hover:hover) and (pointer:fine){
  .desktop-nav a{position:relative}
- .desktop-nav a::after{content:"";position:absolute;bottom:-9px;left:0;right:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .38s var(--v4-ease)}
+ .desktop-nav a::after{content:"";position:absolute;bottom:-9px;left:0;right:0;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .38s var(--v4-ease)}
  .desktop-nav a:hover::after,.desktop-nav a[aria-current="location"]::after{transform:scaleX(1)}
 }
 @media(max-width:800px){

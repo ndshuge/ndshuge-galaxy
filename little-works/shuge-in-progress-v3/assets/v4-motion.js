@@ -98,11 +98,27 @@
   const oldOpenProject=typeof openProject==='function' ? openProject : null;
   function showProject(key,source){
     if(!dialog || !oldOpenProject)return;
+    const wasClosing=dialog.open && state.dialog==='closing';
     modalOrigin=source||null;
     if(!dialog.open)oldOpenProject(key,source);
+    else if(typeof PROJECTS!=='undefined' && PROJECTS[key]){
+      const d=PROJECTS[key];
+      document.getElementById('dialogCategory').textContent=d.category;
+      document.getElementById('dialogTitle').textContent=d.title;
+      document.getElementById('dialogSummary').textContent=d.summary;
+      document.getElementById('dialogStory').textContent=d.story;
+      document.getElementById('dialogTags').replaceChildren(...d.tags.map(t=>{const s=document.createElement('span');s.textContent=t;return s;}));
+      if(typeof triggerForDialog!=='undefined')triggerForDialog=source;
+    }
     if(!hasMotion()){state.dialog='open';return}
     dialog.getAnimations().forEach(animation=>animation.cancel());
     gsap.killTweensOf(dialog);
+    if(wasClosing){
+      state.dialog='opening';
+      gsap.to(dialog,{x:0,y:0,scale:1,autoAlpha:1,duration:.42,ease:'power3.out',overwrite:true,
+        onComplete:()=>{state.dialog='open';gsap.set(dialog,{clearProps:'transform,opacity,visibility'})}});
+      return;
+    }
     const src=source?.getBoundingClientRect();
     const dest=dialog.getBoundingClientRect();
     const scale=src?Math.max(.65,Math.min(.93,src.width/Math.max(1,dest.width))):.93;
