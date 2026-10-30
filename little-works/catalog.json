@@ -1,5 +1,19 @@
 [
   {
+    "slug": "shuge-in-progress-v3",
+    "title": "SHUGE · 正在发生｜个人档案 V3",
+    "date": "2026.10.30",
+    "type": "PERSONAL / INTERACTIVE PORTFOLIO",
+    "description": "一个仍在更新的个人数字档案：电子科学、AI 创作、音乐与生活。含可操作的 Canvas 信号展厅、作品故事和成长时间轴。",
+    "url": "./shuge-in-progress-v3/",
+    "cover": "./shuge-in-progress-v3/cover.svg",
+    "tags": [
+      "个人档案",
+      "交互艺术",
+      "Canvas 信号"
+    ]
+  },
+  {
     "slug": "interactive-matter",
     "title": "微观宇宙｜Interactive Matter",
     "date": "2026.10.29",
