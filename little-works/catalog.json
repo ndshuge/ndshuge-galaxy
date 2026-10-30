@@ -1,5 +1,19 @@
 [
   {
+    "slug": "echo-coast",
+    "title": "回声岸线｜Echo Coast",
+    "date": "2026.10.30",
+    "type": "INTERACTIVE ART",
+    "description": "雨后的街道、末班车站与海边栈桥。拖动一片真实的声音地形，听三段城市夜声缓慢交叠。",
+    "url": "./echo-coast/",
+    "cover": "./echo-coast/cover.webp",
+    "tags": [
+      "三维声景",
+      "交互艺术",
+      "程序化声音"
+    ]
+  },
+  {
     "slug": "shuge-in-progress-v3",
     "title": "SHUGE · 正在发生｜个人档案 V4",
     "date": "2026.10.30",

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#101f28" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230e202a'/%3E%3Ctext x='10' y='46' font-family='Georgia' font-size='35' fill='%23e0dbca'%3EEC%3C/text%3E%3C/svg%3E" />
+<meta name="description" content="回声岸线：走进雨后的街道、末班车站和海边栈桥，聆听城市留给夜晚的声音。" />
+<title>回声岸线｜Echo Coast — 城市留给夜晚的声音</title>
+  <script type="module" crossorigin src="./assets/index-C9993DAM.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DUXgkJCv.css">
+</head>
+<body>
+<div class="experience">
+  <div class="scene-wrap" id="scene-wrap" aria-hidden="true"><canvas id="world"></canvas><div id="fallback" class="fallback" hidden>此设备无法显示三维地形。你仍可通过下方的地点目录阅读三个展区。</div></div>
+  <div class="paper-texture" aria-hidden="true"></div>
+  <header class="masthead">
+    <button class="monogram" id="reset" aria-label="回到第一个展区">E<span>C</span><small>／</small></button>
+    <div class="brandline">回声岸线 <span>Echo Coast</span></div>
+    <div class="header-right"><span class="edition">声景档案 / 2026</span><button class="text-button sound-toggle" id="sound" aria-pressed="false"><span class="sound-indicator" aria-hidden="true"></span><span id="sound-text">开启声音</span></button></div>
+  </header>
+  <main class="layout">
+    <section class="intro" aria-labelledby="exhibition-title">
+      <p class="eyebrow">一座关于夜晚的声音地形</p>
+      <h1 id="exhibition-title">回声<span>岸线</span><em>Echo<br/>Coast</em></h1>
+      <div class="rule"></div>
+      <p class="statement">城市留给夜晚的声音。</p>
+      <p class="intro-note">三处地点，三段尚未散去的声响。<br/>沿着地形行走，听见它们之间的距离。</p>
+    </section>
+    <section class="exhibit" aria-labelledby="place-title">
+      <div class="exhibit-top"><span class="exhibit-label">当前地点</span><span class="progress" id="progress">01 / 03</span></div>
+      <div class="exhibit-main" aria-live="polite" aria-atomic="true">
+        <p class="place-time" id="place-time">23:17 · 街道路口</p>
+        <h2 id="place-title">雨后的街道</h2>
+        <p class="place-english" id="place-english">AFTER THE RAIN</p>
+        <p class="place-copy" id="place-copy">鞋底带起一小片积水。路口的行人灯已经变红，车轮仍从白线旁驶过。</p>
+      </div>
+      <nav class="places" aria-label="选择展区">
+        <button type="button" class="place-button active" data-place="0" aria-current="true"><span class="place-num">01</span><span>雨后的街道</span><span class="place-mark" aria-hidden="true"></span></button>
+        <button type="button" class="place-button" data-place="1"><span class="place-num">02</span><span>末班车站</span><span class="place-mark" aria-hidden="true"></span></button>
+        <button type="button" class="place-button" data-place="2"><span class="place-num">03</span><span>海边栈桥</span><span class="place-mark" aria-hidden="true"></span></button>
+      </nav>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="foot-left"><span class="small-line" aria-hidden="true"></span><span id="sound-description">雨点落入路面的浅水，远处车辆缓慢驶过。</span></div>
+    <div class="foot-center">拖动旋转地形 <span class="separator">/</span> 滚轮调整距离 <span class="separator">/</span> ← → 切换地点</div>
+    <button class="text-button reduce-toggle" type="button" id="motion" aria-pressed="false">减少动态</button>
+  </footer>
+  <div class="edge-text" aria-hidden="true">A FIELD RECORDING WITHOUT A RECORDING</div>
+  <div class="announcer sr-only" role="status" id="announcer"></div>
+</div>
+</body>
+</html>
