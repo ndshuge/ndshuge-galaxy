@@ -1,0 +1,568 @@
+{
+  "date": "2026-10-31",
+  "weekday": "星期六",
+  "title": "从模型路由到生命系统：真正的技术突破为何总要跨越验证与交付？",
+  "deck": "Copilot Fusion、开放权重、芯片供需、工业机器人、磁感应假肢、哈勃延寿、纳米癌症疫苗与COP17，共同揭示技术原型走向可靠交付的边界。",
+  "window": "截至北京时间2026年10月31日08:18；重点为10月28—30日事件，较早研究明确标注公布日期。",
+  "topSignals": [
+    "AI模型调度需要质量和权限双重验证。",
+    "算力供应链的需求、制造与融资并不同步。",
+    "传感、可靠性和真实场景验证决定技术交付。"
+  ],
+  "core": [
+    {
+      "n": 1,
+      "id": "core-1",
+      "title": "GitHub Copilot Fusion：模型选择变成工程调度",
+      "tags": [
+        "AI",
+        "Agent"
+      ],
+      "summary": "10月28日GitHub Universe发布Copilot Fusion，自动按任务路由、组合模型；官方称Fusion Max在特定编码Agent指数上与Opus 5.5 Max相差2分，成本约一半、任务时间少40%。",
+      "background": "多模型编排从选择聊天模型延伸到推理、代码、调试与工具调用。",
+      "importance": "厂商基准对比不代表所有真实项目都节约一半成本。",
+      "impact": "为Mice Hole和知序研究带质量门槛、权限日志的模型路由。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://github.blog/news-insights/company-news/github-universe-2026-evolving-every-layer-of-the-stack/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://docs.github.com/ja/copilot/concepts/models/copilot-fusion"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "id": "core-2",
+      "title": "Mistral Large 4公开权重：自主部署与安全治理的张力",
+      "tags": [
+        "AI",
+        "安全"
+      ],
+      "summary": "Mistral于10月29日公开Large 4，重点是代码与网络安全，Reuters同日报道；组织可自行下载部署。",
+      "background": "可自主运行降低云服务依赖，但权重发布后难以撤回。",
+      "importance": "开放权重不等于安全；模型基准与实际系统权限风险需要分开验证。",
+      "impact": "在受控环境比较本地和云模型的越权率、可追溯性与更新成本。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/legal/litigation/mistral-ai-publicly-releases-large-4-targets-cybersecurity-users-2026-10-29/"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "id": "core-3",
+      "title": "MIT Social.Wiki：用户可以修改自己使用的社交网站",
+      "tags": [
+        "AI",
+        "HCI"
+      ],
+      "summary": "MIT于10月29日介绍Social.Wiki研究原型：用户可修改平台内应用并选择接受哪些编辑，数据保护层要求个人授权；论文拟于11月UIST发表。",
+      "background": "传统社交平台的界面、内容治理和数据权限集中于运营方。",
+      "importance": "仍属早期原型，未证明大规模部署安全，端到端加密也仍在完善。",
+      "impact": "小芽、知序可借鉴可解释的个性化界面、数据访问提示与版本选择。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.mit.edu/index.php/2026/new-system-gives-users-more-control-over-online-experience-1029"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "id": "core-4",
+      "title": "Intel财报警告引发芯片股震荡",
+      "tags": [
+        "半导体",
+        "CPU"
+      ],
+      "summary": "Intel于10月29日发布财报展望，10月30日股价收跌约28.6%；Reuters称其预计本年现金流难转正，面临PC需求疲弱、内存涨价和AI服务器产品供应错配。",
+      "background": "先进工艺扩产需要长期投入，产品结构与库存调整有时间滞后。",
+      "importance": "股价不是工艺性能的直接证明；公司预测与分析师解释需分开。",
+      "impact": "学习CPU、先进节点、良率和服务器需求时同时研究产能与现金流。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/business/intel-warning-sparks-chip-rout-pc-weakness-clouds-turnaround-2026-10-30/"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "id": "core-5",
+      "title": "亚洲芯片企业称AI需求仍强，但供应链回报受到质疑",
+      "tags": [
+        "半导体",
+        "HBM",
+        "供应链"
+      ],
+      "summary": "10月30日Reuters报道联发科CEO认为AI需求会持续增长，富士康也强调AI服务器订单；投资者同时质疑巨额基建投资回报。",
+      "background": "HBM、逻辑芯片、先进封装、服务器与PC处于不同供需周期。",
+      "importance": "高管乐观表态不等于独立需求预测，不能推断所有细分市场同步扩张。",
+      "impact": "比较存储、Chiplet、封装、服务器交付和PC成本的传导关系。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/asia-pacific/chip-designer-mediatek-says-ai-demand-growth-will-continue-for-sure-2026-10-30/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://www.reuters.com/world/china/foxconn-working-new-tie-up-with-openai-says-there-is-no-ai-bubble-2026-10-30/"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "id": "core-6",
+      "title": "富士康在得州设施内部部署十余台人形机器人",
+      "tags": [
+        "机器人",
+        "具身智能"
+      ],
+      "summary": "10月30日Reuters报道，富士康称已在得州工厂部署十余台人形机器人，并展示搬运、装配、上下料用轮式机器人。",
+      "background": "工业场景评价依赖节拍、停机、安全、维护与重复精度。",
+      "importance": "厂商部署数量尚不能证明独立验证的长期产线生产率。",
+      "impact": "RoboCup可增加连续运行、任务成功率和故障恢复验收。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/china/foxconn-working-new-tie-up-with-openai-says-there-is-no-ai-bubble-2026-10-30/"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "id": "core-7",
+      "title": "MIT用肌肉内磁珠追踪运动，探索更稳定的假肢控制",
+      "tags": [
+        "基础科学",
+        "传感器"
+      ],
+      "summary": "MIT于10月29日介绍《Nature Sensors》研究：3名膝下截肢参与者接受磁珠传感评估，通过体外读数估计肌肉运动，并在光标任务中比较控制信号。",
+      "background": "皮肤肌电反映电激活，不直接等于肌肉长度和关节力学状态。",
+      "importance": "小样本光标任务不能证明真实假肢行走安全或临床普适性。",
+      "impact": "联系磁传感、滤波、状态估计和ROS 2控制。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.mit.edu/2026/magnetic-sensors-track-muscle-movement-better-prosthetic-limb-control-1029"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "id": "core-8",
+      "title": "S&P将Meta评级展望改为负面，AI投资改变融资约束",
+      "tags": [
+        "科技产业",
+        "商业模式"
+      ],
+      "summary": "10月30日Reuters报道，S&P因AI资本开支和自由经营现金流压力，将Meta信用评级展望由稳定改为负面；Meta不同意机构判断。",
+      "background": "技术建设前期支付设备和能源成本，收入回收可能多年后发生。",
+      "importance": "是评级展望而非评级本身被下调，预测与公司回应均非既成结果。",
+      "impact": "为个人项目同时记录维护成本、计算成本、用户留存与实际价值。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/business/sp-global-revises-outlook-meta-negative-cashflow-concerns-2026-10-30/"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "id": "core-9",
+      "title": "MIT AI2050研究资助强调长期社会效益",
+      "tags": [
+        "大学科研",
+        "职业发展"
+      ],
+      "summary": "MIT于10月30日公布5名教职人员及相关校友入选Schmidt Sciences AI2050 Fellows，课题涉及算法与人、算法公平及生物酶功能。",
+      "background": "科研资助会影响哪些基础问题被长期追踪。",
+      "importance": "入选仅表明资助方向，不能当作研究成果已实现。",
+      "impact": "练习用可检验问题、对照和使用者价值定义自己的竞赛研究。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.mit.edu/2026/mit-affiliates-named-schmidt-sciences-ai2050-fellows-1030"
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "id": "core-10",
+      "title": "NASA征询商业机构为哈勃望远镜延寿的方案",
+      "tags": [
+        "Wildcard",
+        "航天"
+      ],
+      "summary": "NASA于10月29日发布信息征询，10月30日说明将研究商业抬轨、在轨维护升级及安全退役可能性。",
+      "background": "空间资产维修需综合轨道、燃料、任务风险和科学价值。",
+      "importance": "RFI是市场调研，不是已批准或签约的维修任务。",
+      "impact": "研究航天设备失效模式、寿命管理与风险成本。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://science.nasa.gov/missions/hubble/nasa-explores-potential-commercial-servicing-for-hubble-telescope/"
+        }
+      ]
+    }
+  ],
+  "extensions": [
+    {
+      "n": 11,
+      "id": "ext-11",
+      "title": "政治①：奥列什基局部停火下开展人道救援",
+      "tags": [
+        "政治",
+        "乌克兰"
+      ],
+      "summary": "俄乌此前同意10月27日起在俄占奥列什基局部停火；10月30日Reuters报道巴士、救护车运送平民并提供物资，双方人权专员参与协调。",
+      "background": "局部人道行动不代表乌克兰全境停火，其他地区战斗仍在继续。",
+      "importance": "各方对撤离自愿性与政治意义的说法应分别标注；行动开始不等于所有人安全到达。",
+      "impact": "关注实际撤离、通行安全、独立监督与后续谈判。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/europe/aid-convoy-sets-off-russian-held-town-oleshky-ukraine-izvestia-says-2026-10-30/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://apnews.com/article/94e0aee5d56bcd164f8cbae0918ed1f8"
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "id": "ext-12",
+      "title": "政治②：美国FCC限制中国测试实验室，中国商务部反对",
+      "tags": [
+        "政治",
+        "中美",
+        "电子"
+      ],
+      "summary": "FCC于10月29日投票限制中国等非互惠地区实验室为美国市场电子设备进行认证测试，预计2028年12月生效；中国商务部10月30日表示反对并称愿磋商。",
+      "background": "电子产品认证是跨境供应链的一环，不等于芯片制造本身。",
+      "importance": "美方强调安全与互惠，中方反对限制；双方理由是各自立场，不能当作已证实风险。",
+      "impact": "关注正式法规、过渡期和企业合规成本。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/business/media-telecom/fcc-votes-ban-all-chinese-labs-testing-us-electronics-2026-10-29/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://www.reuters.com/world/china/china-opposes-us-fcc-ban-chinese-lab-testing-vows-countermeasures-if-us-presses-2026-10-30/"
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "id": "ext-13",
+      "title": "艺术：MES用影像装置呈现涩谷城市历史层次",
+      "tags": [
+        "艺术",
+        "数字艺术"
+      ],
+      "summary": "MES双人组《RE-I》10月24日在东京PARCO MUSEUM TOKYO开幕，10月29日主办方再次介绍；结合大型影像、激光VJ与现场表演，展至11月16日。",
+      "background": "空间和时间层本身可以构成叙事，不一定依赖装饰。",
+      "importance": "主办方的艺术评价属于策展表述，不能当作客观排名。",
+      "impact": "失重印刷所可借鉴真实材料、空间路径和克制视觉组织。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.dommune.com/streamings/2026/102601/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://prtimes.jp/main/html/rd/p/000004146.000003639.html"
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "id": "ext-14",
+      "title": "生物：MIT用噬菌体纳米纤维调节癌症疫苗抗原密度",
+      "tags": [
+        "生物",
+        "纳米医学"
+      ],
+      "summary": "MIT于10月30日介绍发表于《Advanced Healthcare Materials》的研究：工程化M13噬菌体携带肿瘤抗原，调节抗原密度，在小鼠模型中观察到更强保护性免疫反应。",
+      "background": "抗原密度、递送材料和免疫细胞识别之间存在多层关系。",
+      "importance": "小鼠预防性实验不是人类临床治疗证据，也不是已获批癌症疫苗。",
+      "impact": "学习材料结构、剂量、对照实验和临床转化的区别。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.mit.edu/index.php/2026/mit-engineers-create-nanoparticles-delivering-personalized-cancer-vaccines-1030"
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "id": "ext-15",
+      "title": "教育：MIT J-PAL启动ARTEMIS研究训练",
+      "tags": [
+        "教育",
+        "科研训练"
+      ],
+      "summary": "MIT于10月30日介绍ARTEMIS项目：首届20名早期研究者学习随机对照评估、统计功效与提案设计，6月启动并持续到12月。",
+      "background": "研究能力包括定义因果问题、对照设计、采样与实际实施。",
+      "importance": "学员反馈不能证明训练项目的长期效果。",
+      "impact": "为知序设计先导对照实验，分开满意度和独立学习成效。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.mit.edu/2026/j-pal-north-america-launches-artemis-train-early-career-researchers-1030"
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "id": "ext-16",
+      "title": "历史：伊特鲁里亚古城Kainua仪式井出土青铜器和遗骸",
+      "tags": [
+        "历史",
+        "考古"
+      ],
+      "summary": "意大利文化部于8月4日公布博洛尼亚大学在Kainua的仪式井发现，含保存良好的青铜器与人类遗骸；这是近期研究，非10月30日新发现。",
+      "background": "地层、器物与年代证据共同构成古代社会活动的重建。",
+      "importance": "遗骸不能单独证明人祭，仪式解释尚需DNA和年代分析。",
+      "impact": "3D文物展示需区分实物、合理推断与艺术补全。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://cultura.gov.it/comunicato/a-kainua-marzabotto-leccezionale-scoperta-di-un-pozzo-rituale-con-manufatti-integri-e-resti-umani"
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "id": "ext-17",
+      "title": "金融：美国科技股下跌，市场重新审视AI投资回报",
+      "tags": [
+        "金融",
+        "资本市场"
+      ],
+      "summary": "10月30日美股收盘，Reuters和AP报道纳指跌约2.9%、标普500跌1.8%，Intel收跌28.6%，半导体板块承压。",
+      "background": "估值包含对未来盈利、资金成本和投资回收的预期。",
+      "importance": "单日行情不能证明AI长期需求消失；市场解释不构成单一确定因果或投资建议。",
+      "impact": "研究利率、现金流、折旧和风险溢价。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/business/nasdaq-futures-tumble-amazon-intel-results-deepen-ai-spending-woes-2026-10-30/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://apnews.com/article/16c266731fdf64178f38070af2b42497"
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "id": "ext-18",
+      "title": "生态：COP17通过关键文本，但生物多样性目标仍有执行缺口",
+      "tags": [
+        "生态",
+        "生物多样性"
+      ],
+      "summary": "COP17于10月19—30日在埃里温举行；AFP于10月30日晚报道近200个国家延时谈判后通过关键文本，推进2030生物多样性框架。",
+      "background": "生态目标涉及保护、恢复、监测、融资和跨国协作。",
+      "importance": "AFP发稿时最终文本尚未公布，不能提前断言具体条款、资金和执行成效。",
+      "impact": "研究政策承诺、生态数据和真实恢复之间的差距。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.afp.com/en/nations-agree-crucial-texts-overtime-un-nature-summit"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://www.unep.org/en/events/conference/unep-un-biodiversity-conference"
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "label": "世界模型／共同瓶颈",
+      "text": "比较Copilot Fusion路由、Intel产能错配、富士康机器人、MIT磁珠假肢和COP17执行：从单项指标到系统可靠性分别缺少哪些验证环节，哪些反馈有明显时间滞后？"
+    },
+    {
+      "label": "与你有关／大学与项目",
+      "text": "结合MIT AI2050、ARTEMIS和Social.Wiki，未来六周怎样为电子科基础、RoboCup、知序AI学院与FactGuard分别设计一个不依赖漂亮演示的验收指标？"
+    },
+    {
+      "label": "反事实／权衡",
+      "text": "假设小芽和知序维护预算减半：A方案采用廉价多模型路由但增加审计负担，B方案采用单一昂贵模型但维护简单；若再要求用户离线访问个人数据，怎样重估风险和交付顺序？"
+    }
+  ],
+  "projects": [
+    {
+      "name": "FrameAudit｜多模型表述差异观察站",
+      "type": "软件 / AI",
+      "definition": "用固定中性技术问题追踪模型事实、来源、语气与不确定性表达的差异。",
+      "why": "适合FactGuard和AI Scientist Arena的可复现研究。",
+      "reuse": "FactGuard证据链、知序题库、SHUGE DAILY。",
+      "mvp": "20个非政治技术问题、两模型、三轮采样，生成差异矩阵。",
+      "difficulty": "中",
+      "learning": "模型评测、实验设计、偏差分析。",
+      "risk": "小样本和模型版本更新可能造成错误归因。",
+      "next": "先研究MIT LLM Election Observatory的记录方法，不自动调用API。",
+      "question": "两个模型事实一致但风险提示顺序相反，如何证明这会影响判断？",
+      "source": {
+        "label": "研究灵感",
+        "url": "https://news.mit.edu/2026/qa-hey-ai-who-should-i-vote-for-this-year-1030"
+      }
+    },
+    {
+      "name": "Hubble Service Lab｜轨道维修决策游戏",
+      "type": "游戏 / 交互",
+      "definition": "在有限预算、燃料与风险下模拟抬轨、维修或退役决策。",
+      "why": "把NASA真实RFI变成系统工程游戏。",
+      "reuse": "Godot游戏厅、3D场景、Python。",
+      "mvp": "三种策略、四个参数、结果曲线，明确标注假设。",
+      "difficulty": "中",
+      "learning": "轨道力学、决策树、约束优化。",
+      "risk": "简化模型不能代表真实航天安全。",
+      "next": "研究NASA RFI与Godot 3D示例，不设计真实维修方案。",
+      "question": "抬轨成功率提高却增加退役风险，怎样定义总收益？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/godotengine/godot-demo-projects"
+      }
+    },
+    {
+      "name": "Muscle Signal Sandbox｜肌肉传感控制实验台",
+      "type": "硬件 / 机器人 / 电子",
+      "definition": "纯软件比较模拟肌电、肌肉长度与磁传感信号对闭环控制的影响。",
+      "why": "结合电子科传感、滤波、控制与RoboCup。",
+      "reuse": "Python、ROS 2、C语言。",
+      "mvp": "两路合成信号、噪声、延迟和光标控制对比。",
+      "difficulty": "中",
+      "learning": "状态估计、滤波、稳定性。",
+      "risk": "模拟数据不能证明临床性能。",
+      "next": "研究OpenSim和MIT论文，不进行人体实验或采购。",
+      "question": "噪声较小但延迟更大的传感器一定更适合闭环控制吗？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/opensim-org/opensim-core"
+      }
+    },
+    {
+      "name": "City Layers｜城市记忆空间展",
+      "type": "视觉 / 3D / 创意技术",
+      "definition": "用空间路径呈现同一地点的不同历史材料与时间层。",
+      "why": "适合西交3D校园与失重印刷所的成熟数字展览方向。",
+      "reuse": "Three.js、3D校园、现有展览素材。",
+      "mvp": "一个授权场景、三层证据、手机桌面分别验收。",
+      "difficulty": "中",
+      "learning": "空间叙事、WebGL、信息架构。",
+      "risk": "视觉真实感可能掩盖证据不足。",
+      "next": "研究MES展览和A-Frame，不修改原项目。",
+      "question": "只保留三个视觉元素，如何同时传达地点、年代和证据等级？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/aframevr/aframe"
+      }
+    },
+    {
+      "name": "Biodiversity Ledger｜生物多样性证据账本",
+      "type": "Wildcard / 生态数据",
+      "definition": "将物种观测、采样强度和生态恢复承诺放在可审计时间线。",
+      "why": "让SHUGE DAILY延伸到真实生态数据与长期世界模型。",
+      "reuse": "Python、地图前端、SHUGE DAILY。",
+      "mvp": "一个地区、两年、三个物种指标与采样偏差说明。",
+      "difficulty": "中",
+      "learning": "GIS、统计偏差、公共政策评估。",
+      "risk": "观测数量增加可能仅由采样努力增加引起。",
+      "next": "先研究GBIF API和COP17正式文本，不自动建库。",
+      "question": "观测物种数翻倍而调查强度增加三倍，能判断生态改善吗？",
+      "source": {
+        "label": "开源灵感",
+        "url": "https://github.com/gbif/pygbif"
+      }
+    }
+  ],
+  "projectCompare": [
+    "FrameAudit与Muscle Signal Sandbox怎样分别区分观测误差、模型误差和真实环境变化？",
+    "Hubble Service Lab与City Layers的视觉真实感什么时候会遮蔽科学或历史证据？",
+    "只有四个周末时，如何在五个候选中比较独立复核价值，而不只是开发速度？"
+  ],
+  "person": {
+    "name": "Hugh Herr",
+    "subtitle": "1964年生｜MIT生物机电研究者｜机器人假肢与人机融合工程",
+    "sections": [
+      {
+        "title": "出身与早期环境",
+        "body": "1964年生于宾夕法尼亚州兰开斯特地区，少年时热爱攀岩，实践经验先于系统学术训练。"
+      },
+      {
+        "title": "学生时代与第一次尝试",
+        "body": "1982年登山遭遇暴风雪并因严重冻伤接受双侧膝下截肢；此后利用机械加工经验设计适合不同攀岩地形的义肢，并继续学习物理与工程。"
+      },
+      {
+        "title": "关键转折",
+        "body": "从自身使用问题转向可推广的仿生工程，在MIT获得机械工程硕士、哈佛获得生物物理博士，后来领导MIT生物机电团队。"
+      },
+      {
+        "title": "重要成功",
+        "body": "团队推进动力踝足假肢、神经肌肉接口与控制方法；2026年10月29日MIT报道的磁珠传感研究由其担任资深作者。"
+      },
+      {
+        "title": "明确失败与代价",
+        "body": "Herr在本人访谈中说数十年技术转化曾多次失败，一项仿生部件常需约十年；早期义肢难以适应复杂环境，肌电也不能直接代表肌肉机械状态。不要浪漫化登山事故。"
+      },
+      {
+        "title": "关键选择背后的约束",
+        "body": "同时受到体积重量、峰值功率、耐久性、临床安全、制造、监管与支付体系约束；信号质量与侵入性存在权衡。"
+      },
+      {
+        "title": "合作者、竞争者与时代环境",
+        "body": "与外科医生Matthew Carty、研究生、材料与控制团队协作，成果依赖多学科工程、医疗体系与产业转化，不能归功于个人。"
+      },
+      {
+        "title": "可学与不可机械模仿",
+        "body": "学习从真实用户问题建立传感—控制—验证链，并接受长期失败和转化成本；不要把实验室成功等同于临床安全或忽视监管。"
+      }
+    ],
+    "questions": [
+      "RoboCup控制中哪些状态可直接测量，哪些只能估计？",
+      "怎样设计实验区分光标控制更准确与真实机械任务更安全？",
+      "高精度但高侵入性和低侵入但噪声更大，谁应决定取舍？",
+      "若研究原型需要十年转化，大一阶段如何设计可见的阶段性成果？",
+      "哪些问题适合自己研究，哪些必须与材料、医疗、机械伙伴合作？"
+    ],
+    "sources": [
+      {
+        "label": "主要来源",
+        "url": "https://news.mit.edu/2026/magnetic-sensors-track-muscle-movement-better-prosthetic-limb-control-1029"
+      },
+      {
+        "label": "交叉来源",
+        "url": "https://infinite.mit.edu/video/hugh-herr-sm-93/"
+      },
+      {
+        "label": "交叉来源",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11378350/"
+      },
+      {
+        "label": "交叉来源",
+        "url": "https://www.newyorker.com/magazine/2024/12/16/a-bionic-leg-controlled-by-the-brain"
+      }
+    ]
+  },
+  "finalSignals": [
+    "模型路由、开放权重与用户可编辑界面重新分配控制权，也增加审计责任。",
+    "AI制造的供需、产能和资本回收有不同的时间尺度。",
+    "从磁感应假肢到工业机器人，闭环传感与长期可靠性比演示更重要。",
+    "科研训练需要对照、可检验问题和可复现证据。",
+    "国际规则、生态保护与航天延寿都必须区分承诺、实施和真实效果。"
+  ],
+  "deepDive": [
+    "从Copilot Fusion到Social.Wiki：多模型Agent的用户控制权、权限与可审计路由。",
+    "从磁珠假肢到工业机器人：传感—估计—控制—真实场景验证的工程知识地图。"
+  ]
+}
