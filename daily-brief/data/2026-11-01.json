@@ -1,0 +1,563 @@
+{
+  "date": "2026-11-01",
+  "weekday": "星期日",
+  "title": "从63亿美元安全事件到HBM利润：技术扩张的控制权、成本与证据",
+  "deck": "AI开源治理、三星HBM4、苹果触控Mac、量子芯片、韩国出口、Binance安全事件、斯坦福学习科学与COP17，共同揭示验证和维护成本。",
+  "window": "截至北京时间2026年11月1日08:53；重点为10月28—31日事件，含11月1日08:39前公布的韩国出口数据。较早研究明确标注日期。",
+  "topSignals": [
+    "AI自动化的效率收益需要扣除权限与维护成本。",
+    "HBM需求和出口增长仍受投资周期、终端成本与日历效应影响。",
+    "科学、政策与安全事故都需要可追溯证据和长期验证。"
+  ],
+  "core": [
+    {
+      "n": 1,
+      "id": "core-1",
+      "title": "Google开源周报聚焦AI贡献的人类签收与维护成本",
+      "tags": [
+        "AI",
+        "开源治理"
+      ],
+      "summary": "10月30日Google发布开源周报，梳理AI生成贡献的社区边界、人工签收、成本护栏和软件供应链问题；它是实践观察，非统一行业标准。",
+      "background": "自动化提交数量增加后，验证、依赖更新与长期维护成本仍由维护者承担。",
+      "importance": "评估Agent时应计算审查与维护成本，不能把社区讨论视为已经形成共识。",
+      "impact": "Mice Hole和R21可记录修改来源、人工批准点、回退和长期维护工作量。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://opensource.googleblog.com/2026/10/this-week-in-open-source-for-october-29.html"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "id": "core-2",
+      "title": "美国SEC审视AI企业风险披露与循环交易",
+      "tags": [
+        "AI",
+        "产业监管"
+      ],
+      "summary": "10月30日SEC执法主管David Woodcock接受Reuters采访，称关注AI公司重大风险披露、估值和潜在循环交易。",
+      "background": "AI基础设施投资巨大，收入、关联融资与真实现金回收不总能直接对应。",
+      "importance": "监管关注不等于已经认定任何具体公司违法。",
+      "impact": "知序和小芽也应区分真实使用价值、收入、计算成本与未经验证的宣传。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/legal/government/us-secs-top-cop-says-agency-is-monitoring-ai-corporate-disclosures-2026-10-30/"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "id": "core-3",
+      "title": "Stanford STEPS：让AI辅导保留学生的解题过程",
+      "tags": [
+        "AI",
+        "学习科学"
+      ],
+      "summary": "斯坦福10月28日介绍化学课程STEPS工具，通过分步问题引导学生；部分学生起初不满它不直接给答案，后来认可过程训练。",
+      "background": "即时给答案提高便利性，但可能挤压独立分析和纠错练习。",
+      "importance": "课堂反馈不能直接证明长期学习成绩改善，仍需独立后测。",
+      "impact": "知序AI学院可研究提示梯度、延迟答案与迁移测试。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.stanford.edu/stories/2026/10/ctl-shareouts-ai-learning"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "id": "core-4",
+      "title": "三星Q3营业利润107.4万亿韩元，HBM4扩销",
+      "tags": [
+        "半导体",
+        "HBM"
+      ],
+      "summary": "三星10月29日公布截至9月30日季度营收195.3万亿韩元、营业利润107.4万亿韩元；存储业务创纪录，HBM4扩大销售。",
+      "background": "AI服务器争夺高带宽存储产能，消费电子也承受零件价格上涨。",
+      "importance": "财报数据已公布，未来需求与利润能否维持仍不确定。",
+      "impact": "研究HBM堆叠、封装、良率、产能分配和PC内存成本的联动。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.samsungsemiconductor.com/global/samsung-electronics-announces-third-quarter-2026-results/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://apnews.com/article/295ba99532e93f2706b7abff95e0ff15"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "id": "core-5",
+      "title": "苹果推出首款触控MacBook Pro及M5 Pro/Max",
+      "tags": [
+        "CPU",
+        "显示",
+        "HCI"
+      ],
+      "summary": "苹果10月28日公布14和16英寸新MacBook Pro，使用PROLED XDR串联OLED、首次支持Mac触控，搭载M5 Pro/Max。",
+      "background": "高亮度显示、触控、键鼠共存改变桌面专业软件的人机交互约束。",
+      "importance": "性能与续航为官方测试或宣传规格，不能直接推断所有负载。",
+      "impact": "你的Apple风格Web项目可研究触控与指针的双端一致性，无须购买新设备。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "id": "core-6",
+      "title": "美国对进口机器人认定安全风险但暂不立即加税",
+      "tags": [
+        "机器人",
+        "制造"
+      ],
+      "summary": "Reuters10月28日报道，美国政府在进口机器人和工业机械安全审查后暂未立即加征关税，要求相关部门谈判并在180天内报告。",
+      "background": "工厂机器人、AGV和机床高度依赖全球供应链。",
+      "importance": "安全风险是美方政策判断；谈判结果与未来关税均尚未确定。",
+      "impact": "RoboCup之外也应理解工业机器人采购、认证和可替代性。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/china/trump-says-imported-robotics-pose-national-security-risks-does-not-impose-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "id": "core-7",
+      "title": "NVision研究有机分子薄膜量子芯片",
+      "tags": [
+        "基础科学",
+        "材料"
+      ],
+      "summary": "10月28日Nature研究和Reuters报道：团队用AI筛选数百候选、合成约40种分子，找到可在传统芯片上沉积薄层的材料候选。",
+      "background": "技术从MRI自旋极化研究扩展到量子芯片制造。",
+      "importance": "器件材料可行不等于可扩展的容错量子计算机已经建成。",
+      "impact": "学习自旋、薄膜沉积、量子器件和纠错的工程接口。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/technology/german-startup-nvision-shows-new-path-quantum-computing-chips-nature-paper-2026-10-28/"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "id": "core-8",
+      "title": "韩国10月出口同比增长93.7%，芯片增259.4%",
+      "tags": [
+        "科技产业",
+        "供应链"
+      ],
+      "summary": "韩国11月1日公布10月出口1152.8亿美元，同比增93.7%，半导体增259.4%，电脑增496.6%；Reuters 00:39 UTC报道。",
+      "background": "AI服务器投资推动芯片需求，节假日错位带来的工作日增加也抬高同比。",
+      "importance": "出口增速不全是AI需求造成，也不能外推到未来每个月。",
+      "impact": "将韩国出口、三星财报、内存价格和资本开支放在同一时间轴。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/asia-pacific/south-korea-exports-nearly-double-october-strongest-growth-since-1974-2026-11-01/"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "id": "core-9",
+      "title": "斯坦福21个项目研究好奇心与学习动力",
+      "tags": [
+        "大学",
+        "科研训练"
+      ],
+      "summary": "斯坦福10月28日介绍21项种子研究，包含VR珊瑚礁、校园安全调查和文化桌游，尝试测量探索欲与学习体验。",
+      "background": "学习乐趣可来自真实问题、合作和自主探索，而不止游戏化奖励。",
+      "importance": "部分项目短期反馈积极，不能等同长期效果已经证实。",
+      "impact": "知序可增加探索任务，但必须测量长期留存与独立解题。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.stanford.edu/stories/2026/10/accelerator-learning-joy-projects"
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "id": "core-10",
+      "title": "Binance约63亿美元资产遭窃，FBI归因朝鲜关联团体",
+      "tags": [
+        "Wildcard",
+        "网络安全"
+      ],
+      "summary": "10月29日发生重大加密资产盗窃；10月31日FBI指向TraderTraitor，Binance称用自身资金补足约90%损失。",
+      "background": "初步线索涉及受损工程师电脑；终端安全可能影响整个资金系统。",
+      "importance": "FBI归因为官方调查结论；公司补足资产不等于追回赃款，入侵链仍需取证。",
+      "impact": "Mice Hole与GitHub自动化需要最小权限、隔离凭据、审计和恢复演练。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/legal/government/binance-says-90-stolen-assets-replenished-2026-10-31/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://www.reuters.com/world/fbi-links-north-korea-theft-6-billion-from-binance-2026-10-31/"
+        }
+      ]
+    }
+  ],
+  "extensions": [
+    {
+      "n": 11,
+      "id": "ext-11",
+      "title": "政治①：奥列什基局部停火下居民抵达乌方控制区",
+      "tags": [
+        "政治",
+        "俄乌"
+      ],
+      "summary": "10月31日Reuters与AP报道，俄乌短期局部停火支持奥列什基居民经俄、白俄抵达乌克兰控制区；参与者包括两国官员与人道救援方。",
+      "background": "当地居民长期面临饥饿、交通阻断和基础设施缺失。",
+      "importance": "确有居民抵达，但完整人数尚不明确；局部停火不代表全线停火，各方叙述需分开。",
+      "impact": "关注实际撤离、选择目的地的自由及后续医疗与谈判。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/europe/three-planes-carrying-residents-evacuated-oleshky-arrive-belarus-news-agency-2026-10-31/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://apnews.com/article/5cbc7d2a5b8ac34b15c914338fd5a9f3"
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "id": "ext-12",
+      "title": "政治②：土耳其提名下一任联合国秘书长候选人",
+      "tags": [
+        "政治",
+        "国际组织"
+      ],
+      "summary": "AP10月31日报道，土耳其正式提名前外长Feridun Sinirlioglu竞逐下一任联合国秘书长；参与者包括土耳其、安理会、联大及其他候选人。",
+      "background": "联合国秘书长由安理会推荐、联大任命，五个常任理事国有否决权。",
+      "importance": "提名不等于胜选，不预测候选人最终结果。",
+      "impact": "观察正式规则、外交协商与区域惯例如何共同影响国际组织。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://apnews.com/article/78df3aecf8df62a2473b5e45cb7513be"
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "id": "ext-13",
+      "title": "艺术：森万里子《燦燦》回顾三十年科技艺术",
+      "tags": [
+        "艺术",
+        "交互"
+      ],
+      "summary": "东京森美术馆10月31日开幕展览，持续至2027年3月28日，约40件作品涉及CG摄影、影像、雕塑与互动装置。",
+      "background": "展览连接数字媒介、未来主义与空间体验。",
+      "importance": "展期与媒介由美术馆确认，艺术价值仍属于评论和策展判断。",
+      "impact": "失重印刷所可学习如何用空间、材质和观众动作组织叙事。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.mori.art.museum/jp/exhibitions/marikomori/"
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "id": "ext-14",
+      "title": "生物：首次培养两株海姆达尔古菌",
+      "tags": [
+        "生物",
+        "进化"
+      ],
+      "summary": "京都大学和JAMSTEC10月29日公布Nature研究：分离培养两株近缘古菌，观察到简单内部、外部突起和共生现象；论文10月28日英国时间发表。",
+      "background": "真核生物起源与古菌、细菌共生和线粒体形成密切相关。",
+      "importance": "现生古菌不是远古祖先本身，起源路径仍需多重证据。",
+      "impact": "理解显微观察、培养实验与进化假说的不同证据等级。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.kyoto-u.ac.jp/ja/research-news/2026-10-29-0"
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "id": "ext-15",
+      "title": "教育：斯坦福先修知识导航与课程自测",
+      "tags": [
+        "教育",
+        "大学"
+      ],
+      "summary": "斯坦福10月28日介绍Foundations Navigator，通过课程材料分析、教师审核和入门自测帮助生物学新生定位先修知识缺口。",
+      "background": "大学课程往往隐含基础要求，新生准备水平不同。",
+      "importance": "这是课程实践，尚不能仅凭反馈证明长期因果效果。",
+      "impact": "为线代、C语言和电子科构建先修概念图，针对缺口练习。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://news.stanford.edu/stories/2026/10/ctl-shareouts-ai-learning"
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "id": "ext-16",
+      "title": "历史：南非六万年前赭石层发现羚羊胶原",
+      "tags": [
+        "历史",
+        "考古"
+      ],
+      "summary": "Archaeology10月26日报道，国际团队用古蛋白质组学在南非Kilpdrift遗址约六万年前的赭石沉积物中识别出大羚羊胶原。",
+      "background": "材料残留能帮助推断史前颜料、皮革处理和工具实践。",
+      "importance": "赭石与动物胶混合或处理兽皮均属可能解释，无法唯一确定用途。",
+      "impact": "3D历史复原应明确区分原始物证、分析结论和艺术补全。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://archaeology.org/news/2026/10/26/60000-year-old-animal-proteins-mixed-with-ocher-identified-in-south-africa/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://phys.org/news/2026-10-antelope-collagen-year-ochre-clues.html"
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "id": "ext-17",
+      "title": "金融：日本央行维持1.25%利率并评估通胀目标",
+      "tags": [
+        "金融",
+        "宏观"
+      ],
+      "summary": "10月29日日本央行维持政策利率1.25%，行长植田和男称基础通胀接近2%目标，后续逐次会议判断。",
+      "background": "融资利率会影响硬件研发、跨境资本流动与长期投资回收。",
+      "importance": "市场对12月加息的猜测并非已经宣布的决定；不提供投资建议。",
+      "impact": "将利率变化与半导体设备投资、融资周期联系起来。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/world/asia-pacific/bank-japan-hold-rates-signal-further-hikes-2026-10-29/"
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "id": "ext-18",
+      "title": "生态：COP17通过《埃里温路径》，资金与执行仍有缺口",
+      "tags": [
+        "生态",
+        "生物多样性"
+      ],
+      "summary": "10月31日COP17在亚美尼亚闭幕，通过Yerevan Pathway，要求加快减少有害补贴、扩大资金和落实国家目标；Reuters同日报道。",
+      "background": "全球2030框架包含保护30%陆地与水域、恢复30%退化生态系统等目标。",
+      "importance": "第一轮全球盘点显示多数目标仍落后；宣布资金不等于到账或生态恢复。",
+      "impact": "研究生态指标、政策执行、资金兑现与观测偏差。",
+      "sources": [
+        {
+          "label": "主要来源",
+          "url": "https://www.reuters.com/sustainability/cop/countries-reach-cop17-deal-speed-up-biodiversity-action-money-still-short-2026-10-31/"
+        },
+        {
+          "label": "交叉来源",
+          "url": "https://www.carbonbrief.org/cop17-key-outcomes-agreed-at-the-un-biodiversity-conference-in-yerevan"
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "label": "世界模型／共同机制",
+      "text": "比较Google开源治理、三星HBM扩产、Binance终端入侵和COP17资金执行：哪些环节存在收益先出现、风险和验证后显现的时间错配？"
+    },
+    {
+      "label": "与你有关／大学与项目",
+      "text": "结合斯坦福STEPS、先修知识导航、NVision材料研究和Pocket Logic Lab，你怎样为大一电子科的基础学习、原型制作与可复现实验分别制定一个验收指标？"
+    },
+    {
+      "label": "反事实／权衡",
+      "text": "若SHUGE DAILY与Mice Hole只能新增一种保护：A为所有AI写入人工签收，B为自动化最小权限与完整追踪；在终端入侵和Agent误操作两种威胁下，你如何调整选择？"
+    }
+  ],
+  "projects": [
+    {
+      "name": "TraceBudget｜Agent成本与权限追踪器",
+      "type": "软件 / AI",
+      "definition": "记录Agent任务中的模型、工具、耗时、费用与人工签收点。",
+      "why": "契合Mice Hole和FactGuard的真实施工流程。",
+      "reuse": "Mice Hole日志、FactGuard核验、SHUGE DAILY。",
+      "mvp": "10个隔离模拟任务，输出调用时间线、权限异常和成本报表。",
+      "difficulty": "中",
+      "learning": "可观测性、分布式追踪、权限治理。",
+      "risk": "追踪数据泄露敏感信息，或记录本身增加成本。",
+      "next": "先研究OpenTelemetry Python数据模型，不修改桥。",
+      "question": "成本降低40%却出现一次越权调用时，应怎样定义通过门槛？",
+      "source": {
+        "label": "灵感及可复用来源",
+        "url": "https://github.com/open-telemetry/opentelemetry-python"
+      }
+    },
+    {
+      "name": "Memory Cycle Tycoon｜内存周期策略游戏",
+      "type": "游戏 / 交互",
+      "definition": "玩家在HBM、消费DRAM和研发间配置产能并承受库存周期。",
+      "why": "将三星财报和电子科产业知识转成可玩的系统。",
+      "reuse": "Godot游戏厅、Python图表。",
+      "mvp": "三产品线、12季度、价格、产能滞后与现金流曲线。",
+      "difficulty": "中",
+      "learning": "系统动力学、经济建模、游戏数值。",
+      "risk": "简化模型可能误导现实供需。",
+      "next": "先研究Godot官方例程和财报参数，不自动开发。",
+      "question": "HBM毛利最高但扩产需两年，如何应对价格反转？",
+      "source": {
+        "label": "灵感及可复用来源",
+        "url": "https://github.com/godotengine/godot-demo-projects"
+      }
+    },
+    {
+      "name": "Pocket Logic Lab｜口袋数字时序实验台",
+      "type": "硬件 / 电子 / 机器人",
+      "definition": "用RP2040 PIO原理采样数字波形，研究UART与I²C解码。",
+      "why": "契合C语言、电子科和RoboCup调试。",
+      "reuse": "C语言、Python可视化、Windows/Ubuntu。",
+      "mvp": "先以合成波形实现解码、噪声和采样误差测试。",
+      "difficulty": "中",
+      "learning": "PIO、采样率、数字通信、USB。",
+      "risk": "电平不匹配损坏硬件，采样率不足造成误判。",
+      "next": "先研究pico-examples的PIO/DMA，不采购设备。",
+      "question": "采样率仅为波特率三倍，怎样测量误判概率？",
+      "source": {
+        "label": "灵感及可复用来源",
+        "url": "https://github.com/raspberrypi/pico-examples"
+      }
+    },
+    {
+      "name": "Luminous Memory｜光与时间的互动展",
+      "type": "视觉 / 3D / 创意技术",
+      "definition": "通过观众动作让装置呈现不同时间层的光、材质和记忆。",
+      "why": "适合失重印刷所和西交3D校园的空间叙事。",
+      "reuse": "Three.js、现有材质与交互。",
+      "mvp": "一个装置、三种时间状态、触控与指针、移动端性能验收。",
+      "difficulty": "中",
+      "learning": "空间叙事、实时渲染、性能预算。",
+      "risk": "光效喧宾夺主，手机端性能不稳定。",
+      "next": "研究森万里子展览的媒介组织，不改旧作品。",
+      "question": "去掉所有文字后，如何让观众理解时间层？",
+      "source": {
+        "label": "灵感及可复用来源",
+        "url": "https://www.mori.art.museum/jp/exhibitions/marikomori/"
+      }
+    },
+    {
+      "name": "Ochre Evidence Studio｜考古证据复原工作台",
+      "type": "Wildcard / 历史科技",
+      "definition": "把照片、材料证据、年代和假说呈现为可切换证据等级的3D卡片。",
+      "why": "结合校园3D、FactGuard与数字人文。",
+      "reuse": "Three.js、FactGuard、Python。",
+      "mvp": "选择授权样本，制作低精度重建并标注证实与推测。",
+      "difficulty": "中",
+      "learning": "摄影测量、溯源、科学可视化。",
+      "risk": "版权、摄影测量误差与艺术补全误导。",
+      "next": "先研究OpenSfM及素材授权，不自动下载。",
+      "question": "胶原蛋白支持两种解释时，3D展示如何保持不确定性？",
+      "source": {
+        "label": "灵感及可复用来源",
+        "url": "https://github.com/mapillary/OpenSfM"
+      }
+    }
+  ],
+  "projectCompare": [
+    "TraceBudget和Pocket Logic Lab都测量系统行为：怎样区分仪表精度、采样覆盖率与真实安全性？",
+    "Memory Cycle Tycoon与Luminous Memory如何避免流畅交互掩盖经济模型或历史叙事中的假设？",
+    "只有四个周末时，五个候选分别需要怎样的最小独立复核证据，才能比较学习收益？"
+  ],
+  "person": {
+    "name": "Eben Upton",
+    "subtitle": "Raspberry Pi联合创始人、计算机工程师与教育推动者",
+    "sections": [
+      {
+        "title": "出身与早期环境",
+        "body": "出生于英国威尔士，童年接触BBC Micro，受到教师和动手编程环境的影响；2026年Financial Times专访也强调他对多领域知识的兴趣。"
+      },
+      {
+        "title": "学生时代与第一次关键尝试",
+        "body": "在剑桥大学学习物理与工程，曾参与IBM工作学习，之后继续学习计算机科学；长期关注学生动手编程能力。"
+      },
+      {
+        "title": "关键转折",
+        "body": "约2006年与剑桥同事担忧计算机系新生编程实践减少，2008年共同成立Raspberry Pi Foundation，2012年产品上市。"
+      },
+      {
+        "title": "重要成功",
+        "body": "低成本Linux计算机扩展到学校、创客和工业嵌入式场景；2026年FT报道累计销量超过7500万台，基金会持续投入编程教育。"
+      },
+      {
+        "title": "明确误判与代价",
+        "body": "早期访谈中Upton承认最初只预计约1000至10000台需求，低估成人创客与工业市场；近年内存成本上涨迫使部分板卡提价。"
+      },
+      {
+        "title": "关键选择背后的约束",
+        "body": "教育可及性、芯片成本、软件兼容、制造规模、供应链与商业可持续性必须一起考虑。"
+      },
+      {
+        "title": "合作者、竞争者与时代环境",
+        "body": "基金会、商业团队、Broadcom及制造伙伴共同促成产品；Arduino、PC和其他开发板在不同用途上既竞争也互补。"
+      },
+      {
+        "title": "今天仍值得学习的原则",
+        "body": "从真实学习门槛出发，将硬件、系统软件、文档、社区与教学资源作为完整产品设计。"
+      },
+      {
+        "title": "哪些不应机械模仿",
+        "body": "不能假设低价永久维持、销量等于学习成效，或开源社区会自动形成；成功依赖当时的芯片和Linux生态。"
+      }
+    ],
+    "questions": [
+      "电子科一年级最需要哪一种能看见底层原理的工具：单片机、逻辑分析仪还是模拟器？如何用证据决定？",
+      "Pocket Logic Lab先只做模拟时，怎样证明它能帮助你理解UART/I²C，而非只会点击界面？",
+      "Raspberry Pi的需求误判提示小芽和知序应如何识别预期之外的真实使用者？",
+      "若内存价格再涨一倍，如何在性能、价格、供货和功能之间取舍？",
+      "怎样设计一个同时服务基础学习、RoboCup竞赛和真实用户的长期硬件/软件项目？"
+    ],
+    "sources": [
+      {
+        "label": "Raspberry Pi官方访谈",
+        "url": "https://www.raspberrypi.com/news/in-depth-interview-with-eben/"
+      },
+      {
+        "label": "早期报道",
+        "url": "https://www.theguardian.com/technology/2014/mar/09/raspberry-pi-computer-eben-upton-cambridge"
+      },
+      {
+        "label": "2026年专访",
+        "url": "https://www.ft.com/content/07acddb2-9a2f-4646-b7dd-2cb4ebe0257d"
+      },
+      {
+        "label": "供应链背景",
+        "url": "https://www.theverge.com/tech/872393/raspberry-pi-price-increase-ram-shortage-costs"
+      }
+    ]
+  },
+  "finalSignals": [
+    "自动化扩大个人创造能力，也把审核、维护和安全责任转移给使用者。",
+    "半导体利润与出口快速增长，必须同时观察产能、工作日、终端价格和投资周期。",
+    "安全防线要覆盖工程师终端、工具权限和资金恢复，补足资产不等于追回赃款。",
+    "大学学习要同时关注先修知识、主动解题与独立后测。",
+    "国际政策和科学研究都需要区分观察、解释、承诺与最终结果。"
+  ],
+  "deepDive": [
+    "从Binance事件到Agent工具权限：终端入侵、最小权限、审计与恢复演练。",
+    "从三星HBM4到韩国出口：存储产业周期、先进封装与电子科就业结构。"
+  ]
+}
