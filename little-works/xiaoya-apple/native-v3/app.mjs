@@ -3,6 +3,8 @@ import {dateKey,weekday,monday,plusDays,teachingWeek,occurrences,growth,checkSch
 import {createSpring} from '../glass/liquid-glass.js';
 import '../glass/components.js'; // Original liquidglass.dev optical controls, self-hosted (MIT).
 import {createStore} from './store.mjs?v=3.1.1';
+import {createAssistant} from './assistant.mjs?v=20261102';
+import {createGrowthPanel} from './growth-panel.mjs?v=20261102';
 import {buildDayTimeline} from './timeline.mjs';
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -16,6 +18,8 @@ const timePart=s=>s?.includes('T')?s.slice(11,16):s||'';
 let store,view='today',filter='all',query='',selectedDate=dateKey(now()),weekStart=monday(now()),modal=null,preview=null,toastTimeout=null;
 try{store=createStore({preferDemoOnFreshSession:new URLSearchParams(location.search).get('judge')==='1'})}catch(e){$('#workspace').innerHTML='<div class="page-heading"><h1>档案需要处理</h1></div><div class="group"><div class="empty-group"><strong>为了保护你的记录，小芽不会覆盖无法读取的数据</strong><p>'+esc(e.message)+'</p><a href="../index.html">打开原有完整界面以导出备份</a></div></div>';throw e}
 const state=()=>store.current();
+const assistant=createAssistant({getData:state,getMode:()=>store.mode(),navigate});
+const growthPanel=createGrowthPanel({getData:state,getMode:()=>store.mode(),replace:next=>store.replace(next),refresh:render,openSheet,closeSheet,notify,esc});
 
 function notify(s){const el=$('#toast');el.textContent=s;el.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>el.classList.remove('show'),2900)}
 function save(fn){try{store.commit(fn);render();notify('已保存到当前浏览器');return true}catch(e){render();notify(e.message);return false}}
@@ -71,6 +75,7 @@ function goalsView(d){
  const pct=d.goals.length?Math.round(completed.length/d.goals.length*100):0;
  return head('成长目标','为喜欢的事情留一点时间','<button class="primary" data-add="goal">'+icon('plus')+'新建目标</button>')+
  '<div class="goal-summary"><div><strong>'+open.length+' 项正在坚持</strong><p>进度来自你记录的真实行动，不自动打卡。</p></div><div class="goal-ring" style="--pct:'+pct+'"><span>'+pct+'%</span></div></div>'+
+ growthPanel.render()+
  section('进行中的目标',open.length?goalsSection(open):empty('还没有进行中的目标','音乐、运动、研究，都可以是一件值得长期做的事','新建目标','add-goal'))+
  (completed.length?section('已完成',goalsSection(completed)):'');
 }
@@ -218,7 +223,8 @@ function submitSheet(e){
  else if(modal.type==='checkin')saveCheckin();
  else if(modal.type==='approval'){
    try{const result=executePlan(state(),modal.suggestion);store.replace(result.next);closeSheet();render();notify('已批准并保存日程')}catch(e){notify('安排未执行：'+e.message)}
- }else if(modal.type==='pet')closeSheet();
+ }else if(modal.type==='growth')growthPanel.approve(modal);
+ else if(modal.type==='pet')closeSheet();
 }
 function rejectSuggestion(id){const s=suggestions(state()).find(x=>x.id===id);if(!s)return;save(d=>{d.decisions.push({id,status:'rejected',at:now().toISOString(),reason:'用户暂不采纳',sourceIds:s.sources})})}
 function blobDownload(text,mime,name){const a=document.createElement('a'),href=URL.createObjectURL(new Blob([text],{type:mime}));a.href=href;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(href),2000)}
@@ -233,9 +239,7 @@ function runAction(action){
  case 'now-week':weekStart=monday(now());selectedDate=dateKey(now());render();break;
  case 'search':navigate('search');break;
  case 'close':closeSheet();break;
- case 'pet':{
-   const s=suggestions(state())[0];openSheet('小芽想对你说','<div class="pet-illustration"><img src="../assets/brand/xiaoya_hero_v1.webp" width="150" height="150" alt="小芽"></div><p class="sheet-note" style="text-align:center">'+esc(s?.description||'按自己的节奏，把今天过好。')+'</p>',{type:'pet'},{hideSave:true});break
- }
+ case 'pet':assistant.open();break;
  case 'mode':store.setMode(store.mode()==='demo'?'personal':'demo');navigate('today');notify(store.mode()==='demo'?'已切换到合成演示档案':'已返回私人档案');break;
  case 'export-json':blobDownload(JSON.stringify({...state(),exportedAt:now().toISOString(),archiveMode:store.mode()},null,2),'application/json','xiaoya-'+store.mode()+'-'+dateKey(now())+'.json');notify('已导出当前档案');break;
  case 'import-json':$('#import-file').click();break;
@@ -246,6 +250,7 @@ function runAction(action){
 }
 document.addEventListener('click',e=>{
  const t=e.target.closest('button');if(!t)return;
+ if(growthPanel.handle(t))return;
  if(t.dataset.view)return navigate(t.dataset.view);
  if(t.dataset.add)return editForm(t.dataset.add);
  if(t.dataset.edit)return editForm(t.dataset.edit,t.dataset.id);
@@ -280,7 +285,7 @@ $('#calendar-file').addEventListener('change',async e=>{
  try{const candidate=parseSchedule(await file.text(),file.name,state());if(!candidate.items?.length)return notify('没有新的课表记录');if(!confirm('确认导入 '+candidate.items.length+' 条课表记录？'))return;store.replace(applyImport(state(),candidate).next);navigate('schedule');notify('导入成功')}catch(err){notify('导入失败：'+err.message)}
 });
 window.addEventListener('storage',e=>{if(e.key===store.key()){try{store.refresh();render();notify('已读取另一标签页更新的记录')}catch(err){notify(err.message)}}});
-window.__XY_NATIVE_V3={version:'3.0',getMode:()=>store.mode(),getData:()=>state(),navigate,render,store};
+window.__XY_NATIVE_V3={version:'3.2',getMode:()=>store.mode(),getData:()=>state(),navigate,render,store};
 for(const btn of $$('.bottom-nav button,.floating-add,.glass-btn')){
  const spring=createSpring(0,v=>{btn.style.transform='scale('+(1-.09*v)+')'},{stiffness:420,damping:31});
  const release=()=>spring.set(0);
