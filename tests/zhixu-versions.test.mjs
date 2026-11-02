@@ -14,5 +14,6 @@ test('selector exposes all three verified version destinations',()=>{
   assert.match(html,/https:\/\/ndshuge\.github\.io\/zhixu-ai-academy\/original\.html/);
   assert.match(html,/https:\/\/ndshuge\.github\.io\/zhixu-ai-academy\/apple-editions\/ai-academy-apple\//);
   assert.match(html,/https:\/\/ndshuge\.github\.io\/zhixu-ai-academy\/apple-editions\/ai-academy-v4\//);
+  assert.match(html,/https:\/\/ndshuge\.github\.io\/zhixu-ai-academy\/apple-editions\/ai-academy-v5\//);
   assert.match(html,/返回小作品/);
 });
