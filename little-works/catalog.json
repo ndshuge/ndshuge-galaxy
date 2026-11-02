@@ -522,8 +522,8 @@
     "title": "知序 AI 学院",
     "date": "2026.10.22",
     "type": "INTERACTIVE LEARNING",
-    "description": "亲手预测、运行真实 Logistic 科学实验、批准第二轮并留下学习证据。Pages 科学版不包含在线 AI 模型。",
-    "url": "./zhixu-ai-academy/",
+    "description": "对比 Original、Apple R3、Apple V4 三代知序学习界面。原版科学实验、学习记录与安全边界保持一致。",
+    "url": "./zhixu-versions/",
     "cover": "",
     "tags": [
       "科学探究",
