@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小鼠观测站 · 鼠哥星系</title>
+<meta name="description" content="一个关于老鼠的互动网页：追奶酪的小鼠、超声波翻译器、会长长的门牙、繁殖计算器和胡须迷宫。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#1b1740;
+  --sky-2:#262059;
+  --sky-3:#352d78;
+  --fur:#c9c3d9;
+  --moon:#f3ecd8;
+  --cheese:#f6c445;
+  --cheese-deep:#d99a1e;
+  --nose:#ff9bb8;
+  --ink:#ece8f7;
+  --muted:#a9a2c8;
+  --line:rgba(236,232,247,.14);
+  --display:"ZCOOL KuaiLe", "Noto Sans SC", sans-serif;
+  --body:"Noto Sans SC", system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--sky);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.75;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--cheese);outline-offset:3px;border-radius:6px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;min-height:560px;overflow:hidden;
+  background:radial-gradient(1200px 700px at 75% 20%, #3b2f8a 0%, transparent 60%),
+             radial-gradient(900px 600px at 10% 90%, #2d2466 0%, transparent 60%), var(--sky)}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
+.hero-copy{position:absolute;left:clamp(20px,6vw,90px);bottom:clamp(90px,14vh,150px);max-width:620px;pointer-events:none}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(56px,11vw,150px);line-height:.95;letter-spacing:.02em;color:var(--moon)}
+.hero h1 span{display:inline-block;animation:hop 2.8s ease-in-out infinite}
+.hero h1 span:nth-child(2){animation-delay:.15s}
+.hero h1 span:nth-child(3){animation-delay:.3s}
+.hero h1 span:nth-child(4){animation-delay:.45s}
+@keyframes hop{0%,80%,100%{transform:translateY(0)}88%{transform:translateY(-14px) rotate(-3deg)}}
+.hero p{margin-top:18px;color:var(--muted);font-size:clamp(16px,2vw,19px);max-width:30em}
+.hero-bar{position:absolute;left:clamp(20px,6vw,90px);right:clamp(20px,6vw,90px);bottom:28px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.pill{border:1.5px solid var(--line);background:rgba(27,23,64,.55);backdrop-filter:blur(6px);padding:9px 18px;border-radius:999px;font-size:15px;transition:border-color .2s,background .2s}
+.pill:hover{border-color:var(--cheese);background:rgba(246,196,69,.12)}
+.pill.on{background:var(--cheese);color:var(--sky);border-color:var(--cheese)}
+.tally{margin-left:auto;color:var(--muted);font-size:15px}
+.tally b{color:var(--cheese);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ---------- sections ---------- */
+section{padding:clamp(80px,12vw,150px) clamp(20px,6vw,90px) 0;max-width:1240px;margin:0 auto}
+.head{max-width:640px;margin-bottom:40px}
+.head h2{font-family:var(--display);font-weight:400;font-size:clamp(36px,5.4vw,62px);line-height:1.1;color:var(--moon)}
+.head p{margin-top:14px;color:var(--muted)}
+.split{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(24px,4vw,56px);align-items:center}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+
+/* the mouse-hole frame: arch top, flat bottom */
+.hole{position:relative;background:var(--sky-2);border-radius:999px 999px 28px 28px / 46% 46% 28px 28px;
+  border:1.5px solid var(--line);overflow:hidden}
+.hole::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  box-shadow:inset 0 30px 60px rgba(0,0,0,.25)}
+
+/* ---------- anatomy ---------- */
+.anatomy svg{display:block;width:100%;height:auto;padding:12% 4% 2%}
+.hot{cursor:pointer}
+.hot circle.ring{fill:none;stroke:var(--cheese);stroke-width:2.5;opacity:.85;transform-box:fill-box;transform-origin:center;animation:ping 2s ease-out infinite}
+.hot circle.dot{fill:var(--cheese)}
+.hot.active circle.dot{fill:var(--nose)}
+.hot.active circle.ring{stroke:var(--nose)}
+@keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.8);opacity:0}}
+#whiskers line{transform-origin:505px 192px;animation:whisk .35s ease-in-out infinite alternate}
+#whiskers line:nth-child(even){animation-delay:.12s}
+@keyframes whisk{from{transform:rotate(-4deg)}to{transform:rotate(5deg)}}
+#svgTail{transition:d .6s}
+.part-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.part-list button{border:1.5px solid var(--line);background:none;padding:6px 14px;border-radius:999px;font-size:15px}
+.part-list button[aria-pressed="true"]{background:var(--nose);border-color:var(--nose);color:var(--sky)}
+.info h3{font-family:var(--display);font-weight:400;font-size:34px;color:var(--cheese);line-height:1.2}
+.info p{margin-top:10px;max-width:30em}
+.info .num{display:block;margin-top:16px;font-size:15px;color:var(--muted)}
+
+/* ---------- ultrasound ---------- */
+.sono{position:relative}
+#sonoCanvas{display:block;width:100%;height:320px}
+.sono-axis{position:absolute;left:12px;top:0;bottom:0;pointer-events:none;font-size:12px;color:var(--muted)}
+.sono-axis span{position:absolute;left:0;transform:translateY(-50%);white-space:nowrap}
+.human-line{position:absolute;left:0;right:0;border-top:2px dashed var(--nose);pointer-events:none}
+.human-line em{position:absolute;right:14px;top:-26px;font-style:normal;font-size:13px;color:var(--nose)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{border:none;background:var(--cheese);color:var(--sky);font-weight:700;padding:12px 22px;border-radius:999px;font-size:16px;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--line);font-weight:500}
+.btn.ghost:hover{border-color:var(--cheese)}
+.note{margin-top:14px;font-size:15px;color:var(--muted)}
+
+/* ---------- teeth ---------- */
+.teeth-stage{display:grid;place-items:center;padding:16% 6% 8%;min-height:400px}
+#teethSvg{width:min(320px,80%);height:auto;overflow:visible}
+.meter{height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:22px;max-width:420px}
+.meter i{display:block;height:100%;width:30%;background:var(--cheese);transition:width .3s,background .3s}
+.meter.bad i{background:var(--nose)}
+#teethMsg{margin-top:12px;min-height:3.4em;max-width:30em}
+.chip{position:absolute;width:7px;height:4px;background:#b88a52;border-radius:2px;pointer-events:none}
+
+/* ---------- numbers ---------- */
+.numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-radius:22px;overflow:hidden;border:1px solid var(--line)}
+.numbers div{background:var(--sky);padding:28px 22px}
+.numbers strong{display:block;font-family:var(--display);font-weight:400;font-size:clamp(40px,5vw,58px);line-height:1;color:var(--moon);font-variant-numeric:tabular-nums}
+.numbers span{display:block;margin-top:10px;color:var(--muted);font-size:15px;line-height:1.5}
+@media (max-width:760px){.numbers{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- population ---------- */
+.pop-stage{padding:12% 5% 5%}
+#popCanvas{display:block;width:100%;height:300px}
+.pop-read{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.pop-read strong{font-family:var(--display);font-weight:400;font-size:clamp(46px,7vw,84px);line-height:1;color:var(--cheese);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;max-width:440px;accent-color:var(--cheese);height:28px}
+.legend{font-size:14px;color:var(--muted);margin-top:4px}
+
+/* ---------- myths ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{perspective:900px;min-height:230px;background:none;border:none;text-align:left;padding:0}
+.card-in{position:relative;width:100%;height:100%;min-height:230px;transition:transform .7s cubic-bezier(.3,1.4,.5,1);transform-style:preserve-3d}
+.card.flipped .card-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;padding:24px;display:flex;flex-direction:column}
+.front{background:var(--sky-2);border:1.5px solid var(--line)}
+.front q{font-family:var(--display);font-size:25px;line-height:1.35;color:var(--moon);quotes:"“" "”"}
+.front small{margin-top:auto;color:var(--muted);font-size:14px}
+.back{background:var(--moon);color:#2a2350;transform:rotateY(180deg)}
+.back b{font-family:var(--display);font-weight:400;font-size:24px;color:#b2408a}
+.back p{margin-top:8px;font-size:15.5px;line-height:1.65}
+
+/* ---------- maze ---------- */
+.maze-wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(24px,4vw,56px);align-items:start}
+@media (max-width:860px){.maze-wrap{grid-template-columns:1fr}}
+.maze-stage{padding:14% 5% 5%;touch-action:none}
+#mazeCanvas{display:block;width:100%;height:auto;aspect-ratio:17/13}
+.dpad{display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,56px);gap:8px;margin-top:22px}
+.dpad button{border:1.5px solid var(--line);background:var(--sky-2);border-radius:14px;font-size:22px}
+.dpad button:active{background:var(--sky-3)}
+.dpad .up{grid-column:2}
+.dpad .left{grid-column:1;grid-row:2}.dpad .down{grid-column:2;grid-row:2}.dpad .right{grid-column:3;grid-row:2}
+.maze-stats{display:flex;gap:24px;margin-top:18px;color:var(--muted);font-size:15px}
+.maze-stats b{color:var(--moon);font-variant-numeric:tabular-nums}
+.win{color:var(--cheese)!important}
+
+footer{padding:120px clamp(20px,6vw,90px) 60px;max-width:1240px;margin:0 auto;color:var(--muted);font-size:15px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer .sig{font-family:var(--display);font-size:22px;color:var(--moon)}
+
+#sound{position:fixed;top:18px;right:18px;z-index:20}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<button id="sound" class="pill" aria-pressed="false">🔈 开声音</button>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <canvas id="heroCanvas" aria-label="一只跟着你鼠标跑的小老鼠，点击放下奶酪"></canvas>
+  <div class="hero-copy">
+    <h1><span>小</span><span>鼠</span><span>观</span><span>测站</span></h1>
+    <p>它在跟着你的指针跑。随便点一下，丢块奶酪给它。</p>
+  </div>
+  <div class="hero-bar">
+    <button class="pill" id="addMouse">再来一只</button>
+    <button class="pill" id="rain">奶酪雨</button>
+    <span class="tally">已吃掉 <b id="eaten">0</b> 块奶酪</span>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ ANATOMY ============ -->
+<section id="anatomy">
+  <div class="head reveal">
+    <h2>一只小家鼠的说明书</h2>
+    <p>小家鼠（<i>Mus musculus</i>）身长七到十厘米，尾巴差不多一样长，体重大约二十克。点黄色的点，看看它身上每个零件是干什么用的。</p>
+  </div>
+  <div class="split">
+    <div class="hole anatomy reveal">
+      <svg viewBox="0 0 600 330" role="img" aria-label="小家鼠侧面图">
+        <defs>
+          <radialGradient id="furG" cx="45%" cy="35%" r="70%">
+            <stop offset="0" stop-color="#ddd8ea"/><stop offset="1" stop-color="#9f97b9"/>
+          </radialGradient>
+        </defs>
+        <path id="svgTail" d="M150 238 C 90 260, 60 210, 40 170 S 10 110, 30 80" fill="none" stroke="#e4a7bd" stroke-width="9" stroke-linecap="round"/>
+        <ellipse cx="185" cy="282" rx="26" ry="10" fill="#f0b5c8"/>
+        <ellipse cx="350" cy="286" rx="22" ry="9" fill="#f0b5c8"/>
+        <ellipse cx="290" cy="215" rx="150" ry="82" fill="url(#furG)"/>
+        <ellipse cx="430" cy="180" rx="88" ry="66" fill="url(#furG)" transform="rotate(12 430 180)"/>
+        <path d="M480 150 Q 535 170 522 196 Q 500 222 455 210 Z" fill="url(#furG)"/>
+        <ellipse cx="390" cy="108" rx="48" ry="56" fill="#b6aecb"/>
+        <ellipse cx="392" cy="112" rx="32" ry="40" fill="#f2b3c7"/>
+        <circle cx="466" cy="160" r="11" fill="#1a1530"/><circle cx="469" cy="156" r="3.5" fill="#fff"/>
+        <circle cx="522" cy="186" r="10" fill="#ff8fb1"/>
+        <rect x="496" y="208" width="6" height="16" rx="2" fill="#f4d58a"/>
+        <rect x="503" y="208" width="6" height="16" rx="2" fill="#f4d58a"/>
+        <g id="whiskers" stroke="#efeaf8" stroke-width="1.6" stroke-linecap="round" opacity=".85">
+          <line x1="505" y1="192" x2="590" y2="160"/><line x1="505" y1="192" x2="595" y2="185"/>
+          <line x1="505" y1="192" x2="590" y2="212"/><line x1="505" y1="192" x2="578" y2="238"/>
+        </g>
+        <!-- hotspots -->
+        <g class="hot" data-part="whisker" tabindex="0"><circle class="ring" cx="565" cy="198" r="13"/><circle class="dot" cx="565" cy="198" r="7"/></g>
+        <g class="hot" data-part="ear" tabindex="0"><circle class="ring" cx="392" cy="98" r="13"/><circle class="dot" cx="392" cy="98" r="7"/></g>
+        <g class="hot" data-part="eye" tabindex="0"><circle class="ring" cx="466" cy="140" r="13"/><circle class="dot" cx="466" cy="140" r="5"/></g>
+        <g class="hot" data-part="nose" tabindex="0"><circle class="ring" cx="530" cy="168" r="13"/><circle class="dot" cx="530" cy="168" r="6"/></g>
+        <g class="hot" data-part="teeth" tabindex="0"><circle class="ring" cx="502" cy="236" r="13"/><circle class="dot" cx="502" cy="236" r="6"/></g>
+        <g class="hot" data-part="tail" tabindex="0"><circle class="ring" cx="48" cy="170" r="13"/><circle class="dot" cx="48" cy="170" r="7"/></g>
+        <g class="hot" data-part="heart" tabindex="0"><circle class="ring" cx="330" cy="215" r="13"/><circle class="dot" cx="330" cy="215" r="7"/></g>
+      </svg>
+    </div>
+    <div class="info reveal" aria-live="polite">
+      <div class="part-list" id="partList"></div>
+      <h3 id="partTitle">胡须</h3>
+      <p id="partText"></p>
+      <span class="num" id="partNum"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ULTRASOUND ============ -->
+<section id="ultra">
+  <div class="head reveal">
+    <h2>你听不见的情歌</h2>
+    <p>小鼠的大部分叫声在三万到十万赫兹之间，人耳最多只能听到两万赫兹左右。雄鼠闻到雌鼠的气味时，会唱出一串有结构的超声波“歌”。下面这台翻译器把它降低 16 倍播放给你听。</p>
+  </div>
+  <div class="hole sono reveal">
+    <canvas id="sonoCanvas" aria-label="声谱图：纵轴是频率，横轴是时间"></canvas>
+    <div class="sono-axis" id="sonoAxis"></div>
+    <div class="human-line" id="humanLine"><em>人耳上限 ≈ 20 kHz</em></div>
+  </div>
+  <div class="controls reveal">
+    <button class="btn" id="singBtn">播放一段鼠歌</button>
+    <button class="btn ghost" id="squeakBtn">普通吱吱声</button>
+  </div>
+  <p class="note reveal">声音需要你点按钮之后才会响。声谱图里每一道亮线都是一个“音节”，越往上频率越高。</p>
+</section>
+
+<!-- ============ TEETH ============ -->
+<section id="teeth">
+  <div class="split">
+    <div class="reveal">
+      <div class="head" style="margin-bottom:0">
+        <h2>门牙永远在长</h2>
+        <p>啮齿动物的四颗门牙没有牙根的尽头，一辈子都在往外长。它们必须不停地啃东西把牙磨短，不然牙会长到戳进嘴里，没法吃饭。</p>
+      </div>
+      <div class="meter" id="meter"><i></i></div>
+      <p id="teethMsg">时间在走，牙在长。给它点东西啃。</p>
+      <div class="controls">
+        <button class="btn" id="gnawBtn">给它一根木棍</button>
+        <button class="btn ghost" id="pauseTeeth">暂停时间</button>
+      </div>
+    </div>
+    <div class="hole teeth-stage reveal" id="teethStage">
+      <svg id="teethSvg" viewBox="0 0 300 300" aria-label="小鼠正面，门牙会随时间变长">
+        <ellipse cx="80" cy="70" rx="52" ry="56" fill="#b6aecb"/><ellipse cx="80" cy="74" rx="34" ry="38" fill="#f2b3c7"/>
+        <ellipse cx="220" cy="70" rx="52" ry="56" fill="#b6aecb"/><ellipse cx="220" cy="74" rx="34" ry="38" fill="#f2b3c7"/>
+        <ellipse cx="150" cy="150" rx="100" ry="88" fill="#c9c3d9"/>
+        <ellipse cx="150" cy="200" rx="52" ry="36" fill="#ddd8ea"/>
+        <circle cx="112" cy="132" r="12" fill="#1a1530"/><circle cx="116" cy="128" r="4" fill="#fff"/>
+        <circle cx="188" cy="132" r="12" fill="#1a1530"/><circle cx="192" cy="128" r="4" fill="#fff"/>
+        <ellipse cx="150" cy="182" rx="12" ry="9" fill="#ff8fb1"/>
+        <path d="M150 191 v10 M150 201 q-12 10 -22 2 M150 201 q12 10 22 2" stroke="#6d6288" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <g id="incisors">
+          <rect id="toothL" x="135" y="206" width="14" height="22" rx="3" fill="#f4d58a" stroke="#d8b061" stroke-width="1.5"/>
+          <rect id="toothR" x="151" y="206" width="14" height="22" rx="3" fill="#f4d58a" stroke="#d8b061" stroke-width="1.5"/>
+        </g>
+        <g stroke="#efeaf8" stroke-width="2" stroke-linecap="round" opacity=".8">
+          <line x1="128" y1="188" x2="40" y2="170"/><line x1="128" y1="192" x2="36" y2="200"/>
+          <line x1="172" y1="188" x2="260" y2="170"/><line x1="172" y1="192" x2="264" y2="200"/>
+        </g>
+        <g id="stick" opacity="0">
+          <rect x="70" y="222" width="160" height="16" rx="8" fill="#b88a52"/>
+          <rect x="70" y="222" width="160" height="5" rx="2.5" fill="#d3a56b"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NUMBERS ============ -->
+<section id="numbers">
+  <div class="numbers reveal">
+    <div><strong data-to="600">0</strong><span>静息心跳约每分钟 600 次，你的大约是 70 次</span></div>
+    <div><strong data-to="20">0</strong><span>怀孕大约 20 天就生，一窝通常 5 到 8 只</span></div>
+    <div><strong data-to="6" data-suffix="mm">0</strong><span>大概 6 毫米宽的缝就能钻过去，差不多一支铅笔粗</span></div>
+    <div><strong data-to="40" data-suffix="%">0</strong><span>哺乳动物物种里约四成是啮齿类，是最大的一个目</span></div>
+  </div>
+</section>
+
+<!-- ============ POPULATION ============ -->
+<section id="pop">
+  <div class="head reveal">
+    <h2>两只老鼠，一年以后</h2>
+    <p>小鼠出生六周左右就能繁殖，生完一窝马上又能怀下一窝。拖动滑块，看一对老鼠在食物无限、没有天敌、也没有一只死掉的理想世界里会变成多少只。</p>
+  </div>
+  <div class="hole pop-stage reveal">
+    <div class="pop-read"><strong id="popCount">2</strong><span id="popMonth">第 0 个月</span></div>
+    <input type="range" id="popRange" min="0" max="12" value="0" step="1" aria-label="经过的月数">
+    <p class="legend" id="popLegend">每个点代表 1 只老鼠</p>
+    <canvas id="popCanvas" aria-hidden="true"></canvas>
+  </div>
+  <p class="note reveal">这是一个故意夸张的简化模型：每只雌鼠从两个月大起每月生一窝 6 只，一半是雌的。现实中食物、天敌、疾病和拥挤会让数量远远达不到这里。</p>
+</section>
+
+<!-- ============ MYTHS ============ -->
+<section id="myths">
+  <div class="head reveal">
+    <h2>你以为的老鼠</h2>
+    <p>点开每张卡片，看看真相。</p>
+  </div>
+  <div class="cards reveal" id="cards"></div>
+</section>
+
+<!-- ============ MAZE ============ -->
+<section id="maze">
+  <div class="maze-wrap">
+    <div class="hole maze-stage reveal" id="mazeStage">
+      <canvas id="mazeCanvas" aria-label="胡须迷宫游戏"></canvas>
+    </div>
+    <div class="reveal">
+      <div class="head" style="margin-bottom:20px">
+        <h2>胡须迷宫</h2>
+        <p>老鼠的视力很差，在黑暗的洞里主要靠胡须摸路。你现在也只能“摸”到身边一小圈。用方向键、WASD、屏幕按钮或者滑动，把小鼠带到奶酪那里。</p>
+      </div>
+      <div class="dpad" aria-label="方向按钮">
+        <button class="up" data-d="0,-1" aria-label="上">↑</button>
+        <button class="left" data-d="-1,0" aria-label="左">←</button>
+        <button class="down" data-d="0,1" aria-label="下">↓</button>
+        <button class="right" data-d="1,0" aria-label="右">→</button>
+      </div>
+      <div class="maze-stats">
+        <span>步数 <b id="steps">0</b></span>
+        <span>用时 <b id="mtime">0.0</b> 秒</span>
+        <span id="mstatus">找奶酪中</span>
+      </div>
+      <div class="controls"><button class="btn ghost" id="newMaze">换一个迷宫</button><button class="btn ghost" id="lightBtn">开灯作弊</button></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <a class="sig" href="../" style="color:inherit;text-decoration:none">← 回到鼠哥星系 · 小作品</a>
+  <span>资料整理自动物学常识，数字均为近似值。</span>
+</footer>
+
+<script>
+(() => {
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAU = Math.PI * 2;
+const rand = (a, b) => a + Math.random() * (b - a);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+/* ================= AUDIO ================= */
+let actx = null, soundOn = false;
+const soundBtn = document.getElementById('sound');
+function ac() {
+  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+  if (actx.state === 'suspended') actx.resume();
+  return actx;
+}
+soundBtn.onclick = () => {
+  soundOn = !soundOn;
+  soundBtn.textContent = soundOn ? '🔊 关声音' : '🔈 开声音';
+  soundBtn.setAttribute('aria-pressed', soundOn);
+  soundBtn.classList.toggle('on', soundOn);
+  if (soundOn) { ac(); squeak(); }
+};
+function tone(f0, f1, start, dur, vol = .12, type = 'sine') {
+  const a = ac(), o = a.createOscillator(), g = a.createGain();
+  o.type = type;
+  o.frequency.setValueAtTime(f0, start);
+  o.frequency.linearRampToValueAtTime(f1, start + dur);
+  g.gain.setValueAtTime(0, start);
+  g.gain.linearRampToValueAtTime(vol, start + Math.min(.015, dur / 3));
+  g.gain.linearRampToValueAtTime(0, start + dur);
+  o.connect(g).connect(a.destination);
+  o.start(start); o.stop(start + dur + .02);
+}
+function squeak(force) {
+  if (!soundOn && !force) return;
+  const a = ac(), t = a.currentTime;
+  const base = rand(2600, 3600);
+  tone(base, base * 1.35, t, .07, .07, 'triangle');
+  tone(base * 1.2, base * .9, t + .08, .09, .06, 'triangle');
+}
+function crunch() {
+  if (!soundOn) return;
+  const a = ac(), t = a.currentTime, n = a.sampleRate * .06;
+  const buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
+  for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n) ** 2;
+  const s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
+  f.type = 'bandpass'; f.frequency.value = 2200; g.gain.value = .25;
+  s.buffer = buf; s.connect(f).connect(g).connect(a.destination); s.start(t);
+}
+
+/* ================= MOUSE DRAWING (top-down) ================= */
+function drawCheese(ctx, x, y, size, bites, rot = 0) {
+  const k = clamp(bites / 6, .25, 1);
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(size * k, size * k);
+  ctx.beginPath(); ctx.moveTo(-14, 9); ctx.lineTo(14, 9); ctx.lineTo(10, -10); ctx.closePath();
+  ctx.fillStyle = '#f6c445'; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(-14, 9); ctx.lineTo(10, -10); ctx.lineTo(12, -6); ctx.lineTo(-11, 11); ctx.closePath();
+  ctx.fillStyle = '#d99a1e'; ctx.fill();
+  ctx.fillStyle = '#c78a14';
+  [[4, 3, 2.6], [8, -3, 1.8], [-4, 5, 1.6]].forEach(([hx, hy, r]) => { ctx.beginPath(); ctx.arc(hx, hy, r, 0, TAU); ctx.fill(); });
+  ctx.restore();
+}
+
+class Mouse {
+  constructor(x, y, s = 1, hue = 0) {
+    this.x = x; this.y = y; this.vx = 0; this.vy = 0; this.a = rand(0, TAU);
+    this.s = s; this.t = rand(0, 10); this.hue = hue;
+    this.tail = Array.from({ length: 14 }, () => ({ x, y }));
+    this.offset = { a: rand(0, TAU), r: rand(40, 110) };
+    this.chew = 0; this.speed = 0;
+  }
+  update(tx, ty, dt, eager) {
+    this.t += dt;
+    const dx = tx - this.x, dy = ty - this.y, d = Math.hypot(dx, dy);
+    const max = (eager ? 6.2 : 4.4) * this.s;
+    let desired = d > 30 ? Math.min(max, d * .06) : 0;
+    const dirx = d ? dx / d : 0, diry = d ? dy / d : 0;
+    this.vx += (dirx * desired - this.vx) * .12;
+    this.vy += (diry * desired - this.vy) * .12;
+    this.x += this.vx; this.y += this.vy;
+    this.speed = Math.hypot(this.vx, this.vy);
+    if (this.speed > .25) {
+      const target = Math.atan2(this.vy, this.vx);
+      let diff = ((target - this.a + Math.PI) % TAU + TAU) % TAU - Math.PI;
+      this.a += diff * .18;
+    } else if (d > 4) {
+      const target = Math.atan2(dy, dx);
+      let diff = ((target - this.a + Math.PI) % TAU + TAU) % TAU - Math.PI;
+      this.a += diff * .05;
+    }
+    // tail chain
+    const s = this.s, seg = 6.2 * s;
+    const bx = this.x - Math.cos(this.a) * 28 * s, by = this.y - Math.sin(this.a) * 28 * s;
+    this.tail[0].x = bx; this.tail[0].y = by;
+    for (let i = 1; i < this.tail.length; i++) {
+      const p = this.tail[i], q = this.tail[i - 1];
+      // idle sway
+      const sway = this.speed < .3 ? Math.sin(this.t * 2.2 + i * .5) * .35 * i / this.tail.length : 0;
+      p.x += -Math.sin(this.a) * sway; p.y += Math.cos(this.a) * sway;
+      const ex = p.x - q.x, ey = p.y - q.y, l = Math.hypot(ex, ey) || 1;
+      p.x = q.x + ex / l * seg; p.y = q.y + ey / l * seg;
+    }
+    if (this.chew > 0) this.chew -= dt;
+  }
+  draw(ctx) {
+    const s = this.s, t = this.t;
+    // tail
+    ctx.lineCap = 'round';
+    for (let i = 1; i < this.tail.length; i++) {
+      ctx.strokeStyle = '#e4a7bd';
+      ctx.lineWidth = (4.2 - i * .24) * s;
+      ctx.beginPath(); ctx.moveTo(this.tail[i - 1].x, this.tail[i - 1].y); ctx.lineTo(this.tail[i].x, this.tail[i].y); ctx.stroke();
+    }
+    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.a); ctx.scale(s, s);
+    const gait = this.speed > .4 ? Math.sin(t * 22) : 0;
+    // feet
+    ctx.fillStyle = '#f0b5c8';
+    [[10, 12, gait], [10, -12, -gait], [-16, 13, -gait], [-16, -13, gait]].forEach(([fx, fy, g]) => {
+      ctx.beginPath(); ctx.ellipse(fx + g * 4, fy, 4.5, 3, 0, 0, TAU); ctx.fill();
+    });
+    // body
+    const breathe = 1 + Math.sin(t * 6) * .025;
+    const fur = this.hue ? `hsl(${this.hue},22%,76%)` : '#c9c3d9';
+    ctx.fillStyle = fur;
+    ctx.beginPath(); ctx.ellipse(-8, 0, 23 * breathe, 16 * breathe, 0, 0, TAU); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,.18)';
+    ctx.beginPath(); ctx.ellipse(-6, -4, 14, 7, 0, 0, TAU); ctx.fill();
+    // ears
+    [[7, 12], [7, -12]].forEach(([ex, ey]) => {
+      ctx.fillStyle = '#b6aecb'; ctx.beginPath(); ctx.arc(ex, ey, 8.5, 0, TAU); ctx.fill();
+      ctx.fillStyle = '#f2b3c7'; ctx.beginPath(); ctx.arc(ex + .5, ey, 5.5, 0, TAU); ctx.fill();
+    });
+    // head
+    const nod = this.chew > 0 ? Math.sin(t * 40) * 1.5 : 0;
+    ctx.fillStyle = fur;
+    ctx.beginPath(); ctx.ellipse(14 + nod, 0, 14, 11, 0, 0, TAU); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(18 + nod, -8); ctx.quadraticCurveTo(32 + nod, 0, 18 + nod, 8); ctx.fill();
+    // eyes
+    ctx.fillStyle = '#1a1530';
+    ctx.beginPath(); ctx.arc(19 + nod, 5.5, 2.4, 0, TAU); ctx.arc(19 + nod, -5.5, 2.4, 0, TAU); ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(19.8 + nod, 4.8, .8, 0, TAU); ctx.arc(19.8 + nod, -6.2, .8, 0, TAU); ctx.fill();
+    // nose
+    const sniff = Math.sin(t * 14) * .6;
+    ctx.fillStyle = '#ff8fb1';
+    ctx.beginPath(); ctx.arc(29 + nod + sniff, 0, 3, 0, TAU); ctx.fill();
+    // whiskers
+    ctx.strokeStyle = 'rgba(240,236,250,.75)'; ctx.lineWidth = .8;
+    const w = Math.sin(t * 16) * .18;
+    for (const side of [1, -1]) for (let k = 0; k < 3; k++) {
+      const ang = side * (.35 + k * .32) + w * side;
+      ctx.beginPath(); ctx.moveTo(26 + nod, side * 2);
+      ctx.lineTo(26 + nod + Math.cos(ang) * 20, side * 2 + Math.sin(ang) * 20); ctx.stroke();
+    }
+    ctx.restore();
+  }
+}
+
+/* ================= HERO ================= */
+const hero = document.getElementById('heroCanvas');
+const hctx = hero.getContext('2d');
+let W = 0, H = 0, DPR = 1;
+const stars = [];
+function sizeHero() {
+  DPR = Math.min(devicePixelRatio || 1, 2);
+  W = hero.clientWidth; H = hero.clientHeight;
+  hero.width = W * DPR; hero.height = H * DPR;
+  hctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  stars.length = 0;
+  const n = Math.round(W * H / 2600);
+  for (let i = 0; i < n; i++) stars.push({ x: rand(0, W), y: rand(0, H), r: rand(.3, 1.6), z: rand(.2, 1), tw: rand(0, TAU) });
+}
+sizeHero(); addEventListener('resize', sizeHero);
+
+const pointer = { x: W * .62, y: H * .45, active: false };
+const mice = [new Mouse(W * .7, H * .55, 1.35)];
+const cheeses = [], crumbs = [], meteors = [];
+let eaten = 0;
+const eatenEl = document.getElementById('eaten');
+
+function heroPos(e) { const r = hero.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+hero.addEventListener('pointermove', e => { const p = heroPos(e); pointer.x = p.x; pointer.y = p.y; pointer.active = true; });
+hero.addEventListener('pointerdown', e => {
+  const p = heroPos(e);
+  pointer.x = p.x; pointer.y = p.y;
+  dropCheese(p.x, p.y);
+});
+function dropCheese(x, y, fromSky) {
+  cheeses.push({ x, y: fromSky ? -20 : y, ty: y, vy: 0, bites: 6, rot: rand(-.4, .4), land: !fromSky });
+  if (!fromSky) squeak();
+}
+document.getElementById('addMouse').onclick = () => {
+  if (mice.length >= 9) { mice.shift(); }
+  mice.push(new Mouse(rand(0, W), H + 30, rand(.85, 1.2), Math.random() < .5 ? 0 : rand(20, 330)));
+  squeak();
+};
+document.getElementById('rain').onclick = () => {
+  for (let i = 0; i < 10; i++) setTimeout(() => dropCheese(rand(60, W - 60), rand(H * .3, H * .85), true), i * 120);
+};
+
+let last = performance.now();
+function heroLoop(now) {
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  hctx.clearRect(0, 0, W, H);
+  // stars with parallax
+  const px = (pointer.x / W - .5), py = (pointer.y / H - .5);
+  for (const s of stars) {
+    const a = .45 + .55 * Math.sin(s.tw + now * .002 * s.z);
+    hctx.globalAlpha = a * s.z;
+    hctx.fillStyle = '#f3ecd8';
+    hctx.beginPath(); hctx.arc(s.x - px * 24 * s.z, s.y - py * 24 * s.z, s.r, 0, TAU); hctx.fill();
+  }
+  hctx.globalAlpha = 1;
+  // moon (cheese moon)
+  const mx = W * .82 - px * 10, my = H * .2 - py * 10, mr = Math.min(W, H) * .085;
+  const mg = hctx.createRadialGradient(mx, my, mr * .2, mx, my, mr * 2.4);
+  mg.addColorStop(0, 'rgba(246,196,69,.28)'); mg.addColorStop(1, 'rgba(246,196,69,0)');
+  hctx.fillStyle = mg; hctx.beginPath(); hctx.arc(mx, my, mr * 2.4, 0, TAU); hctx.fill();
+  hctx.fillStyle = '#f6d36e'; hctx.beginPath(); hctx.arc(mx, my, mr, 0, TAU); hctx.fill();
+  hctx.fillStyle = '#e2b443';
+  [[-.35, -.2, .2], [.3, .1, .26], [-.05, .45, .14], [.38, -.42, .1]].forEach(([a, b, r]) => { hctx.beginPath(); hctx.arc(mx + a * mr, my + b * mr, r * mr, 0, TAU); hctx.fill(); });
+  // meteors
+  if (!reduce && Math.random() < .006) meteors.push({ x: rand(W * .2, W), y: rand(-20, H * .3), life: 1 });
+  for (let i = meteors.length - 1; i >= 0; i--) {
+    const m = meteors[i]; m.x -= 9; m.y += 4.5; m.life -= .02;
+    const g = hctx.createLinearGradient(m.x, m.y, m.x + 90, m.y - 45);
+    g.addColorStop(0, `rgba(255,240,210,${m.life})`); g.addColorStop(1, 'rgba(255,240,210,0)');
+    hctx.strokeStyle = g; hctx.lineWidth = 2; hctx.beginPath(); hctx.moveTo(m.x, m.y); hctx.lineTo(m.x + 90, m.y - 45); hctx.stroke();
+    if (m.life <= 0) meteors.splice(i, 1);
+  }
+  // cheeses
+  for (const c of cheeses) {
+    if (!c.land) { c.vy += .5; c.y += c.vy; if (c.y >= c.ty) { c.y = c.ty; c.land = true; c.vy = 0; for (let k = 0; k < 6; k++) crumbs.push({ x: c.x, y: c.y, vx: rand(-2, 2), vy: rand(-3, -1), life: 1, star: true }); } }
+    drawCheese(hctx, c.x, c.y, 1.5, c.bites, c.rot);
+  }
+  // mice
+  mice.forEach((m, i) => {
+    let best = null, bd = 1e9;
+    for (const c of cheeses) { if (!c.land) continue; const d = Math.hypot(c.x - m.x, c.y - m.y); if (d < bd) { bd = d; best = c; } }
+    let tx, ty;
+    if (best) { tx = best.x; ty = best.y; }
+    else if (i === 0) { tx = pointer.x; ty = pointer.y; }
+    else { m.offset.a += dt * .4; tx = pointer.x + Math.cos(m.offset.a) * m.offset.r; ty = pointer.y + Math.sin(m.offset.a) * m.offset.r * .6; }
+    m.update(tx, ty, dt, !!best);
+    if (best && bd < 34 * m.s) {
+      m.chew = .3;
+      if (Math.random() < .06) {
+        best.bites -= 1;
+        for (let k = 0; k < 4; k++) crumbs.push({ x: best.x, y: best.y, vx: rand(-1.8, 1.8), vy: rand(-2.5, -.5), life: 1 });
+        crunch();
+        if (best.bites <= 0) { cheeses.splice(cheeses.indexOf(best), 1); eaten++; eatenEl.textContent = eaten; if (Math.random() < .5) squeak(); }
+      }
+    }
+  });
+  mice.forEach(m => m.draw(hctx));
+  // crumbs
+  for (let i = crumbs.length - 1; i >= 0; i--) {
+    const c = crumbs[i]; c.vy += .12; c.x += c.vx; c.y += c.vy; c.life -= .025;
+    hctx.globalAlpha = Math.max(0, c.life);
+    hctx.fillStyle = c.star ? '#fff3c4' : '#f6c445';
+    hctx.fillRect(c.x, c.y, c.star ? 2 : 3, c.star ? 2 : 3);
+    if (c.life <= 0) crumbs.splice(i, 1);
+  }
+  hctx.globalAlpha = 1;
+  // pointer hint ring when idle
+  if (!cheeses.length && pointer.active) {
+    hctx.strokeStyle = 'rgba(246,196,69,.35)'; hctx.lineWidth = 1.5;
+    hctx.beginPath(); hctx.arc(pointer.x, pointer.y, 10 + Math.sin(now * .006) * 3, 0, TAU); hctx.stroke();
+  }
+  requestAnimationFrame(heroLoop);
+}
+requestAnimationFrame(heroLoop);
+
+/* ================= ANATOMY ================= */
+const parts = {
+  whisker: { t: '胡须', p: '胡须是小鼠在黑暗中的“手”。它们每秒能前后扫动十几次，碰到东西时，根部密集的神经会把距离、形状和纹理告诉大脑。研究者常用胡须研究触觉在大脑里怎么被处理。', n: '每侧大约 30 根大胡须，排成整齐的行列' },
+  ear: { t: '耳朵', p: '又大又薄的耳朵对高频声音特别敏感，能听到远超人类上限的超声波。它们用这种“高音频道”互相交流，猫和人都听不见。', n: '可听范围大约 1 到 90 千赫兹以上' },
+  eye: { t: '眼睛', p: '眼睛长在头两侧，视野很宽，能及时发现上方飞来的猛禽，但看东西很模糊。小鼠只有两种视锥细胞，分不清红色，对紫外光反而敏感。', n: '视力大约只有人类的百分之一到二' },
+  nose: { t: '鼻子', p: '嗅觉是小鼠认识世界的主力。它们靠气味找食物、认出亲戚、判断对方是公是母，甚至分辨出天敌留下的痕迹。鼻子每秒能快速嗅闻好几次。', n: '约有 1100 个嗅觉受体基因，人类只有约 400 个' },
+  teeth: { t: '门牙', p: '上下各两颗门牙，正面有坚硬的橙黄色釉质，背面较软。啃东西时背面磨得快，前面就保持成锋利的凿子形状。它们终生不停生长。', n: '下面可以亲自试试“门牙永远在长”' },
+  tail: { t: '尾巴', p: '几乎没毛的长尾巴布满血管，是散热器官，也是爬绳子、走窄边时的平衡杆。尾巴的长度差不多和身体一样长。', n: '尾长约 5 到 10 厘米' },
+  heart: { t: '心脏', p: '身体小，散热快，所以新陈代谢非常旺盛。小鼠一天要吃掉相当于自己体重一成多的食物，心跳快得惊人。', n: '静息心跳每分钟约 500 到 700 次' },
+};
+const partList = document.getElementById('partList');
+const hots = [...document.querySelectorAll('.hot')];
+function showPart(key) {
+  const d = parts[key];
+  document.getElementById('partTitle').textContent = d.t;
+  document.getElementById('partText').textContent = d.p;
+  document.getElementById('partNum').textContent = d.n;
+  hots.forEach(h => h.classList.toggle('active', h.dataset.part === key));
+  partList.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.part === key));
+  const tail = document.getElementById('svgTail');
+  tail.setAttribute('d', key === 'tail' ? 'M150 238 C 100 280, 40 270, 30 220 S 60 140, 20 110' : 'M150 238 C 90 260, 60 210, 40 170 S 10 110, 30 80');
+}
+Object.entries(parts).forEach(([k, v]) => {
+  const b = document.createElement('button'); b.textContent = v.t; b.dataset.part = k;
+  b.onclick = () => { showPart(k); squeak(); }; partList.appendChild(b);
+});
+hots.forEach(h => {
+  const go = () => { showPart(h.dataset.part); squeak(); };
+  h.addEventListener('click', go);
+  h.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+});
+showPart('whisker');
+
+/* ================= ULTRASOUND ================= */
+const sono = document.getElementById('sonoCanvas'), sctx = sono.getContext('2d');
+const FMAX = 120000; let SW = 0, SH = 0;
+function sizeSono() {
+  const d = Math.min(devicePixelRatio || 1, 2);
+  SW = sono.clientWidth; SH = sono.clientHeight;
+  sono.width = SW * d; sono.height = SH * d; sctx.setTransform(d, 0, 0, d, 0, 0);
+  sctx.fillStyle = '#262059'; sctx.fillRect(0, 0, SW, SH);
+  const top = SH * .1, bot = SH * .94;
+  const axis = document.getElementById('sonoAxis'); axis.innerHTML = '';
+  [0, 20, 40, 60, 80, 100].forEach(k => {
+    const s = document.createElement('span'); s.textContent = k + ' kHz';
+    s.style.top = (bot - (k * 1000 / FMAX) * (bot - top)) + 'px'; axis.appendChild(s);
+  });
+  document.getElementById('humanLine').style.top = (bot - (20000 / FMAX) * (bot - top)) + 'px';
+}
+const yOf = f => { const top = SH * .1, bot = SH * .94; return bot - f / FMAX * (bot - top); };
+let syllables = [], songStart = 0, singing = false;
+function makeSong() {
+  const out = []; let t = 0;
+  const shapes = [[70000, 72000], [62000, 82000], [85000, 60000], [75000, 75000], [55000, 90000]];
+  for (let i = 0; i < 14; i++) {
+    const [a, b] = shapes[Math.floor(Math.random() * shapes.length)];
+    const dur = rand(.05, .14), j = rand(-6000, 6000);
+    out.push({ start: t, dur, f0: a + j, f1: b + j });
+    t += dur + rand(.06, .16);
+  }
+  return out;
+}
+document.getElementById('singBtn').onclick = () => {
+  const a = ac(); syllables = makeSong(); songStart = performance.now(); singing = true;
+  const t0 = a.currentTime + .05;
+  syllables.forEach(s => tone(s.f0 / 16, s.f1 / 16, t0 + s.start, s.dur, .14));
+};
+document.getElementById('squeakBtn').onclick = () => {
+  squeak(true);
+  syllables = [{ start: 0, dur: .07, f0: 3000, f1: 4000, audible: true }, { start: .08, dur: .09, f0: 3600, f1: 2700, audible: true }];
+  songStart = performance.now(); singing = true;
+};
+let sonoVisible = false;
+new IntersectionObserver(es => { sonoVisible = es[0].isIntersecting; }).observe(sono);
+function sonoLoop() {
+  if (sonoVisible && SW) {
+    const step = 3;
+    sctx.drawImage(sono, step * (sono.width / SW), 0, sono.width - step * (sono.width / SW), sono.height, 0, 0, SW - step, SH);
+    sctx.fillStyle = '#262059'; sctx.fillRect(SW - step, 0, step, SH);
+    // faint noise floor
+    for (let i = 0; i < 6; i++) { sctx.fillStyle = `rgba(169,162,200,${rand(.02, .08)})`; sctx.fillRect(SW - step, rand(SH * .1, SH * .94), step, 1.5); }
+    if (singing) {
+      const el = (performance.now() - songStart) / 1000; let any = false;
+      for (const s of syllables) {
+        if (el < s.start + s.dur) any = true;
+        if (el >= s.start && el <= s.start + s.dur) {
+          const p = (el - s.start) / s.dur, f = s.f0 + (s.f1 - s.f0) * p, y = yOf(f);
+          const g = sctx.createLinearGradient(0, y - 8, 0, y + 8);
+          const c = s.audible ? '255,155,184' : '246,196,69';
+          g.addColorStop(0, `rgba(${c},0)`); g.addColorStop(.5, `rgba(${c},1)`); g.addColorStop(1, `rgba(${c},0)`);
+          sctx.fillStyle = g; sctx.fillRect(SW - step, y - 8, step, 16);
+        }
+      }
+      if (!any) singing = false;
+    }
+  }
+  requestAnimationFrame(sonoLoop);
+}
+sizeSono(); addEventListener('resize', sizeSono); requestAnimationFrame(sonoLoop);
+
+/* ================= TEETH ================= */
+const toothL = document.getElementById('toothL'), toothR = document.getElementById('toothR');
+const meter = document.getElementById('meter'), teethMsg = document.getElementById('teethMsg');
+const stick = document.getElementById('stick'), teethStage = document.getElementById('teethStage');
+let toothLen = 22, teethPaused = false, teethVisible = false, gnawing = 0;
+new IntersectionObserver(es => { teethVisible = es[0].isIntersecting; }).observe(teethStage);
+function renderTeeth() {
+  toothL.setAttribute('height', toothLen); toothR.setAttribute('height', toothLen);
+  const pct = clamp((toothLen - 10) / 70 * 100, 0, 100);
+  meter.firstElementChild.style.width = pct + '%';
+  meter.classList.toggle('bad', toothLen > 55);
+  teethMsg.textContent = toothLen > 70 ? '牙已经长到下巴外面了，它根本合不上嘴。快给木棍！'
+    : toothLen > 55 ? '太长了。门牙开始互相错开，吃东西变得很困难。'
+    : toothLen > 32 ? '有点长了，它想找东西啃。'
+    : toothLen < 16 ? '磨得很短很利，像一把小凿子。' : '长度刚好。';
+}
+setInterval(() => {
+  if (!teethPaused && teethVisible && !gnawing) { toothLen = Math.min(80, toothLen + .9); renderTeeth(); }
+}, 250);
+document.getElementById('pauseTeeth').onclick = e => {
+  teethPaused = !teethPaused; e.target.textContent = teethPaused ? '继续时间' : '暂停时间';
+};
+document.getElementById('gnawBtn').onclick = () => {
+  if (gnawing) return;
+  gnawing = 1; stick.style.transition = 'opacity .2s'; stick.setAttribute('opacity', '1');
+  let n = 0;
+  const iv = setInterval(() => {
+    n++;
+    document.getElementById('incisors').setAttribute('transform', `translate(0 ${n % 2 ? 3 : 0})`);
+    toothLen = Math.max(14, toothLen - 2.2); renderTeeth(); crunch();
+    const r = teethStage.getBoundingClientRect(), sr = stick.getBoundingClientRect();
+    for (let k = 0; k < 3; k++) {
+      const c = document.createElement('i'); c.className = 'chip';
+      c.style.left = (sr.left - r.left + rand(.3, .7) * sr.width) + 'px'; c.style.top = (sr.top - r.top) + 'px';
+      teethStage.appendChild(c);
+      const dx = rand(-90, 90), dy = rand(40, 120);
+      c.animate([{ transform: 'translate(0,0) rotate(0)' , opacity: 1 }, { transform: `translate(${dx}px,${dy}px) rotate(${rand(-360, 360)}deg)`, opacity: 0 }], { duration: 700, easing: 'cubic-bezier(.2,.6,.4,1)' }).onfinish = () => c.remove();
+    }
+    if (n >= 10) {
+      clearInterval(iv); gnawing = 0; stick.setAttribute('opacity', '0');
+      document.getElementById('incisors').removeAttribute('transform');
+    }
+  }, 120);
+};
+renderTeeth();
+
+/* ================= NUMBERS ================= */
+const numObs = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return; numObs.unobserve(e.target);
+  e.target.querySelectorAll('strong').forEach(el => {
+    const to = +el.dataset.to, suf = el.dataset.suffix || ''; const t0 = performance.now(), d = reduce ? 1 : 1400;
+    (function f(now) { const p = Math.min(1, (now - t0) / d), v = Math.round(to * (1 - (1 - p) ** 3)); el.textContent = v + suf; if (p < 1) requestAnimationFrame(f); })(t0);
+  });
+}), { threshold: .4 });
+numObs.observe(document.querySelector('.numbers'));
+
+/* ================= POPULATION ================= */
+function population(months) {
+  // cohorts of females by age in months; males = females (approx)
+  let fem = [1]; // index = age in months
+  for (let m = 0; m < months; m++) {
+    const breeders = fem.reduce((s, c, age) => s + (age >= 2 ? c : 0), 0);
+    fem = [breeders * 3, ...fem];
+  }
+  // newborn female count at index 0 also have equal males
+  return fem.reduce((s, c) => s + c, 0) * 2;
+}
+const popCanvas = document.getElementById('popCanvas'), pctx = popCanvas.getContext('2d');
+const popRange = document.getElementById('popRange');
+let popDots = [], popTarget = 2, popShown = 2;
+function sizePop() {
+  const d = Math.min(devicePixelRatio || 1, 2);
+  popCanvas.width = popCanvas.clientWidth * d; popCanvas.height = popCanvas.clientHeight * d;
+  pctx.setTransform(d, 0, 0, d, 0, 0);
+}
+function fmt(n) { return n >= 1e8 ? (n / 1e8).toFixed(2) + ' 亿' : n >= 1e4 ? (n / 1e4).toFixed(1) + ' 万' : String(n); }
+function updatePop() {
+  const m = +popRange.value; popTarget = population(m);
+  document.getElementById('popMonth').textContent = `第 ${m} 个月`;
+  const per = popTarget > 2000 ? Math.pow(10, Math.ceil(Math.log10(popTarget / 2000))) : 1;
+  document.getElementById('popLegend').textContent = `每个点代表 ${fmt(per)} 只老鼠`;
+  const want = Math.max(1, Math.round(popTarget / per));
+  const w = popCanvas.clientWidth, h = popCanvas.clientHeight;
+  while (popDots.length < want) popDots.push({ x: w / 2 + rand(-20, 20), y: h / 2 + rand(-20, 20), tx: rand(8, w - 8), ty: rand(8, h - 8), r: rand(2, 3.6) });
+  popDots.length = want;
+  if (m && m % 3 === 0) squeak();
+}
+function popLoop() {
+  const w = popCanvas.clientWidth, h = popCanvas.clientHeight;
+  pctx.clearRect(0, 0, w, h);
+  popShown += (popTarget - popShown) * .12;
+  document.getElementById('popCount').textContent = fmt(Math.round(popShown));
+  for (const d of popDots) {
+    d.x += (d.tx - d.x) * .08; d.y += (d.ty - d.y) * .08;
+    if (Math.random() < .004) { d.tx = clamp(d.tx + rand(-30, 30), 6, w - 6); d.ty = clamp(d.ty + rand(-30, 30), 6, h - 6); }
+    pctx.fillStyle = '#c9c3d9'; pctx.beginPath(); pctx.arc(d.x, d.y, d.r, 0, TAU); pctx.fill();
+    pctx.fillStyle = '#ff9bb8'; pctx.beginPath(); pctx.arc(d.x + d.r * .9, d.y, d.r * .35, 0, TAU); pctx.fill();
+  }
+  requestAnimationFrame(popLoop);
+}
+sizePop(); addEventListener('resize', sizePop); popRange.oninput = updatePop; updatePop(); requestAnimationFrame(popLoop);
+
+/* ================= MYTHS ================= */
+const myths = [
+  ['老鼠最爱吃奶酪', '其实更爱谷物和甜食', '动画片的功劳。野外的小鼠主要吃种子、谷物和昆虫，实验里它们对花生酱、巧克力、水果的兴趣都比奶酪大。浓烈的奶酪味有时反而会让它们犹豫。'],
+  ['老鼠吃坏了会吐出来', '它们根本不会呕吐', '大鼠和小鼠都没有呕吐能力，食道和胃之间的结构以及控制呕吐的神经通路都不支持。所以它们对新食物格外谨慎，会先尝一小口观察。'],
+  ['老鼠胆小，一天到晚只会逃', '它们会笑，也会帮同伴', '大鼠被挠痒时会发出约 50 千赫兹的超声“笑声”，还会主动追着挠痒的手玩。实验里，大鼠会主动打开笼门救出被困的同伴，还会把巧克力分给它。'],
+  ['老鼠只能直直地钻洞', '跳高、游泳、爬墙都行', '小鼠能垂直跳起约 30 厘米，会游泳，能沿着粗糙的墙面和电线往上爬，还能从相当于自己身长很多倍的高度跳下而不受伤。'],
+  ['老鼠脏，所以总在打滚', '它们一天要洗很多次脸', '小鼠花大量时间梳理毛发：舔爪子、擦脸、理胡须，有固定的先后顺序。清洁的毛发对保温和用胡须感知环境都很重要。'],
+  ['老鼠和人差得远', '它们是医学研究的主力', '小鼠和人类的大部分基因都能一一对应，又繁殖快、体型小，所以从疫苗到癌症药物，很多研究都从小鼠开始。'],
+];
+const cardsEl = document.getElementById('cards');
+myths.forEach(([q, title, body]) => {
+  const b = document.createElement('button'); b.className = 'card'; b.setAttribute('aria-pressed', 'false');
+  b.innerHTML = `<div class="card-in"><div class="face front"><q>${q}</q><small>点我翻面</small></div><div class="face back"><b>${title}</b><p>${body}</p></div></div>`;
+  b.onclick = () => { b.classList.toggle('flipped'); b.setAttribute('aria-pressed', b.classList.contains('flipped')); squeak(); };
+  cardsEl.appendChild(b);
+});
+
+/* ================= MAZE ================= */
+const COLS = 17, ROWS = 13; // odd grid of cells (walls in between)
+const mc = document.getElementById('mazeCanvas'), mctx = mc.getContext('2d');
+let grid, player, goal, steps, tStart, won, lightOn = false, trail;
+function genMaze() {
+  grid = Array.from({ length: ROWS }, () => Array(COLS).fill(1));
+  const stack = [[1, 1]]; grid[1][1] = 0;
+  while (stack.length) {
+    const [x, y] = stack[stack.length - 1];
+    const dirs = [[2, 0], [-2, 0], [0, 2], [0, -2]].sort(() => Math.random() - .5);
+    let moved = false;
+    for (const [dx, dy] of dirs) {
+      const nx = x + dx, ny = y + dy;
+      if (nx > 0 && ny > 0 && nx < COLS - 1 && ny < ROWS - 1 && grid[ny][nx]) {
+        grid[y + dy / 2][x + dx / 2] = 0; grid[ny][nx] = 0; stack.push([nx, ny]); moved = true; break;
+      }
+    }
+    if (!moved) stack.pop();
+  }
+  // a few loops for fun
+  for (let i = 0; i < 8; i++) { const x = 1 + Math.floor(Math.random() * (COLS - 2)), y = 1 + Math.floor(Math.random() * (ROWS - 2)); if ((x + y) % 2 === 1) grid[y][x] = 0; }
+  player = { x: 1, y: 1, rx: 1, ry: 1, a: 0 }; goal = { x: COLS - 2, y: ROWS - 2 };
+  steps = 0; tStart = 0; won = false; trail = new Set(['1,1']);
+  document.getElementById('steps').textContent = 0; document.getElementById('mtime').textContent = '0.0';
+  const st = document.getElementById('mstatus'); st.textContent = '找奶酪中'; st.classList.remove('win');
+}
+function sizeMaze() {
+  const d = Math.min(devicePixelRatio || 1, 2);
+  mc.width = mc.clientWidth * d; mc.height = mc.clientHeight * d; mctx.setTransform(d, 0, 0, d, 0, 0);
+}
+function move(dx, dy) {
+  if (won) return;
+  const nx = player.x + dx, ny = player.y + dy;
+  player.a = Math.atan2(dy, dx);
+  if (grid[ny] && grid[ny][nx] === 0) {
+    player.x = nx; player.y = ny; steps++; trail.add(nx + ',' + ny);
+    if (!tStart) tStart = performance.now();
+    document.getElementById('steps').textContent = steps;
+    if (nx === goal.x && ny === goal.y) {
+      won = true; squeak(); setTimeout(() => squeak(), 160);
+      const st = document.getElementById('mstatus'); st.textContent = '找到了！'; st.classList.add('win');
+    }
+  } else { bump = 1; }
+}
+let bump = 0;
+const mazeMouse = new Mouse(0, 0, .5);
+addEventListener('keydown', e => {
+  const map = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0], w: [0, -1], s: [0, 1], a: [-1, 0], d: [1, 0], W: [0, -1], S: [0, 1], A: [-1, 0], D: [1, 0] };
+  if (!map[e.key]) return;
+  const r = mc.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+  if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+  e.preventDefault(); move(...map[e.key]);
+});
+document.querySelectorAll('.dpad button').forEach(b => b.onclick = () => move(...b.dataset.d.split(',').map(Number)));
+let sw = null;
+mc.addEventListener('pointerdown', e => { sw = { x: e.clientX, y: e.clientY }; });
+mc.addEventListener('pointerup', e => {
+  if (!sw) return; const dx = e.clientX - sw.x, dy = e.clientY - sw.y; sw = null;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) < 18) return;
+  Math.abs(dx) > Math.abs(dy) ? move(Math.sign(dx), 0) : move(0, Math.sign(dy));
+});
+document.getElementById('newMaze').onclick = genMaze;
+document.getElementById('lightBtn').onclick = e => { lightOn = !lightOn; e.target.textContent = lightOn ? '关灯' : '开灯作弊'; };
+function mazeLoop(now) {
+  const w = mc.clientWidth, h = mc.clientHeight, cs = Math.min(w / COLS, h / ROWS);
+  const ox = (w - cs * COLS) / 2, oy = (h - cs * ROWS) / 2;
+  player.rx += (player.x - player.rx) * .3; player.ry += (player.y - player.ry) * .3;
+  if (tStart && !won) document.getElementById('mtime').textContent = ((now - tStart) / 1000).toFixed(1);
+  mctx.clearRect(0, 0, w, h);
+  // floor + walls
+  for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) {
+    if (grid[y][x]) { mctx.fillStyle = '#4a3f99'; mctx.fillRect(ox + x * cs, oy + y * cs, cs + .5, cs + .5); }
+    else if (trail.has(x + ',' + y)) { mctx.fillStyle = 'rgba(246,196,69,.09)'; mctx.fillRect(ox + x * cs, oy + y * cs, cs + .5, cs + .5); }
+  }
+  // cheese
+  const gx = ox + (goal.x + .5) * cs, gy = oy + (goal.y + .5) * cs;
+  drawCheese(mctx, gx, gy + Math.sin(now * .004) * 2, cs / 26, 6);
+  // mouse
+  const px = ox + (player.rx + .5) * cs, py = oy + (player.ry + .5) * cs;
+  mazeMouse.s = cs / 46; mazeMouse.a += (((player.a - mazeMouse.a + Math.PI) % TAU + TAU) % TAU - Math.PI) * .3;
+  const moving = Math.hypot(player.x - player.rx, player.y - player.ry) > .05;
+  mazeMouse.vx = moving ? Math.cos(mazeMouse.a) : 0; mazeMouse.vy = moving ? Math.sin(mazeMouse.a) : 0; mazeMouse.speed = moving ? 1 : 0;
+  mazeMouse.x = px; mazeMouse.y = py; mazeMouse.t += .016;
+  const bx = px - Math.cos(mazeMouse.a) * 28 * mazeMouse.s, by = py - Math.sin(mazeMouse.a) * 28 * mazeMouse.s;
+  mazeMouse.tail[0] = { x: bx, y: by };
+  for (let i = 1; i < mazeMouse.tail.length; i++) {
+    const p = mazeMouse.tail[i], q = mazeMouse.tail[i - 1], seg = 6.2 * mazeMouse.s;
+    const ex = p.x - q.x, ey = p.y - q.y, l = Math.hypot(ex, ey) || 1; p.x = q.x + ex / l * seg; p.y = q.y + ey / l * seg;
+  }
+  mazeMouse.draw(mctx);
+  // darkness: whisker radius
+  if (!lightOn && !won) {
+    const r = cs * (2.6 + (bump ? .4 * bump : 0) + Math.sin(now * .01) * .08);
+    mctx.save();
+    const g = mctx.createRadialGradient(px, py, r * .45, px, py, r * 1.15);
+    g.addColorStop(0, 'rgba(38,32,89,0)'); g.addColorStop(1, 'rgba(38,32,89,1)');
+    mctx.fillStyle = g; mctx.fillRect(0, 0, w, h);
+    mctx.restore();
+    // cheese scent glow
+    const sg = mctx.createRadialGradient(gx, gy, 0, gx, gy, cs * 1.4);
+    sg.addColorStop(0, 'rgba(246,196,69,.45)'); sg.addColorStop(1, 'rgba(246,196,69,0)');
+    mctx.fillStyle = sg; mctx.beginPath(); mctx.arc(gx, gy, cs * 1.4, 0, TAU); mctx.fill();
+  }
+  if (bump) bump = Math.max(0, bump - .08);
+  if (won) {
+    for (let i = 0; i < 3; i++) {
+      mctx.fillStyle = ['#f6c445', '#ff9bb8', '#f3ecd8'][i];
+      const a = now * .003 + i * 2.1, rr = cs * (1.2 + Math.sin(now * .005) * .3);
+      mctx.beginPath(); mctx.arc(px + Math.cos(a) * rr, py + Math.sin(a) * rr, cs * .12, 0, TAU); mctx.fill();
+    }
+  }
+  requestAnimationFrame(mazeLoop);
+}
+genMaze(); sizeMaze(); addEventListener('resize', sizeMaze); requestAnimationFrame(mazeLoop);
+
+/* ================= REVEAL ================= */
+const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }), { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+})();
+</script>
+</body>
+</html>

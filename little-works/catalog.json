@@ -1,5 +1,19 @@
 [
   {
+    "slug": "mouse-observatory",
+    "title": "小鼠观测站｜Mouse Observatory",
+    "date": "2026.11.05",
+    "type": "INTERACTIVE SCIENCE",
+    "description": "喂一只追着指针跑的小鼠，听它降频后的超声波情歌，看门牙一直长，再用胡须摸黑走出迷宫。",
+    "url": "./mouse-observatory/",
+    "cover": "./mouse-observatory/cover.webp",
+    "tags": [
+      "互动科普",
+      "超声波声谱",
+      "胡须迷宫"
+    ]
+  },
+  {
     "slug": "living-archive",
     "title": "SHUGE｜仍在形成 · Living Archive",
     "date": "2026.10.30",
