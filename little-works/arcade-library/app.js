@@ -1,6 +1,7 @@
 'use strict';
 const BASE='https://ndshuge.github.io/ndshuge-game/games/';
 const GAMES=[
+{id:'mumujinjin',name:'木木金金棋',en:'MUMU JINJIN · XIAOKE',group:'策略',tags:['策略','棋类','AI','双人'],desc:'在随机地形上交锋：筑墙、传送与路径博弈。经典和进阶分别挑战小克的两套 AI。',device:'支持手机和电脑；打开独立正式棋局。',url:'https://ndshuge.github.io/oh-mumujinjin/'},
 {id:'lumen-siege',name:'光核围城',en:'LUMEN SIEGE',group:'动作',tags:['动作','生存','像素'],desc:'在光与暗交错的战场里，一边躲避不断涌来的敌人，一边进化你的武器。每一局都是新的生存挑战。',device:'键盘体验更完整'},
 {id:'still',name:'凝时 STILL',en:'STILL',group:'动作',tags:['动作','时间','弹幕'],desc:'按下时间的暂停键，在密集弹幕间寻找唯一的破局路线。快与慢，在你的手中交换。'},
 {id:'gravity-garden',name:'重力花园',en:'GRAVITY GARDEN',group:'实验',tags:['实验','物理','沙盒'],desc:'给物体一点力量，让它们自由碰撞、旋转、飞行。在这座小小的物理花园里，玩出你的宇宙。'},
@@ -19,8 +20,9 @@ const GAMES=[
 {id:'ww2-frontline',name:'西线前线',en:'WESTERN FRONT',group:'冒险',tags:['冒险','3D','FPS'],desc:'踏入第一人称的战场原型，在 3D 空间里完成一段充满挑战的探索。',device:'推荐使用电脑与键鼠'}
 ];
 
+const gameUrl=g=>g.url||BASE+g.id+'/';
 const byId=Object.fromEntries(GAMES.map(g=>[g.id,g]));
-const PICKS=['lumen-siege','still','gravity-garden','vocalon-chaos','pulse-breaker'];
+const PICKS=['mumujinjin','lumen-siege','still','gravity-garden','vocalon-chaos','pulse-breaker'];
 const STORIES=['still','gravity-garden','vocalon-chaos','belfry','ghostslash','pulse-breaker'];
 const DISCOVER=['rewinder','echo-trail','issen','motu','lightlag','ww2-frontline'];
 const GENRES=['全部','动作','节奏','冒险','解谜','街机','实验'];
@@ -39,7 +41,7 @@ function featureAt(index){
  'lumen-siege':'一束光，迎战无尽黑暗。','still':'凝住时间，改变战局。','gravity-garden':'让星球与重力自由起舞。','vocalon-chaos':'让每一次按键，都踩在节拍上。','pulse-breaker':'跟上脉冲，冲破边界。'
  }[g.id]||g.desc;
  $('#heroLabel').textContent=['本周精选','为你推荐','自由探索','节奏之选','动作新体验'][next];
- $('#heroPlay').href=BASE+g.id+'/';$('#heroPlay').dataset.play=g.id;
+ $('#heroPlay').href=gameUrl(g);$('#heroPlay').dataset.play=g.id;
  $('#heroDetail').dataset.detail=g.id;$('#heroDetail').setAttribute('aria-label','查看'+g.name+'详情');
  $('#heroDots').innerHTML=PICKS.map((id,i)=>'<button type="button" class="hero-dot '+(i===next?'active':'')+'" data-feature="'+i+'" aria-label="查看第'+(i+1)+'款精选游戏" aria-pressed="'+(i===next)+'"></button>').join('');
 }
@@ -64,7 +66,7 @@ function renderList(){
  $('#subTitle').textContent=searchMode?'搜索':m[0];$('#subEyebrow').textContent=searchMode?'找到你的下一款游戏':'SHUGE Arcade';$('#subDescription').textContent=searchMode?'按名称、类型或玩法探索。':m[1];$('#listHeading').textContent=m[2];
  $('#tagStrip').innerHTML=GENRES.map(t=>'<button type="button" class="filter-chip '+(t===genre?'active':'')+'" aria-pressed="'+(t===genre)+'" data-filter="'+t+'">'+t+'</button>').join('');
  const result=listForView();$('#resultCount').textContent=result.length+' 款';
- $('#gameList').innerHTML=result.map(g=>'<article class="list-row"><button class="list-image" data-detail="'+g.id+'" aria-label="查看'+g.name+'详情"><img src="'+gameArt(g.id)+'" loading="lazy" alt=""></button><button class="list-text" data-detail="'+g.id+'"><strong>'+g.name+'</strong><small>'+g.en+' · '+g.tags.slice(0,2).join(' · ')+'</small></button><a href="'+BASE+g.id+'/" data-play="'+g.id+'" target="_blank" rel="noopener noreferrer" class="row-play" aria-label="游玩'+g.name+'">游玩</a><button type="button" class="row-favorite '+(favorites.has(g.id)?'selected':'')+'" data-fav="'+g.id+'" aria-pressed="'+favorites.has(g.id)+'" aria-label="'+(favorites.has(g.id)?'取消收藏':'收藏')+g.name+'">'+heart+'</button></article>').join('');
+ $('#gameList').innerHTML=result.map(g=>'<article class="list-row"><button class="list-image" data-detail="'+g.id+'" aria-label="查看'+g.name+'详情"><img src="'+gameArt(g.id)+'" loading="lazy" alt=""></button><button class="list-text" data-detail="'+g.id+'"><strong>'+g.name+'</strong><small>'+g.en+' · '+g.tags.slice(0,2).join(' · ')+'</small></button><a href="'+gameUrl(g)+'" data-play="'+g.id+'" target="_blank" rel="noopener noreferrer" class="row-play" aria-label="游玩'+g.name+'">游玩</a><button type="button" class="row-favorite '+(favorites.has(g.id)?'selected':'')+'" data-fav="'+g.id+'" aria-pressed="'+favorites.has(g.id)+'" aria-label="'+(favorites.has(g.id)?'取消收藏':'收藏')+g.name+'">'+heart+'</button></article>').join('');
  const empty=result.length===0;$('#emptyState').hidden=!empty;
  if(empty){
    $('#emptyTitle').textContent=query?'没有找到游戏':view==='favorites'?'暂无收藏':view==='recent'?'还没有游玩记录':'没有符合条件的游戏';
@@ -91,7 +93,7 @@ function toggleFavorite(id){
 }
 function markPlayed(id){if(!byId[id])return;recent=[id,...recent.filter(x=>x!==id)].slice(0,16);save(HISTORY,recent);renderHome();if(view==='recent')renderList()}
 function renderDetail(g){
- $('#modalContent').innerHTML='<div class="modal-cover"><img src="'+gameArt(g.id)+'" alt="" fetchpriority="high"></div><div class="modal-body"><div class="modal-symbol"><img src="'+gameArt(g.id)+'" alt=""></div><p class="modal-category">SHUGE Games · '+g.group+'</p><h2 id="detailTitle">'+g.name+'</h2><p class="modal-desc">'+g.desc+'</p><div class="modal-tags">'+g.tags.map(t=>'<span>'+t+'</span>').join('')+'</div><div class="modal-actions"><a class="modal-play" href="'+BASE+g.id+'/" data-play="'+g.id+'" target="_blank" rel="noopener noreferrer">游玩 <span aria-hidden="true">↗</span></a><button class="modal-save" data-fav="'+g.id+'" aria-pressed="'+favorites.has(g.id)+'">'+(favorites.has(g.id)?'♥ 已收藏':'♡ 收藏')+'</button></div><p class="modal-note">'+(g.device||'在新标签页启动浏览器游戏。')+' · 游玩记录只保存在这台设备</p></div>';
+ $('#modalContent').innerHTML='<div class="modal-cover"><img src="'+gameArt(g.id)+'" alt="" fetchpriority="high"></div><div class="modal-body"><div class="modal-symbol"><img src="'+gameArt(g.id)+'" alt=""></div><p class="modal-category">SHUGE Games · '+g.group+'</p><h2 id="detailTitle">'+g.name+'</h2><p class="modal-desc">'+g.desc+'</p><div class="modal-tags">'+g.tags.map(t=>'<span>'+t+'</span>').join('')+'</div><div class="modal-actions"><a class="modal-play" href="'+gameUrl(g)+'" data-play="'+g.id+'" target="_blank" rel="noopener noreferrer">游玩 <span aria-hidden="true">↗</span></a><button class="modal-save" data-fav="'+g.id+'" aria-pressed="'+favorites.has(g.id)+'">'+(favorites.has(g.id)?'♥ 已收藏':'♡ 收藏')+'</button></div><p class="modal-note">'+(g.device||'在新标签页启动浏览器游戏。')+' · 游玩记录只保存在这台设备</p></div>';
 }
 function openDetail(id){
  const g=byId[id];if(!g)return;lastFocus=document.activeElement;openGame=id;renderDetail(g);
