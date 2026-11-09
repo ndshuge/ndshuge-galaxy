@@ -94,7 +94,7 @@ async function startViewer() {
       resolve,
       event => {
         if (event.lengthComputable && event.total > 0) {
-          const percent = Math.round(event.loaded / event.total * 100);
+          const percent = Math.min(99, Math.max(0, Math.round(event.loaded / event.total * 100)));
           status.textContent = '载入场景 ' + percent + '%';
         }
       },
