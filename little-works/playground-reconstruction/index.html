@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1424">
+  <meta name="description" content="从一张照片出发，在 Blender 中重建一座蓝色的儿童乐园。双机位渲染、可旋转的真实 3D 场景与可编辑模型。">
+  <title>童梦空间 · 一张照片的三维重建｜鼠哥星系</title>
+  <link rel="icon" href="./cover.webp" type="image/webp">
+  <link rel="preload" href="./hero.png" as="image">
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+  <script type="module" src="./viewer.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#work">跳转到作品</a>
+  <header class="topbar">
+    <a class="back" href="../" aria-label="返回鼠哥星系的小作品列表"><span class="arrow">←</span> 鼠哥星系 / 小作品</a>
+    <span class="topbar-stamp">SHUGE · SPATIAL STUDY 001</span>
+  </header>
+  <main id="work">
+    <section class="intro" aria-labelledby="title">
+      <div class="eyebrow"><span class="eyebrow-line"></span> PHOTO TO SPACE · 2026.11.09</div>
+      <h1 id="title">童梦<span class="serif">空间</span><span class="title-dot">.</span></h1>
+      <p class="lead">一张照片，重新走进一座蓝色的儿童乐园。</p>
+      <p class="sublead">从兔子入口到钟楼、双滑梯与海洋球池，把平面记忆逐件放回三维空间。这里展示的是一件可以亲自旋转、探索和编辑的 Blender 重建实验。</p>
+      <div class="meta-row">
+        <span>01 / 单张照片</span><span>02 / 真实三维几何</span><span>03 / 双机位实拍式渲染</span>
+      </div>
+    </section>
+    <section class="stage" aria-label="作品展示">
+      <div class="stage-toolbar">
+        <div class="view-switch" role="group" aria-label="选择查看模式">
+          <button class="tab is-active" type="button" data-view="hero" aria-pressed="true">主视角</button>
+          <button class="tab" type="button" data-view="alt" aria-pressed="false">另一角度</button>
+          <button class="tab" type="button" data-view="model" aria-pressed="false">旋转 3D <span class="live-dot" aria-hidden="true"></span></button>
+        </div>
+        <button class="reset" type="button" id="resetView" hidden>↺ 重置视角</button>
+      </div>
+      <div class="stage-media">
+        <img class="stage-image is-shown" id="heroImage" src="./hero.png" alt="Blender 实际渲染：左侧兔子拱门、中央钟楼、右侧双滑梯球池和蓝色花纹地板" fetchpriority="high" decoding="async">
+        <img class="stage-image" id="altImage" src="./alternate.png" alt="Blender 第二个实际机位，能看到兔子入口、钟楼侧面和滑梯的立体结构" loading="lazy" decoding="async">
+        <div id="viewer" class="viewer" role="region" aria-label="可旋转、缩放的儿童乐园真实三维模型" hidden>
+          <div id="viewerStatus" class="viewer-status" role="status">点击“旋转 3D”后加载模型</div>
+        </div>
+        <div class="stage-caption" id="stageCaption"><span class="caption-index">01 / 03</span> 原照片机位重建 · Blender 渲染</div>
+      </div>
+      <div class="stage-foot">
+        <span class="stage-hint" id="stageHint">真实模型渲染 · 1536 × 1024</span>
+        <span class="stage-credit">Made with Blender 5.2 · bpy · Mice Hole</span>
+      </div>
+    </section>
+    <section class="details" aria-label="作品说明">
+      <div>
+        <p class="section-kicker">THE EXPERIMENT</p>
+        <h2>从照片走入空间</h2>
+      </div>
+      <div class="details-body">
+        <p>照片只记录一个瞬间，三维模型还要回答画面之外的问题。兔子入口的厚度、滑梯的曲面、海洋球池的边界，以及钟柱背后的结构，都在建模时重新推断。</p>
+        <p>这不是照片测量扫描，也没有以原照片作为背景平面。每个主要设施都在 Blender 中用可编辑的网格、曲线、材质和灯光构成；隐藏区域带有合理的设计性推测。</p>
+      </div>
+    </section>
+    <section class="specs" aria-label="建模信息">
+      <div class="spec"><span>OBJECTS</span><strong>2,322</strong><small>场景对象</small></div>
+      <div class="spec"><span>MATERIALS</span><strong>32</strong><small>独立材质</small></div>
+      <div class="spec"><span>LIGHTS</span><strong>16</strong><small>场景灯光</small></div>
+      <div class="spec"><span>CAMERAS</span><strong>03</strong><small>可编辑机位</small></div>
+    </section>
+    <section class="files" aria-label="获取三维作品">
+      <div>
+        <p class="section-kicker">OPEN THE SCENE</p>
+        <h2>把空间带走</h2>
+        <p>下载原始场景，亲自移动镜头、拆解几何或修改材质。移动设备也可以下载 GLB，用兼容的三维查看器打开。</p>
+      </div>
+      <div class="file-links">
+        <a href="./playground.blend" download="playground-reconstruction.blend" class="file-link"><span>Blender 原始工程 <small>.blend · 可继续编辑</small></span><span aria-hidden="true">↗</span></a>
+        <a href="./playground.glb" download="playground-reconstruction.glb" class="file-link"><span>便携式三维模型 <small>.glb · 跨软件查看</small></span><span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+    <footer class="footer"><span>SHUGE · A SMALL EXPERIMENT</span><a href="../">回到所有小作品 ↗</a></footer>
+  </main>
+</body>
+</html>
