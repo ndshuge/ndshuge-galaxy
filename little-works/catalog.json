@@ -1,5 +1,19 @@
 [
   {
+    "slug": "b612-little-prince",
+    "title": "B612 · 还没有长大的星球",
+    "date": "2026.11.11",
+    "type": "INTERACTIVE 3D ART",
+    "description": "一颗被晚风轻轻托起的星球：小王子、狐狸、玫瑰与黄昏。旋转它，从另外一面看童话。",
+    "url": "./b612-little-prince/",
+    "cover": "./b612-little-prince/cover.webp",
+    "tags": [
+      "Blender 原创建模",
+      "低多边形艺术",
+      "可旋转 3D"
+    ]
+  },
+  {
     "slug": "playground-reconstruction",
     "title": "童梦空间｜一张照片的三维重建",
     "date": "2026.11.09",

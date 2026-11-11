@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#061420">
+<meta name="description" content="B612 · 一颗还没有长大的星球。原创低多边形 Blender 童话场景，包含可旋转 3D 小星球、小王子、狐狸和玫瑰。">
+<title>B612 · 还没有长大的星球 | SHUGE GALAXY</title>
+<link rel="preload" as="image" href="./cover.png">
+<style>
+:root{color-scheme:dark;--bg:#06131e;--ink:#f6f1e6;--muted:#9caeb8;--gold:#eccaa2;--edge:rgba(205,227,227,.19)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 60vw 45vh at 70% -20%,#355f66a8,transparent 80%);z-index:-1}
+a{color:inherit}button{font:inherit}button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.layout{width:min(1220px,calc(100% - 48px));margin:auto}
+.header{display:flex;align-items:center;justify-content:space-between;min-height:78px;border-bottom:1px solid var(--edge)}
+.header a{text-decoration:none;color:#c9dfdb;font-size:12px;letter-spacing:.16em}.header a:hover{color:white}.header .index{font:11px/1.2 ui-monospace,monospace;letter-spacing:.15em;color:#819a9f}
+.intro{text-align:center;padding:80px 0 38px}.eyebrow{margin:0;color:var(--gold);font:11px/1.4 ui-monospace,monospace;letter-spacing:.3em}.intro h1{font:400 clamp(62px,12vw,142px)/1.05 Georgia,serif;letter-spacing:-.045em;margin:18px 0 8px}.intro h2{font:400 clamp(22px,3.2vw,39px)/1.4 "Songti SC","Noto Serif CJK SC",serif;margin:20px 0 12px;letter-spacing:.16em}.intro p{font-size:13px;color:var(--muted);letter-spacing:.05em;margin:0}
+.frame{position:relative;overflow:hidden;background:#03111e;border:1px solid #9baaa929;border-radius:7px;box-shadow:0 45px 120px #0008}
+.frame img{width:100%;display:block;aspect-ratio:3/2;object-fit:cover}
+.frame .indexmark{position:absolute;left:28px;bottom:22px;font:10px ui-monospace,monospace;letter-spacing:.18em;text-shadow:0 1px 7px #0009}
+.intro-foot{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--edge);padding:22px 2px 30px;color:#b4c2c1;font:11px ui-monospace,monospace;letter-spacing:.13em;gap:12px}
+.section{padding:102px 0 80px}.section-head{display:flex;align-items:start;justify-content:space-between;gap:24px;margin-bottom:45px}.section-head .chapter{font:11px ui-monospace,monospace;letter-spacing:.2em;color:#c8a27c}.section h3{font:400 clamp(34px,5vw,60px)/1.3 "Songti SC","Noto Serif CJK SC",Georgia,serif;letter-spacing:.06em;margin:17px 0}.section-head p{max-width:345px;color:var(--muted);margin:15px 0 0;font-size:13px;line-height:2}
+.viewer{width:100%;min-height:520px;height:min(65vw,740px);max-height:740px;background:radial-gradient(circle at 50% 36%,#285061,#071a2b 57%,#040e19);position:relative;border:1px solid var(--edge);overflow:hidden;border-radius:7px;touch-action:pan-y}
+.viewer canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}.viewer canvas:active{cursor:grabbing}
+.viewer .fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .6s;pointer-events:none}
+.viewer .fallback.loaded{opacity:0}
+.viewer .veil{position:absolute;left:24px;top:22px;color:#c7d3d3;font:11px ui-monospace,monospace;letter-spacing:.14em;pointer-events:none}
+.viewer .loading{position:absolute;bottom:22px;left:24px;color:#d6ccc1;font:11px ui-monospace,monospace;pointer-events:none}
+.viewer-actions{display:flex;gap:9px;flex-wrap:wrap;padding:17px 0;align-items:center}
+.viewer-actions button,.viewer-actions a{border:1px solid #dce6e546;background:transparent;color:#e4ece8;border-radius:100px;padding:9px 19px;cursor:pointer;font-size:12px;transition:.2s;text-decoration:none}
+.viewer-actions button:hover,.viewer-actions a:hover,.viewer-actions button[aria-pressed=true]{background:#dae0cf;color:#10232a}
+.viewer-actions span{margin-left:auto;color:var(--muted);font-size:11px}
+.gallery{display:grid;grid-template-columns:1.1fr .9fr;gap:25px;align-items:center;margin-top:25px}
+.gallery img{width:100%;border:1px solid var(--edge);border-radius:5px;display:block;background:#071623}
+.gallery aside{padding:0 5%}.gallery .label{font:11px ui-monospace,monospace;letter-spacing:.18em;color:var(--gold)}.gallery h4{font:400 clamp(29px,4vw,48px)/1.4 "Songti SC",Georgia,serif;margin:19px 0}.gallery p{color:var(--muted);line-height:2.1;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:66px;border-top:1px solid var(--edge);border-bottom:1px solid var(--edge)}
+.stat{padding:30px 15px 30px 0;border-right:1px solid var(--edge)}.stat:last-child{border-right:0;padding-left:25px}.stat:nth-child(2){padding-left:25px}.stat .number{font:400 clamp(32px,4vw,55px)/1.1 Georgia,serif;color:#f6e4c7}.stat .name{font:10px ui-monospace,monospace;letter-spacing:.16em;color:#9eb6b7;margin-top:14px}
+.note{padding:70px 0 95px;text-align:center}.note .rule{height:1px;background:linear-gradient(90deg,transparent,#c0b8a560,transparent);margin-bottom:55px}.note blockquote{font:400 clamp(22px,3.2vw,36px)/1.7 "Songti SC",Georgia,serif;letter-spacing:.08em;margin:0 0 25px}.note p{color:var(--muted);font-size:12px;margin:0}
+.footer{display:flex;justify-content:space-between;gap:20px;padding:25px 0 50px;border-top:1px solid var(--edge);color:#9aacb0;font:11px ui-monospace,monospace;letter-spacing:.06em}
+.footer a{text-decoration:none;border-bottom:1px solid var(--edge);padding-bottom:2px}
+@media(max-width:700px){.layout{width:calc(100% - 28px)}.header{min-height:64px}.intro{padding:65px 0 25px}.intro h1{font-size:100px}.intro h2{font-size:24px}.frame img{aspect-ratio:3/2;object-fit:contain}.frame .indexmark{left:13px;bottom:11px;font-size:9px}.intro-foot{font-size:9px;flex-wrap:wrap}.section{padding:72px 0 40px}.section-head{display:block;margin-bottom:27px}.section-head p{max-width:none}.viewer{min-height:360px;height:104vw;max-height:530px}.viewer-actions span{width:100%;margin-left:0}.gallery{display:block}.gallery aside{padding:23px 4px}.stats{grid-template-columns:repeat(3,1fr);margin-top:33px}.stat{padding:23px 8px!important}.stat .name{font-size:9px;letter-spacing:.04em}.note{padding:50px 0 80px}.footer{display:block}.footer a{display:block;margin-top:15px;width:max-content}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/"}}</script>
+</head>
+<body>
+<div class="layout">
+<header class="header"><a href="../../">SHUGE GALAXY&nbsp; / &nbsp;小作品</a><span class="index">STORY NO. 006 / 2026</span></header>
+<main>
+<section class="intro" aria-labelledby="title"><p class="eyebrow">A TINY UNIVERSE · ORIGINAL LOW-POLY DIORAMA</p><h1 id="title">B612</h1><h2>还没有长大的星球</h2><p>一朵玫瑰，一只狐狸，与一个永远愿意仰望的人。</p></section>
+<div class="frame"><img src="./cover.png" width="1440" height="960" alt="小王子和狐狸站在青绿色的多边形小星球上，旁边有玫瑰和路灯，四周漂浮着星星"><div class="indexmark">01 / A LITTLE PLANET AT DUSK</div></div>
+<div class="intro-foot"><span>SCULPTED IN BLENDER 5.2</span><span>ORIGINAL 3D ART · NO THIRD-PARTY MESHES</span><span>2026.11.11</span></div>
+<section class="section" id="orbit" aria-labelledby="orbit-title">
+  <div class="section-head"><div><span class="chapter">01 — EXPLORE THE PLANET</span><h3 id="orbit-title">把星球转向自己</h3></div><p>拖动星球，看看另外一面。这里没有任务、分数和终点，只为保留一点无用而珍贵的想象力。</p></div>
+  <div class="viewer" id="viewer" aria-label="可以拖动、缩放的 B612 星球 3D 模型"><img class="fallback" id="fallback" src="./cover.png" alt="B612 静态预览"><span class="veil">INTERACTIVE / B612</span><span class="loading" id="loading" role="status">正在准备星球…</span></div>
+  <div class="viewer-actions"><button id="rotate" type="button" aria-pressed="true">暂停旋转</button><button id="reset" type="button">回到起点</button><a href="./little_prince_b612.blend" download>下载 Blender 工程</a><span>拖动旋转 · 滚轮或双指缩放</span></div>
+  <div class="gallery"><img src="./alternate.png" alt="从另一个视角看到的多边形小王子星球" width="1200" height="800" loading="lazy"><aside><span class="label">02 / A SECOND VIEW</span><h4>不止一面，<br>才是一个世界。</h4><p>头顶是晕染不开的夜，脚下是一颗小得可以被拥抱的星球。玫瑰有她的骄傲，狐狸有他的安静，而旅人只是站在这里，看一次日落。</p></aside></div>
+  <div class="stats"><div class="stat"><div class="number">307</div><div class="name">LOW-POLY MESHES</div></div><div class="stat"><div class="number">41</div><div class="name">CRAFTED MATERIALS</div></div><div class="stat"><div class="number">02</div><div class="name">RENDERED VIEWS</div></div></div>
+</section>
+<section class="note"><div class="rule"></div><blockquote>有些地方很小，<br>却足够装下一个宇宙。</blockquote><p>个人原创 3D 致意作品 · 灵感来自童话里的小王子 · 非官方周边</p></section>
+</main>
+<footer class="footer"><span>© SHUGE GALAXY · CREATED WITH BLENDER & CURIOSITY</span><a href="../">返回所有小作品</a></footer>
+</div>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+const holder=document.getElementById('viewer'),fallback=document.getElementById('fallback'),loading=document.getElementById('loading');
+const pause=document.getElementById('rotate'),reset=document.getElementById('reset');
+try{
+  const scene=new THREE.Scene();scene.background=new THREE.Color('#091827');
+  const camera=new THREE.PerspectiveCamera(38,1,.1,100);
+  camera.position.set(8,6,10);
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.45;
+  holder.insertBefore(renderer.domElement,fallback);
+  const controls=new OrbitControls(camera,renderer.domElement);
+  controls.target.set(0,1.45,0);controls.enableDamping=true;controls.dampingFactor=.055;
+  controls.autoRotate=true;controls.autoRotateSpeed=.6;controls.minDistance=5;controls.maxDistance=18;
+  controls.enablePan=false;
+  scene.add(new THREE.HemisphereLight(0xe9f8ff,0x365866,2.5));
+  const key=new THREE.DirectionalLight(0xffe6b8,4.0);key.position.set(5,8,6);scene.add(key);
+  const rim=new THREE.DirectionalLight(0x87cce8,2.1);rim.position.set(-7,2,-4);scene.add(rim);
+  const loader=new GLTFLoader();let loaded=false;
+  loader.load('./b612.glb',(gltf)=>{
+    const model=gltf.scene;scene.add(model);
+    const box=new THREE.Box3().setFromObject(model),center=new THREE.Vector3();box.getCenter(center);
+    controls.target.copy(center);
+    const radius=box.getSize(new THREE.Vector3()).length()*1.18;
+    camera.position.copy(center).add(new THREE.Vector3(1,.75,1.35).normalize().multiplyScalar(Math.max(radius,7.5)));
+    controls.update();fallback.classList.add('loaded');loaded=true;loading.textContent='拖动探索 B612';
+  },undefined,()=>{loading.textContent='3D 暂不可用，已切换为静态画面';renderer.domElement.style.display='none'});
+  function resize(){const w=holder.clientWidth,h=holder.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}
+  const ro=new ResizeObserver(resize);ro.observe(holder);resize();
+  let frame=0,active=true;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){controls.autoRotate=false;pause.textContent='开始旋转';pause.setAttribute('aria-pressed','false')}
+  function draw(){if(!active)return;frame=requestAnimationFrame(draw);controls.update();renderer.render(scene,camera)}
+  draw();document.addEventListener('visibilitychange',()=>{if(document.hidden){active=false;cancelAnimationFrame(frame)}else if(!active){active=true;draw()}});
+  pause.addEventListener('click',()=>{controls.autoRotate=!controls.autoRotate;pause.setAttribute('aria-pressed',String(controls.autoRotate));pause.textContent=controls.autoRotate?'暂停旋转':'开始旋转'});
+  reset.addEventListener('click',()=>{controls.reset();controls.target.set(0,1.45,0);camera.position.set(8,6,10);controls.update()});
+}catch(e){loading.textContent='当前浏览器显示静态版本';console.error('B612 3D viewer:',e)}
+</script>
+</body>
+</html>

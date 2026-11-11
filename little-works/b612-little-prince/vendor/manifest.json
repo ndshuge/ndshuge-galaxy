@@ -1,0 +1,26 @@
+{
+  "vendor/controls/OrbitControls.js": {
+    "bytes": 38703,
+    "sha256": "b97879c748170baadeb3fb84cea1ffdf4674e283dc06042f34e2acb95a76042c"
+  },
+  "vendor/loaders/GLTFLoader.js": {
+    "bytes": 114450,
+    "sha256": "28f2eeae9b289aa0607ebb3249257cb2ad0715f2b23a40e0d3b4f867895e251f"
+  },
+  "vendor/three.core.js": {
+    "bytes": 1385513,
+    "sha256": "c943c148229a99917d815f772404c48f5447e82c0c450f92403955bc27e8d100"
+  },
+  "vendor/three.module.js": {
+    "bytes": 595384,
+    "sha256": "d513a6de314b2c32d0a11a209bc1ec06b528ae95c0f841a1c1761aa9248c814a"
+  },
+  "vendor/THREE_LICENSE.txt": {
+    "bytes": 1081,
+    "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+  },
+  "vendor/utils/BufferGeometryUtils.js": {
+    "bytes": 35538,
+    "sha256": "cbcfe1864abedcc0122cb893373918fe14469491717a34ca6efcc38551805765"
+  }
+}
