@@ -1,5 +1,19 @@
 [
   {
+    "slug": "b612-little-prince-v2",
+    "title": "B612 · 黄昏的对话（第二版）",
+    "date": "2026.11.12",
+    "type": "INTERACTIVE 3D ART",
+    "description": "小王子俯身向玫瑰伸手，狐狸静静陪在旁边。重新雕塑的低多边形星球，拖动即可旋转观看。",
+    "url": "./b612-little-prince-v2/",
+    "cover": "./b612-little-prince-v2/cover.webp",
+    "tags": [
+      "Blender 原创建模",
+      "第二版预览",
+      "可旋转 3D"
+    ]
+  },
+  {
     "slug": "b612-little-prince",
     "title": "B612 · 还没有长大的星球",
     "date": "2026.11.11",
@@ -21,7 +35,11 @@
     "description": "从一张乐园照片出发，在 Blender 中重建兔子入口、钟楼与双滑梯球池。切换真实渲染机位，旋转完整三维场景，还可以下载可编辑模型。",
     "url": "./playground-reconstruction/",
     "cover": "./playground-reconstruction/cover.webp",
-    "tags": ["照片重建", "Blender 三维", "自由旋转"]
+    "tags": [
+      "照片重建",
+      "Blender 三维",
+      "自由旋转"
+    ]
   },
   {
     "slug": "mouse-observatory",
