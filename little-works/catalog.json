@@ -1,5 +1,19 @@
 [
   {
+    "slug": "b612-little-prince-v3",
+    "title": "B612 · 星球上的约定（雕塑版）",
+    "date": "2026.11.13",
+    "type": "INTERACTIVE 3D ART",
+    "description": "小王子与狐狸守护一朵玫瑰。暖陶土星球、流动围巾和金色轨道，可拖动旋转观看。",
+    "url": "./b612-little-prince-v3/",
+    "cover": "./b612-little-prince-v3/cover.webp",
+    "tags": [
+      "原创 Blender 雕塑",
+      "小王子星球",
+      "可旋转 3D"
+    ]
+  },
+  {
     "slug": "b612-little-prince-v2",
     "title": "B612 · 黄昏的对话（第二版）",
     "date": "2026.11.12",
