@@ -1,5 +1,19 @@
 [
   {
+    "slug": "b612-little-prince-v4",
+    "title": "B612 · 玫瑰的约定（参考图重制）",
+    "date": "2026.11.13",
+    "type": "INTERACTIVE 3D ART",
+    "description": "重新参考陶土和手工雕塑创作：原创 UV 岩层贴图、卷曲花瓣、玻璃罩、小王子和狐狸。可拖动旋转。",
+    "url": "./b612-little-prince-v4/",
+    "cover": "./b612-little-prince-v4/cover.webp",
+    "tags": [
+      "参考图重制",
+      "Blender 原创雕塑",
+      "可交互 3D"
+    ]
+  },
+  {
     "slug": "b612-little-prince-v3",
     "title": "B612 · 星球上的约定（雕塑版）",
     "date": "2026.11.13",
